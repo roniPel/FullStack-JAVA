@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Exam_131223/Exam_131223.iml" filepath="$PROJECT_DIR$/Exam_131223/Exam_131223.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Exam_22.11.23_RoniPeled/Exam_22.11.23_RoniPeled.iml" filepath="$PROJECT_DIR$/Exam_22.11.23_RoniPeled/Exam_22.11.23_RoniPeled.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IdeaProjects.iml" filepath="$PROJECT_DIR$/.idea/IdeaProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lesson_181223/Lesson_181223.iml" filepath="$PROJECT_DIR$/Lesson_181223/Lesson_181223.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lesson_201223/Lesson_201223.iml" filepath="$PROJECT_DIR$/Lesson_201223/Lesson_201223.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Test123/Test123.iml" filepath="$PROJECT_DIR$/Test123/Test123.iml" />
+      <module fileurl="file://$PROJECT_DIR$/berore exercise inheritance - collections-20231220T100756Z-001/berore exercise inheritance - collections-20231220T100756Z-001.iml" filepath="$PROJECT_DIR$/berore exercise inheritance - collections-20231220T100756Z-001/berore exercise inheritance - collections-20231220T100756Z-001.iml" />
+    </modules>
+  </component>
+</project>
