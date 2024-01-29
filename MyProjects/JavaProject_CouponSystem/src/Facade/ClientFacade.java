@@ -1,8 +1,8 @@
 package Facade;
 
-import DAO.CompaniesDAO;
-import DAO.CouponsDAO;
-import DAO.CustomersDAO;
+import DataBase.DAO.CompaniesDAO;
+import DataBase.DAO.CouponsDAO;
+import DataBase.DAO.CustomersDAO;
 
 public abstract class ClientFacade {
     protected CompaniesDAO companiesDAO;

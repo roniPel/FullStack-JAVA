@@ -1,4 +1,4 @@
-package DAO;
+package DataBase.DAO;
 
 import Beans.Coupon;
 

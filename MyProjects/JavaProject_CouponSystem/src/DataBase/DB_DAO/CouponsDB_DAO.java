@@ -1,7 +1,7 @@
-package DAO;
+package DataBase.DB_DAO;
 
-import Beans.Category;
 import Beans.Coupon;
+import DataBase.DAO.CouponsDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
 import DataBase.SQLcommands;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
-public class CouponsDB_DAO implements CouponsDAO{
+public class CouponsDB_DAO implements CouponsDAO {
     private ConnectionPool connectionPool;
     //Todo - finish all class methods
 

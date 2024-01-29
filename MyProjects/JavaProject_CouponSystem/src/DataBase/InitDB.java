@@ -5,17 +5,13 @@ import ErrorHandling.CouponSystemException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
+
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class InitDB {
     // Create DB (schema)
-    //Todo - delete? public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS `couponsystemdb`" ;
-    //Todo - delete? public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS '"+DBmanager.SQL_DB+"'" ;
     public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS "+DBmanager.SQL_DB;
 
     // Create tables
@@ -67,10 +63,11 @@ public class InitDB {
                     "  PRIMARY KEY (`customerID`, `couponID`));";
 
     // Link Tables
-    public static final String LINK_BETWEEN_TABLES_COUPONS_COMPANIES_CATEGORIES =
+    public static final String LINK_BETWEEN_TABLES_COUPONS_COMPANIES_CATEGORIES1 =
             "ALTER TABLE `"+DBmanager.SQL_DB+"`.`coupons` " +
                     "ADD INDEX `companyID_idx` (`companyID` ASC) VISIBLE," +
-                    "ADD INDEX `categoryFK_idx` (`categoryID` ASC) VISIBLE;" +
+                    "ADD INDEX `categoryFK_idx` (`categoryID` ASC) VISIBLE;";
+    public static final String LINK_BETWEEN_TABLES_COUPONS_COMPANIES_CATEGORIES2 =
                     "ALTER TABLE `"+DBmanager.SQL_DB+"`.`coupons` " +
                     "ADD CONSTRAINT `companyFK`" +
                     "  FOREIGN KEY (`companyID`)" +
@@ -82,11 +79,12 @@ public class InitDB {
                     "  REFERENCES `"+DBmanager.SQL_DB+"`.`categories` (`id`)" +
                     "  ON DELETE CASCADE" +
                     "  ON UPDATE CASCADE;";
-
-    public static final String LINK_BETWEEN_TABLES_CUSTOMERS_VS_COUPONS =
+    public static final String LINK_BETWEEN_TABLES_CUSTOMERS_VS_COUPONS1 =
             "ALTER TABLE `"+DBmanager.SQL_DB+"`.`customers_vs_coupons` " +
-                    "ADD INDEX `couponsFK_idx` (`couponID` ASC) VISIBLE;" +
-                    "ALTER TABLE `"+DBmanager.SQL_DB+"`.`customers_vs_coupons` " +
+                    "ADD INDEX `couponsFK_idx` (`couponID` ASC) VISIBLE;";
+
+    public static final String LINK_BETWEEN_TABLES_CUSTOMERS_VS_COUPONS2 =
+            "ALTER TABLE `"+DBmanager.SQL_DB+"`.`customers_vs_coupons` " +
                     "ADD CONSTRAINT `customersFK`" +
                     "  FOREIGN KEY (`customerID`)" +
                     "  REFERENCES `"+DBmanager.SQL_DB+"`.`customers` (`id`)" +
@@ -109,8 +107,10 @@ public class InitDB {
         sqlCommands.add(CREATE_TABLE_CATEGORIES);
         sqlCommands.add(CREATE_TABLE_COUPONS);
         sqlCommands.add(CREATE_TABLE_CUSTOMERS_VS_COUPONS);
-        sqlCommands.add(LINK_BETWEEN_TABLES_COUPONS_COMPANIES_CATEGORIES);
-        sqlCommands.add(LINK_BETWEEN_TABLES_CUSTOMERS_VS_COUPONS);
+        sqlCommands.add(LINK_BETWEEN_TABLES_COUPONS_COMPANIES_CATEGORIES1);
+        sqlCommands.add(LINK_BETWEEN_TABLES_COUPONS_COMPANIES_CATEGORIES2);
+        sqlCommands.add(LINK_BETWEEN_TABLES_CUSTOMERS_VS_COUPONS1);
+        sqlCommands.add(LINK_BETWEEN_TABLES_CUSTOMERS_VS_COUPONS2);
 
         // Iterate over SQL commands and inform if failed or succeeded
         for(String command: sqlCommands) {
@@ -128,7 +128,7 @@ public class InitDB {
 
         //use connection from connection sql to send queries to our DB
         Connection connection = null;
-
+        System.out.println(sql);
         try {
             //get a connection from connection pool
             connection = ConnectionPool.getInstance().getConnection();

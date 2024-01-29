@@ -1,6 +1,7 @@
-package DAO;
+package DataBase.DB_DAO;
 
 import Beans.Customer;
+import DataBase.DAO.CustomersDAO;
 import DataBase.ConnectionPool;
 import DataBase.SQLcommands;
 import ErrorHandling.CouponSystemException;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomersDB_DAO implements CustomersDAO{
+public class CustomersDB_DAO implements CustomersDAO {
     private ConnectionPool connectionPool;
     //Todo - finish all class methods
 

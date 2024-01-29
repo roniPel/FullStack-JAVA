@@ -1,7 +1,8 @@
-package DAO;
+package DataBase.DB_DAO;
 
 import Beans.Company;
 import Beans.Coupon;
+import DataBase.DAO.CompaniesDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
 import DataBase.SQLcommands;
@@ -14,7 +15,7 @@ import java.util.*;
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
-public class CompaniesDB_DAO implements CompaniesDAO{
+public class CompaniesDB_DAO implements CompaniesDAO {
     private ConnectionPool connectionPool;
 
     public static boolean IsCompanyExists(String email, String password) throws CouponSystemException {
@@ -127,15 +128,19 @@ public class CompaniesDB_DAO implements CompaniesDAO{
 
         // Part 2 - organize results in a company variable
         try {
-            int id = results.getInt(1);
-            String name = results.getString(2);
-            String email = results.getString(3);
-            String password = results.getString(4);
-            Array couponSQLarray = results.getArray(5);
-            // Convert SQL array to Coupons array
-            ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
-            // return a Company object with all details
-            return new Company(id, name, email, password, coupons);
+            while(results.next()) {
+                int id = results.getInt(1);
+                String name = results.getString(2);
+                String email = results.getString(3);
+                String password = results.getString(4);
+                Array couponSQLarray = results.getArray(5);
+                // Convert SQL array to Coupons array
+                ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+                // return a Company object with all details
+                return new Company(id, name, email, password, coupons);
+            }
+            // If no data is in the result set, return null
+            return null;
         } catch(SQLException e) {
             throw new CouponSystemException(SQL_ERROR.getMessage()+e);
         }
