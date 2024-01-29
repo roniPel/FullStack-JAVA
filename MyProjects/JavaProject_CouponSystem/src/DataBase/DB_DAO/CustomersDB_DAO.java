@@ -3,7 +3,6 @@ package DataBase.DB_DAO;
 import Beans.Customer;
 import DataBase.DAO.CustomersDAO;
 import DataBase.ConnectionPool;
-import DataBase.SQLcommands;
 import ErrorHandling.CouponSystemException;
 
 import java.sql.ResultSet;
@@ -19,7 +18,7 @@ public class CustomersDB_DAO implements CustomersDAO {
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,email);
         params.put(2,password);
-        ResultSet result = DataBase.DButils.runQueryForResult(SQLcommands.companyExists, params);
+        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.companyExists, params);
 
         return false;
     }

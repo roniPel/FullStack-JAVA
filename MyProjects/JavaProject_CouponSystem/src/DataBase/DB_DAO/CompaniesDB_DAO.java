@@ -5,7 +5,6 @@ import Beans.Coupon;
 import DataBase.DAO.CompaniesDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
-import DataBase.SQLcommands;
 import ErrorHandling.CouponSystemException;
 
 import java.sql.Array;
@@ -22,7 +21,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,email);
         params.put(2,password);
-        ResultSet result = DataBase.DButils.runQueryForResult(SQLcommands.companyExists, params);
+        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.companyExists, params);
         int numberOfReturns = 0;
         try {
             if(result.next()) {
@@ -51,7 +50,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         params.put(3,company.getEmail());
         params.put(4,company.getPassword());
 
-        if(DButils.runQueryWithMap(SQLcommands.insertCompany,params) ) {
+        if(DButils.runQueryWithMap(DataBase.CRUD.Create.insertCompany,params) ) {
             if(company.getCoupons() == null){
                 System.out.println("Company was added to DB. There were no coupons associated with the company. ");
                 return true;
@@ -82,7 +81,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         params.put(3,company.getPassword());
         params.put(4,company.getId());
 
-        if(DButils.runQueryWithMap(SQLcommands.updateCompany,params) ) {
+        if(DButils.runQueryWithMap(DataBase.CRUD.Update.updateCompany,params) ) {
             System.out.println("Company was updated successfully");
             return true;
         }
@@ -96,7 +95,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         // Part 1 - Get companies - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(SQLcommands.getAllCompanies,params);
+        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getAllCompanies,params);
 
         // Part 2 - add results to company list
         ArrayList<Company> companyList = new ArrayList<>();
@@ -124,7 +123,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         // Part 1 - Get company - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,companyID);
-        ResultSet results = DButils.runQueryForResult(SQLcommands.getOneCompany,params);
+        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getOneCompany,params);
 
         // Part 2 - organize results in a company variable
         try {

@@ -4,7 +4,6 @@ import Beans.Coupon;
 import DataBase.DAO.CouponsDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
-import DataBase.SQLcommands;
 import ErrorHandling.CouponSystemException;
 
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         // Part 1 - Get coupon's categoryID from DB:
         int categoryID;
         params.put(1,coupon.getCategory().toString());
-        ResultSet result = DataBase.DButils.runQueryForResult(SQLcommands.getCategoryID, params);
+        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.getCategoryID, params);
         try {
             categoryID = result.getInt(1);
         } catch (SQLException e) {
@@ -43,7 +42,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         params.put(8,coupon.getPrice());
         params.put(9,coupon.getImage());
 
-        if( DButils.runQueryWithMap(SQLcommands.insertCoupon,params)) {
+        if( DButils.runQueryWithMap(DataBase.CRUD.Create.insertCoupon,params)) {
             System.out.println("Coupon was added successfully to DB. ");
             return true;
         }

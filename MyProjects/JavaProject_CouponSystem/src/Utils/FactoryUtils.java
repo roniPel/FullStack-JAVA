@@ -1,7 +1,6 @@
 package Utils;
 
 import Beans.Category;
-import DataBase.SQLcommands;
 import ErrorHandling.CouponSystemException;
 
 import java.text.DecimalFormat;
@@ -9,46 +8,59 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static DataBase.DButils.runQueryWithMap;
-import static DataBase.SQLcommands.insertCategory;
 
 public class FactoryUtils {
+
+    /**
+     * Changes price format into organized decimal format
+     * @param price - price in double format
+     * @return - price in String format
+     */
     public static String beautifyPrice(Double price) {
         String pattern = "###,###.##";
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         return myFormatter.format(price);
     }
 
+    /**
+     * Fills in category table with all categories in 'Category' Enum
+     * @return - true if succeeded, false if failed.
+     * @throws CouponSystemException - If we get any SQL exception.  Details are provided
+     */
     public static boolean FillInCategoryTable() throws CouponSystemException {
-        String category, updatedSQLcommand;
+        String category;
         Map<Integer,Object> params = new HashMap<>();
         for (int i = 0; i < Category.values().length; i++) {
             category = String.valueOf(Category.values()[i]);
-            params.put(i+1,category);
+            params.put(1,category);
+            if(runQueryWithMap(DataBase.CRUD.Create.insertCategory, params));
+            else {
+                System.out.println("There was a problem creating the Category table");
+                return false;
+            }
         }
-        // Repeat 'insert category' SQL command in order to only run query once
-        updatedSQLcommand = SQLcommands.insertCategory.repeat(Category.values().length);
-        return runQueryWithMap(updatedSQLcommand, params);
+        return true;
     }
 
-    public static boolean FillInCompanyTable() throws CouponSystemException {
-        String company, updatedSQLcommand;
-        int numberOfCompanies = 7;
-        Map<Integer,Object> params = CreateRandomCompanies(numberOfCompanies);
-        // Repeat 'insert company' SQL command in order to run query once in DB
-        updatedSQLcommand = SQLcommands.insertCompany.repeat(numberOfCompanies);
-        return runQueryWithMap(updatedSQLcommand, params);
-    }
-
-    private static Map<Integer,Object> CreateRandomCompanies(int numberOfCompanies) {
-        int counter = 1;
+    /**
+     * Fills in company table with the number of companies the user wants to enter
+     * @param numberOfCompanies - number of companies to insert into DB
+     * @return - true if succeeded, false if failed.
+     * @throws CouponSystemException - If we get any SQL exception.  Details are provided
+     */
+    public static boolean FillInCompanyTable(int numberOfCompanies) throws CouponSystemException {
         Map<Integer,Object> params = new HashMap<>();
         for (int i = 1; i <= numberOfCompanies; i++) {
-            params.put(counter,"Company"+i);
-            params.put(counter+1,"Company"+i+"@hotmail.com");
-            params.put(counter+2,"PassComp"+i);
-            counter += 3;
+            params.put(1,"Company"+i);
+            params.put(2,"Company"+i+"@hotmail.com");
+            params.put(3,"PassComp"+i);
+            if(runQueryWithMap(DataBase.CRUD.Create.insertCompany, params));
+            else {
+                System.out.println("There was a problem filling the company table. ");
+                return false;
+            }
         }
-        return params;
+        System.out.println("Company table has been auto filled. ");
+        return true;
     }
-
 }
