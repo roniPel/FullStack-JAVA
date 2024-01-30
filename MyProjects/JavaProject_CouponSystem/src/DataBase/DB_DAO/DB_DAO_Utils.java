@@ -4,14 +4,12 @@ import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
 import DataBase.CRUD.Create;
-import DataBase.DB_DAO.CompaniesDB_DAO;
-import DataBase.DB_DAO.CouponsDB_DAO;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
+import Utils.DateFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,18 +18,7 @@ import java.util.Map;
 import static DataBase.DButils.runQueryWithMap;
 import static ErrorHandling.Errors.SQL_ERROR;
 
-public class FactoryUtils {
-
-    /**
-     * Changes price format into organized decimal String format
-     * @param price price in double format
-     * @return price in String format
-     */
-    public static String beautifyPrice(Double price) {
-        String pattern = "###,###.##";
-        DecimalFormat myFormatter = new DecimalFormat(pattern);
-        return myFormatter.format(price);
-    }
+public class DB_DAO_Utils {
 
     /**
      * Fills in category table with all categories in 'Category' Enum
