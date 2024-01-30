@@ -14,7 +14,15 @@ public class CustomersDB_DAO implements CustomersDAO {
     private ConnectionPool connectionPool;
     //Todo - finish all class methods
 
+    /**
+     * Checks whether a customer exists in the DB
+     * @param email - customer's email
+     * @param password - customer's password
+     * @return - true if customer exists, false if customer doesn't exist or if the email + password combo are incorrect.
+     * @throws CouponSystemException - If we get any SQL exception.  Details are provided
+     */
     public boolean IsCustomerExists(String email, String password) throws CouponSystemException {
+        //Todo - finish
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,email);
         params.put(2,password);

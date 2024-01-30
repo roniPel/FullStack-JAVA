@@ -18,20 +18,22 @@ public class CouponsDB_DAO implements CouponsDAO {
     private ConnectionPool connectionPool;
     //Todo - finish all class methods
 
+    /**
+     * Adds a coupon to the DB - based on the details listed in the param
+     * @param coupon a 'Coupon' class instance containing coupon details
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public static boolean AddCoupon(Coupon coupon) throws CouponSystemException {
-        Map<Integer,Object> params = new HashMap<>();
-
         // Part 1 - Get coupon's categoryID from DB:
-        int categoryID;
-        params.put(1,coupon.getCategory().toString());
-        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.getCategoryID, params);
-        try {
-            categoryID = result.getInt(1);
-        } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        int categoryID = getCouponCategoryID(coupon.getCategory().toString());
+        if(categoryID>0);
+        else {
+            System.out.println("No category ID found in DB.  Coupon was not added. ");
+            return false;
         }
         // Part 2 - prepare parameters and create coupon in DB
-        params.clear();
+        Map<Integer,Object> params = new HashMap<>();
         params.put(1,coupon.getCompanyID());
         params.put(2,categoryID);
         params.put(3,coupon.getTitle());
@@ -49,6 +51,28 @@ public class CouponsDB_DAO implements CouponsDAO {
         else {
             System.out.println("There was a problem adding coupon to DB. ");
             return false;
+        }
+    }
+
+    /**
+     * Provides coupon's category ID from DB - based on the details listed in the param
+     * @param categoryName a String containing category name to search for in DB
+     * @return int with category ID if succeeded, -1 if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private static int getCouponCategoryID(String categoryName) throws CouponSystemException {
+        int categoryID;
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,categoryName);
+        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.getCategoryID, params);
+        try {
+            while(result.next()) {
+                categoryID = result.getInt(1);
+                return categoryID;
+            }
+            return -1;
+        } catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
         }
     }
 

@@ -12,6 +12,8 @@ public class Read {
     public static final String getAllCompanies =
             "SELECT * FROM "+DBmanager.SQL_DB+".companies;";
 
+    public static final String getAllCategories =
+            "SELECT * FROM "+DBmanager.SQL_DB+".categories;";
     public static final String getOneCompany =
             "SELECT * FROM "+DBmanager.SQL_DB+".companies WHERE id = ? ;";
 }

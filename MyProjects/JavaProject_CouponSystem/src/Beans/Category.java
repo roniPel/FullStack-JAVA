@@ -10,6 +10,10 @@ public enum Category {
 
     private static final int size = Category.values().length;
 
+    /**
+     * Provides a random category based on values in Category Enum
+     * @return String with a random category name
+     */
     public static String GetRandomCategory() {
         String category = "";
         int rand = (int) (Math.round(Math.random()*(size-1)));
