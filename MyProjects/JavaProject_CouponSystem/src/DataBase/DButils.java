@@ -43,12 +43,11 @@ public class DButils {
 
     /**
      * Creates an SQL statement to insert multiple values into DB
-     * @param sql original SQL statement for single line insert to DB
      * @param numberOfRows number of times to 'repeat' the insert line
      * @param type which type of 'insert' is needed
      * @return String statement if succeeded, null if failed.
      */
-    public static String sqlInsertMultipleValues(String sql, int numberOfRows, String type) {
+    public static String sqlInsertMultipleValues(int numberOfRows, String type) {
         String updatedCommand = switch (type) {
             case "Coupon" -> createRepeatStatement(Create.insertCoupon, numberOfRows);
             case "Company" -> createRepeatStatement(Create.insertCompany, numberOfRows);
@@ -59,6 +58,13 @@ public class DButils {
         return updatedCommand;
     }
 
+
+    /**
+     * Finds and concatenates relevant section to repeat
+     * @param sql original SQL statement for single line insert to DB
+     * @param numberOfRows number of times to 'repeat' the insert line
+     * @return concatenated String statement if succeeded, null if failed.
+     */
     private static String createRepeatStatement(String sql, int numberOfRows) {
         String basicCommand;
         String sectionToRepeat;
@@ -77,6 +83,14 @@ public class DButils {
         updatedCommand += (";");
         return updatedCommand;
     }
+
+
+    /**
+     * Runs a query on the DB using an SQL statement as param and a map with parameters to insert into the statement
+     * @param sql SQL statement to send to DB
+     * @param params Map with parameters to insert into the SQL statement
+     * @return true if succeeded running query, false if failed.
+     */
     public static boolean runQueryWithMap(String sql, Map<Integer, Object> params) throws CouponSystemException {
         Connection connection = null;
         try {
@@ -120,6 +134,15 @@ public class DButils {
             ConnectionPool.getInstance().returnConnection(connection);
         }
     }
+
+
+    /**
+     * Runs a query on the DB using an SQL statement as param and a map with parameters to insert into the statement.
+     * Returns a result set taken from DB.
+     * @param sql SQL statement to send to DB
+     * @param params Map with parameters to insert into the SQL statement
+     * @return 'ResultSet' objects with results if succeeded running query, null if failed.
+     */
     public static ResultSet runQueryForResult(String sql, Map<Integer,Object> params) throws CouponSystemException {
         Connection connection = null;
 
