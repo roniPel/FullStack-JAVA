@@ -29,7 +29,6 @@ public class CouponsDB_DAO implements CouponsDAO {
         int categoryID = getCouponCategoryID(coupon.getCategory().toString());
         if(categoryID>0);
         else {
-            System.out.println("No category ID found in DB.  Coupon was not added. ");
             return false;
         }
         // Part 2 - prepare parameters and create coupon in DB
@@ -45,11 +44,9 @@ public class CouponsDB_DAO implements CouponsDAO {
         params.put(9,coupon.getImage());
 
         if( DButils.runQueryWithMap(DataBase.CRUD.Create.insertCoupon,params)) {
-            System.out.println("Coupon was added successfully to DB. ");
             return true;
         }
         else {
-            System.out.println("There was a problem adding coupon to DB. ");
             return false;
         }
     }

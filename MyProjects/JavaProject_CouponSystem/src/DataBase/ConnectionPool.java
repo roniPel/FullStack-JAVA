@@ -18,6 +18,7 @@ public class ConnectionPool {
     private final Stack<Connection> connections = new Stack<>();
 
     private ConnectionPool() throws CouponSystemException {
+        //Todo - remove sout below:
         System.out.println("We created new connection pool instance");
         openAllConnections();
         // Initiate DB

@@ -38,13 +38,9 @@ public class CompaniesDB_DAO implements CompaniesDAO {
             throw new CouponSystemException(SQL_ERROR.getMessage()+e);
         }
         if(numberOfReturns == 1) {
-            System.out.println("Company exists");
             return true;
         }
         else {
-            System.out.println("Company does not exist /" +
-                    " there is a problem with the company listing / " +
-                    "no company matches the inserted details.");
             return false;
         }
     }
@@ -65,7 +61,6 @@ public class CompaniesDB_DAO implements CompaniesDAO {
 
         if(DButils.runQueryWithMap(DataBase.CRUD.Create.insertCompany,params) ) {
             if(company.getCoupons() == null){
-                System.out.println("Company was added to DB. There were no coupons associated with the company. ");
                 return true;
             }
             // Part 2 - Iterate over coupon list and add each company coupon to DB
@@ -78,11 +73,9 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                     return false;
                 }
             }
-            System.out.println("Company and relevant coupons were added successfully to DB. ");
             return true;
         }
         else {
-            System.out.println("There was a problem adding the company to DB. ");
             return false;
         }
     }
@@ -101,11 +94,9 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         params.put(4,company.getId());
 
         if(DButils.runQueryWithMap(DataBase.CRUD.Update.updateCompany,params) ) {
-            System.out.println("Company was updated successfully");
             return true;
         }
         else {
-            System.out.println("There was a problem updating the company.");
             return false;
         }
     }
@@ -130,9 +121,12 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 String name = results.getString(2);
                 String email = results.getString(3);
                 String password = results.getString(4);
-                Array couponSQLarray = results.getArray(5);
+
+                // Todo - Get linked coupons from DB
                 // Convert SQL array to Coupons array
-                ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+                ArrayList<Coupon> coupons = null;
+                //ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+
                 // Create a new Company object in the companyList
                 companyList.add(new Company(id, name, email, password, coupons));
             }
@@ -162,9 +156,12 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 String name = results.getString(2);
                 String email = results.getString(3);
                 String password = results.getString(4);
-                Array couponSQLarray = results.getArray(5);
+
+                // Todo - Get linked coupons from DB
                 // Convert SQL array to Coupons array
-                ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+                ArrayList<Coupon> coupons = null;
+                //ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+
                 // return a Company object with all details
                 return new Company(id, name, email, password, coupons);
             }

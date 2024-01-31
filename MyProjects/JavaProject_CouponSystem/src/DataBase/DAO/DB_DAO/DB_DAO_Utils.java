@@ -2,8 +2,7 @@ package DataBase.DAO.DB_DAO;
 
 import Beans.Category;
 import Beans.Company;
-import Beans.Coupon;
-import DataBase.CRUD.Create;
+import DataBase.CRUD.Read;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
 import Utils.DateFactory;
@@ -27,6 +26,7 @@ public class DB_DAO_Utils {
      */
     public static boolean FillInCategoryTable() throws CouponSystemException {
         String category;
+
         // Prepare params Map with Category values
         Map<Integer,Object> params = new HashMap<>();
         int counter = 1;
@@ -37,14 +37,15 @@ public class DB_DAO_Utils {
         }
         // Prepare multiple insert SQL statement
         String sql = sqlInsertMultipleValues(Category.values().length, "Category");
+
         // Run query in DB
-        if(runQueryWithMap(sql, params));
+        if(runQueryWithMap(sql, params))
+            return true;
         else {
-            System.out.println("There was a problem creating the Category table");
             return false;
         }
-        return true;
     }
+
 
     /**
      * Fills in company table with the number of companies the user wants to enter
@@ -65,12 +66,11 @@ public class DB_DAO_Utils {
         // Run query in DB
         if(runQueryWithMap(sql, params));
         else {
-            System.out.println("There was a problem filling the company table. ");
             return false;
         }
-        System.out.println("Company table has been auto filled. ");
         return true;
     }
+
 
     /**
      * Creates coupons for all the companies listed in the DB.  Steps:
@@ -86,11 +86,11 @@ public class DB_DAO_Utils {
 
         // Part 1 - check if DB contains companies
         int numOfCompanies = IsDBcontainsCompanies();
-        if(numOfCompanies != 0) {
+        if(numOfCompanies > 0) {
             ArrayList<Company> companies = CompaniesDB_DAO.GetAllCompanies();
 
             // Part 2 - check if DB contains categories
-            if(isDBcontainsCategories()) {
+            if(isDBcontainsCategories() > 0) {
 
                 // Part 3 - create coupons in DB
 
@@ -162,21 +162,16 @@ public class DB_DAO_Utils {
         return params;
     }
 
-    private static int GetRandomCategoryIdFromMap(Map<Integer, String> categories) {
-        return (int) (Math.round(Math.random()*(categories.size())));
-    }
-
 
     /**
      * Provides a random categoryID based on details in param
      * @param categories Map containing CategoryIDs and Category names as listed in DB
      * @return int with a random category ID
      */
-    private static Category GetRandomCategoryFromMap(Map<Integer, String> categories) {
-        int rand = (int) (Math.round(Math.random()*(categories.size())));
-        String categoryName = categories.get(rand);
-        return Category.valueOf(categoryName);
+    private static int GetRandomCategoryIdFromMap(Map<Integer, String> categories) {
+        return (int) (Math.round(Math.random()*(categories.size())));
     }
+
 
     /**
      * Gets a map of all the categories listed in the DB
@@ -205,23 +200,47 @@ public class DB_DAO_Utils {
         return categories;
     }
 
+
     /**
      * Checks whether the DB contains Companies
      * @return int with number of companies in DB if succeeded, -1 if failed or if no companies exist in DB
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static int IsDBcontainsCompanies() {
-        // Todo - Finish
-        return -1;
+    private static int IsDBcontainsCompanies() throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCompanies,params);
+        try {
+            int numberOfCompanies = -1;
+            while (results.next()) {
+                numberOfCompanies = results.getInt(1);
+            }
+            return numberOfCompanies;
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
     }
+
 
     /**
      * Checks whether the DB contains categories
      * @return true if succeeded, false if failed or if no categories exist in DB
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static boolean isDBcontainsCategories() {
-        // Todo - Finish
-        return false;
+    private static int isDBcontainsCategories() throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCompanies,params);
+        try {
+            int numberOfCompanies = -1;
+            while (results.next()) {
+                numberOfCompanies = results.getInt(1);
+            }
+            return numberOfCompanies;
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
     }
 }

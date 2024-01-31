@@ -1,6 +1,7 @@
 package DataBase;
 
 import ErrorHandling.CouponSystemException;
+import ErrorHandling.Errors;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -96,6 +97,12 @@ public class InitDB {
                     "  ON DELETE CASCADE" +
                     "  ON UPDATE CASCADE;";
 
+
+    /**
+     * Initiates DataBase by running all SQL commands in InitDB class.
+     * @return void
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public static void InitiateDB() throws CouponSystemException {
         // Create schema, all tables, links, and foreign keys
 
@@ -116,13 +123,17 @@ public class InitDB {
         for(String command: sqlCommands) {
             if(runQuery(command));
             else {
-                System.out.println("DB initiation failed");
                 return;
             }
         }
-        System.out.println("Database was initiated successfully");
     }
 
+
+    /**
+     * Runs a query on the DB using an SQL statement as param
+     * @param sql SQL statement to send to DB
+     * @return true if succeeded running query, false if failed.
+     */
     private static boolean runQuery(String sql) throws CouponSystemException {
         // private function - only used for initiating DB
 
@@ -140,8 +151,7 @@ public class InitDB {
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
-            System.out.println(SQL_ERROR.getMessage()+e);
-            return false;
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
