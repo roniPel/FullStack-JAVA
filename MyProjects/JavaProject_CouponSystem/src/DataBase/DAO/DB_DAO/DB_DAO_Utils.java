@@ -1,4 +1,4 @@
-package DataBase.DB_DAO;
+package DataBase.DAO.DB_DAO;
 
 import Beans.Category;
 import Beans.Company;
@@ -7,7 +7,6 @@ import DataBase.CRUD.Create;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
 import Utils.DateFactory;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;

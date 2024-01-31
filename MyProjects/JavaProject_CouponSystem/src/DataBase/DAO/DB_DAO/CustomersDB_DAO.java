@@ -1,4 +1,4 @@
-package DataBase.DB_DAO;
+package DataBase.DAO.DB_DAO;
 
 import Beans.Customer;
 import DataBase.DAO.CustomersDAO;

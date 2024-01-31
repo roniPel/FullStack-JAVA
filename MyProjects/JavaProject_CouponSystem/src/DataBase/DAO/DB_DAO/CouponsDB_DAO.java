@@ -1,4 +1,4 @@
-package DataBase.DB_DAO;
+package DataBase.DAO.DB_DAO;
 
 import Beans.Coupon;
 import DataBase.DAO.CouponsDAO;
@@ -80,23 +80,29 @@ public class CouponsDB_DAO implements CouponsDAO {
         return false;
     }
 
+
     public boolean DeleteCoupon(int couponID) {
         return false;
     }
+
 
     public ArrayList<Coupon> GetAllCoupons() {
         return null;
     }
 
+
     public Coupon GetOneCoupon(int couponID) {
         return null;
     }
+
 
     public boolean AddCouponPurchase(int customerID, int couponID) {
         return false;
     }
 
+
     public boolean DeleteCouponPurchase(int customerID, int couponID) {
         return false;
     }
+
 }

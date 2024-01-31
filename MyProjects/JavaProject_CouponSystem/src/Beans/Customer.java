@@ -13,7 +13,8 @@ public class Customer {
 
     // Constructors
 
-    public Customer(int id, String firstName, String lastName, String email, String password, ArrayList<Coupon> coupons) {
+    public Customer(int id, String firstName, String lastName,
+                    String email, String password, ArrayList<Coupon> coupons) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -11,7 +11,7 @@ import static ErrorHandling.Errors.SQL_ERROR;
 import static ErrorHandling.Errors.THREAD_ERROR;
 
 public class ConnectionPool {
-    //Singleton
+    //Singleton class - connection pool
     //Number of connection to mySQL (maximum is 20, default is 10)
     private static final int NUMBER_OF_CONNECTION=10;
     public static ConnectionPool instance=null;
