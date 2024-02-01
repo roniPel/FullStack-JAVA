@@ -1,6 +1,8 @@
 package DataBase.DAO.DB_DAO;
 
+import Beans.Category;
 import Beans.Coupon;
+import DataBase.CRUD.Read;
 import DataBase.DAO.CouponsDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
@@ -8,6 +10,7 @@ import ErrorHandling.CouponSystemException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,16 +85,51 @@ public class CouponsDB_DAO implements CouponsDAO {
         return false;
     }
 
+    /**
+     * Get all the coupons listed in DB
+     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {
 
-    public ArrayList<Coupon> GetAllCoupons() {
-        return null;
+        // Part 1 - Get coupons - query from DB
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.getAllCoupons,params);
+
+        // Get category table from DB - for use in part 2
+        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+
+        // Part 2 - add results to coupon list
+        ArrayList<Coupon> couponList = new ArrayList<>();
+
+        try {
+            while (results.next()) {
+                int id = results.getInt(1);
+                int companyId = results.getInt(2);
+                int categoryId = results.getInt(3);
+                String title = results.getString(4);
+                String description = results.getString(5);
+                LocalDate startDate = results.getDate(6).toLocalDate();
+                LocalDate endDate = results.getDate(7).toLocalDate();
+                int amount = results.getInt(8);
+                double price = results.getDouble(9);
+                String image = results.getString(10);
+
+                // Create a new coupon object in the couponList
+                couponList.add(new Coupon(id,companyId,Category.valueOf(categories.get(categoryId)),
+                        title,description,startDate,endDate,amount,price,image));
+            }
+        }
+        catch(SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return couponList;
     }
-
 
     public Coupon GetOneCoupon(int couponID) {
         return null;
     }
-
 
     public boolean AddCouponPurchase(int customerID, int couponID) {
         return false;
@@ -100,6 +138,49 @@ public class CouponsDB_DAO implements CouponsDAO {
 
     public boolean DeleteCouponPurchase(int customerID, int couponID) {
         return false;
+    }
+
+
+    /**
+     * Get all the coupons listed in DB for a specific company
+     * @param companyID ID belonging to the company the coupons belong to
+     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static ArrayList<Coupon> GetCouponsForCompany(int companyID) throws CouponSystemException {
+        // Part 1 - Get coupons - query from DB
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,companyID);
+        ResultSet results = DButils.runQueryForResult(Read.getCouponsForCompany,params);
+
+        // Get category table from DB - for use in part 2
+        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+
+        // Part 2 - add results to coupon list
+        ArrayList<Coupon> couponList = new ArrayList<>();
+
+        try {
+            while (results.next()) {
+                int id = results.getInt(1);
+                int companyId = results.getInt(2);
+                int categoryId = results.getInt(3);
+                String title = results.getString(4);
+                String description = results.getString(5);
+                LocalDate startDate = results.getDate(6).toLocalDate();
+                LocalDate endDate = results.getDate(7).toLocalDate();
+                int amount = results.getInt(8);
+                double price = results.getDouble(9);
+                String image = results.getString(10);
+
+                // Create a new coupon object in the couponList
+                couponList.add(new Coupon(id,companyId,Category.valueOf(categories.get(categoryId)),
+                        title,description,startDate,endDate,amount,price,image));
+            }
+        }
+        catch(SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return couponList;
     }
 
 }

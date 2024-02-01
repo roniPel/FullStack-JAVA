@@ -122,10 +122,8 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 String email = results.getString(3);
                 String password = results.getString(4);
 
-                // Todo - Get linked coupons from DB
-                // Convert SQL array to Coupons array
-                ArrayList<Coupon> coupons = null;
-                //ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+                // Get coupons listed on company from DB
+                ArrayList<Coupon> coupons = CouponsDB_DAO.GetCouponsForCompany(id);
 
                 // Create a new Company object in the companyList
                 companyList.add(new Company(id, name, email, password, coupons));
@@ -157,10 +155,8 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 String email = results.getString(3);
                 String password = results.getString(4);
 
-                // Todo - Get linked coupons from DB
                 // Convert SQL array to Coupons array
-                ArrayList<Coupon> coupons = null;
-                //ArrayList<Coupon> coupons = new ArrayList(List.of(couponSQLarray));
+                ArrayList<Coupon> coupons = CouponsDB_DAO.GetCouponsForCompany(id);
 
                 // return a Company object with all details
                 return new Company(id, name, email, password, coupons);

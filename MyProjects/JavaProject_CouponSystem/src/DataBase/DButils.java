@@ -11,36 +11,6 @@ import static ErrorHandling.Errors.*;
 
 public class DButils {
 
-    //Todo - add a 'multiRunQueryWithMap' - to add multiple data to DB via one connection -
-    // for adding multiple companies, categories, and coupons
-    // or for filling up the DB with mock data (DB_DAO_Utils)
-    /*
-    OPTION 1:
-
-    public static  String INSERT_CATEGORIES(int categories){
-        // Iterating and inserting "(?)," "categories" times
-        String wildCards = IntStream.range(0,categories).mapToObj((index)->"(?),")
-                .collect(Collectors.joining());
-        //subtracting the last ',' because it's unnecessary and will cause a sql bug
-        return "INSERT INTO " + DBmanager.SQL_DB + "." + DBmanager.SQL_CATEGORIES + " (Name) VALUES " + wildCards.substring(0,wildCards.length()-1);
-    }
-
-	//iterating through all the categories and adding them to params in order to insert them
-        for(int index = 0;index<Category.values().length;index++)
-        {
-            params.put(index+1,Category.values()[index].toString());
-        }
-
-     OPTION 2:
-        INSERT INTO MyTable
-    ( Column1, Column2, Column3 )
-            VALUES
-    ('John', 123, 'Lloyds Office'),
-    ('Jane', 124, 'Lloyds Office'),
-    ('Billy', 125, 'London Office'),
-    ('Miranda', 126, 'Bristol Office');
-     */
-
     /**
      * Creates an SQL statement to insert multiple values into DB
      * @param numberOfRows number of times to 'repeat' the insert line
@@ -69,19 +39,19 @@ public class DButils {
         String basicCommand;
         String sectionToRepeat;
         String updatedCommand = "";
-        basicCommand = Create.insertCoupon.substring(0,Create.insertCoupon.length()-1);
+        basicCommand = sql.substring(0,sql.length()-1);
         // Remove ";" char at the end of the SQL command
-        basicCommand = basicCommand.substring(0,basicCommand.length()-1);
+        basicCommand = basicCommand.substring(0,basicCommand.length());
         // Find section to repeat
-        int startIdx = basicCommand.indexOf("VALUES");
+        int startIdx = basicCommand.lastIndexOf("(");
         int endIdx = basicCommand.length();
         sectionToRepeat = basicCommand.substring(startIdx,endIdx);
-        for (int i = 0; i < numberOfRows; i++) {
+        for (int i = 1; i < numberOfRows; i++) {
             updatedCommand += (", ");
             updatedCommand += sectionToRepeat;
         }
         updatedCommand += (";");
-        return updatedCommand;
+        return basicCommand.concat(updatedCommand);
     }
 
 
@@ -119,7 +89,7 @@ public class DButils {
                         }
                     } catch (SQLException e) {
                         try {
-                            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+                            throw new CouponSystemException(SQL_ERROR.getMessage() + e + e.getMessage());
                         } catch (CouponSystemException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -177,8 +147,6 @@ public class DButils {
                     }
                 }
             }
-            //Todo - for testing only, delete when finished:
-            System.out.println(preparedStatement);
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
             throw new CouponSystemException(SQL_ERROR.getMessage() + e);

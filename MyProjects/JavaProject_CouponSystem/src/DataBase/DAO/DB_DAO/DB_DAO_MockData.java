@@ -6,6 +6,8 @@ import DataBase.CRUD.Read;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
 import Utils.DateFactory;
+
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -17,7 +19,7 @@ import static DataBase.DButils.runQueryWithMap;
 import static DataBase.DButils.sqlInsertMultipleValues;
 import static ErrorHandling.Errors.SQL_ERROR;
 
-public class DB_DAO_Utils {
+public class DB_DAO_MockData {
 
     /**
      * Fills in category table with all categories in 'Category' Enum
@@ -56,10 +58,11 @@ public class DB_DAO_Utils {
     public static boolean FillInCompanyTable(int numberOfCompanies) throws CouponSystemException {
         // Prepare params Map with Company values
         Map<Integer,Object> params = new HashMap<>();
+        int counter = 1;
         for (int i = 1; i <= numberOfCompanies; i++) {
-            params.put(1,"Company"+i);
-            params.put(2,"Company"+i+"@hotmail.com");
-            params.put(3,"PassComp"+i);
+            params.put(counter++,"Company"+i);
+            params.put(counter++,"Company"+i+"@hotmail.com");
+            params.put(counter++,"PassComp"+i);
         }
         // Prepare multiple insert SQL statement
         String sql = sqlInsertMultipleValues(numberOfCompanies, "Company");
@@ -95,7 +98,7 @@ public class DB_DAO_Utils {
                 // Part 3 - create coupons in DB
 
                 // Prepare multiple insert SQL statement
-                String sql = sqlInsertMultipleValues(numberOfCouponsePerCompany, "Coupons");
+                String sql = sqlInsertMultipleValues(numberOfCouponsePerCompany, "Coupon");
 
                 // Add coupons for each company
                 for(Company company: companies) {
@@ -108,6 +111,7 @@ public class DB_DAO_Utils {
                     else {  // If coupons were not added to DB - query failed
                         return false;
                     }
+                    params.clear();
                 }
                 return true;
             }
@@ -136,16 +140,15 @@ public class DB_DAO_Utils {
 
         // Prepare params Map with Coupon values
         Map<Integer, Object> params = new HashMap<>();
-        int count = 0;
+        int count = 1;
         for (int i = 0; i < numCouponsPerComp; i++) {
             // Generate random parameters
             int categoryID = GetRandomCategoryIdFromMap(categories);
-            String title = "Title"+i;
+            String title = "Title"+i+" Company"+companyID;
             String description = "Description"+i;
-            LocalDate startDate = DateFactory.getLocalDate(false);
-            LocalDate endDate = DateFactory.getLocalDate(true);
-            int amount = (int) (Math.random()*amountCouponsPerType);
-            double price = (int) (Math.random()*maxPrice);
+            Date startDate = Date.valueOf(DateFactory.getLocalDate(false));
+            Date endDate = Date.valueOf(DateFactory.getLocalDate(true));
+            double price = Math.random()*(maxPrice+1);
             String image = "Image"+i;
 
             // Add params to map
@@ -155,7 +158,7 @@ public class DB_DAO_Utils {
             params.put(count++,description);
             params.put(count++,startDate);
             params.put(count++,endDate);
-            params.put(count++,amount);
+            params.put(count++, amountCouponsPerType);
             params.put(count++,price);
             params.put(count++,image);
         }
@@ -169,7 +172,7 @@ public class DB_DAO_Utils {
      * @return int with a random category ID
      */
     private static int GetRandomCategoryIdFromMap(Map<Integer, String> categories) {
-        return (int) (Math.round(Math.random()*(categories.size())));
+        return (int) (Math.random()*(categories.size()) )+1;
     }
 
 
@@ -178,7 +181,7 @@ public class DB_DAO_Utils {
      * @return a map of categoryID (Integer) and name (String) if succeeded, 'null' if failed or if no categories exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static Map<Integer, String> GetAllCategories() throws CouponSystemException {
+    public static Map<Integer, String> GetAllCategories() throws CouponSystemException {
         // Part 1 - Get categories - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);

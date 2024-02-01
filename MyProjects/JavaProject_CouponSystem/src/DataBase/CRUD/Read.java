@@ -21,12 +21,16 @@ public class Read {
             "SELECT id FROM "+DBmanager.SQL_DB+".categories WHERE name = ? ;";
     public static final String getAllCategories =
             "SELECT * FROM "+DBmanager.SQL_DB+".categories;";
-
     public static final String getNumberOfCategories =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".categories;";
 
 
     // Coupons
+    public static final String getAllCoupons =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons;";
+
+    public static final String getCouponsForCompany =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ?;";
 
 
     // Customer

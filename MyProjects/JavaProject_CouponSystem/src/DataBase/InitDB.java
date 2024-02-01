@@ -139,7 +139,6 @@ public class InitDB {
 
         //use connection from connection sql to send queries to our DB
         Connection connection = null;
-        System.out.println(sql);
         try {
             //get a connection from connection pool
             connection = ConnectionPool.getInstance().getConnection();
