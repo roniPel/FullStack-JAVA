@@ -3,6 +3,8 @@ package Utils;
 import DataBase.DAO.DB_DAO.DB_DAO_MockData;
 import ErrorHandling.CouponSystemException;
 
+import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerTable;
+
 public class Helper {
     //Todo - Create reports for tester/ main
 
@@ -17,7 +19,7 @@ public class Helper {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public static boolean FillDataBaseWithMockData
-            (int numCompanies,int couponsPerComp, int amountPerType, double maxPrice) throws CouponSystemException {
+            (int numCompanies,int couponsPerComp, int amountPerType, double maxPrice, int numberOfCustomers) throws CouponSystemException {
         // Fill in category table
         if(DB_DAO_MockData.FillInCategoryTable());
         else {
@@ -34,6 +36,10 @@ public class Helper {
             return false;
         }
         // Todo - Fill in customers table
+        if(FillInCustomerTable(numberOfCustomers));
+        else {
+            return false;
+        }
 
         // Todo - Fill in customers_vs_coupons table
 

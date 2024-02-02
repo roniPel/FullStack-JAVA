@@ -7,6 +7,7 @@ import DataBase.DAO.CouponsDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
+import ErrorHandling.Errors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -157,8 +158,51 @@ public class CouponsDB_DAO implements CouponsDAO {
         Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
 
         // Part 2 - add results to coupon list
+        return AddResultsToCouponList(results);
+    }
+
+    /**
+     * Get all the coupons listed in DB for a specific customer
+     * @param customerID ID belonging to the customer the coupons belong to
+     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException {
+        // Part 1 - - Get coupons ID list - query from DB
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,customerID);
+        ArrayList<Integer> couponIDlist = new ArrayList<>();
+        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getCouponsForCustomer,params);
+
+        try {
+            // Part 2 - add results to coupons list (for customer)
+            while (results.next()) {
+                int customerId = results.getInt(1);
+                int couponId = results.getInt(2);
+                couponIDlist.add(couponId);
+            }
+        } catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
+
+        // Todo - Part 3 -  prepare params to send to DB query in next part
+        params.clear();
+
+        //Todo -  Part 4 - Get coupons list - query from DB (based on couponID list)
+        results = DButils.runQueryForResult(Read.getCouponsById,params);
+
+
+        // Part 5 - add results to couponID list
+        return AddResultsToCouponList(results);
+    }
+
+    private static ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException {
         ArrayList<Coupon> couponList = new ArrayList<>();
 
+        // Get category table from DB - for use in part 2
+        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+
+        // Insert results into couponList array
         try {
             while (results.next()) {
                 int id = results.getInt(1);

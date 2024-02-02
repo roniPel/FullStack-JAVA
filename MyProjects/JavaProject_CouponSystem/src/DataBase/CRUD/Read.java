@@ -32,6 +32,18 @@ public class Read {
     public static final String getCouponsForCompany =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ?;";
 
+    public static final String getCouponsForCustomer =
+            "SELECT * FROM "+DBmanager.SQL_DB+".customer_vs_coupons WHERE customerID = ?;";
+
+    public static final String getCouponsById =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?)";
+
 
     // Customer
+    public static final String getNumberOfCustomers =
+            "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers;";
+
+    public static final String getAllCustomers =
+            "SELECT * FROM "+DBmanager.SQL_DB+".customers;";
+
 }

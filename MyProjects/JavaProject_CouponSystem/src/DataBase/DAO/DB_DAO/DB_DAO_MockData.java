@@ -10,7 +10,6 @@ import Utils.DateFactory;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +19,57 @@ import static DataBase.DButils.sqlInsertMultipleValues;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class DB_DAO_MockData {
+
+    /**
+     * Creates links between coupons and customers for all the customers listed in the DB.  Steps:
+     * 1 - check if DB contains customers
+     * 2 - check if DB contains coupons
+     * 3 - Link coupons and customers + update the correct amount
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static boolean FillInCustomerVsCouponsTable() throws CouponSystemException {
+        // Part 1 - check if DB contains customers
+        int numberOfCustomers = isDBcontainsCustomers();
+        if(numberOfCustomers > 0) {
+            ArrayList<Company> customers = CompaniesDB_DAO.GetAllCompanies();
+
+            // Part 2 - check if DB contains categories
+            if (isDBcontainsCategories() > 0) {
+                // Part 2 - check if DB contains coupons
+
+                // Part 3 - Create item in Customers_vs_coupons table
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Fills in customer table with the number of customers the user wants to enter
+     * @param numberOfCustomers number of customers to insert into DB
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static boolean FillInCustomerTable(int numberOfCustomers) throws CouponSystemException {
+        // Prepare params Map with Company values
+        Map<Integer,Object> params = new HashMap<>();
+        int counter = 1;
+        for (int i = 1; i <= numberOfCustomers; i++) {
+            params.put(counter++,"FirstName"+i);
+            params.put(counter++,"LastName"+i);
+            params.put(counter++,"Customer"+i+"@hotmail.com");
+            params.put(counter++,"PassCust"+i);
+        }
+        // Prepare multiple insert SQL statement
+        String sql = sqlInsertMultipleValues(numberOfCustomers, "Customer");
+        // Run query in DB
+        if(runQueryWithMap(sql, params));
+        else {
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * Fills in category table with all categories in 'Category' Enum
@@ -228,7 +278,7 @@ public class DB_DAO_MockData {
 
     /**
      * Checks whether the DB contains categories
-     * @return true if succeeded, false if failed or if no categories exist in DB
+     * @return number of categories in DB if succeeded, -1 if failed or if no categories exist in DB
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private static int isDBcontainsCategories() throws CouponSystemException {
@@ -241,6 +291,50 @@ public class DB_DAO_MockData {
                 numberOfCompanies = results.getInt(1);
             }
             return numberOfCompanies;
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
+    }
+
+
+    /**
+     * Checks whether the DB contains customers
+     * @return number of customers in DB if succeeded, -1 if failed or if no customers exist in DB
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private static int isDBcontainsCustomers() throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCustomers,params);
+        try {
+            int numberOfCustomers = -1;
+            while (results.next()) {
+                numberOfCustomers = results.getInt(1);
+            }
+            return numberOfCustomers;
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
+    }
+
+
+    /**
+     * Checks whether the DB contains coupons
+     * @return number of coupons in DB if succeeded, -1 if failed or if no coupons exist in DB
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private static int isDBcontainsCoupons() throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCustomers,params);
+        try {
+            int numberOfCoupons = -1;
+            while (results.next()) {
+                numberOfCoupons = results.getInt(1);
+            }
+            return numberOfCoupons;
         }
         catch (SQLException e) {
             throw new CouponSystemException(SQL_ERROR.getMessage() + e);
