@@ -2,6 +2,8 @@ package DataBase.DAO.DB_DAO;
 
 import Beans.Category;
 import Beans.Company;
+import Beans.Coupon;
+import Beans.Customer;
 import DataBase.CRUD.Read;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static DataBase.DAO.CustomersDAO.GetAllCustomers;
 import static DataBase.DButils.runQueryWithMap;
 import static DataBase.DButils.sqlInsertMultipleValues;
 import static ErrorHandling.Errors.SQL_ERROR;
@@ -32,16 +35,27 @@ public class DB_DAO_MockData {
         // Part 1 - check if DB contains customers
         int numberOfCustomers = isDBcontainsCustomers();
         if(numberOfCustomers > 0) {
-            ArrayList<Company> customers = CompaniesDB_DAO.GetAllCompanies();
+            // Get all customers from DB
+            ArrayList<Customer> customers = CustomersDB_DAO.GetAllCustomers();
 
             // Part 2 - check if DB contains categories
             if (isDBcontainsCategories() > 0) {
 
                 // Part 2 - check if DB contains coupons
                 if(isDBcontainsCoupons() > 0) {
+                    ArrayList<Coupon> coupons = CouponsDB_DAO.GetAllCoupons();
 
-                    // Part 3 - Create item in Customers_vs_coupons table
-                    //Todo - finish
+                    // Todo: Export to external function? Part 3 - Prepare params map (inputs: customers, coupons)
+                    Map<Integer, Object> params = new HashMap<>();
+                    customers.forEach(customer -> {
+                        int couponID = (int)(Math.random()* coupons.size())+1;
+                        params.put(customer.getId(),couponID);
+                            }
+                    );
+
+                    //Todo: Part 4 - Create items in Customers_vs_coupons table
+
+                    //Todo: Part 5 - Update 'amount' column in 'coupons' table
                 }
             }
         }

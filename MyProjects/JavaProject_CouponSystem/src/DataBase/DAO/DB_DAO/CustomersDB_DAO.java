@@ -55,7 +55,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return an ArrayList of 'Customer' class items if succeeded, 'null' if failed or if no companies exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
+    public static ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
         // Part 1 - Get customers - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
