@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static DataBase.DButils.sqlInsertMultiple_IN_Values;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CouponsDB_DAO implements CouponsDAO {
@@ -161,6 +162,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         return AddResultsToCouponList(results);
     }
 
+
     /**
      * Get all the coupons listed in DB for a specific customer
      * @param customerID ID belonging to the customer the coupons belong to
@@ -168,35 +170,31 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public static ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException {
-        // Part 1 - - Get coupons ID list - query from DB
+        // Part 1 - - Get coupons ID map - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,customerID);
-        ArrayList<Integer> couponIDlist = new ArrayList<>();
         ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getCouponsForCustomer,params);
 
-        try {
-            // Part 2 - add results to coupons list (for customer)
-            while (results.next()) {
-                int customerId = results.getInt(1);
-                int couponId = results.getInt(2);
-                couponIDlist.add(couponId);
-            }
-        } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-        }
-
-        // Todo - Part 3 -  prepare params to send to DB query in next part
+        // Part 2 -  prepare params and SQL command - to send to DB query in next part
         params.clear();
+        params = PrepareParamsMapFromResultSet(results);
+        String sql = sqlInsertMultiple_IN_Values(Read.getCouponsById,params.size());
 
-        //Todo -  Part 4 - Get coupons list - query from DB (based on couponID list)
+        // Part 3 - Get coupons list - query from DB (based on couponID list)
         results = DButils.runQueryForResult(Read.getCouponsById,params);
 
-
-        // Part 5 - add results to couponID list
+        // Part 4 - add results to couponID list
         return AddResultsToCouponList(results);
     }
 
-    private static ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException {
+
+    /**
+     * Converts a result set from SQL DB to an Array list of coupon objects
+     * @param results result set containing all Coupons from DB
+     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException {
         ArrayList<Coupon> couponList = new ArrayList<>();
 
         // Get category table from DB - for use in part 2
@@ -227,4 +225,26 @@ public class CouponsDB_DAO implements CouponsDAO {
         return couponList;
     }
 
+
+    /**
+     * Converts a result set from SQL DB to a map of coupon IDs to use as parameters for a DB query
+     * @param results result set containing coupon IDs needed to use as parameters in params map
+     * @return Map<Integer, Object> of parameters (Counter, CouponID) if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static Map<Integer, Object> PrepareParamsMapFromResultSet(ResultSet results) throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        int counter = 1;
+        try {
+            // Iterate and add results to coupons map
+            while (results.next()) {
+                int customerId = results.getInt(1);
+                int couponId = results.getInt(2);
+                params.put(counter++,couponId);
+            }
+        } catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
+        return params;
+    }
 }

@@ -36,7 +36,7 @@ public class Read {
             "SELECT * FROM "+DBmanager.SQL_DB+".customer_vs_coupons WHERE customerID = ?;";
 
     public static final String getCouponsById =
-            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?)";
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?);";
 
 
     // Customer

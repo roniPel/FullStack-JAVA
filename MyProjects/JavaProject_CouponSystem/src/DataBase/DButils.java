@@ -12,9 +12,36 @@ import static ErrorHandling.Errors.*;
 public class DButils {
 
     /**
+     * Creates an SQL statement to insert multiple values into an 'IN' statement, in the DB
+     * @param numberOfRows number of times to 'repeat' the insert line
+     * @param sql string containing an 'IN' command with a section to be repeated
+     * @return String statement if succeeded, null if failed.
+     */
+    public static String sqlInsertMultiple_IN_Values(String sql, int numberOfRows) {
+        String basicCommand;
+        String sectionToRepeat;
+        String updatedCommand = "";
+
+        // Remove ");" chars at the end of the SQL command
+        basicCommand = sql.substring(0,sql.length()-2);
+
+        // Find section to repeat
+        int startIdx = basicCommand.lastIndexOf("(");
+        int endIdx = basicCommand.length();
+        sectionToRepeat = basicCommand.substring(startIdx,endIdx);
+        for (int i = 1; i < numberOfRows; i++) {
+            updatedCommand += (", ");
+            updatedCommand += sectionToRepeat;
+        }
+        updatedCommand += (");");
+        return basicCommand.concat(updatedCommand);
+    }
+
+
+    /**
      * Creates an SQL statement to insert multiple values into DB
      * @param numberOfRows number of times to 'repeat' the insert line
-     * @param type which type of 'insert' is needed
+     * @param type string, explaining which type of 'insert' is needed
      * @return String statement if succeeded, null if failed.
      */
     public static String sqlInsertMultipleValues(int numberOfRows, String type) {
@@ -39,9 +66,10 @@ public class DButils {
         String basicCommand;
         String sectionToRepeat;
         String updatedCommand = "";
-        basicCommand = sql.substring(0,sql.length()-1);
+
         // Remove ";" char at the end of the SQL command
-        basicCommand = basicCommand.substring(0,basicCommand.length());
+        basicCommand = sql.substring(0,sql.length()-1);
+
         // Find section to repeat
         int startIdx = basicCommand.lastIndexOf("(");
         int endIdx = basicCommand.length();
