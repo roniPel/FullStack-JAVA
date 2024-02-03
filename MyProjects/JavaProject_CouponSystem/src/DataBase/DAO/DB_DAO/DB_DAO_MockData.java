@@ -45,13 +45,8 @@ public class DB_DAO_MockData {
                 if(isDBcontainsCoupons() > 0) {
                     ArrayList<Coupon> coupons = CouponsDB_DAO.GetAllCoupons();
 
-                    // Todo: Export to external function? Part 3 - Prepare params map (inputs: customers, coupons)
-                    Map<Integer, Object> params = new HashMap<>();
-                    customers.forEach(customer -> {
-                        int couponID = (int)(Math.random()* coupons.size())+1;
-                        params.put(customer.getId(),couponID);
-                            }
-                    );
+                    // Part 3 - Prepare params map (customers Vs Coupons)
+                    Map<Integer, Object> params = PrepareParamsCustomersVsCoupons(coupons,customers);
 
                     //Todo: Part 4 - Create items in Customers_vs_coupons table
 
@@ -60,6 +55,24 @@ public class DB_DAO_MockData {
             }
         }
         return false;
+    }
+
+
+    /**
+     * Prepares a params map for filling in the customerVsCoupons table
+     * @param coupons an array list of coupons to add to table
+     * @param customers an array list of customers to add to table
+     * @return Map<Integer, Object> params if succeeded, null if failed.
+     */
+    private static Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
+        Map<Integer, Object> params = new HashMap<>();
+
+        customers.forEach(customer -> {
+                    int couponID = (int)(Math.random()* coupons.size())+1;
+                    params.put(customer.getId(),couponID);
+                }
+        );
+        return params;
     }
 
     /**
