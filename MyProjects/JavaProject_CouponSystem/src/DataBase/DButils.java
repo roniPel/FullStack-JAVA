@@ -27,7 +27,7 @@ public class DButils {
         basicCommand = sql.substring(0,sql.length()-2);
 
         // Find section to repeat
-        int startIdx = basicCommand.lastIndexOf("(");
+        int startIdx = basicCommand.lastIndexOf("(")+1;
         int endIdx = basicCommand.length();
         sectionToRepeat = basicCommand.substring(startIdx,endIdx);
         for (int i = 1; i < numberOfRows; i++) {
@@ -51,6 +51,7 @@ public class DButils {
             case "Company" -> createRepeatStatement(Create.insertCompany, numberOfRows);
             case "Category" -> createRepeatStatement(Create.insertCategory, numberOfRows);
             case "Customer" -> createRepeatStatement(Create.insertCustomer, numberOfRows);
+            case "CustomerVsCoupon" -> createRepeatStatement(Create.insertCustomerVsCoupon,numberOfRows);
             default -> null;
         };
         return updatedCommand;

@@ -3,13 +3,16 @@ import DataBase.DButils;
 import DataBase.InitDB;
 import ErrorHandling.CouponSystemException;
 
-import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerTable;
-import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerVsCouponsTable;
+import static DataBase.DAO.DB_DAO.DB_DAO_MockData.*;
 
 public class Main {
     public static void main(String[] args) {
-        //InitDB.InitiateDB();
         try {
+            InitDB.InitiateDB();
+            FillInCategoryTable();
+            FillInCompanyTable(5);
+            CreateCouponsForAllCompanies(50,40,156.99);
+            FillInCustomerTable(30);
             FillInCustomerVsCouponsTable();
         } catch (CouponSystemException e) {
             throw new RuntimeException(e);

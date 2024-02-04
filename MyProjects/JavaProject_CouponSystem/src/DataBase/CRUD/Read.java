@@ -33,7 +33,7 @@ public class Read {
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ?;";
 
     public static final String getCouponsForCustomer =
-            "SELECT * FROM "+DBmanager.SQL_DB+".customer_vs_coupons WHERE customerID = ?;";
+            "SELECT * FROM "+DBmanager.SQL_DB+".customers_vs_coupons WHERE customerID = ?;";
 
     public static final String getCouponsById =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?);";

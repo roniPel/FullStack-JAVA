@@ -181,7 +181,10 @@ public class CouponsDB_DAO implements CouponsDAO {
         String sql = sqlInsertMultiple_IN_Values(Read.getCouponsById,params.size());
 
         // Part 3 - Get coupons list - query from DB (based on couponID list)
-        results = DButils.runQueryForResult(Read.getCouponsById,params);
+        if(params.isEmpty()){
+            return null;
+        }
+        results = DButils.runQueryForResult(sql,params);
 
         // Part 4 - add results to couponID list
         return AddResultsToCouponList(results);

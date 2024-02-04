@@ -4,10 +4,12 @@ import DataBase.DAO.DB_DAO.DB_DAO_MockData;
 import ErrorHandling.CouponSystemException;
 
 import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerTable;
+import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerVsCouponsTable;
 
 public class Helper {
     //Todo - Create reports for tester/ main
 
+    //Todo - change FillDataBaseWithMockData method details + params - receive as hashmap?
 
     /**
      * Fills in all DB tables with mock data based on specifications in params
@@ -35,14 +37,15 @@ public class Helper {
         else {
             return false;
         }
-        // Todo - Fill in customers table
+        // Fill in customers table
         if(FillInCustomerTable(numberOfCustomers));
         else {
             return false;
         }
-
-        // Todo - Fill in customers_vs_coupons table
-
-        return true;
+        // Fill in customersVScoupons table
+        if(FillInCustomerVsCouponsTable()) {
+            return true;
+        }
+        return false;
     }
 }

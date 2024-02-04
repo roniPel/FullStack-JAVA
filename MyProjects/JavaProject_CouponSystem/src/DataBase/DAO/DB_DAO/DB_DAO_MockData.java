@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static DataBase.DAO.CustomersDAO.GetAllCustomers;
 import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
@@ -50,22 +49,10 @@ public class DB_DAO_MockData {
                     // Part 4 - Create items in Customers_vs_coupons table
                     // Check if 'customers_vs_coupons' table is empty
                     if(isCustomersVsCouponsEmpty() == 0) {
-                        if(runQueryWithMap(DataBase.CRUD.Create.insertCustomerVsCoupon,params)) {
-
-                            // Part 5 - Update 'amount' column in 'coupons' table
-                            // Get all coupon IDs from 'customerVsCoupons' table
-                            ArrayList <Integer> couponIDsForCustomers = GetCouponIDsForCustomers();
-
-                            // Prepare multiple IN values SQL String
-                            String updateCouponsSQL = sqlInsertMultiple_IN_Values(DataBase.CRUD.Update.updateCouponsAmount,couponIDsForCustomers.size());
-
-                            // Todo - use existing params map from part 3
-                            params.clear();
-                            int counter = 1;
-                            for(Integer couponID: couponIDsForCustomers){
-                                params.put(counter++,couponID);
-                            }
-                            runQueryWithMap(updateCouponsSQL,params);
+                        // Prepare multiple values SQL String
+                        String insertCustVsCoupMulti = sqlInsertMultipleValues(customers.size(),"CustomerVsCoupon");
+                        if(runQueryWithMap(insertCustVsCoupMulti,params)) {
+                            return true;
                         }
                     }
                 }
@@ -74,6 +61,11 @@ public class DB_DAO_MockData {
         return false;
     }
 
+    /**
+     * Gets an array list of couponIDs (integers) for customers
+     * @return ArrayList<Integer> with couponIDs if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     private static ArrayList<Integer> GetCouponIDsForCustomers() throws CouponSystemException {
         Map<Integer,Object> params = new HashMap<>();
         ArrayList<Integer> couponIDForCustomers = new ArrayList<>();
@@ -102,9 +94,9 @@ public class DB_DAO_MockData {
     private static Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
         Map<Integer, Object> params = new HashMap<>();
         int counter = 1;
-        for (Customer value : customers) {
+        for (Customer customer : customers) {
             int couponID = (int) (Math.random() * coupons.size()) + 1;
-            params.put(counter++, value.getId());
+            params.put(counter++, customer.getId());
             params.put(counter++, couponID);
         }
         return params;
@@ -124,7 +116,7 @@ public class DB_DAO_MockData {
             params.put(counter++,"FirstName"+i);
             params.put(counter++,"LastName"+i);
             params.put(counter++,"Customer"+i+"@hotmail.com");
-            params.put(counter++,"PassCust"+i);
+            params.put(counter++,"Pass"+i);
         }
         // Prepare multiple insert SQL statement
         String sql = sqlInsertMultipleValues(numberOfCustomers, "Customer");
