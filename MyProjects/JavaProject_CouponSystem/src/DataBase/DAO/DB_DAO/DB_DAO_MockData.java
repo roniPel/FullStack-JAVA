@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static DataBase.DAO.CustomersDAO.GetAllCustomers;
-import static DataBase.DButils.runQueryWithMap;
-import static DataBase.DButils.sqlInsertMultipleValues;
+import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class DB_DAO_MockData {
@@ -48,13 +47,49 @@ public class DB_DAO_MockData {
                     // Part 3 - Prepare params map (customers Vs Coupons)
                     Map<Integer, Object> params = PrepareParamsCustomersVsCoupons(coupons,customers);
 
-                    //Todo: Part 4 - Create items in Customers_vs_coupons table
+                    // Part 4 - Create items in Customers_vs_coupons table
+                    // Check if 'customers_vs_coupons' table is empty
+                    if(isCustomersVsCouponsEmpty() == 0) {
+                        if(runQueryWithMap(DataBase.CRUD.Create.insertCustomerVsCoupon,params)) {
 
-                    //Todo: Part 5 - Update 'amount' column in 'coupons' table
+                            // Part 5 - Update 'amount' column in 'coupons' table
+                            // Get all coupon IDs from 'customerVsCoupons' table
+                            ArrayList <Integer> couponIDsForCustomers = GetCouponIDsForCustomers();
+
+                            // Prepare multiple IN values SQL String
+                            String updateCouponsSQL = sqlInsertMultiple_IN_Values(DataBase.CRUD.Update.updateCouponsAmount,couponIDsForCustomers.size());
+
+                            // Todo - use existing params map from part 3
+                            params.clear();
+                            int counter = 1;
+                            for(Integer couponID: couponIDsForCustomers){
+                                params.put(counter++,couponID);
+                            }
+                            runQueryWithMap(updateCouponsSQL,params);
+                        }
+                    }
                 }
             }
         }
         return false;
+    }
+
+    private static ArrayList<Integer> GetCouponIDsForCustomers() throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        ArrayList<Integer> couponIDForCustomers = new ArrayList<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.getCouponIDCustomersVsCoupons,params);
+        try {
+            int couponID = -1;
+            while (results.next()) {
+                couponID = results.getInt(1);
+                couponIDForCustomers.add(couponID);
+            }
+            return couponIDForCustomers;
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
     }
 
 
@@ -66,12 +101,12 @@ public class DB_DAO_MockData {
      */
     private static Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
         Map<Integer, Object> params = new HashMap<>();
-
-        customers.forEach(customer -> {
-                    int couponID = (int)(Math.random()* coupons.size())+1;
-                    params.put(customer.getId(),couponID);
-                }
-        );
+        int counter = 1;
+        for (Customer value : customers) {
+            int couponID = (int) (Math.random() * coupons.size()) + 1;
+            params.put(counter++, value.getId());
+            params.put(counter++, couponID);
+        }
         return params;
     }
 
@@ -367,6 +402,28 @@ public class DB_DAO_MockData {
                 numberOfCoupons = results.getInt(1);
             }
             return numberOfCoupons;
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
+    }
+
+
+    /**
+     * Checks whether the DB contains coupons VS customers
+     * @return number of items in DB if succeeded, -1 if failed or if table is empty
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private static int isCustomersVsCouponsEmpty() throws CouponSystemException {
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = DButils.runQueryForResult(Read.countCustomersVsCoupons,params);
+        try {
+            int numberOfItems = -1;
+            while (results.next()) {
+                numberOfItems = results.getInt(1);
+            }
+            return numberOfItems;
         }
         catch (SQLException e) {
             throw new CouponSystemException(SQL_ERROR.getMessage() + e);

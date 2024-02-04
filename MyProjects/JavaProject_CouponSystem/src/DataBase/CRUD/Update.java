@@ -13,7 +13,8 @@ public class Update {
 
 
     // Coupons
-
+    public static final String updateCouponsAmount =
+            "UPDATE `"+ DBmanager.SQL_DB+"`.`coupons` SET `amount` = `amount` = `amount`-1 WHERE `id` IN (?);";
 
     // Customer
 

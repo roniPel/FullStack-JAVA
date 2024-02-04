@@ -2,6 +2,7 @@ package DataBase;
 
 import DataBase.CRUD.Create;
 import ErrorHandling.CouponSystemException;
+import ErrorHandling.Errors;
 
 import java.sql.*;
 import java.util.ConcurrentModificationException;
@@ -100,29 +101,7 @@ public class DButils {
                 throw new CouponSystemException(EMPTY_OR_NULL.getMessage());
             }
             else {
-                params.forEach((key, value) -> {
-                    try {
-                        if (value instanceof Integer) {
-                            preparedStatement.setInt(key, (Integer) value);
-                        } else if (value instanceof String) {
-                            preparedStatement.setString(key, String.valueOf(value));
-                        } else if (value instanceof Date) {
-                            preparedStatement.setDate(key, (Date) value);
-                        } else if (value instanceof Double) {
-                            preparedStatement.setDouble(key, (Double) value);
-                        } else if (value instanceof Boolean) {
-                            preparedStatement.setBoolean(key, (Boolean) value);
-                        } else if (value instanceof Float) {
-                            preparedStatement.setFloat(key, (Float) value);
-                        }
-                    } catch (SQLException e) {
-                        try {
-                            throw new CouponSystemException(SQL_ERROR.getMessage() + e + e.getMessage());
-                        } catch (CouponSystemException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                });
+                preparedStatement = fillInPreparedStatementFromParams(preparedStatement,params);
             }
             preparedStatement.execute();
             return true;
@@ -131,6 +110,38 @@ public class DButils {
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
+    }
+
+
+    /**
+     * Takes a prepared SQL statement and updates it with values from the 'params' map
+     * @param preparedStatement SQL prepared statements that needs to be updated
+     * @param params Map<Integer,Object> used to update the prepared statement
+     * @return PreparedStatement statement with values from the 'params' map
+     */
+    private static PreparedStatement fillInPreparedStatementFromParams(PreparedStatement preparedStatement,Map<Integer, Object> params) throws CouponSystemException {
+        for (Map.Entry<Integer, Object> entry : params.entrySet()) {
+            Integer key = entry.getKey();
+            Object value = entry.getValue();
+            try {
+                if (value instanceof Integer) {
+                    preparedStatement.setInt(key, (Integer) value);
+                } else if (value instanceof String) {
+                    preparedStatement.setString(key, String.valueOf(value));
+                } else if (value instanceof Date) {
+                    preparedStatement.setDate(key, (Date) value);
+                } else if (value instanceof Double) {
+                    preparedStatement.setDouble(key, (Double) value);
+                } else if (value instanceof Boolean) {
+                    preparedStatement.setBoolean(key, (Boolean) value);
+                } else if (value instanceof Float) {
+                    preparedStatement.setFloat(key, (Float) value);
+                }
+            } catch (SQLException e) {
+                throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            }
+        }
+        return preparedStatement;
     }
 
 

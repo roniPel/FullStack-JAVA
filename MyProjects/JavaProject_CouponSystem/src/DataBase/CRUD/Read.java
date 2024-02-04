@@ -46,4 +46,10 @@ public class Read {
     public static final String getAllCustomers =
             "SELECT * FROM "+DBmanager.SQL_DB+".customers;";
 
+    public static final String countCustomersVsCoupons =
+            "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers_vs_coupons;";
+
+    public static final String getCouponIDCustomersVsCoupons =
+            "SELECT couponID FROM "+DBmanager.SQL_DB+".customers_vs_coupons;";
+
 }

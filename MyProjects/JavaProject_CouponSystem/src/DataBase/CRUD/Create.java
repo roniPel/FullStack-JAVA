@@ -24,4 +24,7 @@ public class Create {
     public static final String insertCustomer =
             "INSERT INTO `"+DBmanager.SQL_DB+"`.`customers` (`first_name`, `last_name`, `email`, `password`) " +
                     "VALUES (?, ?, ?, ?);";
+
+    public static final String insertCustomerVsCoupon =
+            "INSERT INTO `"+DBmanager.SQL_DB+"`.`customers_vs_coupons` (`customerID`, `couponID`) VALUES (?, ?);";
 }
