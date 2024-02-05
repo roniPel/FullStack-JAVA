@@ -26,6 +26,8 @@ public class Read {
 
 
     // Coupons
+    public static final String countNumberOfCoupons =
+            "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".coupons;";
     public static final String getAllCoupons =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons;";
 
@@ -40,7 +42,7 @@ public class Read {
 
 
     // Customer
-    public static final String getNumberOfCustomers =
+    public static final String countNumberOfCustomers =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers;";
 
     public static final String getAllCustomers =

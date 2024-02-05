@@ -31,16 +31,16 @@ public class DB_DAO_MockData {
      */
     public static boolean FillInCustomerVsCouponsTable() throws CouponSystemException {
         // Part 1 - check if DB contains customers
-        int numberOfCustomers = isDBcontainsCustomers();
+        int numberOfCustomers = countItemsInTable(Read.countNumberOfCustomers);
         if(numberOfCustomers > 0) {
             // Get all customers from DB
             ArrayList<Customer> customers = CustomersDB_DAO.GetAllCustomers();
 
             // Part 2 - check if DB contains categories
-            if (isDBcontainsCategories() > 0) {
+            if (countItemsInTable(Read.countNumberOfCategories) > 0) {
 
                 // Part 2 - check if DB contains coupons
-                if(isDBcontainsCoupons() > 0) {
+                if(countItemsInTable(Read.countNumberOfCoupons) > 0) {
                     ArrayList<Coupon> coupons = CouponsDB_DAO.GetAllCoupons();
 
                     // Part 3 - Prepare params map (customers Vs Coupons)
@@ -48,7 +48,7 @@ public class DB_DAO_MockData {
 
                     // Part 4 - Create items in Customers_vs_coupons table
                     // Check if 'customers_vs_coupons' table is empty
-                    if(isCustomersVsCouponsEmpty() == 0) {
+                    if(countItemsInTable(Read.countCustomersVsCoupons) == 0) {
                         // Prepare multiple values SQL String
                         String insertCustVsCoupMulti = sqlInsertMultipleValues(customers.size(),"CustomerVsCoupon");
                         if(runQueryWithMap(insertCustVsCoupMulti,params)) {
@@ -196,12 +196,12 @@ public class DB_DAO_MockData {
                                                        double maxPrice) throws CouponSystemException {
 
         // Part 1 - check if DB contains companies
-        int numOfCompanies = IsDBcontainsCompanies();
+        int numOfCompanies = countItemsInTable(Read.countNumberOfCompanies);
         if(numOfCompanies > 0) {
             ArrayList<Company> companies = CompaniesDB_DAO.GetAllCompanies();
 
             // Part 2 - check if DB contains categories
-            if(isDBcontainsCategories() > 0) {
+            if(countItemsInTable(Read.countNumberOfCategories) > 0) {
 
                 // Part 3 - create coupons in DB
 
@@ -312,126 +312,13 @@ public class DB_DAO_MockData {
         return (int) (Math.random()*(categories.size()) )+1;
     }
 
-
-    /**
-     * Checks whether the DB contains Companies
-     * @return int with number of companies in DB if succeeded, -1 if failed or if no companies exist in DB
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    private static int IsDBcontainsCompanies() throws CouponSystemException {
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.countNumberOfCompanies,params);
-        try {
-            int numberOfCompanies = -1;
-            while (results.next()) {
-                numberOfCompanies = results.getInt(1);
-            }
-            return numberOfCompanies;
-        }
-        catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-        }
-    }
-
-
-    /**
-     * Checks whether the DB contains categories
-     * @return number of categories in DB if succeeded, -1 if failed or if no categories exist in DB
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    private static int isDBcontainsCategories() throws CouponSystemException {
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.countNumberOfCompanies,params);
-        try {
-            int numberOfCompanies = -1;
-            while (results.next()) {
-                numberOfCompanies = results.getInt(1);
-            }
-            return numberOfCompanies;
-        }
-        catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-        }
-    }
-
-
-    /**
-     * Checks whether the DB contains customers
-     * @return number of customers in DB if succeeded, -1 if failed or if no customers exist in DB
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    private static int isDBcontainsCustomers() throws CouponSystemException {
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCustomers,params);
-        try {
-            int numberOfCustomers = -1;
-            while (results.next()) {
-                numberOfCustomers = results.getInt(1);
-            }
-            return numberOfCustomers;
-        }
-        catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-        }
-    }
-
-
-    /**
-     * Checks whether the DB contains coupons
-     * @return number of coupons in DB if succeeded, -1 if failed or if no coupons exist in DB
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    private static int isDBcontainsCoupons() throws CouponSystemException {
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCustomers,params);
-        try {
-            int numberOfCoupons = -1;
-            while (results.next()) {
-                numberOfCoupons = results.getInt(1);
-            }
-            return numberOfCoupons;
-        }
-        catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-        }
-    }
-
-
-    /**
-     * Checks whether the DB contains coupons VS customers
-     * @return number of items in DB if succeeded, -1 if failed or if table is empty
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    private static int isCustomersVsCouponsEmpty() throws CouponSystemException {
-//        Map<Integer,Object> params = new HashMap<>();
-//        params.put(1,null);
-//        ResultSet results = DButils.runQueryForResult(Read.countCustomersVsCoupons,params);
-//        try {
-//            int numberOfItems = -1;
-//            while (results.next()) {
-//                numberOfItems = results.getInt(1);
-//            }
-//            return numberOfItems;
-//        }
-//        catch (SQLException e) {
-//            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-//        }
-
-        return isTableEmpty(Read.countCustomersVsCoupons);
-    }
-
-
     /**
      * Checks whether the DB contains items in the table specified by sql param
      * @param sql String of SQL command to send to DB (to check if table is empty)
      * @return number of items in DB table if succeeded, -1 if failed or if table is empty
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static int isTableEmpty(String sql) throws CouponSystemException {
+    public static int countItemsInTable(String sql) throws CouponSystemException {
         //Todo - convert all 'IsEmpty' functions to this one
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
