@@ -321,7 +321,7 @@ public class DB_DAO_MockData {
     private static int IsDBcontainsCompanies() throws CouponSystemException {
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCompanies,params);
+        ResultSet results = DButils.runQueryForResult(Read.countNumberOfCompanies,params);
         try {
             int numberOfCompanies = -1;
             while (results.next()) {
@@ -343,7 +343,7 @@ public class DB_DAO_MockData {
     private static int isDBcontainsCategories() throws CouponSystemException {
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.getNumberOfCompanies,params);
+        ResultSet results = DButils.runQueryForResult(Read.countNumberOfCompanies,params);
         try {
             int numberOfCompanies = -1;
             while (results.next()) {
@@ -407,9 +407,35 @@ public class DB_DAO_MockData {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private static int isCustomersVsCouponsEmpty() throws CouponSystemException {
+//        Map<Integer,Object> params = new HashMap<>();
+//        params.put(1,null);
+//        ResultSet results = DButils.runQueryForResult(Read.countCustomersVsCoupons,params);
+//        try {
+//            int numberOfItems = -1;
+//            while (results.next()) {
+//                numberOfItems = results.getInt(1);
+//            }
+//            return numberOfItems;
+//        }
+//        catch (SQLException e) {
+//            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+//        }
+
+        return isTableEmpty(Read.countCustomersVsCoupons);
+    }
+
+
+    /**
+     * Checks whether the DB contains items in the table specified by sql param
+     * @param sql String of SQL command to send to DB (to check if table is empty)
+     * @return number of items in DB table if succeeded, -1 if failed or if table is empty
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static int isTableEmpty(String sql) throws CouponSystemException {
+        //Todo - convert all 'IsEmpty' functions to this one
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.countCustomersVsCoupons,params);
+        ResultSet results = DButils.runQueryForResult(sql,params);
         try {
             int numberOfItems = -1;
             while (results.next()) {

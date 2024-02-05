@@ -29,12 +29,24 @@ public class CustomersDB_DAO implements CustomersDAO {
      */
     public boolean IsCustomerExists(String email, String password) throws CouponSystemException {
         //Todo - finish
+
+        // Part 1 - prepare params
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,email);
         params.put(2,password);
-        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.companyExists, params);
-
-        return false;
+        // Part 2 - run query for results in DB
+        ResultSet results = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.companyExists, params);
+        // Part 3 - check results
+        int numOfItems = -1;
+        try {
+            while (results.next()) {
+                numOfItems = results.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+        }
+        return numOfItems == 1;
     }
 
     public boolean AddCustomer(Customer customer) {

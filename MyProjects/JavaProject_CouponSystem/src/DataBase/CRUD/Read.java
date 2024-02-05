@@ -13,7 +13,7 @@ public class Read {
             "SELECT * FROM "+DBmanager.SQL_DB+".companies;";
     public static final String getOneCompany =
             "SELECT * FROM "+DBmanager.SQL_DB+".companies WHERE id = ? ;";
-    public static final String getNumberOfCompanies =
+    public static final String countNumberOfCompanies =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".companies;";
 
     // Category
@@ -21,7 +21,7 @@ public class Read {
             "SELECT id FROM "+DBmanager.SQL_DB+".categories WHERE name = ? ;";
     public static final String getAllCategories =
             "SELECT * FROM "+DBmanager.SQL_DB+".categories;";
-    public static final String getNumberOfCategories =
+    public static final String countNumberOfCategories =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".categories;";
 
 
