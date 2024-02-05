@@ -1,11 +1,15 @@
-package com.Peled.Roni.beans;public class MySingleton {
-    // Fields
+package com.Peled.Roni.beans;
 
-    // Constructors
+import lombok.Data;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
-    // Getters/Setters
-
-    // toString, HashCode, Equals
-
-    // User Methods
+@Component
+@Lazy
+@Data
+public class MySingleton {
+    private String name;
+    public MySingleton() {
+        System.out.println(this.getClass().getSimpleName()+" was invoked");
+    }
 }

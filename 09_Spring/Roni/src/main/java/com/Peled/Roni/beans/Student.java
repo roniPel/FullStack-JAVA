@@ -1,11 +1,16 @@
-package com.Peled.Roni.beans;public class Student {
-    // Fields
+package com.Peled.Roni.beans;
 
-    // Constructors
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-    // Getters/Setters
+@Component
+@Data
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 
-    // toString, HashCode, Equals
+public class Student {
+   private String name;
 
-    // User Methods
 }

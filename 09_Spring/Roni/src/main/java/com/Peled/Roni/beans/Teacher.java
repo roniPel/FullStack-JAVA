@@ -1,11 +1,15 @@
-package com.Peled.Roni.beans;public class Teacher {
-    // Fields
+package com.Peled.Roni.beans;
 
-    // Constructors
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
-    // Getters/Setters
+@Component
+@Lazy
+@Data
+@NoArgsConstructor
+public class Teacher {
+    private String name;
 
-    // toString, HashCode, Equals
-
-    // User Methods
 }
