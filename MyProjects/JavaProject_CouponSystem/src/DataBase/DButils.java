@@ -6,11 +6,25 @@ import ErrorHandling.Errors;
 
 import java.sql.*;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Map;
 
 import static ErrorHandling.Errors.*;
 
 public class DButils {
+
+    /**
+     * Prepares 'param' map for login check
+     * @param email login email
+     * @param password login password
+     * @return Map<Integer, Object> params if succeeded, null if failed.
+     */
+    public static Map<Integer, Object> PrepareParamsForLoginCheck(String email, String password) {
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,email);
+        params.put(2,password);
+        return params;
+    }
 
     /**
      * Creates an SQL statement to insert multiple values into an 'IN' statement, in the DB
@@ -195,4 +209,22 @@ public class DButils {
         }
     }
 
+
+    /**
+     * Checks whether login results mean the user exists or doesn't in DB
+     * @param results ResultSet with data from DB after login check
+     * @return true if user exists (login results are true), false if the email + password combo are incorrect.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static boolean CheckLoginResults(ResultSet results) throws CouponSystemException {
+        int numberOfReturns = -1;
+        try {
+            if(results.next()) {
+                numberOfReturns = results.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return numberOfReturns == 1;
+    }
 }

@@ -5,7 +5,7 @@ import DataBase.DBmanager;
 public class Read {
 
     // Company
-    public static final String companyExists =
+    public static final String isCompanyExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? AND password = ? ;";
     public static final String getCompanyID =
             "SELECT id FROM "+DBmanager.SQL_DB+".companies WHERE name = ? ;";
@@ -40,8 +40,15 @@ public class Read {
     public static final String getCouponsById =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?);";
 
+    public static final String getCouponIdMatch =
+            "SELECT id FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ? AND categoryID = ? " +
+                    "AND title = ? AND description = ? AND startDate = ? AND endDate = ? " +
+                    "AND amount = ? AND price = ? AND image = ?;";
+
 
     // Customer
+    public static final String isCustomerExists =
+            "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".customers WHERE email = ? AND password = ? ;";
     public static final String countNumberOfCustomers =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers;";
 

@@ -16,6 +16,10 @@ public class Update {
     public static final String updateCouponsAmount =
             "UPDATE `"+ DBmanager.SQL_DB+"`.`coupons` SET `amount` = `amount`-1 WHERE `id` IN (?);";
 
+    public static final String updateCoupon =
+            "UPDATE `"+ DBmanager.SQL_DB+"`.`coupons` SET `companyID` = ?, " +
+                    "`categoryID` = ?, `title` = ?, `description` = ?, `startDate` = ?, `endDate` = ?, " +
+                    "`amount` = ?, `price` = ?, `image` = ? WHERE (`id` = ?);";
     // Customer
 
 }

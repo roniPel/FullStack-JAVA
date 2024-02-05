@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static DataBase.DButils.PrepareParamsForLoginCheck;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CompaniesDB_DAO implements CompaniesDAO {
@@ -25,24 +26,12 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public static boolean IsCompanyExists(String email, String password) throws CouponSystemException {
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,email);
-        params.put(2,password);
-        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.companyExists, params);
-        int numberOfReturns = 0;
-        try {
-            if(result.next()) {
-                numberOfReturns = result.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
-        }
-        if(numberOfReturns == 1) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        // Part 1 - prepare params
+        Map<Integer,Object> params = PrepareParamsForLoginCheck(email,password);
+        // Part 2 - run query for results in DB
+        ResultSet results = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.isCompanyExists, params);
+        // Part 3 - check results
+        return DButils.CheckLoginResults(results);
     }
 
     /**
@@ -52,7 +41,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public static boolean AddCompany(Company company) throws CouponSystemException {
-        // Part 1 - Add a new company in DB
+        // Part 1 - Prepare Hashmap
         Map<Integer,Object> params = new HashMap<>();
         // ID in company item is ignored.  DB creates an ID automatically
         params.put(1,company.getName());

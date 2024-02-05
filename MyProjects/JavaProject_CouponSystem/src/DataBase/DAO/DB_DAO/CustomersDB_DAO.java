@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static DataBase.DButils.PrepareParamsForLoginCheck;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CustomersDB_DAO implements CustomersDAO {
@@ -28,29 +29,42 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @throws CouponSystemException - If we get any SQL exception.  Details are provided
      */
     public boolean IsCustomerExists(String email, String password) throws CouponSystemException {
-        //Todo - finish
-
         // Part 1 - prepare params
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,email);
-        params.put(2,password);
+        Map<Integer,Object> params = PrepareParamsForLoginCheck(email,password);
         // Part 2 - run query for results in DB
-        ResultSet results = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.companyExists, params);
+        ResultSet results = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.isCustomerExists, params);
         // Part 3 - check results
-        int numOfItems = -1;
-        try {
-            while (results.next()) {
-                numOfItems = results.getInt(1);
-            }
-        }
-        catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
-        }
-        return numOfItems == 1;
+        return DButils.CheckLoginResults(results);
     }
 
-    public boolean AddCustomer(Customer customer) {
-        return false;
+    public boolean AddCustomer(Customer customer) throws CouponSystemException {
+        // Part 1 - Prepare Hashmap
+        Map<Integer,Object> params = new HashMap<>();
+        // ID in customer item is ignored.  DB creates an ID automatically
+        params.put(1,customer.getFirstName());
+        params.put(2,customer.getLastName());
+        params.put(3,customer.getEmail());
+        params.put(4,customer.getPassword());
+
+        if(DButils.runQueryWithMap(DataBase.CRUD.Create.insertCustomer,params) ) {
+            if(customer.getCoupons() == null){
+                return true;
+            }
+            // Part 2 - Iterate over coupon list and add each company coupon to DB
+            for(Coupon coupon: customer.getCoupons()) {
+                // Create new coupon in DB:
+                if(CouponsDB_DAO.AddCoupon(coupon)) {
+                    continue;
+                }
+                else {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean UpdateCustomer(Customer customer) {
