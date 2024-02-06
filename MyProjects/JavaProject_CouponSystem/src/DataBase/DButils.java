@@ -2,11 +2,9 @@ package DataBase;
 
 import DataBase.CRUD.Create;
 import ErrorHandling.CouponSystemException;
-import ErrorHandling.Errors;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,8 +58,9 @@ public class DButils {
      * @param type string, explaining which type of 'insert' is needed
      * @return String statement if succeeded, null if failed.
      */
-    public static String sqlInsertMultipleValues(int numberOfRows, String type) {
-        String updatedCommand = switch (type) {
+    public static String sqlInsertMultipleValues(int numberOfRows, SQLinsertMultipleValues type) {
+        String typeSt = type.name();
+        return switch (typeSt) {
             case "Coupon" -> createRepeatStatement(Create.insertCoupon, numberOfRows);
             case "Company" -> createRepeatStatement(Create.insertCompany, numberOfRows);
             case "Category" -> createRepeatStatement(Create.insertCategory, numberOfRows);
@@ -69,7 +68,6 @@ public class DButils {
             case "CustomerVsCoupon" -> createRepeatStatement(Create.insertCustomerVsCoupon,numberOfRows);
             default -> null;
         };
-        return updatedCommand;
     }
 
 
@@ -122,6 +120,9 @@ public class DButils {
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
+            if(e.getErrorCode() == 1062){
+                throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e);
+            }
             throw new CouponSystemException(SQL_ERROR.getMessage() + e);
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
@@ -150,6 +151,8 @@ public class DButils {
                     preparedStatement.setBoolean(key, (Boolean) value);
                 } else if (value instanceof Float) {
                     preparedStatement.setFloat(key, (Float) value);
+                }else if (value instanceof Date){
+                    preparedStatement.setDate(key,(Date)value);
                 } else if (value instanceof LocalDate) {
                     preparedStatement.setDate(key, Date.valueOf((LocalDate) value));
                 }
@@ -198,6 +201,9 @@ public class DButils {
                             preparedStatement.setFloat(key, (Float) value);
                         }
                     } catch (SQLException e) {
+                        if(e.getErrorCode() == 1062){
+                            throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e);
+                        }
                         throw new CouponSystemException(SQL_ERROR.getMessage());
                     }
                 }

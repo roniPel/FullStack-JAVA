@@ -19,10 +19,11 @@ public class InitDB {
     public static final String CREATE_TABLE_COMPANIES =
             "CREATE TABLE IF NOT EXISTS `"+DBmanager.SQL_DB+"`.`companies` (" +
                     "  `id` INT NOT NULL AUTO_INCREMENT," +
-                    "  `name` VARCHAR(45) NULL," +
+                    "  `name` VARCHAR(45) NOT NULL," +
                     "  `email` VARCHAR(45) NULL," +
                     "  `password` VARCHAR(10) NOT NULL," +
                     "  PRIMARY KEY (`id`)," +
+                    "  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE," +
                     "  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);";
 
     public static final String CREATE_TABLE_CUSTOMERS =

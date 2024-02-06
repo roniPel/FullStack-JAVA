@@ -1,13 +1,12 @@
 package DataBase.DAO.DB_DAO;
 
-import Beans.Category;
-import Beans.Company;
 import Beans.Coupon;
 import Beans.Customer;
 import DataBase.CRUD.Delete;
 import DataBase.DAO.CustomersDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
+import DataBase.SQLinsertMultipleValues;
 import ErrorHandling.CouponSystemException;
 
 import java.sql.ResultSet;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static DataBase.DAO.DB_DAO.CouponsDB_DAO.PrepareParamsForAddCoupons;
 import static DataBase.DAO.DB_DAO.CouponsDB_DAO.PrepareParamsMapCouponPurchaseDel;
 import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
@@ -68,7 +66,7 @@ public class CustomersDB_DAO implements CustomersDAO {
             params.clear();
             params = PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
             // Prepare multiple insert SQL statement
-            String sql = sqlInsertMultipleValues(customer.getCoupons().size(), "CustomerVsCoupon");
+            String sql = sqlInsertMultipleValues(customer.getCoupons().size(), SQLinsertMultipleValues.CustomerVsCoupon);
             return runQueryWithMap(sql, params);
         }
         return false;

@@ -2,15 +2,14 @@ package DataBase.DAO.DB_DAO;
 
 import Beans.Company;
 import Beans.Coupon;
-import Beans.Customer;
 import DataBase.CRUD.Delete;
+import DataBase.CRUD.Read;
 import DataBase.DAO.CompaniesDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
+import DataBase.SQLinsertMultipleValues;
 import ErrorHandling.CouponSystemException;
-import ErrorHandling.Errors;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -38,8 +37,42 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         return DButils.CheckLoginResults(results);
     }
 
+
     /**
-     * Adds a company to the DB - adds the company and the company's coupons (according to the param provided)
+     * Checks whether a company name exists in the DB
+     * @param name company's name
+     * @return true if company name exists, false if company doesn't exist or if the email + password combo are incorrect.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static boolean IsCompanyNameExists(String name) throws CouponSystemException {
+        // Part 1 - prepare params
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,name);
+        // Part 2 - run query for results in DB
+        ResultSet results = DataBase.DButils.runQueryForResult(Read.isCompanyNameExists, params);
+        // Part 3 - check results
+        return DButils.CheckLoginResults(results);
+    }
+
+    /**
+     * Checks whether a company email exists in the DB
+     * @param email company's email
+     * @return true if company email exists, false if company doesn't exist or if the email + password combo are incorrect.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public static boolean IsCompanyEmailExists(String email) throws CouponSystemException {
+        // Part 1 - prepare params
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,email);
+        // Part 2 - run query for results in DB
+        ResultSet results = DataBase.DButils.runQueryForResult(Read.isCompanyEmailExists, params);
+        // Part 3 - check results
+        return DButils.CheckLoginResults(results);
+    }
+
+
+    /**
+     * Adds a company to the DB
      * @param company a 'Company' class instance containing company details
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
@@ -54,7 +87,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 return true;
             }
             // Part 2 - prepare a multi statement and insert coupons to DB
-            String sql = sqlInsertMultipleValues(company.getCoupons().size(), "Coupon");
+            String sql = sqlInsertMultipleValues(company.getCoupons().size(), SQLinsertMultipleValues.Coupon);
             params.clear();
             params = PrepareParamsForAddCoupons(company.getCoupons());
             // Insert coupons into DB:
@@ -84,7 +117,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
     }
 
     /**
-     * Updates a company in the DB - updates the company's details (according to the company ID, based on param provided)
+     * Updates a company in the DB
      * @param company a 'Company' class instance containing company details
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided

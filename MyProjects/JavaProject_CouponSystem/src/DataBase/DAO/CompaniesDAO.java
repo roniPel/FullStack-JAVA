@@ -24,6 +24,14 @@ public interface CompaniesDAO {
      */
     static boolean AddCompany(Company company) throws CouponSystemException{return false;};
 
+    /**
+     * Deletes a company (according to the company ID provided)
+     * @param companyID a company's ID, as listed in the DB
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    static boolean DeleteCompany(int companyID) throws CouponSystemException {return false;}
+
 
     /**
      * Updates a company in the DB - updates the company's details (according to the company ID, based on param provided)

@@ -6,6 +6,7 @@ import Beans.Coupon;
 import Beans.Customer;
 import DataBase.CRUD.Read;
 import DataBase.DButils;
+import DataBase.SQLinsertMultipleValues;
 import ErrorHandling.CouponSystemException;
 import Utils.DateFactory;
 
@@ -50,10 +51,8 @@ public class DB_DAO_MockData {
                     // Check if 'customers_vs_coupons' table is empty
                     if(countItemsInTable(Read.countCustomersVsCoupons) == 0) {
                         // Prepare multiple values SQL String
-                        String insertCustVsCoupMulti = sqlInsertMultipleValues(customers.size(),"CustomerVsCoupon");
-                        if(runQueryWithMap(insertCustVsCoupMulti,params)) {
-                            return true;
-                        }
+                        String insertCustVsCoupMulti = sqlInsertMultipleValues(customers.size(), SQLinsertMultipleValues.CustomerVsCoupon);
+                        return runQueryWithMap(insertCustVsCoupMulti, params);
                     }
                 }
             }
@@ -119,7 +118,7 @@ public class DB_DAO_MockData {
             params.put(counter++,"Pass"+i);
         }
         // Prepare multiple insert SQL statement
-        String sql = sqlInsertMultipleValues(numberOfCustomers, "Customer");
+        String sql = sqlInsertMultipleValues(numberOfCustomers,SQLinsertMultipleValues.Customer);
         // Run query in DB
         if(runQueryWithMap(sql, params));
         else {
@@ -146,7 +145,7 @@ public class DB_DAO_MockData {
             counter++;
         }
         // Prepare multiple insert SQL statement
-        String sql = sqlInsertMultipleValues(Category.values().length, "Category");
+        String sql = sqlInsertMultipleValues(Category.values().length, SQLinsertMultipleValues.Category);
 
         // Run query in DB
         if(runQueryWithMap(sql, params))
@@ -173,7 +172,7 @@ public class DB_DAO_MockData {
             params.put(counter++,"PassComp"+i);
         }
         // Prepare multiple insert SQL statement
-        String sql = sqlInsertMultipleValues(numberOfCompanies, "Company");
+        String sql = sqlInsertMultipleValues(numberOfCompanies, SQLinsertMultipleValues.Company);
         // Run query in DB
         if(runQueryWithMap(sql, params));
         else {
@@ -206,7 +205,7 @@ public class DB_DAO_MockData {
                 // Part 3 - create coupons in DB
 
                 // Prepare multiple insert SQL statement
-                String sql = sqlInsertMultipleValues(numberOfCouponsePerCompany, "Coupon");
+                String sql = sqlInsertMultipleValues(numberOfCouponsePerCompany, SQLinsertMultipleValues.Coupon);
 
                 // Add coupons for each company
                 for(Company company: companies) {

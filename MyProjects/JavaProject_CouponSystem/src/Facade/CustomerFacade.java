@@ -21,7 +21,7 @@ public class CustomerFacade extends ClientFacade{
     public boolean Login(String email, String password) {
         return false;
     }
-    public static boolean PurchaseCoupon(Coupon coupon) {
+    public boolean PurchaseCoupon(Coupon coupon) {
         // Verify coupon doesn't exist for this customer
 
         // Verify coupon is in stock
@@ -50,19 +50,19 @@ public class CustomerFacade extends ClientFacade{
         return false;
     }
 
-    public static ArrayList<Coupon> GetAllCustomerCoupons() {
+    public ArrayList<Coupon> GetAllCustomerCoupons() {
         return null;
     }
 
-    public static ArrayList<Coupon> GetCustomerCouponsByCategory(Category category) {
+    public ArrayList<Coupon> GetCustomerCouponsByCategory(Category category) {
         return null;
     }
 
-    public static ArrayList<Coupon> GetCustomerCouponsByPrice(Double maxPrice) {
+    public ArrayList<Coupon> GetCustomerCouponsByPrice(Double maxPrice) {
         return null;
     }
 
-    public static Customer GetCustomerDetails() {
+    public Customer GetCustomerDetails() {
         return null;
     }
 }

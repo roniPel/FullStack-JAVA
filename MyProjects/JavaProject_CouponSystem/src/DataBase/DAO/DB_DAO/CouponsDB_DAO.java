@@ -23,7 +23,6 @@ import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CouponsDB_DAO implements CouponsDAO {
     private ConnectionPool connectionPool;
-    //Todo - test all class methods
 
 
     /**
