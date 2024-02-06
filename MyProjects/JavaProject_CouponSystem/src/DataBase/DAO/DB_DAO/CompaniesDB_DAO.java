@@ -28,7 +28,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @return true if company exists, false if company doesn't exist or if the email + password combo are incorrect.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean IsCompanyExists(String email, String password) throws CouponSystemException {
+    public boolean IsCompanyExists(String email, String password) throws CouponSystemException {
         // Part 1 - prepare params
         Map<Integer,Object> params = PrepareParamsForLoginCheck(email,password);
         // Part 2 - run query for results in DB
@@ -39,12 +39,28 @@ public class CompaniesDB_DAO implements CompaniesDAO {
 
 
     /**
+     * Checks whether a company exists in the DB
+     * @param companyID company's id
+     * @return true if company exists, false if company doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public boolean IsCompanyIdExists(int companyID) throws CouponSystemException {
+        // Part 1 - prepare params
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,companyID);
+        // Part 2 - run query for results in DB
+        ResultSet results = DataBase.DButils.runQueryForResult(Read.isCompanyIdExists, params);
+        // Part 3 - check results
+        return DButils.CheckLoginResults(results);
+    }
+
+    /**
      * Checks whether a company name exists in the DB
      * @param name company's name
      * @return true if company name exists, false if company doesn't exist or if the email + password combo are incorrect.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean IsCompanyNameExists(String name) throws CouponSystemException {
+    public boolean IsCompanyNameExists(String name) throws CouponSystemException {
         // Part 1 - prepare params
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,name);
@@ -60,7 +76,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @return true if company email exists, false if company doesn't exist or if the email + password combo are incorrect.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean IsCompanyEmailExists(String email) throws CouponSystemException {
+    public boolean IsCompanyEmailExists(String email) throws CouponSystemException {
         // Part 1 - prepare params
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,email);
@@ -70,14 +86,13 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         return DButils.CheckLoginResults(results);
     }
 
-
     /**
      * Adds a company to the DB
      * @param company a 'Company' class instance containing company details
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean AddCompany(Company company) throws CouponSystemException {
+    public boolean AddCompany(Company company) throws CouponSystemException {
         // Part 1 - Prepare Hashmap + insert company into DB
         ArrayList<Company> companies = new ArrayList<>();
         companies.add(company);
@@ -87,9 +102,9 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 return true;
             }
             // Part 2 - prepare a multi statement and insert coupons to DB
-            String sql = sqlInsertMultipleValues(company.getCoupons().size(), SQLinsertMultipleValues.Coupon);
+            String sql = DButils.sqlInsertMultipleValues(company.getCoupons().size(), SQLinsertMultipleValues.Coupon);
             params.clear();
-            params = PrepareParamsForAddCoupons(company.getCoupons());
+            params = CouponsDB_DAO.PrepareParamsForAddCoupons(company.getCoupons());
             // Insert coupons into DB:
             if(runQueryWithMap(sql,params)) ;
             else {  // If coupons were not added to DB - query failed
@@ -105,7 +120,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @return Map<Integer, Object> params if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static Map<Integer, Object> PrepareParamsForAddCompany(ArrayList<Company> companies) throws CouponSystemException {
+    private Map<Integer, Object> PrepareParamsForAddCompany(ArrayList<Company> companies) throws CouponSystemException {
         Map<Integer, Object> params = new HashMap<>();
         int count = 1;
         for(Company company: companies) {
@@ -122,7 +137,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean UpdateCompany(Company company) throws CouponSystemException {
+    public boolean UpdateCompany(Company company) throws CouponSystemException {
         // Part 1 - Prepare params hashmap
         ArrayList<Company> companies = new ArrayList<>();
         companies.add(company);
@@ -139,7 +154,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean DeleteCompany(int companyID) throws CouponSystemException {
+    public boolean DeleteCompany(int companyID) throws CouponSystemException {
         // Part 1 - prepare params map
         Map<Integer, Object> params = new HashMap<>();
         params.put(1,companyID);
@@ -169,7 +184,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static Company GetOneCompany(int companyID) throws CouponSystemException {
+    public Company GetOneCompany(int companyID) throws CouponSystemException {
         // Part 1 - Get company - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,companyID);
@@ -198,6 +213,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 String email = results.getString(3);
                 String password = results.getString(4);
 
+                //Todo - Delete section so that company has 'null' coupons
                 // Convert SQL array to Coupons array
                 ArrayList<Coupon> coupons = CouponsDB_DAO.GetCouponsForCompany(id);
 

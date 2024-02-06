@@ -9,11 +9,10 @@ public class Read {
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? AND password = ? ;";
     public static final String isCompanyNameExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE name = ? ;";
-
     public static final String isCompanyEmailExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? ;";
-    public static final String getCompanyID =
-            "SELECT id FROM "+DBmanager.SQL_DB+".companies WHERE name = ? ;";
+    public static final String isCompanyIdExists =
+            "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".companies WHERE id = ?;";
     public static final String getAllCompanies =
             "SELECT * FROM "+DBmanager.SQL_DB+".companies;";
     public static final String getOneCompany =
@@ -54,6 +53,9 @@ public class Read {
     // Customer
     public static final String isCustomerExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".customers WHERE email = ? AND password = ? ;";
+
+    public static final String isCustomerIdExists =
+            "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers WHERE id = ?;";
     public static final String countNumberOfCustomers =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers;";
 

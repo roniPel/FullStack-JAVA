@@ -3,10 +3,8 @@ package Utils;
 import DataBase.DAO.DB_DAO.DB_DAO_MockData;
 import ErrorHandling.CouponSystemException;
 
-import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerTable;
-import static DataBase.DAO.DB_DAO.DB_DAO_MockData.FillInCustomerVsCouponsTable;
-
 public class Helper {
+    private DB_DAO_MockData mockData = new DB_DAO_MockData();
     //Todo - Create reports for tester/ main
 
     //Todo - change FillDataBaseWithMockData method details + params - receive as hashmap?
@@ -20,30 +18,30 @@ public class Helper {
      * @return true if succeeded, false if failed
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean FillDataBaseWithMockData
+    public boolean FillDataBaseWithMockData
             (int numCompanies,int couponsPerComp, int amountPerType, double maxPrice, int numberOfCustomers) throws CouponSystemException {
         // Fill in category table
-        if(DB_DAO_MockData.FillInCategoryTable());
+        if(mockData.FillInCategoryTable());
         else {
             return false;
         }
         // Fill in company table
-        if(DB_DAO_MockData.FillInCompanyTable(numCompanies));
+        if(mockData.FillInCompanyTable(numCompanies));
         else {
             return false;
         }
         // Fill in coupons table
-        if(DB_DAO_MockData.CreateCouponsForAllCompanies(couponsPerComp,amountPerType,maxPrice));
+        if(mockData.CreateCouponsForAllCompanies(couponsPerComp,amountPerType,maxPrice));
         else {
             return false;
         }
         // Fill in customers table
-        if(FillInCustomerTable(numberOfCustomers));
+        if(mockData.FillInCustomerTable(numberOfCustomers));
         else {
             return false;
         }
         // Fill in customersVScoupons table
-        if(FillInCustomerVsCouponsTable()) {
+        if(mockData.FillInCustomerVsCouponsTable()) {
             return true;
         }
         return false;

@@ -30,7 +30,7 @@ public class DB_DAO_MockData {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean FillInCustomerVsCouponsTable() throws CouponSystemException {
+    public boolean FillInCustomerVsCouponsTable() throws CouponSystemException {
         // Part 1 - check if DB contains customers
         int numberOfCustomers = countItemsInTable(Read.countNumberOfCustomers);
         if(numberOfCustomers > 0) {
@@ -65,7 +65,7 @@ public class DB_DAO_MockData {
      * @return ArrayList<Integer> with couponIDs if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static ArrayList<Integer> GetCouponIDsForCustomers() throws CouponSystemException {
+    private ArrayList<Integer> GetCouponIDsForCustomers() throws CouponSystemException {
         Map<Integer,Object> params = new HashMap<>();
         ArrayList<Integer> couponIDForCustomers = new ArrayList<>();
         params.put(1,null);
@@ -90,7 +90,7 @@ public class DB_DAO_MockData {
      * @param customers an array list of customers to add to table
      * @return Map<Integer, Object> params if succeeded, null if failed.
      */
-    private static Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
+    private Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
         Map<Integer, Object> params = new HashMap<>();
         int counter = 1;
         for (Customer customer : customers) {
@@ -107,7 +107,7 @@ public class DB_DAO_MockData {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean FillInCustomerTable(int numberOfCustomers) throws CouponSystemException {
+    public boolean FillInCustomerTable(int numberOfCustomers) throws CouponSystemException {
         // Prepare params Map with Company values
         Map<Integer,Object> params = new HashMap<>();
         int counter = 1;
@@ -133,7 +133,7 @@ public class DB_DAO_MockData {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean FillInCategoryTable() throws CouponSystemException {
+    public boolean FillInCategoryTable() throws CouponSystemException {
         String category;
 
         // Prepare params Map with Category values
@@ -162,7 +162,7 @@ public class DB_DAO_MockData {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean FillInCompanyTable(int numberOfCompanies) throws CouponSystemException {
+    public boolean FillInCompanyTable(int numberOfCompanies) throws CouponSystemException {
         // Prepare params Map with Company values
         Map<Integer,Object> params = new HashMap<>();
         int counter = 1;
@@ -191,7 +191,7 @@ public class DB_DAO_MockData {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean CreateCouponsForAllCompanies(int numberOfCouponsePerCompany, int amountCouponsPerType,
+    public boolean CreateCouponsForAllCompanies(int numberOfCouponsePerCompany, int amountCouponsPerType,
                                                        double maxPrice) throws CouponSystemException {
 
         // Part 1 - check if DB contains companies
@@ -269,7 +269,7 @@ public class DB_DAO_MockData {
      * @return Map<Integer,Object> with params if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static Map<Integer, Object> createMapRandomCoupons(int companyID, int numCouponsPerComp,
+    private Map<Integer, Object> createMapRandomCoupons(int companyID, int numCouponsPerComp,
                                                          int amountCouponsPerType, double maxPrice) throws CouponSystemException {
         // Get categories currently in DB
         Map<Integer, String> categories = GetAllCategories();
@@ -307,7 +307,7 @@ public class DB_DAO_MockData {
      * @param categories Map containing CategoryIDs and Category names as listed in DB
      * @return int with a random category ID
      */
-    private static int GetRandomCategoryIdFromMap(Map<Integer, String> categories) {
+    private int GetRandomCategoryIdFromMap(Map<Integer, String> categories) {
         return (int) (Math.random()*(categories.size()) )+1;
     }
 
@@ -317,7 +317,7 @@ public class DB_DAO_MockData {
      * @return number of items in DB table if succeeded, -1 if failed or if table is empty
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static int countItemsInTable(String sql) throws CouponSystemException {
+    public int countItemsInTable(String sql) throws CouponSystemException {
         //Todo - convert all 'IsEmpty' functions to this one
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);

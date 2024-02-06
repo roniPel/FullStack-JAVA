@@ -31,7 +31,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean AddCoupon(Coupon coupon) throws CouponSystemException {
+    public boolean AddCoupon(Coupon coupon) throws CouponSystemException {
         ArrayList<Coupon> coupons = new ArrayList<>();
         coupons.add(coupon);
         // Part 1 - prepare params map
@@ -48,7 +48,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return Map<Integer, Object> params if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static Map<Integer, Object> PrepareParamsForAddCoupons(ArrayList<Coupon> coupons) throws CouponSystemException {
+    public static Map<Integer, Object> PrepareParamsForAddCoupons(ArrayList<Coupon> coupons) throws CouponSystemException {
         Map<Integer, Object> params = new HashMap<>();
         int count = 1;
         // Part 1 - Get coupon's categoryID from DB:
@@ -100,7 +100,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean UpdateCoupon(Coupon coupon) throws CouponSystemException {
+    public boolean UpdateCoupon(Coupon coupon) throws CouponSystemException {
         ArrayList<Coupon> coupons = new ArrayList<>();
         coupons.add(coupon);
         // Part 1 - prepare params map
@@ -117,7 +117,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean DeleteCoupon(int couponID) throws CouponSystemException {
+    public boolean DeleteCoupon(int couponID) throws CouponSystemException {
         // Part 1 - prepare params map
         Map<Integer, Object> params = new HashMap<>();
         params.put(1,couponID);
@@ -152,7 +152,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return Coupon object if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static Coupon GetOneCoupon(int couponID) throws CouponSystemException {
+    public Coupon GetOneCoupon(int couponID) throws CouponSystemException {
         // Part 1 - Get coupon - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,couponID);
@@ -209,7 +209,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean AddCouponPurchase(int customerID, int couponID) throws CouponSystemException {
+    public boolean AddCouponPurchase(int customerID, int couponID) throws CouponSystemException {
         // Part 1 - prepare params map
         Map<Integer, Integer> customerVsCouponsMap = new HashMap<>();
         customerVsCouponsMap.put(customerID,couponID);
@@ -226,7 +226,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean DeleteCouponPurchase(int customerID, int couponID) throws CouponSystemException {
+    public boolean DeleteCouponPurchase(int customerID, int couponID) throws CouponSystemException {
         // Part 1 - prepare params map
         Map<Integer, Integer> customerVsCouponsMap = new HashMap<>();
         customerVsCouponsMap.put(customerID,couponID);

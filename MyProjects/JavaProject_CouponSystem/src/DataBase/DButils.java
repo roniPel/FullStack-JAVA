@@ -121,9 +121,9 @@ public class DButils {
             return true;
         } catch (SQLException e) {
             if(e.getErrorCode() == 1062){
-                throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e);
+                throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e+"\n");
             }
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e+"\n");
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
@@ -180,7 +180,7 @@ public class DButils {
 
             if (params.isEmpty()) {
                 ConnectionPool.getInstance().returnConnection(connection);
-                throw new CouponSystemException(EMPTY_OR_NULL.getMessage());
+                throw new CouponSystemException(EMPTY_OR_NULL.getMessage()+"\n");
             }
             else  {
                 for (Map.Entry<Integer, Object> entry : params.entrySet()) {
@@ -202,15 +202,15 @@ public class DButils {
                         }
                     } catch (SQLException e) {
                         if(e.getErrorCode() == 1062){
-                            throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e);
+                            throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e+"\n");
                         }
-                        throw new CouponSystemException(SQL_ERROR.getMessage());
+                        throw new CouponSystemException(SQL_ERROR.getMessage()+"\n");
                     }
                 }
             }
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR.getMessage() + e+"\n");
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
@@ -230,7 +230,7 @@ public class DButils {
                 numberOfReturns = results.getInt(1);
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e+"\n");
         }
         return numberOfReturns == 1;
     }

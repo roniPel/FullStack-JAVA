@@ -1,6 +1,7 @@
 package DataBase.DAO;
 
 import Beans.Company;
+import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
 import ErrorHandling.CouponSystemException;
 
 import java.util.ArrayList;
@@ -13,8 +14,15 @@ public interface CompaniesDAO {
      * @return true if company exists, false if company doesn't exist or if the email + password combo are incorrect.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean IsCompanyExists(String email, String password) throws CouponSystemException{ return false;};
+    boolean IsCompanyExists(String email, String password) throws CouponSystemException;
 
+    /**
+     * Checks whether a company exists in the DB
+     * @param companyID company's id
+     * @return true if company exists, false if company doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    boolean IsCompanyIdExists(int companyID) throws CouponSystemException;
 
     /**
      * Adds a company to the DB - adds the company and the company's coupons (according to the param provided)
@@ -22,7 +30,7 @@ public interface CompaniesDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean AddCompany(Company company) throws CouponSystemException{return false;};
+    boolean AddCompany(Company company) throws CouponSystemException;
 
     /**
      * Deletes a company (according to the company ID provided)
@@ -30,7 +38,7 @@ public interface CompaniesDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean DeleteCompany(int companyID) throws CouponSystemException {return false;}
+    boolean DeleteCompany(int companyID) throws CouponSystemException;
 
 
     /**
@@ -39,15 +47,18 @@ public interface CompaniesDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean UpdateCompany(Company company) throws CouponSystemException {return false;};
+    boolean UpdateCompany(Company company) throws CouponSystemException;
 
 
     /**
      * Gets an ArrayList of all the companies listed in the DB
+     *
      * @return an ArrayList of 'Company' class items if succeeded, 'null' if failed or if no companies exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static ArrayList<Company> GetAllCompanies() throws CouponSystemException {return null;};
+    static ArrayList<Company> GetAllCompanies() throws CouponSystemException {
+        return CompaniesDB_DAO.GetAllCompanies();
+    }
 
 
     /**
@@ -56,5 +67,5 @@ public interface CompaniesDAO {
      * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static Company GetOneCompany(int companyID) throws CouponSystemException {return null;};
+    Company GetOneCompany(int companyID) throws CouponSystemException;
 }

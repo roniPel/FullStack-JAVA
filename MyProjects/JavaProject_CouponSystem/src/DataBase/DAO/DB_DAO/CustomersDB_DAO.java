@@ -3,6 +3,7 @@ package DataBase.DAO.DB_DAO;
 import Beans.Coupon;
 import Beans.Customer;
 import DataBase.CRUD.Delete;
+import DataBase.CRUD.Read;
 import DataBase.DAO.CustomersDAO;
 import DataBase.ConnectionPool;
 import DataBase.DButils;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static DataBase.DAO.DB_DAO.CouponsDB_DAO.PrepareParamsMapCouponPurchaseDel;
 import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
@@ -29,7 +29,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return - true if customer exists, false if customer doesn't exist or if the email + password combo are incorrect.
      * @throws CouponSystemException - If we get any SQL exception.  Details are provided
      */
-    public static boolean IsCustomerExists(String email, String password) throws CouponSystemException {
+    public boolean IsCustomerExists(String email, String password) throws CouponSystemException {
         // Part 1 - prepare params
         Map<Integer,Object> params = PrepareParamsForLoginCheck(email,password);
         // Part 2 - run query for results in DB
@@ -38,6 +38,21 @@ public class CustomersDB_DAO implements CustomersDAO {
         return DButils.CheckLoginResults(results);
     }
 
+    /**
+     * Checks whether a customer exists in the DB
+     * @param customerID customer's id
+     * @return true if customer exists, false if customer doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public boolean IsCustomerIdExists(int customerID) throws CouponSystemException {
+        // Part 1 - prepare params
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,customerID);
+        // Part 2 - run query for results in DB
+        ResultSet results = DataBase.DButils.runQueryForResult(Read.isCustomerIdExists, params);
+        // Part 3 - check results
+        return DButils.CheckLoginResults(results);
+    }
 
     /**
      * Adds a customer to the DB - adds the customer and the customer's coupon purchases (according to the param provided)
@@ -45,7 +60,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean AddCustomer(Customer customer) throws CouponSystemException {
+    public boolean AddCustomer(Customer customer) throws CouponSystemException {
         ArrayList<Customer> customers = new ArrayList<>();
         customers.add(customer);
         // Part 1 - Prepare Hashmap and insert customer into DB
@@ -64,7 +79,7 @@ public class CustomersDB_DAO implements CustomersDAO {
                 customerVsCouponsMap.put(customer.getId(), coupon.getId());
             }
             params.clear();
-            params = PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
+            params = CouponsDB_DAO.PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
             // Prepare multiple insert SQL statement
             String sql = sqlInsertMultipleValues(customer.getCoupons().size(), SQLinsertMultipleValues.CustomerVsCoupon);
             return runQueryWithMap(sql, params);
@@ -79,7 +94,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return Map<Integer, Object> params if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static Map<Integer, Object> PrepareParamsForAddCustomer(ArrayList<Customer> customers) throws CouponSystemException {
+    private Map<Integer, Object> PrepareParamsForAddCustomer(ArrayList<Customer> customers) throws CouponSystemException {
         Map<Integer, Object> params = new HashMap<>();
         int count = 1;
         // Part 1 - Get customer's categoryID from DB:
@@ -100,7 +115,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean UpdateCustomer(Customer customer) throws CouponSystemException {
+    public boolean UpdateCustomer(Customer customer) throws CouponSystemException {
         ArrayList<Customer> customers = new ArrayList<>();
         customers.add(customer);
         // Prepare Hashmap and update customer in DB
@@ -117,13 +132,12 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean DeleteCustomer(int customerID) throws CouponSystemException {
+    public boolean DeleteCustomer(int customerID) throws CouponSystemException {
         // Part 1 - prepare params map
         Map<Integer, Object> params = new HashMap<>();
         params.put(1,customerID);
         // Part 2 - delete customer from DB
         return runQueryWithMap(Delete.deleteCustomer,params);
-        //Todo Part 3 - delete associated coupons in DB?
     }
 
 
@@ -149,7 +163,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static Customer GetOneCustomer(int customerID) throws CouponSystemException {
+    public Customer GetOneCustomer(int customerID) throws CouponSystemException {
         // Part 1 - Get customer - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,customerID);
@@ -170,7 +184,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return ArrayList<Customer> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static ArrayList<Customer> ConvertResultSetToCustomerArray(ResultSet results) throws CouponSystemException {
+    public static ArrayList<Customer> ConvertResultSetToCustomerArray(ResultSet results) throws CouponSystemException {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
             while (results.next()) {
@@ -180,6 +194,7 @@ public class CustomersDB_DAO implements CustomersDAO {
                 String email = results.getString(4);
                 String password = results.getString(5);
 
+                // Todo - remove coupons section / mark 'null'?
                 // Part 2 - Get coupons for customer - query from DB
                 ArrayList<Coupon> coupons = CouponsDB_DAO.GetCouponsForCustomer(id);
 

@@ -13,7 +13,7 @@ public interface CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean AddCoupon(Coupon coupon) throws CouponSystemException {return false;};
+    boolean AddCoupon(Coupon coupon) throws CouponSystemException;
 
 
     /**
@@ -22,7 +22,7 @@ public interface CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean UpdateCoupon(Coupon coupon) throws CouponSystemException {return false;};
+    boolean UpdateCoupon(Coupon coupon) throws CouponSystemException;
 
 
     /**
@@ -31,7 +31,7 @@ public interface CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean DeleteCoupon(int couponID) throws CouponSystemException {return false;};
+    boolean DeleteCoupon(int couponID) throws CouponSystemException;
 
 
     /**
@@ -48,7 +48,7 @@ public interface CouponsDAO {
      * @return 'Coupon' object if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static Coupon GetOneCoupon(int couponID) throws CouponSystemException {return null;};
+    Coupon GetOneCoupon(int couponID) throws CouponSystemException;
 
 
     /**
@@ -58,7 +58,7 @@ public interface CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean AddCouponPurchase(int customerID, int couponID) throws CouponSystemException {return false;};
+    boolean AddCouponPurchase(int customerID, int couponID) throws CouponSystemException;
 
 
     /**
@@ -68,5 +68,5 @@ public interface CouponsDAO {
      * @return true if succeeded, false if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static boolean DeleteCouponPurchase(int customerID, int couponID) throws CouponSystemException {return false;};
+    boolean DeleteCouponPurchase(int customerID, int couponID) throws CouponSystemException;
 }

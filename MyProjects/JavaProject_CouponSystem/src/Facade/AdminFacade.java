@@ -3,10 +3,11 @@ package Facade;
 import Beans.Company;
 import Beans.Customer;
 import DataBase.DAO.CompaniesDAO;
-import DataBase.DAO.CustomersDAO;
-import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
+import DataBase.DAO.CouponsDAO;
 import DataBase.DAO.DB_DAO.CouponsDB_DAO;
 import DataBase.DAO.DB_DAO.CustomersDB_DAO;
+import DataBase.DAO.CustomersDAO;
+import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 
@@ -17,6 +18,10 @@ import java.util.Objects;
 public class AdminFacade extends  ClientFacade{
     private final String email = "admin@admin.com";
     private final String password = "admin";
+    
+    private CompaniesDAO companiesDAO = new CompaniesDB_DAO();
+    private CustomersDAO customersDAO = new CustomersDB_DAO();
+    private CouponsDAO couponsDAO = new CouponsDB_DAO();
 
     //Todo - finish all class methods
 
@@ -32,7 +37,7 @@ public class AdminFacade extends  ClientFacade{
      */
     @Override
     public boolean Login(String email, String password) throws CouponSystemException {
-        // Admin user - Check login details locally, no need to check via DB query
+        // Admin user - Check login details locally: (no need to check via DB query)
         if((Objects.equals(email, this.email)) && (Objects.equals(password, this.password))) {
             return true;
         }
@@ -47,7 +52,7 @@ public class AdminFacade extends  ClientFacade{
      */
     public boolean AddCompany(Company company) throws CouponSystemException {
         // Verify can't create company with same email or name -  covered by try-catch in DButils class
-        return CompaniesDAO.AddCompany(company);
+        return companiesDAO.AddCompany(company);
     }
 
     /**
@@ -57,17 +62,17 @@ public class AdminFacade extends  ClientFacade{
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public boolean UpdateCompany(Company company) throws CouponSystemException {
-        // Part 1 - Verify can't update company ID - option not available in CompaniesDAO
+        // Part 1 - Verify can't update company ID - option not available in companiesDAO
         // Part 2 - Verify company exists in DB
-        if (CompaniesDAO.IsCompanyExists(company.getEmail(),company.getPassword()) ) {
-            Company oldCompany = CompaniesDAO.GetOneCompany(company.getId());
+        if (companiesDAO.IsCompanyIdExists(company.getId()) ) {
             // Part 3 - verify company name doesn't exist in DB
-            if(Objects.equals(oldCompany.getName(), company.getName())) {
-                return CompaniesDAO.UpdateCompany(company);
+            ArrayList<Company> companies = GetAllCompanies();
+            for(Company comp: companies) {
+                if (Objects.equals(comp.getName(), company.getName())) {
+                    throw new CouponSystemException(Errors.COMPANY_NAME_ALREADY_EXISTS.getMessage());
+                }
             }
-            else {
-                throw new CouponSystemException(Errors.COMPANY_NAME_ALREADY_EXISTS.getMessage());
-            }
+            return companiesDAO.UpdateCompany(company);
         }
         else {
             throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST.getMessage());
@@ -85,12 +90,12 @@ public class AdminFacade extends  ClientFacade{
         // Verify company coupons are deleted as well - covered by DB table cascade config
         // Verify relevant company customer coupon purchases are deleted as well - covered by DB table cascade config
         // Part 1 - Verify company exists in DB
-        Company company = CompaniesDAO.GetOneCompany(companyID);
+        Company company = companiesDAO.GetOneCompany(companyID);
         if (company == null) {
             throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST.getMessage());
         }
         // Part 2 - Delete company from DB
-        return CompaniesDAO.DeleteCompany(companyID);
+        return companiesDAO.DeleteCompany(companyID);
     }
 
 
@@ -117,10 +122,10 @@ public class AdminFacade extends  ClientFacade{
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public Company GetOneCompany(int companyID) throws CouponSystemException {
-        Company company = CompaniesDAO.GetOneCompany(companyID);
+        Company company = companiesDAO.GetOneCompany(companyID);
         // Part 1 - Verify company exists in DB
         if(company == null) {
-            throw new CouponSystemException(Errors.ITEM_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST.getMessage());
         }
         // Part 2 - return company
         return company;
@@ -135,8 +140,9 @@ public class AdminFacade extends  ClientFacade{
      */
     public boolean AddCustomer(Customer customer) throws CouponSystemException {
         // Verify can't add customer with same email - covered by try-catch in DButils class
-        return CustomersDAO.AddCustomer(customer);
+        return customersDAO.AddCustomer(customer);
     }
+
 
     /**
      * Updates a customer to the DB, based on param
@@ -145,23 +151,64 @@ public class AdminFacade extends  ClientFacade{
      * @throws CouponSystemException - If we get any SQL exception.  Details are provided
      */
     public boolean UpdateCustomer(Customer customer) throws CouponSystemException {
-        // Part 1 - Verify can't update customer ID - option not available in CustomersDAO
+        // Part 1 - Verify can't update customer ID - option not available in customersDAO
         // Part 2 - Verify customer exists in DB
-        if (CustomersDAO.IsCustomerExists(customer.getEmail(),customer.getPassword()) ) {
-            return CustomersDAO.UpdateCustomer(customer);
+        if (customersDAO.IsCustomerIdExists(customer.getId()) ) {
+            return customersDAO.UpdateCustomer(customer);
         }
         else {
             throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST.getMessage());
         }
     }
 
-    public boolean DeleteCustomer(int customerID) {
-        return false;
+
+    /**
+     * Deletes a customer (according to the customer ID provided)
+     * @param customerID a customer's ID, as listed in the DB
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public boolean DeleteCustomer(int customerID) throws CouponSystemException {
+        // Verify customer coupon purchases are also deleted - covered by DB table cascade config
+        // Part 1 - Verify customer exists in DB
+        Customer customer = customersDAO.GetOneCustomer(customerID);
+        if (customer == null) {
+            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST.getMessage());
+        }
+        // Part 2 - Delete customer from DB
+        return customersDAO.DeleteCustomer(customerID);
     }
-    public ArrayList<Customer> GetAllCustomers() {
-        return null;
+
+
+    /**
+     * Gets an ArrayList of all the customers listed in the DB
+     * @return an ArrayList of 'Customer' class items if succeeded, 'null' if failed or if no customers exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
+        ArrayList<Customer> customers = CustomersDAO.GetAllCustomers();
+        // Part 1 - Verify customers exist in DB
+        if(customers == null) {
+            throw new CouponSystemException(Errors.TABLE_IS_EMPTY.getMessage());
+        }
+        // Part 2 - return customers array
+        return customers;
     }
-    public Customer GetOneCustomer(int customerID) {
-        return null;
+
+
+    /**
+     * Gets a customer (according to data provided in params)
+     * @param customerID a customer's ID, as listed in the DB
+     * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public Customer GetOneCustomer(int customerID) throws CouponSystemException {
+        Customer customer = customersDAO.GetOneCustomer(customerID);
+        // Part 1 - Verify customer exists in DB
+        if(customer == null) {
+            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST.getMessage());
+        }
+        // Part 2 - return customer
+        return customer;
     }
 }
