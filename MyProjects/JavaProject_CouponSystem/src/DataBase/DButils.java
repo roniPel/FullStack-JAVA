@@ -5,6 +5,7 @@ import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
@@ -143,14 +144,14 @@ public class DButils {
                     preparedStatement.setInt(key, (Integer) value);
                 } else if (value instanceof String) {
                     preparedStatement.setString(key, String.valueOf(value));
-                } else if (value instanceof Date) {
-                    preparedStatement.setDate(key, (Date) value);
                 } else if (value instanceof Double) {
                     preparedStatement.setDouble(key, (Double) value);
                 } else if (value instanceof Boolean) {
                     preparedStatement.setBoolean(key, (Boolean) value);
                 } else if (value instanceof Float) {
                     preparedStatement.setFloat(key, (Float) value);
+                } else if (value instanceof LocalDate) {
+                    preparedStatement.setDate(key, Date.valueOf((LocalDate) value));
                 }
             } catch (SQLException e) {
                 throw new CouponSystemException(SQL_ERROR.getMessage() + e);

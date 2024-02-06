@@ -22,4 +22,7 @@ public class Update {
                     "`amount` = ?, `price` = ?, `image` = ? WHERE (`id` = ?);";
     // Customer
 
+    public static final String updateCustomer =
+            "UPDATE `"+ DBmanager.SQL_DB+"`.`customers` SET `first_name` = ?, `last_name` = ?, `email` = ?, `password` = ? WHERE (`id` = ?);";
+
 }
