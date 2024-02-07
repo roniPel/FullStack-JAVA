@@ -53,9 +53,7 @@ public interface CustomersDAO {
      * @return an ArrayList of 'Customer' class items if succeeded, 'null' if failed or if no customers exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
-        return CustomersDB_DAO.GetAllCustomers();
-    }
+    ArrayList<Customer> GetAllCustomers() throws CouponSystemException;
 
     /**
      * Gets a customer (according to data provided in params)

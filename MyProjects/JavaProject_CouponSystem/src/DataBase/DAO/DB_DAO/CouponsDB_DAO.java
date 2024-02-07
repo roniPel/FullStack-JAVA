@@ -22,7 +22,8 @@ import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CouponsDB_DAO implements CouponsDAO {
-    private ConnectionPool connectionPool;
+    private final DButils dButils = new DButils();
+    private final DB_DAO_MockData mockData = new DB_DAO_MockData();
 
 
     /**
@@ -38,7 +39,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         Map<Integer, Object> params = PrepareParamsForAddCoupons(coupons);
         // Part 2 - create coupon in DB
 
-        return DButils.runQueryWithMap(DataBase.CRUD.Create.insertCoupon, params);
+        return dButils.runQueryWithMap(DataBase.CRUD.Create.insertCoupon, params);
     }
 
 
@@ -48,7 +49,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return Map<Integer, Object> params if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static Map<Integer, Object> PrepareParamsForAddCoupons(ArrayList<Coupon> coupons) throws CouponSystemException {
+    public Map<Integer, Object> PrepareParamsForAddCoupons(ArrayList<Coupon> coupons) throws CouponSystemException {
         Map<Integer, Object> params = new HashMap<>();
         int count = 1;
         // Part 1 - Get coupon's categoryID from DB:
@@ -77,11 +78,11 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return int with category ID if succeeded, -1 if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static int getCouponCategoryID(String categoryName) throws CouponSystemException {
+    private int getCouponCategoryID(String categoryName) throws CouponSystemException {
         int categoryID;
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,categoryName);
-        ResultSet result = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.getCategoryID, params);
+        ResultSet result = dButils.runQueryForResult(DataBase.CRUD.Read.getCategoryID, params);
         try {
             while(result.next()) {
                 categoryID = result.getInt(1);
@@ -107,7 +108,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         Map<Integer, Object> params = PrepareParamsForAddCoupons(coupons);
         params.put(10,coupon.getId());
         // Part 2 - update coupon in DB
-        return runQueryWithMap(DataBase.CRUD.Update.updateCoupon, params);
+        return dButils.runQueryWithMap(DataBase.CRUD.Update.updateCoupon, params);
     }
 
 
@@ -122,7 +123,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1,couponID);
         // Part 2 - delete coupon from DB
-        return runQueryWithMap(Delete.deleteCoupon,params);
+        return dButils.runQueryWithMap(Delete.deleteCoupon,params);
     }
 
 
@@ -131,15 +132,15 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return ArrayList<Coupon> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {
+    public ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {
 
         // Part 1 - Get coupons - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.getAllCoupons,params);
+        ResultSet results = dButils.runQueryForResult(Read.getAllCoupons,params);
 
         // Get category table from DB - for use in part 2
-        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+        Map<Integer, String> categories = mockData.GetAllCategories();
 
         // Part 2 - add results to coupon list
         return MapCouponsFromResultSet(results);
@@ -156,7 +157,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         // Part 1 - Get coupon - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,couponID);
-        ResultSet results = DButils.runQueryForResult(Read.getCouponsById,params);
+        ResultSet results = dButils.runQueryForResult(Read.getCouponsById,params);
 
         // Part 2 - add results to coupon list
         ArrayList<Coupon> coupons = MapCouponsFromResultSet(results);
@@ -175,8 +176,8 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return ArrayList<Coupon> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    private static ArrayList<Coupon> MapCouponsFromResultSet(ResultSet results) throws CouponSystemException {
-        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+    private ArrayList<Coupon> MapCouponsFromResultSet(ResultSet results) throws CouponSystemException {
+        Map<Integer, String> categories = mockData.GetAllCategories();
         ArrayList<Coupon> coupons = new ArrayList<>();
         try {
             while (results.next()) {
@@ -215,7 +216,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         customerVsCouponsMap.put(customerID,couponID);
         Map<Integer, Object> params = PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
         // Part 2 - Add coupon purchase in DB
-        return runQueryWithMap(Create.insertCustomerVsCoupon,params);
+        return dButils.runQueryWithMap(Create.insertCustomerVsCoupon,params);
     }
 
 
@@ -232,7 +233,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         customerVsCouponsMap.put(customerID,couponID);
         Map<Integer, Object> params = PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
         // Part 2 - delete coupon purchase in DB
-        return runQueryWithMap(Delete.deleteCouponPurchase,params);
+        return dButils.runQueryWithMap(Delete.deleteCouponPurchase,params);
     }
 
 
@@ -257,14 +258,14 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return ArrayList<Coupon> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static ArrayList<Coupon> GetCouponsForCompany(int companyID) throws CouponSystemException {
+    public ArrayList<Coupon> GetCouponsForCompany(int companyID) throws CouponSystemException {
         // Part 1 - Get coupons - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,companyID);
-        ResultSet results = DButils.runQueryForResult(Read.getCouponsForCompany,params);
+        ResultSet results = dButils.runQueryForResult(Read.getCouponsForCompany,params);
 
         // Get category table from DB - for use in part 2
-        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+        Map<Integer, String> categories = mockData.GetAllCategories();
 
         // Part 2 - add results to coupon list
         return AddResultsToCouponList(results);
@@ -277,22 +278,22 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return ArrayList<Coupon> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException {
+    public ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException {
         // Part 1 - - Get coupons ID map - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,customerID);
-        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getCouponsForCustomer,params);
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getCouponsForCustomer,params);
 
         // Part 2 -  prepare params and SQL command - to send to DB query in next part
         params.clear();
         params = PrepareParamsMapFromResultSet(results);
-        String sql = sqlInsertMultiple_IN_Values(Read.getCouponsById,params.size());
+        String sql = dButils.sqlInsertMultiple_IN_Values(Read.getCouponsById,params.size());
 
         // Part 3 - Get coupons list - query from DB (based on couponID list)
         if(params.isEmpty()){
             return null;
         }
-        results = DButils.runQueryForResult(sql,params);
+        results = dButils.runQueryForResult(sql,params);
 
         // Part 4 - add results to couponID list
         return AddResultsToCouponList(results);
@@ -305,11 +306,11 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return ArrayList<Coupon> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException {
+    public ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException {
         ArrayList<Coupon> couponList = new ArrayList<>();
 
         // Get category table from DB - for use in part 2
-        Map<Integer, String> categories = DB_DAO_MockData.GetAllCategories();
+        Map<Integer, String> categories = mockData.GetAllCategories();
 
         // Insert results into couponList array
         try {
@@ -343,7 +344,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @return Map<Integer, Object> of parameters (Counter, CouponID) if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static Map<Integer, Object> PrepareParamsMapFromResultSet(ResultSet results) throws CouponSystemException {
+    public Map<Integer, Object> PrepareParamsMapFromResultSet(ResultSet results) throws CouponSystemException {
         Map<Integer,Object> params = new HashMap<>();
         int counter = 1;
         try {

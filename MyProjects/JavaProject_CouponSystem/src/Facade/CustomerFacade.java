@@ -3,15 +3,23 @@ package Facade;
 import Beans.Category;
 import Beans.Coupon;
 import Beans.Customer;
+import DataBase.DAO.CompaniesDAO;
+import DataBase.DAO.CouponsDAO;
+import DataBase.DAO.CustomersDAO;
+import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
+import DataBase.DAO.DB_DAO.CouponsDB_DAO;
+import DataBase.DAO.DB_DAO.CustomersDB_DAO;
 
 import java.util.ArrayList;
 
-import static DataBase.DButils.runQueryWithMap;
-import static DataBase.DButils.sqlInsertMultiple_IN_Values;
-
 public class CustomerFacade extends ClientFacade{
+
+    private final CompaniesDAO companiesDAO = new CompaniesDB_DAO();
+    private final CustomersDAO customersDAO = new CustomersDB_DAO();
+    private final CouponsDAO couponsDAO = new CouponsDB_DAO();
     //Todo - finish all class methods
     private int customerID; // Customer ID belonging to the customer that logged in
+
 
     public CustomerFacade(int customerID) {
         this.customerID = customerID;

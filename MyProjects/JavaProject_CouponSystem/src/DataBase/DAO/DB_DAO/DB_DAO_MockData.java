@@ -20,7 +20,13 @@ import java.util.Map;
 import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
+
 public class DB_DAO_MockData {
+
+    private final DButils dButils = new DButils();
+    private final CustomersDB_DAO customersDBDao = new CustomersDB_DAO();
+    private final CouponsDB_DAO couponsDBDao = new CouponsDB_DAO();
+    private final CompaniesDB_DAO companiesDBDao = new CompaniesDB_DAO();
 
     /**
      * Creates links between coupons and customers for all the customers listed in the DB.  Steps:
@@ -35,14 +41,14 @@ public class DB_DAO_MockData {
         int numberOfCustomers = countItemsInTable(Read.countNumberOfCustomers);
         if(numberOfCustomers > 0) {
             // Get all customers from DB
-            ArrayList<Customer> customers = CustomersDB_DAO.GetAllCustomers();
+            ArrayList<Customer> customers = customersDBDao.GetAllCustomers();
 
             // Part 2 - check if DB contains categories
             if (countItemsInTable(Read.countNumberOfCategories) > 0) {
 
                 // Part 2 - check if DB contains coupons
                 if(countItemsInTable(Read.countNumberOfCoupons) > 0) {
-                    ArrayList<Coupon> coupons = CouponsDB_DAO.GetAllCoupons();
+                    ArrayList<Coupon> coupons = couponsDBDao.GetAllCoupons();
 
                     // Part 3 - Prepare params map (customers Vs Coupons)
                     Map<Integer, Object> params = PrepareParamsCustomersVsCoupons(coupons,customers);
@@ -51,8 +57,8 @@ public class DB_DAO_MockData {
                     // Check if 'customers_vs_coupons' table is empty
                     if(countItemsInTable(Read.countCustomersVsCoupons) == 0) {
                         // Prepare multiple values SQL String
-                        String insertCustVsCoupMulti = sqlInsertMultipleValues(customers.size(), SQLinsertMultipleValues.CustomerVsCoupon);
-                        return runQueryWithMap(insertCustVsCoupMulti, params);
+                        String insertCustVsCoupMulti = dButils.sqlInsertMultipleValues(customers.size(), SQLinsertMultipleValues.CustomerVsCoupon);
+                        return dButils.runQueryWithMap(insertCustVsCoupMulti, params);
                     }
                 }
             }
@@ -69,7 +75,7 @@ public class DB_DAO_MockData {
         Map<Integer,Object> params = new HashMap<>();
         ArrayList<Integer> couponIDForCustomers = new ArrayList<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(Read.getCouponIDCustomersVsCoupons,params);
+        ResultSet results = dButils.runQueryForResult(Read.getCouponIDCustomersVsCoupons,params);
         try {
             int couponID = -1;
             while (results.next()) {
@@ -118,9 +124,9 @@ public class DB_DAO_MockData {
             params.put(counter++,"Pass"+i);
         }
         // Prepare multiple insert SQL statement
-        String sql = sqlInsertMultipleValues(numberOfCustomers,SQLinsertMultipleValues.Customer);
+        String sql = dButils.sqlInsertMultipleValues(numberOfCustomers,SQLinsertMultipleValues.Customer);
         // Run query in DB
-        if(runQueryWithMap(sql, params));
+        if(dButils.runQueryWithMap(sql, params));
         else {
             return false;
         }
@@ -145,10 +151,10 @@ public class DB_DAO_MockData {
             counter++;
         }
         // Prepare multiple insert SQL statement
-        String sql = sqlInsertMultipleValues(Category.values().length, SQLinsertMultipleValues.Category);
+        String sql = dButils.sqlInsertMultipleValues(Category.values().length, SQLinsertMultipleValues.Category);
 
         // Run query in DB
-        if(runQueryWithMap(sql, params))
+        if(dButils.runQueryWithMap(sql, params))
             return true;
         else {
             return false;
@@ -172,9 +178,9 @@ public class DB_DAO_MockData {
             params.put(counter++,"PassComp"+i);
         }
         // Prepare multiple insert SQL statement
-        String sql = sqlInsertMultipleValues(numberOfCompanies, SQLinsertMultipleValues.Company);
+        String sql = dButils.sqlInsertMultipleValues(numberOfCompanies, SQLinsertMultipleValues.Company);
         // Run query in DB
-        if(runQueryWithMap(sql, params));
+        if(dButils.runQueryWithMap(sql, params));
         else {
             return false;
         }
@@ -197,7 +203,7 @@ public class DB_DAO_MockData {
         // Part 1 - check if DB contains companies
         int numOfCompanies = countItemsInTable(Read.countNumberOfCompanies);
         if(numOfCompanies > 0) {
-            ArrayList<Company> companies = CompaniesDB_DAO.GetAllCompanies();
+            ArrayList<Company> companies = companiesDBDao.GetAllCompanies();
 
             // Part 2 - check if DB contains categories
             if(countItemsInTable(Read.countNumberOfCategories) > 0) {
@@ -205,7 +211,7 @@ public class DB_DAO_MockData {
                 // Part 3 - create coupons in DB
 
                 // Prepare multiple insert SQL statement
-                String sql = sqlInsertMultipleValues(numberOfCouponsePerCompany, SQLinsertMultipleValues.Coupon);
+                String sql = dButils.sqlInsertMultipleValues(numberOfCouponsePerCompany, SQLinsertMultipleValues.Coupon);
 
                 // Add coupons for each company
                 for(Company company: companies) {
@@ -214,7 +220,7 @@ public class DB_DAO_MockData {
                             numberOfCouponsePerCompany,amountCouponsPerType,maxPrice);
 
                     // Insert coupons into DB:
-                    if(runQueryWithMap(sql,params)) ;
+                    if(dButils.runQueryWithMap(sql,params)) ;
                     else {  // If coupons were not added to DB - query failed
                         return false;
                     }
@@ -237,11 +243,11 @@ public class DB_DAO_MockData {
      * @return a map of categoryID (Integer) and name (String) if succeeded, 'null' if failed or if no categories exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static Map<Integer, String> GetAllCategories() throws CouponSystemException {
+    public Map<Integer, String> GetAllCategories() throws CouponSystemException {
         // Part 1 - Get categories - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getAllCategories,params);
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getAllCategories,params);
 
         // Part 2 - add results to Category Map
         Map<Integer,String> categories = new HashMap<>();
@@ -321,7 +327,7 @@ public class DB_DAO_MockData {
         //Todo - convert all 'IsEmpty' functions to this one
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(sql,params);
+        ResultSet results = dButils.runQueryForResult(sql,params);
         try {
             int numberOfItems = -1;
             while (results.next()) {

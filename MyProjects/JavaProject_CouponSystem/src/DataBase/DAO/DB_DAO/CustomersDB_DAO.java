@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CustomersDB_DAO implements CustomersDAO {
-    private ConnectionPool connectionPool;
+    private final DButils dButils = new DButils();
+    private final CouponsDB_DAO couponsDBDao = new CouponsDB_DAO();
 
     /**
      * Checks whether a customer exists in the DB
@@ -31,11 +31,11 @@ public class CustomersDB_DAO implements CustomersDAO {
      */
     public boolean IsCustomerExists(String email, String password) throws CouponSystemException {
         // Part 1 - prepare params
-        Map<Integer,Object> params = PrepareParamsForLoginCheck(email,password);
+        Map<Integer,Object> params = dButils.PrepareParamsForLoginCheck(email,password);
         // Part 2 - run query for results in DB
-        ResultSet results = DataBase.DButils.runQueryForResult(DataBase.CRUD.Read.isCustomerExists, params);
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.isCustomerExists, params);
         // Part 3 - check results
-        return DButils.CheckLoginResults(results);
+        return dButils.CheckLoginResults(results);
     }
 
     /**
@@ -49,9 +49,9 @@ public class CustomersDB_DAO implements CustomersDAO {
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,customerID);
         // Part 2 - run query for results in DB
-        ResultSet results = DataBase.DButils.runQueryForResult(Read.isCustomerIdExists, params);
+        ResultSet results = dButils.runQueryForResult(Read.isCustomerIdExists, params);
         // Part 3 - check results
-        return DButils.CheckLoginResults(results);
+        return dButils.CheckLoginResults(results);
     }
 
     /**
@@ -65,7 +65,7 @@ public class CustomersDB_DAO implements CustomersDAO {
         customers.add(customer);
         // Part 1 - Prepare Hashmap and insert customer into DB
         Map<Integer,Object> params = PrepareParamsForAddCustomer(customers);
-        if(DButils.runQueryWithMap(DataBase.CRUD.Create.insertCustomer,params) ) {
+        if(dButils.runQueryWithMap(DataBase.CRUD.Create.insertCustomer,params) ) {
             if(customer.getCoupons() == null){
                 return true;
             }
@@ -81,8 +81,8 @@ public class CustomersDB_DAO implements CustomersDAO {
             params.clear();
             params = CouponsDB_DAO.PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
             // Prepare multiple insert SQL statement
-            String sql = sqlInsertMultipleValues(customer.getCoupons().size(), SQLinsertMultipleValues.CustomerVsCoupon);
-            return runQueryWithMap(sql, params);
+            String sql = dButils.sqlInsertMultipleValues(customer.getCoupons().size(), SQLinsertMultipleValues.CustomerVsCoupon);
+            return dButils.runQueryWithMap(sql, params);
         }
         return false;
     }
@@ -121,7 +121,7 @@ public class CustomersDB_DAO implements CustomersDAO {
         // Prepare Hashmap and update customer in DB
         Map<Integer,Object> params = PrepareParamsForAddCustomer(customers);
         params.put(5,customer.getId());
-        return DButils.runQueryWithMap(DataBase.CRUD.Update.updateCustomer,params);
+        return dButils.runQueryWithMap(DataBase.CRUD.Update.updateCustomer,params);
             // Todo - Part 3 - update customer coupons in DB?
     }
 
@@ -137,7 +137,7 @@ public class CustomersDB_DAO implements CustomersDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1,customerID);
         // Part 2 - delete customer from DB
-        return runQueryWithMap(Delete.deleteCustomer,params);
+        return dButils.runQueryWithMap(Delete.deleteCustomer,params);
     }
 
 
@@ -146,11 +146,11 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return an ArrayList of 'Customer' class items if succeeded, 'null' if failed or if no companies exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
+    public ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
         // Part 1 - Get customers - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
-        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getAllCustomers,params);
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getAllCustomers,params);
 
         // Part 2 - add results to customer list
         return ConvertResultSetToCustomerArray(results);
@@ -167,7 +167,7 @@ public class CustomersDB_DAO implements CustomersDAO {
         // Part 1 - Get customer - query from DB
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,customerID);
-        ResultSet results = DButils.runQueryForResult(DataBase.CRUD.Read.getOneCustomer,params);
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getOneCustomer,params);
 
         // Part 2 - add results to customer list
         ArrayList<Customer> customers = ConvertResultSetToCustomerArray(results);
@@ -184,7 +184,7 @@ public class CustomersDB_DAO implements CustomersDAO {
      * @return ArrayList<Customer> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static ArrayList<Customer> ConvertResultSetToCustomerArray(ResultSet results) throws CouponSystemException {
+    public ArrayList<Customer> ConvertResultSetToCustomerArray(ResultSet results) throws CouponSystemException {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
             while (results.next()) {
@@ -196,7 +196,7 @@ public class CustomersDB_DAO implements CustomersDAO {
 
                 // Todo - remove coupons section / mark 'null'?
                 // Part 2 - Get coupons for customer - query from DB
-                ArrayList<Coupon> coupons = CouponsDB_DAO.GetCouponsForCustomer(id);
+                ArrayList<Coupon> coupons = couponsDBDao.GetCouponsForCustomer(id);
 
                 // Create a new Customer object in the customerList
                 customers.add(new Customer(id, firstName, lastName, email, password, coupons));

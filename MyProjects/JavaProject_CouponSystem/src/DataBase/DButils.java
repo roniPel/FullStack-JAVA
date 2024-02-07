@@ -18,7 +18,7 @@ public class DButils {
      * @param password login password
      * @return Map<Integer, Object> params if succeeded, null if failed.
      */
-    public static Map<Integer, Object> PrepareParamsForLoginCheck(String email, String password) {
+    public Map<Integer, Object> PrepareParamsForLoginCheck(String email, String password) {
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,email);
         params.put(2,password);
@@ -31,7 +31,7 @@ public class DButils {
      * @param sql string containing an 'IN' command with a section to be repeated
      * @return String statement if succeeded, null if failed.
      */
-    public static String sqlInsertMultiple_IN_Values(String sql, int numberOfRows) {
+    public String sqlInsertMultiple_IN_Values(String sql, int numberOfRows) {
         String basicCommand;
         String sectionToRepeat;
         String updatedCommand = "";
@@ -58,7 +58,7 @@ public class DButils {
      * @param type string, explaining which type of 'insert' is needed
      * @return String statement if succeeded, null if failed.
      */
-    public static String sqlInsertMultipleValues(int numberOfRows, SQLinsertMultipleValues type) {
+    public String sqlInsertMultipleValues(int numberOfRows, SQLinsertMultipleValues type) {
         String typeSt = type.name();
         return switch (typeSt) {
             case "Coupon" -> createRepeatStatement(Create.insertCoupon, numberOfRows);
@@ -77,7 +77,7 @@ public class DButils {
      * @param numberOfRows number of times to 'repeat' the insert line
      * @return concatenated String statement if succeeded, null if failed.
      */
-    private static String createRepeatStatement(String sql, int numberOfRows) {
+    private String createRepeatStatement(String sql, int numberOfRows) {
         String basicCommand;
         String sectionToRepeat;
         String updatedCommand = "";
@@ -104,7 +104,7 @@ public class DButils {
      * @param params Map with parameters to insert into the SQL statement
      * @return true if succeeded running query, false if failed.
      */
-    public static boolean runQueryWithMap(String sql, Map<Integer, Object> params) throws CouponSystemException {
+    public boolean runQueryWithMap(String sql, Map<Integer, Object> params) throws CouponSystemException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -136,7 +136,7 @@ public class DButils {
      * @param params Map<Integer,Object> used to update the prepared statement
      * @return PreparedStatement statement with values from the 'params' map
      */
-    private static PreparedStatement fillInPreparedStatementFromParams(PreparedStatement preparedStatement,Map<Integer, Object> params) throws CouponSystemException {
+    private PreparedStatement fillInPreparedStatementFromParams(PreparedStatement preparedStatement,Map<Integer, Object> params) throws CouponSystemException {
         for (Map.Entry<Integer, Object> entry : params.entrySet()) {
             Integer key = entry.getKey();
             Object value = entry.getValue();
@@ -171,7 +171,7 @@ public class DButils {
      * @param params Map with parameters to insert into the SQL statement
      * @return 'ResultSet' objects with results if succeeded running query, null if failed.
      */
-    public static ResultSet runQueryForResult(String sql, Map<Integer,Object> params) throws CouponSystemException {
+    public ResultSet runQueryForResult(String sql, Map<Integer,Object> params) throws CouponSystemException {
         Connection connection = null;
 
         try {
@@ -223,7 +223,7 @@ public class DButils {
      * @return true if user exists (login results are true), false if the email + password combo are incorrect.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public static boolean CheckLoginResults(ResultSet results) throws CouponSystemException {
+    public boolean CheckLoginResults(ResultSet results) throws CouponSystemException {
         int numberOfReturns = -1;
         try {
             if(results.next()) {

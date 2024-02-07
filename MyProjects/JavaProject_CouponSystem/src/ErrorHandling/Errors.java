@@ -20,6 +20,10 @@ public enum Errors {
     CUSTOMER_DOES_NOT_EXIST("Customer doesn't exist in the system. \n"),
 
     // Coupon errors
+    COUPON_EXISTS_FOR_COMPANY("The coupon already exists for this company. \n"),
+    COUPON_DOES_NOT_BELONG_TO_COMPANY("The coupon doesn't belong to this company. \n"),
+
+    COUPON_COMPANY_ID_INCORRECT("The coupon's company ID doesn't match login details. \n"),
     COUPON_DOES_NOT_EXIST("Coupon doesn't exist in the system. \n");
 
     private final String message;

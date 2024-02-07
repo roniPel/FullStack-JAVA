@@ -39,7 +39,7 @@ public interface CouponsDAO {
      * @return ArrayList<Coupon> if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {return null;};
+    ArrayList<Coupon> GetAllCoupons() throws CouponSystemException;
 
 
     /**

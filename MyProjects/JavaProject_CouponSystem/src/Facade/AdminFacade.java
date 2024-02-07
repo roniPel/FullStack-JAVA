@@ -11,19 +11,19 @@ import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class AdminFacade extends  ClientFacade{
+public class AdminFacade extends ClientFacade{
     private final String email = "admin@admin.com";
     private final String password = "admin";
     
-    private CompaniesDAO companiesDAO = new CompaniesDB_DAO();
-    private CustomersDAO customersDAO = new CustomersDB_DAO();
+    private final CompaniesDAO companiesDAO = new CompaniesDB_DAO();
+    private final CustomersDAO customersDAO = new CustomersDB_DAO();
+
+    // Todo - Delete couponsDAO if not in use
     private CouponsDAO couponsDAO = new CouponsDB_DAO();
 
-    //Todo - finish all class methods
 
     public AdminFacade() {
     }
@@ -105,7 +105,7 @@ public class AdminFacade extends  ClientFacade{
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Company> GetAllCompanies() throws CouponSystemException {
-        ArrayList<Company> companies = CompaniesDAO.GetAllCompanies();
+        ArrayList<Company> companies = companiesDAO.GetAllCompanies();
         // Part 1 - Verify companies exist in DB
         if(companies == null) {
             throw new CouponSystemException(Errors.TABLE_IS_EMPTY.getMessage());
@@ -186,7 +186,7 @@ public class AdminFacade extends  ClientFacade{
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Customer> GetAllCustomers() throws CouponSystemException {
-        ArrayList<Customer> customers = CustomersDAO.GetAllCustomers();
+        ArrayList<Customer> customers = customersDAO.GetAllCustomers();
         // Part 1 - Verify customers exist in DB
         if(customers == null) {
             throw new CouponSystemException(Errors.TABLE_IS_EMPTY.getMessage());

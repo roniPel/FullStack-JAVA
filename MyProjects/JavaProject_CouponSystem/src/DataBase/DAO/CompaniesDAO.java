@@ -17,6 +17,14 @@ public interface CompaniesDAO {
     boolean IsCompanyExists(String email, String password) throws CouponSystemException;
 
     /**
+     * Returns a company's ID based on email (unique)
+     * @param email company's email
+     * @return companyID if company exists, -1 if company doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    int GetCompanyIDByEmail(String email) throws CouponSystemException;
+
+    /**
      * Checks whether a company exists in the DB
      * @param companyID company's id
      * @return true if company exists, false if company doesn't exist.
@@ -56,9 +64,7 @@ public interface CompaniesDAO {
      * @return an ArrayList of 'Company' class items if succeeded, 'null' if failed or if no companies exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    static ArrayList<Company> GetAllCompanies() throws CouponSystemException {
-        return CompaniesDB_DAO.GetAllCompanies();
-    }
+     ArrayList<Company> GetAllCompanies() throws CouponSystemException;
 
 
     /**

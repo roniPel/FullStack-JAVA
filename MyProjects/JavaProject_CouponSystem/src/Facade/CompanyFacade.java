@@ -3,45 +3,175 @@ package Facade;
 import Beans.Category;
 import Beans.Company;
 import Beans.Coupon;
+import DataBase.DAO.CompaniesDAO;
+import DataBase.DAO.CouponsDAO;
+import DataBase.DAO.CustomersDAO;
+import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
+import DataBase.DAO.DB_DAO.CouponsDB_DAO;
+import DataBase.DAO.DB_DAO.CustomersDB_DAO;
+import ErrorHandling.CouponSystemException;
+import ErrorHandling.Errors;
 
 import java.util.ArrayList;
 
 public class CompanyFacade extends ClientFacade{
-    //Todo - finish all class methods
+
+    private final CompaniesDAO companiesDAO = new CompaniesDB_DAO();
+
+    //Todo - delete customersDAO if not used
+    private final CustomersDAO customersDAO = new CustomersDB_DAO();
+    private final CouponsDAO couponsDAO = new CouponsDB_DAO();
     private int companyID;  // Company ID belonging to the company that logged in
+    //Todo - test company facade
 
     public CompanyFacade(int companyID) {
         this.companyID = companyID;
     }
 
+
+    /**
+     * Checks whether a user exists in the DB
+     * @param email user's email
+     * @param password user's password
+     * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     @Override
-    public boolean Login(String email, String password) {
-        return false;
-    }
-    public boolean AddCoupon(Coupon coupon) {
-        return false;
-    }
-
-    public boolean UpdateCoupon(Coupon coupon) {
+    public boolean Login(String email, String password) throws CouponSystemException {
+        if(companiesDAO.IsCompanyExists(email,password) ) {
+            this.companyID = companiesDAO.GetCompanyIDByEmail(email);
+            return true;
+        }
         return false;
     }
 
-    public static boolean DeleteCoupon(int couponID) {
-        return false;
+
+    /**
+     * Adds a coupon to the DB - based on the details listed in the param
+     * @param coupon a 'Coupon' class instance containing coupon details
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public boolean AddCoupon(Coupon coupon) throws CouponSystemException {
+        // Can't add a coupon with same Title as coupon belonging to this company (based on this.companyID)
+        // Part 1 - Check there is no coupon with same title listed on companyID
+        ArrayList<Coupon> coupons = companiesDAO.GetOneCompany(this.companyID).getCoupons();
+        for(Coupon coup: coupons) {
+            if(coup.getTitle().equals(coupon.getTitle())) {
+                throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_COMPANY.getMessage());
+            }
+        }
+        // Part 2 - verify companyID listed in coupon matches logged on company
+        if(coupon.getCompanyID() == this.companyID) {
+            // Part 3 - add coupon to company
+            return couponsDAO.AddCoupon(coupon);
+        }
+        else {
+            throw new CouponSystemException(Errors.COUPON_COMPANY_ID_INCORRECT.getMessage());
+        }
     }
 
-    public ArrayList<Coupon> GetAllCompanyCoupons() {
-        return null;
+
+    /**
+     * Update Coupon in DB - based on the details listed in the param
+     * @param coupon a 'Coupon' object used to update an object in the DB
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public boolean UpdateCoupon(Coupon coupon) throws CouponSystemException {
+        // Verify can't update company ID - option not available in DB
+        // Verify can't update coupon ID - option not available in DB
+        // Part 1 - Verify coupon is linked to the company logged on (company ID)
+        if(coupon.getCompanyID() == this.companyID) {
+            // Part 2 - add coupon to company
+            return couponsDAO.UpdateCoupon(coupon);
+        }
+        else {
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_BELONG_TO_COMPANY.getMessage());
+        }
     }
 
-    public ArrayList<Coupon> GetCompanyCouponsByCategory(Category category) {
-        return null;
-    }
-    public ArrayList<Coupon> GetCompanyCouponsByPrice(Double maxPrice) {
-        return null;
+
+    /**
+     * Deletes a Coupon in DB - based on the details listed in the param
+     * @param couponID the ID of the coupon to be deleted in the DB
+     * @return true if succeeded, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public boolean DeleteCoupon(int couponID) throws CouponSystemException {
+        // Delete linked coupon purchases - performed by DB with cascade config.
+        // Part 1 - Verify coupon exists in DB
+        Coupon coupon = couponsDAO.GetOneCoupon(couponID);
+        if(coupon == null) {
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_EXIST.getMessage());
+        }
+        // Part 2 - Verify coupon is linked to the company logged on (company ID)
+        if(coupon.getCompanyID() == this.companyID) {
+            // Part 3 - Delete coupon from DB
+            return couponsDAO.DeleteCoupon(couponID);
+        }
+        else {
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_BELONG_TO_COMPANY.getMessage());
+        }
     }
 
-    public Company GetCompanyDetails() {
-        return null;
+
+    /**
+     * Get all the coupons listed in DB for a specific company
+     * @return ArrayList<Coupon> if succeeded, null if no coupons were found.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetAllCompanyCoupons() throws CouponSystemException {
+        return companiesDAO.GetOneCompany(this.companyID).getCoupons();
+    }
+
+
+    /**
+     * Get all the coupons listed in DB for a specific company belonging to a specific category
+     * @param category - category of coupons to add to coupon list
+     * @return ArrayList<Coupon> if succeeded, null if no coupons matching category were found.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetCompanyCouponsByCategory(Category category) throws CouponSystemException {
+        // Part 1 - get all company coupons
+        ArrayList<Coupon> coupons = GetAllCompanyCoupons();
+        // Part 2 - iterate of company coupons and add relevant coupons to couponsByCategory list
+        ArrayList<Coupon> couponsByCategory = new ArrayList<>();
+        for(Coupon coupon: coupons) {
+            if(coupon.getCategory().equals(category)) {
+                couponsByCategory.add(coupon);
+            }
+        }
+        return couponsByCategory;
+    }
+
+
+    /**
+     * Get all the coupons listed in DB for a specific company up to a max price
+     * @param maxPrice - maximum price of coupons to add to coupon list
+     * @return ArrayList<Coupon> if succeeded, null if no coupons matching max price were found.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetCompanyCouponsByPrice(Double maxPrice) throws CouponSystemException {
+        // Part 1 - get all company coupons
+        ArrayList<Coupon> coupons = GetAllCompanyCoupons();
+        // Part 2 - iterate of company coupons and add relevant coupons to couponsByPrice list
+        ArrayList<Coupon> couponsByMaxPrice = new ArrayList<>();
+        for(Coupon coupon: coupons) {
+            if(coupon.getPrice() <= maxPrice) {
+                couponsByMaxPrice.add(coupon);
+            }
+        }
+        return couponsByMaxPrice;
+    }
+
+
+    /**
+     * Gets a company (according to the company ID belonging to the company logged on)
+     * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public Company GetCompanyDetails() throws CouponSystemException {
+        return companiesDAO.GetOneCompany(this.companyID);
     }
 }
