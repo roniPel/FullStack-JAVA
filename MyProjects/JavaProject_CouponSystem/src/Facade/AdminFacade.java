@@ -21,8 +21,6 @@ public class AdminFacade extends ClientFacade{
     private final CompaniesDAO companiesDAO = new CompaniesDB_DAO();
     private final CustomersDAO customersDAO = new CustomersDB_DAO();
 
-    // Todo - Delete couponsDAO if not in use
-    private CouponsDAO couponsDAO = new CouponsDB_DAO();
 
 
     public AdminFacade() {

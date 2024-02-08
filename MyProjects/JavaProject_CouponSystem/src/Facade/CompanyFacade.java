@@ -18,11 +18,10 @@ public class CompanyFacade extends ClientFacade{
 
     private final CompaniesDAO companiesDAO = new CompaniesDB_DAO();
 
-    //Todo - delete customersDAO if not used
-    private final CustomersDAO customersDAO = new CustomersDB_DAO();
     private final CouponsDAO couponsDAO = new CouponsDB_DAO();
     private int companyID;  // Company ID belonging to the company that logged in
-    //Todo - test company facade
+
+    //Todo - test facade
 
     public CompanyFacade(int companyID) {
         this.companyID = companyID;
@@ -127,7 +126,7 @@ public class CompanyFacade extends ClientFacade{
 
 
     /**
-     * Get all the coupons listed in DB for a specific company belonging to a specific category
+     * Get all the coupons listed in DB for the logged on company belonging to a specific category
      * @param category - category of coupons to add to coupon list
      * @return ArrayList<Coupon> if succeeded, null if no coupons matching category were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
@@ -135,7 +134,7 @@ public class CompanyFacade extends ClientFacade{
     public ArrayList<Coupon> GetCompanyCouponsByCategory(Category category) throws CouponSystemException {
         // Part 1 - get all company coupons
         ArrayList<Coupon> coupons = GetAllCompanyCoupons();
-        // Part 2 - iterate of company coupons and add relevant coupons to couponsByCategory list
+        // Part 2 - iterate over company coupons and add relevant coupons to couponsByCategory list
         ArrayList<Coupon> couponsByCategory = new ArrayList<>();
         for(Coupon coupon: coupons) {
             if(coupon.getCategory().equals(category)) {
@@ -147,7 +146,7 @@ public class CompanyFacade extends ClientFacade{
 
 
     /**
-     * Get all the coupons listed in DB for a specific company up to a max price
+     * Get all the coupons listed in DB for the logged on company up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
      * @return ArrayList<Coupon> if succeeded, null if no coupons matching max price were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
@@ -155,7 +154,7 @@ public class CompanyFacade extends ClientFacade{
     public ArrayList<Coupon> GetCompanyCouponsByPrice(Double maxPrice) throws CouponSystemException {
         // Part 1 - get all company coupons
         ArrayList<Coupon> coupons = GetAllCompanyCoupons();
-        // Part 2 - iterate of company coupons and add relevant coupons to couponsByPrice list
+        // Part 2 - iterate over company coupons and add relevant coupons to couponsByMaxPrice list
         ArrayList<Coupon> couponsByMaxPrice = new ArrayList<>();
         for(Coupon coupon: coupons) {
             if(coupon.getPrice() <= maxPrice) {

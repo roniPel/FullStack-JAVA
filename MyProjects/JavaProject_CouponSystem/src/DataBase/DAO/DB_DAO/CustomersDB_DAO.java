@@ -39,6 +39,30 @@ public class CustomersDB_DAO implements CustomersDAO {
     }
 
     /**
+     * Returns a customer's ID based on email (unique)
+     * @param email customer's email
+     * @return customerID if customer exists, -1 if customer doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public int GetCustomerIDByEmail(String email) throws CouponSystemException {
+        // Part 1 - Prepare params
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,email);
+        // Part 2 - run query for results in DB
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getCustomerIdByEmail,params);
+        // Part 3 - check results and return companyID
+        int customerID = -1;
+        try {
+            while(results.next()) {
+                customerID = results.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return customerID;
+    }
+
+    /**
      * Checks whether a customer exists in the DB
      * @param customerID customer's id
      * @return true if customer exists, false if customer doesn't exist.
@@ -206,5 +230,43 @@ public class CustomersDB_DAO implements CustomersDAO {
             throw new CouponSystemException(SQL_ERROR.getMessage()+e);
         }
         return customers;
+    }
+
+
+    /**
+     * Creates a map of customerIDs vs couponsID listed in DB.
+     * @return Map<Integer, Integer> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public Map<Integer, Integer> CustomerIDsVScouponIDs() throws CouponSystemException {
+        // Part 1 - Get ResultSet of CustomerVSCoupons table from DB
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = dButils.runQueryForResult(Read.getCustomersVsCoupons,params);
+
+        // Part 2 - Insert results into customerIDsVScouponIDs map and return
+        return InsertResultsToMapCustVSCoup(results);
+    }
+
+    /**
+     * Converts a result set from SQL DB to a map of customerIDs vs couponsID
+     * @param results result set containing all CustomersVScoupons from DB
+     * @return Map<Integer, Integer> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private Map<Integer, Integer> InsertResultsToMapCustVSCoup(ResultSet results) throws CouponSystemException {
+        Map<Integer, Integer> customerIDsVScouponIDs = new HashMap<>();
+        try {
+            while (results.next()) {
+                int customerID = results.getInt(1);
+                int couponID  = results.getInt(2);
+                // Insert into customerIDsVScouponIDs map
+                customerIDsVScouponIDs.put(customerID,couponID);
+            }
+        }
+        catch(SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return customerIDsVScouponIDs;
     }
 }

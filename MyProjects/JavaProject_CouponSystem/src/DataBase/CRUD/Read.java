@@ -4,6 +4,8 @@ import DataBase.DBmanager;
 
 public class Read {
 
+    //Todo - delete strings that are not in use
+
     // Company
     public static final String isCompanyExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? AND password = ? ;";
@@ -37,13 +39,13 @@ public class Read {
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".coupons;";
     public static final String getAllCoupons =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons;";
-
     public static final String getCouponsForCompany =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ?;";
-
     public static final String getCouponsForCustomer =
             "SELECT * FROM "+DBmanager.SQL_DB+".customers_vs_coupons WHERE customerID = ?;";
 
+    public static final String getCouponIdByTitle =
+            "SELECT id FROM "+ DBmanager.SQL_DB+".coupons WHERE title = ? ;";
     public static final String getCouponsById =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?);";
 
@@ -54,6 +56,8 @@ public class Read {
 
 
     // Customer
+    public static final String getCustomerIdByEmail =
+            "SELECT id FROM "+ DBmanager.SQL_DB+".customers WHERE email = ? ;";
     public static final String isCustomerExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".customers WHERE email = ? AND password = ? ;";
 
@@ -71,6 +75,8 @@ public class Read {
     public static final String countCustomersVsCoupons =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".customers_vs_coupons;";
 
+    public static final String getCustomersVsCoupons =
+            "SELECT * FROM "+DBmanager.SQL_DB+".customers_vs_coupons;";
     public static final String getCouponIDCustomersVsCoupons =
             "SELECT couponID FROM "+DBmanager.SQL_DB+".customers_vs_coupons;";
 

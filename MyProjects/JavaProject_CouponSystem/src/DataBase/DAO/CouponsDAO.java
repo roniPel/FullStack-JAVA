@@ -15,6 +15,13 @@ public interface CouponsDAO {
      */
     boolean AddCoupon(Coupon coupon) throws CouponSystemException;
 
+    /**
+     * Returns a coupon's ID based on title (unique)
+     * @param title coupon's title
+     * @return couponID if coupon exists, -1 if coupon doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    int GetCouponIDByTitle(String title) throws CouponSystemException;
 
     /**
      * Update Coupon in DB - based on the details listed in the param
@@ -49,6 +56,15 @@ public interface CouponsDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     Coupon GetOneCoupon(int couponID) throws CouponSystemException;
+
+
+    /**
+     * Get all the coupons listed in DB for a specific customer
+     * @param customerID ID belonging to the customer the coupons belong to
+     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException;
 
 
     /**

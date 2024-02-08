@@ -71,6 +71,30 @@ public class CouponsDB_DAO implements CouponsDAO {
         return params;
     }
 
+    /**
+     * Returns a coupon's ID based on title (unique)
+     * @param title coupon's title
+     * @return couponID if coupon exists, -1 if coupon doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public int GetCouponIDByTitle(String title) throws CouponSystemException {
+        // Part 1 - Prepare params
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,title);
+        // Part 2 - run query for results in DB
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getCouponIdByTitle,params);
+        // Part 3 - check results and return couponID
+        int couponID = -1;
+        try {
+            while(results.next()) {
+                couponID = results.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return couponID;
+    }
+
 
     /**
      * Provides coupon's category ID from DB - based on the details listed in the param

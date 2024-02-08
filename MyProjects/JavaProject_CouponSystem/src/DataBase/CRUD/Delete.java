@@ -4,6 +4,8 @@ import DataBase.DBmanager;
 
 public class Delete {
 
+    //Todo - delete strings that are not in use
+
     // Company
     public static final String deleteCompany =
             "DELETE FROM `"+ DBmanager.SQL_DB+"`.`companies` WHERE (`id` = ?);";

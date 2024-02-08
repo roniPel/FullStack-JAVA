@@ -5,6 +5,7 @@ import DataBase.DAO.DB_DAO.CustomersDB_DAO;
 import ErrorHandling.CouponSystemException;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface CustomersDAO {
     /**
@@ -15,6 +16,14 @@ public interface CustomersDAO {
      * @throws CouponSystemException - If we get any SQL exception.  Details are provided
      */
     boolean IsCustomerExists(String email, String password) throws CouponSystemException;
+
+    /**
+     * Returns a customer's ID based on email (unique)
+     * @param email customer's email
+     * @return customerID if customer exists, -1 if customer doesn't exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    int GetCustomerIDByEmail(String email) throws CouponSystemException;
 
     /**
      * Checks whether a customer exists in the DB
@@ -62,4 +71,11 @@ public interface CustomersDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     Customer GetOneCustomer(int customerID) throws CouponSystemException;
+
+    /**
+     * Creates a map of customerIDs vs couponsID listed in DB.
+     * @return Map<Integer, Integer> if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    Map<Integer, Integer> CustomerIDsVScouponIDs() throws CouponSystemException;
 }
