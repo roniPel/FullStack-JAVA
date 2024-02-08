@@ -6,7 +6,7 @@ import Beans.Coupon;
 import Beans.Customer;
 import DataBase.CRUD.Read;
 import DataBase.DButils;
-import DataBase.SQLinsertMultipleValues;
+import DataBase.SQLmultipleValues;
 import ErrorHandling.CouponSystemException;
 import Utils.DateFactory;
 
@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 
@@ -57,7 +56,7 @@ public class DB_DAO_MockData {
                     // Check if 'customers_vs_coupons' table is empty
                     if(countItemsInTable(Read.countCustomersVsCoupons) == 0) {
                         // Prepare multiple values SQL String
-                        String insertCustVsCoupMulti = dButils.sqlInsertMultipleValues(customers.size(), SQLinsertMultipleValues.CustomerVsCoupon);
+                        String insertCustVsCoupMulti = dButils.sqlInsertMultipleValues(customers.size(), SQLmultipleValues.CustomerVsCoupon);
                         return dButils.runQueryWithMap(insertCustVsCoupMulti, params);
                     }
                 }
@@ -124,7 +123,7 @@ public class DB_DAO_MockData {
             params.put(counter++,"Pass"+i);
         }
         // Prepare multiple insert SQL statement
-        String sql = dButils.sqlInsertMultipleValues(numberOfCustomers,SQLinsertMultipleValues.Customer);
+        String sql = dButils.sqlInsertMultipleValues(numberOfCustomers, SQLmultipleValues.Customer);
         // Run query in DB
         if(dButils.runQueryWithMap(sql, params));
         else {
@@ -151,7 +150,7 @@ public class DB_DAO_MockData {
             counter++;
         }
         // Prepare multiple insert SQL statement
-        String sql = dButils.sqlInsertMultipleValues(Category.values().length, SQLinsertMultipleValues.Category);
+        String sql = dButils.sqlInsertMultipleValues(Category.values().length, SQLmultipleValues.Category);
 
         // Run query in DB
         if(dButils.runQueryWithMap(sql, params))
@@ -178,7 +177,7 @@ public class DB_DAO_MockData {
             params.put(counter++,"PassComp"+i);
         }
         // Prepare multiple insert SQL statement
-        String sql = dButils.sqlInsertMultipleValues(numberOfCompanies, SQLinsertMultipleValues.Company);
+        String sql = dButils.sqlInsertMultipleValues(numberOfCompanies, SQLmultipleValues.Company);
         // Run query in DB
         if(dButils.runQueryWithMap(sql, params));
         else {
@@ -211,7 +210,7 @@ public class DB_DAO_MockData {
                 // Part 3 - create coupons in DB
 
                 // Prepare multiple insert SQL statement
-                String sql = dButils.sqlInsertMultipleValues(numberOfCouponsePerCompany, SQLinsertMultipleValues.Coupon);
+                String sql = dButils.sqlInsertMultipleValues(numberOfCouponsePerCompany, SQLmultipleValues.Coupon);
 
                 // Add coupons for each company
                 for(Company company: companies) {

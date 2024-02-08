@@ -1,5 +1,5 @@
 package DataBase;
 
-public enum SQLinsertMultipleValues {
+public enum SQLmultipleValues {
     Coupon, Company, Category, Customer, CustomerVsCoupon;
 }

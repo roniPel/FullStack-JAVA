@@ -25,6 +25,7 @@ public class DButils {
         return params;
     }
 
+
     /**
      * Creates an SQL statement to insert multiple values into an 'IN' statement, in the DB
      * @param numberOfRows number of times to 'repeat' the insert line
@@ -58,7 +59,7 @@ public class DButils {
      * @param type string, explaining which type of 'insert' is needed
      * @return String statement if succeeded, null if failed.
      */
-    public String sqlInsertMultipleValues(int numberOfRows, SQLinsertMultipleValues type) {
+    public String sqlInsertMultipleValues(int numberOfRows, SQLmultipleValues type) {
         String typeSt = type.name();
         return switch (typeSt) {
             case "Coupon" -> createRepeatStatement(Create.insertCoupon, numberOfRows);
@@ -103,6 +104,7 @@ public class DButils {
      * @param sql SQL statement to send to DB
      * @param params Map with parameters to insert into the SQL statement
      * @return true if succeeded running query, false if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public boolean runQueryWithMap(String sql, Map<Integer, Object> params) throws CouponSystemException {
         Connection connection = null;
@@ -135,6 +137,7 @@ public class DButils {
      * @param preparedStatement SQL prepared statements that needs to be updated
      * @param params Map<Integer,Object> used to update the prepared statement
      * @return PreparedStatement statement with values from the 'params' map
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private PreparedStatement fillInPreparedStatementFromParams(PreparedStatement preparedStatement,Map<Integer, Object> params) throws CouponSystemException {
         for (Map.Entry<Integer, Object> entry : params.entrySet()) {
@@ -170,6 +173,7 @@ public class DButils {
      * @param sql SQL statement to send to DB
      * @param params Map with parameters to insert into the SQL statement
      * @return 'ResultSet' objects with results if succeeded running query, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ResultSet runQueryForResult(String sql, Map<Integer,Object> params) throws CouponSystemException {
         Connection connection = null;

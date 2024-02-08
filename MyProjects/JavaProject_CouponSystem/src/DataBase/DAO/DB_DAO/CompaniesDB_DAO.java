@@ -6,9 +6,8 @@ import DataBase.CRUD.Delete;
 import DataBase.CRUD.Read;
 import DataBase.DAO.CompaniesDAO;
 import DataBase.DButils;
-import DataBase.SQLinsertMultipleValues;
+import DataBase.SQLmultipleValues;
 import ErrorHandling.CouponSystemException;
-import ErrorHandling.Errors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -127,7 +126,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 return true;
             }
             // Part 2 - prepare a multi statement and insert coupons to DB
-            String sql = dButils.sqlInsertMultipleValues(company.getCoupons().size(), SQLinsertMultipleValues.Coupon);
+            String sql = dButils.sqlInsertMultipleValues(company.getCoupons().size(), SQLmultipleValues.Coupon);
             params.clear();
             params = couponsDBDao.PrepareParamsForAddCoupons(company.getCoupons());
             // Insert coupons into DB:
