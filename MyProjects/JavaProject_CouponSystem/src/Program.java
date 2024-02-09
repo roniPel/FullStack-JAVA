@@ -1,24 +1,12 @@
-import Beans.Category;
-import Beans.Company;
-import Beans.Coupon;
-import Beans.Customer;
-import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
-import DataBase.DAO.DB_DAO.CouponsDB_DAO;
-import DataBase.DAO.DB_DAO.CustomersDB_DAO;
-import DataBase.DAO.DB_DAO.DB_DAO_MockData;
-import DataBase.DButils;
-import DataBase.InitDB;
 import ErrorHandling.CouponSystemException;
 import Facade.AdminFacade;
+import Test.Test;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import static DataBase.DAO.DB_DAO.DB_DAO_MockData.*;
-import static Utils.DateFactory.getLocalDate;
-
-public class Main {
+public class Program {
     public static void main(String[] args) throws CouponSystemException {
+        //Todo - test the system
+        // Test testAll = new Test();
+
         try {
             // Create DB + fill in data
 //            InitDB.InitiateDB();
