@@ -8,7 +8,7 @@ public class Update {
 
     // Company
     public static final String updateCompany =
-            "UPDATE `"+ DBmanager.SQL_DB+"`.`companies` SET `name` = ?, " +
+            "UPDATE `"+ DBmanager.SQL_DB+"`.`companies` SET " +
                     "`email` = ?, `password` = ? WHERE (`id` = ?);";
 
     // Category

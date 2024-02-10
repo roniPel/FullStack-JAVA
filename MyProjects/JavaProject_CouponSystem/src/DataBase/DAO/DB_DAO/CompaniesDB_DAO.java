@@ -163,10 +163,10 @@ public class CompaniesDB_DAO implements CompaniesDAO {
      */
     public boolean UpdateCompany(Company company) throws CouponSystemException {
         // Part 1 - Prepare params hashmap
-        ArrayList<Company> companies = new ArrayList<>();
-        companies.add(company);
-        Map<Integer,Object> params = PrepareParamsForAddCompany(companies);
-        params.put(4,company.getId());
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,company.getEmail());
+        params.put(2,company.getPassword());
+        params.put(3,company.getId());
         // Part 2 - Update company in DB
         return dButils.runQueryWithMap(DataBase.CRUD.Update.updateCompany, params);
         // Todo - Part 3 - update company coupons in DB?
