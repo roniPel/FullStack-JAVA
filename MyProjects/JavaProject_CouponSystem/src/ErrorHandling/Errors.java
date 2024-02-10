@@ -5,12 +5,13 @@ public enum Errors {
     // Database errors
     SQL_ERROR("Coupon System encountered an SQL error! \n"),
     DUPLICATE_ENTRY("The value inserted (name/ email/ user) already exist in the system. \n"),
+    TABLE_IS_EMPTY("The requested table is empty. \n"),
 
     // General errors
-    TABLE_IS_EMPTY("The requested table is empty. \n"),
     INCORRECT_LOGIN_DETAILS("Incorrect username and/or password. \n"),
     THREAD_ERROR("There is a thread/multithreading problem. \n"),
     EMPTY_OR_NULL("Item is empty or Null. \n"),
+    GENERAL_SYSTEM_ERROR("The coupon system encountered an error.  Please find details below: \n"),
 
     // Company errors
     COMPANY_DOES_NOT_EXIST("Company doesn't exist in the system. \n"),
