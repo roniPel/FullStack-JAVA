@@ -208,7 +208,8 @@ public class Test {
         mockData.FillInCustomerVsCouponsTable();
     }
 
-    public void GetLogonDetails() {
+    //Todo - Delete below function?
+    /*public void GetLogonDetails() {
         if(!isLoggedOn) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Please insert email: ");
@@ -217,6 +218,6 @@ public class Test {
             this.password = scanner.nextLine();
             scanner.close();
         }
-    }
+    }*/
 
 }
