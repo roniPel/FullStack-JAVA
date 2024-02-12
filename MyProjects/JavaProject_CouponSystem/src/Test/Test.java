@@ -1,8 +1,5 @@
 package Test;
 
-import Beans.Company;
-import Beans.Customer;
-import DataBase.DAO.CustomersDAO;
 import DataBase.DAO.DB_DAO.DB_DAO_MockData;
 import DataBase.InitDB;
 import ErrorHandling.CouponSystemException;
@@ -15,16 +12,17 @@ import Facade.LoginManager.ClientType;
 import Facade.LoginManager.LoginManager;
 import Job.CouponExpirationDailyJob;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Test {
     public LoginManager loginManager = LoginManager.getInstance();
     public boolean isLoggedOn = false;
     private Map<String, String> emailsPassowrdsMap;
     private Map<String, Object> mockDataMap;
+    private Methods_Admin adminMethods = new Methods_Admin();
+    private Methods_Company companyMethods = new Methods_Company();
+    private Methods_Customer customerMethods = new Methods_Customer();
     private CouponExpirationDailyJob dailyJob;
 
     //Todo - fill in tables with random data (using 'DB_DAO_MockData' class)
@@ -64,20 +62,20 @@ public class Test {
             // Action 2 - Connect as Admin + perform all methods
             email = emailsPassowrdsMap.get("adminEmail");
             password = emailsPassowrdsMap.get("adminPassword");
-            AdminLogon_RunAllMethods(email,password);
+            Logon_RunAllMethods(email,password,ClientType.Administrator);
 
             // Action 3 - Connect as Company + perform all methods
             email = emailsPassowrdsMap.get("companyEmail");
             password = emailsPassowrdsMap.get("companyPassword");
-            CompanyLogon_RunAllMethods(email,password);
+            Logon_RunAllMethods(email,password,ClientType.Company);
 
             // Action 4 - Connect as Customer + perform all methods
             email = emailsPassowrdsMap.get("customerEmail");
             password = emailsPassowrdsMap.get("customerPassword");
-            CustomerLogon_RunAllMethods(email,password);
+            Logon_RunAllMethods(email,password,ClientType.Customer);
 
         } catch (CouponSystemException e) {
-            throw new CouponSystemException(Errors.GENERAL_SYSTEM_ERROR.getMessage());
+            throw new CouponSystemException(Errors.GENERAL_SYSTEM_ERROR.getMessage()+e);
         }
         StopSystem();
     }
@@ -86,107 +84,81 @@ public class Test {
         // Action 5 - Stop daily job
 
         // Action 6 - Close all connections (required?)
+        System.out.println("That's all, folks!");
+        System.exit(0);
     }
 
-    private void AdminLogon_RunAllMethods(String email, String password) throws CouponSystemException {
-        ClientFacade clientFacade = loginManager.Login(email,password, ClientType.Administrator);
-        if(clientFacade instanceof AdminFacade) {
+    private void Logon_RunAllMethods(String email, String password,ClientType clientType) throws CouponSystemException {
+        ClientFacade clientFacade = loginManager.Login(email,password, clientType);
+        if(CheckFacadeInstance(clientFacade,clientType)) {
             isLoggedOn = true;
-            //Todo - Move methods to separate functions?
-
-            // Method: Get All Companies
-            System.out.println("*** Method: Get All Companies ***");
-            ArrayList<Company> companies = ((AdminFacade) clientFacade).GetAllCompanies();
-            System.out.println(companies);
-            System.out.println();
-
-            // Method: Add Company
-            System.out.println("*** Method: Add Company ***");
-            Company addCompany = new Company(150, "CompanyAddByAdmin","AdminAddComp"+GetrandInt(10)+"@email.com","PassAdmin",null);
-            System.out.println("Added Company: "+ ((AdminFacade) clientFacade).AddCompany(addCompany));
-            System.out.println();
-
-            // Method: Update Company
-            System.out.println("*** Method: Update Company ***");
-            int updateCompId = GetrandInt( companies.size() );
-            Company updatedComp = companies.get(updateCompId);
-            updatedComp.setEmail("AdminUpdateComp"+GetrandInt(10)+"@email.com");
-            updatedComp.setPassword("PassAdmin");
-            System.out.println("Updated Company: "+
-            ((AdminFacade) clientFacade).UpdateCompany(updatedComp));
-            System.out.println();
-
-            // Method: Delete Company
-            System.out.println("*** Method: Delete Company ***");
-            int delCompId = GetrandInt( companies.size() );
-            System.out.println("Deleted Company: "+
-                    ((AdminFacade) clientFacade).DeleteCompany(delCompId) );
-            System.out.println();
-
-            // Method: Get One Company
-            System.out.println("*** Method: Get One Company ***");
-            int getOneCompId = GetrandInt( companies.size() );
-            System.out.println("One Company: "+
-                    ((AdminFacade) clientFacade).GetOneCompany(getOneCompId));
-            System.out.println();
-
-            // Method: Get All Customers
-            System.out.println("*** Method: Get All Customers ***");
-            ArrayList<Customer> customers = ((AdminFacade) clientFacade).GetAllCustomers();
-            System.out.println(customers);
-            System.out.println();
-
-            // Method: Add Customer
-            System.out.println("*** Method: Add Customer ***");
-            Customer addCustomer = new Customer(24,"FirstAdminAdd", "LastAdminAdd","custAdmin@email.com","adminPass",null);
-            System.out.println("Added Customer: "+ ((AdminFacade) clientFacade).AddCustomer(addCustomer));
-            System.out.println();
-
-            // Method: Update Customer
-            System.out.println("*** Method: Update Customer ***");
-            int updateCustId = GetrandInt( customers.size() );
-            Customer updatedCust = new Customer(updateCustId,"UpdatedFirstAdmin", "UpdatedLastAdmin","updatedEmail@email.com","AdminPass",null);
-            System.out.println("Updated Customer: "+
-                    ((AdminFacade) clientFacade).UpdateCustomer(updatedCust));
-            System.out.println();
-
-            // Method: Delete Customer
-            System.out.println("*** Method: Delete Customer ***");
-            int delCustId = GetrandInt( customers.size() );
-            System.out.println("Deleted Customer: "+
-                    ((AdminFacade) clientFacade).DeleteCustomer(delCustId) );
-            System.out.println();
-
-            // Method: Get One Customer
-            System.out.println("*** Method: Get One Customer ***");
-            int getOneCustId = GetrandInt( customers.size() );
-            System.out.println("One Customer: "+
-                    ((AdminFacade) clientFacade).GetOneCustomer(getOneCustId));
-            System.out.println();
+            System.out.println(clientType.toString()+" is logged on. ");
+            // Run all Methods:
+            switch(clientType) {
+                case Administrator:
+                    RunAllMethods_Admin((AdminFacade) clientFacade);
+                    break;
+                case Company:
+                    RunAllMethods_Company((CompanyFacade) clientFacade);
+                    break;
+                case Customer:
+                    RunAllMethods_Customer((CustomerFacade) clientFacade);
+                    break;
+            }
+            isLoggedOn = false;
         }
         else {
             throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS.getMessage());
         }
     }
 
-    private int GetrandInt(int range) {
-        return (int)(Math.random()*range);
+    private void RunAllMethods_Customer(CustomerFacade customerFacade) throws CouponSystemException {
+        customerMethods.PurchaseCoupon(customerFacade);
+        customerMethods.GetCustomerCoupons(customerFacade);
+        customerMethods.GetCustomerCouponsByCategory(customerFacade);
+        customerMethods.GetCustomerCouponsByMaxPrice(customerFacade);
+        customerMethods.GetCustomerDetails(customerFacade);
     }
 
-    private void CompanyLogon_RunAllMethods(String email, String password) throws CouponSystemException {
-        ClientFacade clientFacade = loginManager.Login(email,password, ClientType.Company);
-        if(clientFacade instanceof CompanyFacade) {
-            isLoggedOn = true;
+    private void RunAllMethods_Company(CompanyFacade companyFacade) throws CouponSystemException {
+        companyMethods.AddCoupon(companyFacade);
+        companyMethods.UpdateCoupon(companyFacade);
+        companyMethods.DeleteCoupon(companyFacade);
+        companyMethods.GetCompanyCoupons(companyFacade);
+        companyMethods.GetCompanyCouponsByCategory(companyFacade);
+        companyMethods.GetCompanyCouponsByMaxPrice(companyFacade);
+        companyMethods.GetCompanyDetails(companyFacade);
+    }
+
+    private void RunAllMethods_Admin(AdminFacade clientFacade) throws CouponSystemException {
+        adminMethods.Method_GetAllCompanies(clientFacade);
+        adminMethods.Method_AddCompany(clientFacade);
+        adminMethods.Method_UpdateCompany(clientFacade);
+        adminMethods.Method_DeleteCompany(clientFacade);
+        adminMethods.Method_GetOneCompany(clientFacade);
+        adminMethods.Method_GetAllCustomers(clientFacade);
+        adminMethods.Method_AddCustomer(clientFacade);
+        adminMethods.Method_UpdateCustomer(clientFacade);
+        adminMethods.Method_DeleteCustomer(clientFacade);
+        adminMethods.Method_GetOneCustomer(clientFacade);
+    }
+
+    private boolean CheckFacadeInstance(ClientFacade clientFacade, ClientType clientType) {
+        boolean checkInstance = false;
+        switch(clientType) {
+            case Administrator:
+                checkInstance = clientFacade instanceof AdminFacade;
+                break;
+            case Company:
+                checkInstance = clientFacade instanceof CompanyFacade;
+                break;
+            case Customer:
+                checkInstance = clientFacade instanceof CustomerFacade;
+                break;
+            default:
         }
+        return checkInstance;
     }
-
-    private void CustomerLogon_RunAllMethods(String email, String password) throws CouponSystemException {
-        ClientFacade clientFacade = loginManager.Login(email,password, ClientType.Customer);
-        if(clientFacade instanceof CustomerFacade) {
-            isLoggedOn = true;
-        }
-    }
-
 
     private void CreateAndFillDB() throws CouponSystemException {
         DB_DAO_MockData mockData = new DB_DAO_MockData();

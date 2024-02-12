@@ -14,10 +14,10 @@ public enum Category {
      * Provides a random category based on values in Category Enum
      * @return String with a random category name
      */
-    public static String GetRandomCategory() {
+    public static Category GetRandomCategory() {
         String category = "";
         int rand = (int) (Math.round(Math.random()*(size-1)));
         category += Category.values()[rand];
-        return category.toLowerCase();
+        return Category.valueOf(category);
     }
 }

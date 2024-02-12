@@ -16,8 +16,13 @@ public class CouponExpirationDailyJob implements Runnable{
     private boolean quit = false;
     private final Integer TIME = 1000*60*60*24; // 24 hours
     private ArrayList<CouponSystemException> exceptions;
-    //Todo - ask Zeev how to configure 'run' so that Exceptions don't cause errors in 'run()'
+    //Todo - ask Zeev:
+    // 1. How to configure 'run' so that Exceptions don't cause errors in 'run()' Messages instead of exceptions
+    // 2. Should tester send 'messages' informing various methods were successful? YES
+
+
     //Todo - Delete 'exceptions' array, delete all exception gathering in 'run' and switch to exception throwing
+    //Todo - add 'Sleep' - to 'Test'?
 
     public CouponExpirationDailyJob(CouponsDAO couponsDAO, boolean quit) {
         this.couponsDAO = couponsDAO;
