@@ -14,7 +14,8 @@ import java.util.List;
 public class Cat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id = (int)(Math.random()*1000000000);
+    private int id;
+    // (int)(Math.random()*1000000000)
 
     @Column(nullable = false,length = 40)
     private String name;

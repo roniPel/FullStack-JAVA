@@ -1,4 +1,4 @@
-package com.johnBryce.ClassExercise_120224.clr;
+package com.johnBryce.ClassExercise_120224.Clr;
 
 import com.johnBryce.ClassExercise_120224.Beans.Cat;
 import com.johnBryce.ClassExercise_120224.Beans.Toy;
@@ -7,14 +7,14 @@ import com.johnBryce.ClassExercise_120224.Repositories.ToyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-@Component
+//@Component
 @Order(1)
-public class Init implements CommandLineRunner {
+public class Init_Section3 implements CommandLineRunner {
     @Autowired
     CatRepository catRepo;
     @Autowired
@@ -58,26 +58,36 @@ public class Init implements CommandLineRunner {
                 .build();
 
         // Part 1 - Add cat
+        toyRepo.saveAll( Arrays.asList(t1,t2,t3,t4) );
         catRepo.saveAll( Arrays.asList(c1,c2,c3,c4) );
         System.out.println("Cats were saved in DB. ");
         System.out.println();
 
         // Part 2 - Update cat
-        c2.setName("Geula2");
-        catRepo.save(c2);
-        System.out.println("Cat "+c2.getName()+" was updated in DB. ");
+        Optional<Cat> geula = catRepo.findById(2);
+        geula.ifPresent((myCat)-> {
+            myCat.setName("Geula2");
+            catRepo.saveAndFlush(myCat);
+        });
+        System.out.println("Cat was updated in DB. ");
         System.out.println();
 
         // Part 3 - Delete cat by ID
-        catRepo.delete(c1);
-        System.out.println("Cat "+c1.getName()+" was deleted. ");
+        Optional<Cat> tzahi = catRepo.findById(1);
+        tzahi.ifPresent((myCat)-> {
+            myCat.setToys(null);
+            catRepo.delete(myCat);
+            catRepo.saveAndFlush(myCat);
+        });
+        System.out.println("Cat was deleted. ");
         System.out.println();
 
         // Part 4 - Get single cat by ID
         System.out.println("Get cat (by ID): ");
-        System.out.println(catRepo.findById(2));
+        System.out.println(catRepo.findById(3));
 
         // Part 5 - Get all cats
-        System.out.println(catRepo.findAll());
+        List<Cat> allCats = catRepo.findAll();
+        allCats.forEach(System.out::println);
     }
 }

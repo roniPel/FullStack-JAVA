@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 public class Toy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id = (int)(Math.random()*1000000000);
+    private int id;
+    // (int)(Math.random()*1000000000)
 
     @Column(nullable = false,length = 40)
     private String name;
