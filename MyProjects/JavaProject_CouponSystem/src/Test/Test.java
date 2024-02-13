@@ -1,5 +1,6 @@
 package Test;
 
+import DataBase.ConnectionPool;
 import DataBase.DAO.DB_DAO.DB_DAO_MockData;
 import DataBase.InitDB;
 import ErrorHandling.CouponSystemException;
@@ -12,22 +13,30 @@ import Facade.LoginManager.ClientType;
 import Facade.LoginManager.LoginManager;
 import Job.CouponExpirationDailyJob;
 
+import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Test {
+    // Variables for log-ins:
     public LoginManager loginManager = LoginManager.getInstance();
     public boolean isLoggedOn = false;
     private Map<String, String> emailsPassowrdsMap;
     private Map<String, Object> mockDataMap;
+
+    // Variables for running all methods via facades
     private Methods_Admin adminMethods = new Methods_Admin();
     private Methods_Company companyMethods = new Methods_Company();
     private Methods_Customer customerMethods = new Methods_Customer();
+
+    // Thread
     private CouponExpirationDailyJob dailyJob;
 
-    //Todo - fill in tables with random data (using 'DB_DAO_MockData' class)
 
-    public Test() throws CouponSystemException {
+    public Test() {
+        // Create a new daily job
+        dailyJob = new CouponExpirationDailyJob();
+
         // Prepare mockData map
         mockDataMap = new HashMap<>();
         mockDataMap.put("numberOfCompanies", 8);
@@ -35,9 +44,6 @@ public class Test {
         mockDataMap.put("amountCouponsPerType", 40);
         mockDataMap.put("maxPrice", 160.00);
         mockDataMap.put("numberOfCustomers", 8);
-
-        // Prepare the system - Create DB + schema and fill DB with mock data
-        CreateAndFillDB();
 
         // Prepare data for logins
         emailsPassowrdsMap = new HashMap<>();
@@ -48,17 +54,31 @@ public class Test {
         emailsPassowrdsMap.put("customerEmail","Customer15@hotmail.com");
         emailsPassowrdsMap.put("customerPassword","Pass15");
 
-
-        // Action 1 - Run daily job
-        Thread thread = new Thread(dailyJob);
-        thread.start();
-
-        StartSystem();
+        testAll();
     }
 
-    private void StartSystem() throws CouponSystemException {
+    /**
+     * Tests all system functionalities.
+     * Performs the following actions:
+     * Action 1 - Run daily job
+     * Action 2 - Connect as Admin + perform all methods
+     * Action 3 - Connect as Company + perform all methods
+     * Action 4 - Connect as Customer + perform all methods
+     * Action 5 - Stop daily job - No need.  Thread is configured as daemon, will stop upon system exit.
+     * Action 6 - Close all connections
+     */
+    private void testAll() {
         String email, password;
         try {
+            // Prepare the system - Create DB + schema and fill DB with mock data
+            CreateAndFillDB();
+
+            // Action 1 - Run daily job
+            Thread thread = new Thread(this.dailyJob);
+            // Thread will be terminated upon system stop
+            thread.setDaemon(true);
+            thread.start();
+
             // Action 2 - Connect as Admin + perform all methods
             email = emailsPassowrdsMap.get("adminEmail");
             password = emailsPassowrdsMap.get("adminPassword");
@@ -74,20 +94,28 @@ public class Test {
             password = emailsPassowrdsMap.get("customerPassword");
             Logon_RunAllMethods(email,password,ClientType.Customer);
 
+            // Action 5 - Stop daily job - No need.  Thread is configured as daemon, will stop upon system exit.
+
+            // Action 6 - Close all connections
+            ConnectionPool.getInstance().closeAllConnections();
+
+            // END
+            System.out.println("That's all, folks!");
+            System.exit(0);
+
         } catch (CouponSystemException e) {
-            throw new CouponSystemException(Errors.GENERAL_SYSTEM_ERROR.getMessage()+e);
+            System.out.println((Errors.GENERAL_SYSTEM_ERROR.getMessage()+e));
         }
-        StopSystem();
     }
 
-    private void StopSystem() {
-        // Action 5 - Stop daily job
-
-        // Action 6 - Close all connections (required?)
-        System.out.println("That's all, folks!");
-        System.exit(0);
-    }
-
+    /**
+     * Tries to log into the system with provided params
+     * If successful, runs all relevant methods
+     * @param email email for logon
+     * @param password passowrd for logon
+     * @param clientType client type requested for logon
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     private void Logon_RunAllMethods(String email, String password,ClientType clientType) throws CouponSystemException {
         ClientFacade clientFacade = loginManager.Login(email,password, clientType);
         if(CheckFacadeInstance(clientFacade,clientType)) {
@@ -112,6 +140,11 @@ public class Test {
         }
     }
 
+    /**
+     * Runs all existing customer methods
+     * @param customerFacade facade used to run all methods
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     private void RunAllMethods_Customer(CustomerFacade customerFacade) throws CouponSystemException {
         customerMethods.PurchaseCoupon(customerFacade);
         customerMethods.GetCustomerCoupons(customerFacade);
@@ -120,6 +153,11 @@ public class Test {
         customerMethods.GetCustomerDetails(customerFacade);
     }
 
+    /**
+     * Runs all existing company methods
+     * @param companyFacade facade used to run all methods
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     private void RunAllMethods_Company(CompanyFacade companyFacade) throws CouponSystemException {
         companyMethods.AddCoupon(companyFacade);
         companyMethods.UpdateCoupon(companyFacade);
@@ -130,19 +168,30 @@ public class Test {
         companyMethods.GetCompanyDetails(companyFacade);
     }
 
-    private void RunAllMethods_Admin(AdminFacade clientFacade) throws CouponSystemException {
-        adminMethods.Method_GetAllCompanies(clientFacade);
-        adminMethods.Method_AddCompany(clientFacade);
-        adminMethods.Method_UpdateCompany(clientFacade);
-        adminMethods.Method_DeleteCompany(clientFacade);
-        adminMethods.Method_GetOneCompany(clientFacade);
-        adminMethods.Method_GetAllCustomers(clientFacade);
-        adminMethods.Method_AddCustomer(clientFacade);
-        adminMethods.Method_UpdateCustomer(clientFacade);
-        adminMethods.Method_DeleteCustomer(clientFacade);
-        adminMethods.Method_GetOneCustomer(clientFacade);
+    /**
+     * Runs all existing admin methods
+     * @param adminFacade facade used to run all methods
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private void RunAllMethods_Admin(AdminFacade adminFacade) throws CouponSystemException {
+        adminMethods.Method_GetAllCompanies(adminFacade);
+        adminMethods.Method_AddCompany(adminFacade);
+        adminMethods.Method_UpdateCompany(adminFacade);
+        adminMethods.Method_DeleteCompany(adminFacade);
+        adminMethods.Method_GetOneCompany(adminFacade);
+        adminMethods.Method_GetAllCustomers(adminFacade);
+        adminMethods.Method_AddCustomer(adminFacade);
+        adminMethods.Method_UpdateCustomer(adminFacade);
+        adminMethods.Method_DeleteCustomer(adminFacade);
+        adminMethods.Method_GetOneCustomer(adminFacade);
     }
 
+    /**
+     * Checks weather the client type is in an instance of the Facade type
+     * @param clientFacade facade to compare to
+     * @param clientType client type to check
+     * @return true if client and facade types match, false otherwise
+     */
     private boolean CheckFacadeInstance(ClientFacade clientFacade, ClientType clientType) {
         boolean checkInstance = false;
         switch(clientType) {
@@ -160,6 +209,10 @@ public class Test {
         return checkInstance;
     }
 
+    /**
+     * Fills in DB with mock data
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     private void CreateAndFillDB() throws CouponSystemException {
         DB_DAO_MockData mockData = new DB_DAO_MockData();
 
@@ -179,17 +232,5 @@ public class Test {
         mockData.FillInCustomerTable(numberOfCustomers);
         mockData.FillInCustomerVsCouponsTable();
     }
-
-    //Todo - Delete below function?
-    /*public void GetLogonDetails() {
-        if(!isLoggedOn) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Please insert email: ");
-            this.email = scanner.nextLine();
-            System.out.println("Please insert password: ");
-            this.password = scanner.nextLine();
-            scanner.close();
-        }
-    }*/
 
 }

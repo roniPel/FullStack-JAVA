@@ -5,6 +5,7 @@ import Beans.Coupon;
 import ErrorHandling.CouponSystemException;
 import Facade.CompanyFacade;
 import Utils.DateFactory;
+import Utils.FactoryUtils;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Methods_Company extends Methods{
         Coupon coupon = new Coupon(150,companyId, Category.GetRandomCategory(),
                 "CompanyAddCouponTitle"+GetrandInt(100),"CompanyAddCouponDescription",
                 DateFactory.getLocalDate(false),DateFactory.getLocalDate(true),
-                GetrandInt(50),Math.random()*(2000.00),"Image"+GetrandInt(10));
+                GetrandInt(50),Math.random()*(maxPrice),"Image"+GetrandInt(10));
         // Add coupon to DB
         System.out.println("Added Coupon: "+
                 companyFacade.AddCoupon(coupon));
@@ -53,5 +54,37 @@ public class Methods_Company extends Methods{
                 companyFacade.DeleteCoupon(delCouponId) );
         System.out.println();
     }
-
+    public void GetCompanyCoupons(CompanyFacade companyFacade) throws CouponSystemException {
+        System.out.println("*** Method: Get Company Coupons ***");
+        // Get all company coupons
+        ArrayList<Coupon> coupons = companyFacade.GetAllCompanyCoupons();
+        // Display coupons
+        System.out.println("Company's Coupons: ");
+        coupons.forEach(System.out::println);
+        System.out.println();
+    }
+    public void GetCompanyCouponsByCategory(CompanyFacade companyFacade) throws CouponSystemException {
+        System.out.println("*** Method: Get Company Coupons by Category ***");
+        Category category = Category.GetRandomCategory();
+        // Get company coupons by category
+        ArrayList<Coupon> coupons = companyFacade.GetCompanyCouponsByCategory(category);
+        // Display coupons
+        System.out.println("Company's Coupons by Category "+category+": ");
+        coupons.forEach(System.out::println);
+        System.out.println();
+    }
+    public void GetCompanyCouponsByMaxPrice(CompanyFacade companyFacade) throws CouponSystemException {
+        System.out.println("*** Method: Get Company Coupons by Max Price ***");
+        double price = Math.random()*maxPrice;
+        // Get company coupons by max price
+        ArrayList<Coupon> coupons = companyFacade.GetCompanyCouponsByPrice(price);
+        // Display coupons
+        System.out.println("Company's Coupons by Max Price "+ FactoryUtils.beautifyPrice(price) +": ");
+        coupons.forEach(System.out::println);
+        System.out.println();
+    }
+    public void GetCompanyDetails(CompanyFacade companyFacade) throws CouponSystemException {
+        System.out.println("*** Method: Get Company Details ***");
+        System.out.println(companyFacade.GetCompanyDetails());
+    }
 }

@@ -21,8 +21,6 @@ public class ConnectionPool {
         //Todo - remove sout below:
         System.out.println("We created new connection pool instance");
         openAllConnections();
-        // Initiate DB
-        //Todo - remove comment: InitDB.InitiateDB();
     }
 
     private void openAllConnections() throws CouponSystemException {

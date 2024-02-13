@@ -2,6 +2,7 @@ package Job;
 
 import Beans.Coupon;
 import DataBase.DAO.CouponsDAO;
+import DataBase.DAO.DB_DAO.CouponsDB_DAO;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 
@@ -13,20 +14,14 @@ import java.util.Objects;
 public class CouponExpirationDailyJob implements Runnable{
 
     private CouponsDAO couponsDAO;
-    private boolean quit = false;
-    private final Integer TIME = 1000*60*60*24; // 24 hours
-    private ArrayList<CouponSystemException> exceptions;
-    //Todo - ask Zeev:
-    // 1. How to configure 'run' so that Exceptions don't cause errors in 'run()' Messages instead of exceptions
-    // 2. Should tester send 'messages' informing various methods were successful? YES
+    private boolean quit;
 
+    //Todo - change time to 24 hours (below)
+    private final Integer TIME = 1000*60*2; // 1000*60*60*24; // 24 hours
 
-    //Todo - Delete 'exceptions' array, delete all exception gathering in 'run' and switch to exception throwing
-    //Todo - add 'Sleep' - to 'Test'?
-
-    public CouponExpirationDailyJob(CouponsDAO couponsDAO, boolean quit) {
-        this.couponsDAO = couponsDAO;
-        this.quit = quit;
+    public CouponExpirationDailyJob() {
+        this.couponsDAO = new CouponsDB_DAO();
+        this.quit = false;
     }
 
     public void setQuit(boolean quit) {
@@ -55,50 +50,47 @@ public class CouponExpirationDailyJob implements Runnable{
     @Override
     public void run() {
 
+        //Todo - Delete sout below:
+        System.out.println("Entered job");
         // Part 1 - Get all coupons from DB
         ArrayList<Coupon> coupons = null;
         try {
             coupons = couponsDAO.GetAllCoupons();
         } catch (CouponSystemException e) {
-            System.out.println("System threw an exception! Details: "+ e);
+            System.out.println(Errors.GENERAL_SYSTEM_ERROR.getMessage()+ e);
             stop();
         }
         // Part 2 - Verify 'coupons' is not null
         if(coupons == null) {
             //throw new CouponSystemException(Errors.EMPTY_OR_NULL.getMessage() + e)
-            exceptions.add( new CouponSystemException(Errors.EMPTY_OR_NULL.getMessage()) );
-            System.out.println("System threw an exception! \n");
+            System.out.println(Errors.EMPTY_OR_NULL.getMessage()) ;
         }
+        else {
 
-        // Part 3 - Thread loop - continues as long as 'quit' is false
-        while (!quit) {
-                for (Coupon coupon: coupons) {
-                    if(isExpired(coupon)) {
+            // Part 3 - Thread loop - continues as long as 'quit' is false
+            while (!quit) {
+                for (Coupon coupon : coupons) {
+                    if (isExpired(coupon)) {
                         try {
                             DeleteCoupon(coupon);
                         } catch (CouponSystemException e) {
-                            exceptions.add( new CouponSystemException(Errors.THREAD_ERROR.getMessage()) );
-                            System.out.println("System threw an exception! \n");
+                            System.out.println((Errors.THREAD_ERROR.getMessage()));
                             stop();
-                        }
-                        catch(NullPointerException e) {
+                        } catch (NullPointerException e) {
                             //throw new CouponSystemException(Errors.EMPTY_OR_NULL.getMessage() + e);
-                            exceptions.add( new CouponSystemException(Errors.EMPTY_OR_NULL.getMessage()) );
-                            System.out.println("System threw an exception! \n");
+                            System.out.println((Errors.EMPTY_OR_NULL.getMessage()));
                             stop();
                         }
                     }
                 }
-            try {
-                Thread.sleep(TIME);
-            } catch (InterruptedException e) {
-                //throw new CouponSystemException(Errors.THREAD_ERROR.getMessage());
-                exceptions.add( new CouponSystemException(Errors.THREAD_ERROR.getMessage()) );
-                System.out.println("System threw an exception! \n");
-                stop();
+                try {
+                    Thread.sleep(TIME);
+                } catch (InterruptedException e) {
+                    //throw new CouponSystemException(Errors.THREAD_ERROR.getMessage());
+                    System.out.println(Errors.THREAD_ERROR.getMessage() + e);
+                    stop();
+                }
             }
-            System.out.println("The exceptions caught by the daily job are: ");
-            System.out.println(exceptions);
         }
     }
     public void stop() {
