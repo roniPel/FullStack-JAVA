@@ -5,11 +5,8 @@ import DataBase.DAO.CouponsDAO;
 import DataBase.DAO.DB_DAO.CouponsDB_DAO;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
-
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CouponExpirationDailyJob implements Runnable{
 

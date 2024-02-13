@@ -11,6 +11,11 @@ import java.util.ArrayList;
 
 public class Methods_Customer extends Methods{
 
+    /**
+     * Customer Method - Purchase Coupon
+     * @param customerFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void PurchaseCoupon(CustomerFacade customerFacade) throws CouponSystemException {
         int companyId = customerFacade.GetCustomerDetails().getId();
         System.out.println("*** Method: Purchase Coupon ***");
@@ -25,6 +30,11 @@ public class Methods_Customer extends Methods{
         System.out.println();
     }
 
+    /**
+     * Customer Method - Get Customer Coupons
+     * @param customerFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCustomerCoupons(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Coupons ***");
         // Get all company coupons
@@ -35,6 +45,11 @@ public class Methods_Customer extends Methods{
         System.out.println();
     }
 
+    /**
+     * Customer Method - Get Customer Coupons by Category
+     * @param customerFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCustomerCouponsByCategory(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Coupons by Category ***");
         Category category = Category.GetRandomCategory();
@@ -46,6 +61,11 @@ public class Methods_Customer extends Methods{
         System.out.println();
     }
 
+    /**
+     * Customer Method - Get Customer Coupons by max price
+     * @param customerFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCustomerCouponsByMaxPrice(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Coupons by Max Price ***");
         double price = Math.random()*maxPrice;
@@ -57,6 +77,11 @@ public class Methods_Customer extends Methods{
         System.out.println();
     }
 
+    /**
+     * Customer Method - Get Customer Details
+     * @param customerFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCustomerDetails(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Details ***");
         System.out.println(customerFacade.GetCustomerDetails());

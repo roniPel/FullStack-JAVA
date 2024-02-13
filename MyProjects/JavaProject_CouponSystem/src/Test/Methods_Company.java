@@ -10,6 +10,11 @@ import Utils.FactoryUtils;
 import java.util.ArrayList;
 
 public class Methods_Company extends Methods{
+    /**
+     * Company Method - Add Coupon
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void AddCoupon(CompanyFacade companyFacade) throws CouponSystemException {
         int companyId = companyFacade.GetCompanyDetails().getId();
         System.out.println("*** Method: Add Coupon ***");
@@ -23,6 +28,12 @@ public class Methods_Company extends Methods{
                 companyFacade.AddCoupon(coupon));
         System.out.println();
     }
+
+    /**
+     * Company Method - Update Coupon
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void UpdateCoupon(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Update Coupon ***");
         // Get all company coupons
@@ -43,6 +54,12 @@ public class Methods_Company extends Methods{
                 companyFacade.UpdateCoupon(updatedCoupon));
         System.out.println();
     }
+
+    /**
+     * Company Method - Delete Coupon
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void DeleteCoupon(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Delete Coupon ***");
         // Get all company coupons
@@ -54,6 +71,12 @@ public class Methods_Company extends Methods{
                 companyFacade.DeleteCoupon(delCouponId) );
         System.out.println();
     }
+
+    /**
+     * Company Method - Get company Coupons
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCompanyCoupons(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Company Coupons ***");
         // Get all company coupons
@@ -63,6 +86,12 @@ public class Methods_Company extends Methods{
         coupons.forEach(System.out::println);
         System.out.println();
     }
+
+    /**
+     * Company Method - Get Company Coupons by Category
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCompanyCouponsByCategory(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Company Coupons by Category ***");
         Category category = Category.GetRandomCategory();
@@ -73,6 +102,12 @@ public class Methods_Company extends Methods{
         coupons.forEach(System.out::println);
         System.out.println();
     }
+
+    /**
+     * Company Method - Get Company Coupons by max price
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCompanyCouponsByMaxPrice(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Company Coupons by Max Price ***");
         double price = Math.random()*maxPrice;
@@ -83,6 +118,12 @@ public class Methods_Company extends Methods{
         coupons.forEach(System.out::println);
         System.out.println();
     }
+
+    /**
+     * Company Method - Get Company Details
+     * @param companyFacade used to run method
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
     public void GetCompanyDetails(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Company Details ***");
         System.out.println(companyFacade.GetCompanyDetails());
