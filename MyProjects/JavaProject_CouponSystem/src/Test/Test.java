@@ -12,8 +12,6 @@ import Facade.CustomerFacade;
 import Facade.LoginManager.ClientType;
 import Facade.LoginManager.LoginManager;
 import Job.CouponExpirationDailyJob;
-
-import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,30 +31,6 @@ public class Test {
     private CouponExpirationDailyJob dailyJob;
 
 
-    public Test() {
-        // Create a new daily job
-        dailyJob = new CouponExpirationDailyJob();
-
-        // Prepare mockData map
-        mockDataMap = new HashMap<>();
-        mockDataMap.put("numberOfCompanies", 8);
-        mockDataMap.put("numberOfCouponsPerCompany", 50);
-        mockDataMap.put("amountCouponsPerType", 40);
-        mockDataMap.put("maxPrice", 160.00);
-        mockDataMap.put("numberOfCustomers", 8);
-
-        // Prepare data for logins
-        emailsPassowrdsMap = new HashMap<>();
-        emailsPassowrdsMap.put("adminEmail","admin@admin.com");
-        emailsPassowrdsMap.put("adminPassword","admin");
-        emailsPassowrdsMap.put("companyEmail","Company5@hotmail.com");
-        emailsPassowrdsMap.put("companyPassword","PassComp5");
-        emailsPassowrdsMap.put("customerEmail","Customer15@hotmail.com");
-        emailsPassowrdsMap.put("customerPassword","Pass15");
-
-        testAll();
-    }
-
     /**
      * Tests all system functionalities.
      * Performs the following actions:
@@ -67,7 +41,28 @@ public class Test {
      * Action 5 - Stop daily job - No need.  Thread is configured as daemon, will stop upon system exit.
      * Action 6 - Close all connections
      */
-    private void testAll() {
+    public void testAll() {
+        // Create a new daily job
+        dailyJob = new CouponExpirationDailyJob();
+
+        // Prepare
+        mockDataMap = new HashMap<>();
+        mockDataMap.put("numberOfCompanies", 8);
+        mockDataMap.put("numberOfCouponsPerCompany", 50);
+        mockDataMap.put("amountCouponsPerType", 40);
+        mockDataMap.put("maxPrice", 160.00);
+        mockDataMap
+                .put("numberOfCustomers", 8);
+
+        // Prepare data for logins
+        emailsPassowrdsMap = new HashMap<>();
+        emailsPassowrdsMap.put("adminEmail","admin@admin.com");
+        emailsPassowrdsMap.put("adminPassword","admin");
+        emailsPassowrdsMap.put("companyEmail","Company5@hotmail.com");
+        emailsPassowrdsMap.put("companyPassword","PassComp5");
+        emailsPassowrdsMap.put("customerEmail","Customer15@hotmail.com");
+        emailsPassowrdsMap.put("customerPassword","Pass15");
+
         String email, password;
         try {
             // Prepare the system - Create DB + schema and fill DB with mock data
@@ -120,7 +115,7 @@ public class Test {
         ClientFacade clientFacade = loginManager.Login(email,password, clientType);
         if(CheckFacadeInstance(clientFacade,clientType)) {
             isLoggedOn = true;
-            System.out.println(clientType.toString()+" is logged on. ");
+            System.out.println(clientType +" is logged on. \n");
             // Run all Methods:
             switch(clientType) {
                 case Administrator:

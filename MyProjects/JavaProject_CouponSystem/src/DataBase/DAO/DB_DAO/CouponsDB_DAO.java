@@ -6,10 +6,8 @@ import DataBase.CRUD.Create;
 import DataBase.CRUD.Delete;
 import DataBase.CRUD.Read;
 import DataBase.DAO.CouponsDAO;
-import DataBase.ConnectionPool;
 import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
-import ErrorHandling.Errors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,13 +15,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static DataBase.DButils.*;
 import static ErrorHandling.Errors.SQL_ERROR;
 
 public class CouponsDB_DAO implements CouponsDAO {
     private final DButils dButils = new DButils();
-    private final DB_DAO_MockData mockData = new DB_DAO_MockData();
 
 
     /**
@@ -163,9 +158,6 @@ public class CouponsDB_DAO implements CouponsDAO {
         params.put(1,null);
         ResultSet results = dButils.runQueryForResult(Read.getAllCoupons,params);
 
-        // Get category table from DB - for use in part 2
-        Map<Integer, String> categories = mockData.GetAllCategories();
-
         // Part 2 - add results to coupon list
         return MapCouponsFromResultSet(results);
     }
@@ -201,7 +193,7 @@ public class CouponsDB_DAO implements CouponsDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private ArrayList<Coupon> MapCouponsFromResultSet(ResultSet results) throws CouponSystemException {
-        Map<Integer, String> categories = mockData.GetAllCategories();
+        Map<Integer, String> categories = GetAllCategories();
         ArrayList<Coupon> coupons = new ArrayList<>();
         try {
             while (results.next()) {
@@ -288,9 +280,6 @@ public class CouponsDB_DAO implements CouponsDAO {
         params.put(1,companyID);
         ResultSet results = dButils.runQueryForResult(Read.getCouponsForCompany,params);
 
-        // Get category table from DB - for use in part 2
-        Map<Integer, String> categories = mockData.GetAllCategories();
-
         // Part 2 - add results to coupon list
         return AddResultsToCouponList(results);
     }
@@ -334,7 +323,7 @@ public class CouponsDB_DAO implements CouponsDAO {
         ArrayList<Coupon> couponList = new ArrayList<>();
 
         // Get category table from DB - for use in part 2
-        Map<Integer, String> categories = mockData.GetAllCategories();
+        Map<Integer, String> categories = GetAllCategories();
 
         // Insert results into couponList array
         try {
@@ -374,7 +363,6 @@ public class CouponsDB_DAO implements CouponsDAO {
         try {
             // Iterate and add results to coupons map
             while (results.next()) {
-                int customerId = results.getInt(1);
                 int couponId = results.getInt(2);
                 params.put(counter++,couponId);
             }
@@ -382,5 +370,32 @@ public class CouponsDB_DAO implements CouponsDAO {
             throw new CouponSystemException(SQL_ERROR.getMessage() + e);
         }
         return params;
+    }
+
+    /**
+     * Gets a map of all the categories listed in the DB
+     * @return a map of categoryID (Integer) and name (String) if succeeded, 'null' if failed or if no categories exist.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public Map<Integer, String> GetAllCategories() throws CouponSystemException {
+        // Part 1 - Get categories - query from DB
+        Map<Integer,Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getAllCategories,params);
+
+        // Part 2 - add results to Category Map
+        Map<Integer,String> categories = new HashMap<>();
+        try {
+            while (results.next()) {
+                int id = results.getInt(1);
+                String name = results.getString(2);
+                // Insert data into map
+                categories.put(id,name);
+            }
+        }
+        catch(SQLException e) {
+            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+        }
+        return categories;
     }
 }

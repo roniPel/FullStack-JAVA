@@ -20,8 +20,6 @@ public class Company {
         this.coupons = coupons;
     }
 
-    //Todo - create constructor matching requirements in DB
-
     // Getters/Setters
 
     public int getId() {

@@ -145,7 +145,6 @@ public class CustomersDB_DAO implements CustomersDAO {
         Map<Integer,Object> params = PrepareParamsForAddCustomer(customers);
         params.put(5,customer.getId());
         return dButils.runQueryWithMap(DataBase.CRUD.Update.updateCustomer,params);
-            // Todo - Part 3 - update customer coupons in DB?
     }
 
 

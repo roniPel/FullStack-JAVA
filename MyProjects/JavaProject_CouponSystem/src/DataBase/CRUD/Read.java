@@ -4,8 +4,6 @@ import DataBase.DBmanager;
 
 public class Read {
 
-    //Todo - delete strings that are not in use
-
     // Company
     public static final String isCompanyExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? AND password = ? ;";
@@ -48,11 +46,6 @@ public class Read {
             "SELECT id FROM "+ DBmanager.SQL_DB+".coupons WHERE title = ? ;";
     public static final String getCouponsById =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?);";
-
-    public static final String getCouponIdMatch =
-            "SELECT id FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ? AND categoryID = ? " +
-                    "AND title = ? AND description = ? AND startDate = ? AND endDate = ? " +
-                    "AND amount = ? AND price = ? AND image = ?;";
 
 
     // Customer

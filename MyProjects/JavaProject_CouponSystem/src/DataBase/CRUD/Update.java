@@ -4,15 +4,10 @@ import DataBase.DBmanager;
 
 public class Update {
 
-    //Todo - delete strings that are not in use
-
     // Company
     public static final String updateCompany =
             "UPDATE `"+ DBmanager.SQL_DB+"`.`companies` SET " +
                     "`email` = ?, `password` = ? WHERE (`id` = ?);";
-
-    // Category
-
 
     // Coupons
     public static final String updateCouponsAmount =

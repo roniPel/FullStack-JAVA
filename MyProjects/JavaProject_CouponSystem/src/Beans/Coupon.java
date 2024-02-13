@@ -38,8 +38,6 @@ public class Coupon {
         this.image = image;
     }
 
-    //Todo - create constructor matching requirements in DB (?)
-
     // Getters/Setters
 
     public int getId() {

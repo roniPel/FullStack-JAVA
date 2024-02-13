@@ -27,6 +27,9 @@ public class DB_DAO_MockData {
     private final CouponsDB_DAO couponsDBDao = new CouponsDB_DAO();
     private final CompaniesDB_DAO companiesDBDao = new CompaniesDB_DAO();
 
+    public DB_DAO_MockData() {
+    }
+
     /**
      * Creates links between coupons and customers for all the customers listed in the DB.  Steps:
      * 1 - check if DB contains customers
@@ -238,34 +241,6 @@ public class DB_DAO_MockData {
 
 
     /**
-     * Gets a map of all the categories listed in the DB
-     * @return a map of categoryID (Integer) and name (String) if succeeded, 'null' if failed or if no categories exist.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    public Map<Integer, String> GetAllCategories() throws CouponSystemException {
-        // Part 1 - Get categories - query from DB
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,null);
-        ResultSet results = dButils.runQueryForResult(DataBase.CRUD.Read.getAllCategories,params);
-
-        // Part 2 - add results to Category Map
-        Map<Integer,String> categories = new HashMap<>();
-        try {
-            while (results.next()) {
-                int id = results.getInt(1);
-                String name = results.getString(2);
-                // Insert data into map
-                categories.put(id,name);
-            }
-        }
-        catch(SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
-        }
-        return categories;
-    }
-
-
-    /**
      * Creates a map of random coupons linked to companyID provided in param
      * @param companyID used to create the coupon
      * @param numCouponsPerComp number of coupons for each company
@@ -277,7 +252,7 @@ public class DB_DAO_MockData {
     private Map<Integer, Object> createMapRandomCoupons(int companyID, int numCouponsPerComp,
                                                          int amountCouponsPerType, double maxPrice) throws CouponSystemException {
         // Get categories currently in DB
-        Map<Integer, String> categories = GetAllCategories();
+        Map<Integer, String> categories = couponsDBDao.GetAllCategories();
 
         // Prepare params Map with Coupon values
         Map<Integer, Object> params = new HashMap<>();
@@ -323,7 +298,6 @@ public class DB_DAO_MockData {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public int countItemsInTable(String sql) throws CouponSystemException {
-        //Todo - convert all 'IsEmpty' functions to this one
         Map<Integer,Object> params = new HashMap<>();
         params.put(1,null);
         ResultSet results = dButils.runQueryForResult(sql,params);

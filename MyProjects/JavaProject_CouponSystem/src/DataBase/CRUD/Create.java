@@ -4,8 +4,6 @@ import DataBase.DBmanager;
 
 public class Create {
 
-    //Todo - delete strings that are not in use
-
     // Company
     public static final String insertCompany =
             "INSERT INTO `"+DBmanager.SQL_DB+"`.`companies` (`name`, `email`, `password`) VALUES (?, ?, ?);";

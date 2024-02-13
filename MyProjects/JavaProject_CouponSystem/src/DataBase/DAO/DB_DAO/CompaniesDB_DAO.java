@@ -169,7 +169,6 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         params.put(3,company.getId());
         // Part 2 - Update company in DB
         return dButils.runQueryWithMap(DataBase.CRUD.Update.updateCompany, params);
-        // Todo - Part 3 - update company coupons in DB?
     }
 
     /**
@@ -184,7 +183,6 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         params.put(1,companyID);
         // Part 2 - delete company from DB
         return dButils.runQueryWithMap(Delete.deleteCompany,params);
-        //Todo Part 3 - delete associated coupons in DB?
     }
 
     /**
@@ -242,7 +240,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 ArrayList<Coupon> coupons = couponsDBDao.GetCouponsForCompany(id);
 
                 // add a Company object with all details to companies array
-                companies.add(new Company(id, name, email, password, coupons) );
+                companies.add(new Company(id, name, email, password, null) );
             }
         } catch (SQLException e) {
             throw new CouponSystemException(SQL_ERROR.getMessage() + e);
