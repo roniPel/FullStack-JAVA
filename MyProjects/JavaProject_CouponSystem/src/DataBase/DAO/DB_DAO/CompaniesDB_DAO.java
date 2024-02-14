@@ -15,6 +15,9 @@ import java.util.*;
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
+/**
+ * Class used for sending companies CRUD actions to DB
+ */
 public class CompaniesDB_DAO implements CompaniesDAO {
     private final DButils dButils = new DButils();
     private final CouponsDB_DAO couponsDBDao = new CouponsDB_DAO();
@@ -54,7 +57,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 companyID = results.getInt(1);
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return companyID;
     }
@@ -240,10 +243,10 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 ArrayList<Coupon> coupons = couponsDBDao.GetCouponsForCompany(id);
 
                 // add a Company object with all details to companies array
-                companies.add(new Company(id, name, email, password, null) );
+                companies.add(new Company(id, name, email, password, coupons) );
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR)            ;
         }
         return companies;
     }

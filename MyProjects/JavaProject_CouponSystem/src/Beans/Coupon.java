@@ -20,8 +20,19 @@ public class Coupon {
 
     //Todo - create? - private static Integer counter = 0; (See person in birthdaySystemReminder)
 
-    // Constructors
-
+    /**
+     * All Args Constructor - for creating coupon
+     * @param id
+     * @param companyID
+     * @param category
+     * @param title
+     * @param description
+     * @param startDate
+     * @param endDate
+     * @param amount
+     * @param price
+     * @param image
+     */
     public Coupon(int id, int companyID, Category category,
                   String title, String description, LocalDate startDate,
                   LocalDate endDate, int amount, double price, String image) {

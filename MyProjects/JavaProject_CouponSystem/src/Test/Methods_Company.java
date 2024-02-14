@@ -23,8 +23,10 @@ public class Methods_Company extends Methods{
                 "CompanyAddCouponTitle"+GetrandInt(100),"CompanyAddCouponDescription",
                 DateFactory.getLocalDate(false),DateFactory.getLocalDate(true),
                 GetrandInt(50),Math.random()*(maxPrice),"Image"+GetrandInt(10));
+        System.out.println("Coupon details: ");
+        System.out.print(coupon);
         // Add coupon to DB
-        System.out.println("Added Coupon: "+
+        System.out.println("Added Coupon? "+
                 companyFacade.AddCoupon(coupon));
         System.out.println();
     }
@@ -49,8 +51,10 @@ public class Methods_Company extends Methods{
         updatedCoupon.setImage("CompanyUpdatedImage");
         updatedCoupon.setStartDate(DateFactory.getLocalDate(false));
         updatedCoupon.setEndDate(DateFactory.getLocalDate(true));
+        System.out.println("Updated Coupon details: ");
+        System.out.print(updatedCoupon);
         // Update coupon in DB
-        System.out.println("Updated Coupon: "+
+        System.out.println("Updated Coupon? "+
                 companyFacade.UpdateCoupon(updatedCoupon));
         System.out.println();
     }
@@ -66,9 +70,12 @@ public class Methods_Company extends Methods{
         ArrayList<Coupon> coupons = companyFacade.GetAllCompanyCoupons();
         // Select random coupon ID for delete
         int delCouponId = GetrandInt( coupons.size() );
+        System.out.println("Deleted Coupon details: ");
+        System.out.print(coupons.get(delCouponId));
         // Delete coupon in DB
-        System.out.println("Deleted Coupon: "+
-                companyFacade.DeleteCoupon(delCouponId) );
+        int dbIdToDelete = coupons.get(delCouponId).getId();
+        System.out.println("Deleted Coupon? "+
+                companyFacade.DeleteCoupon(dbIdToDelete) );
         System.out.println();
     }
 
@@ -98,7 +105,7 @@ public class Methods_Company extends Methods{
         // Get company coupons by category
         ArrayList<Coupon> coupons = companyFacade.GetCompanyCouponsByCategory(category);
         // Display coupons
-        System.out.println("Company's Coupons by Category "+category+": ");
+        System.out.println("Company's Coupons by Category '"+category+"': ");
         coupons.forEach(System.out::println);
         System.out.println();
     }
@@ -126,6 +133,8 @@ public class Methods_Company extends Methods{
      */
     public void GetCompanyDetails(CompanyFacade companyFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Company Details ***");
+        System.out.println("The logged on company details are: ");
         System.out.println(companyFacade.GetCompanyDetails());
+        System.out.println();
     }
 }

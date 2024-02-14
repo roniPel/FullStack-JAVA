@@ -56,7 +56,7 @@ public class CustomersDB_DAO implements CustomersDAO {
                 customerID = results.getInt(1);
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return customerID;
     }
@@ -203,7 +203,7 @@ public class CustomersDB_DAO implements CustomersDAO {
     /**
      * Converts a result set from SQL DB to an Array list of customer objects
      * @param results result set containing all Customers from DB
-     * @return ArrayList<Customer> if succeeded, null if failed.
+     * @return customers ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Customer> ConvertResultSetToCustomerArray(ResultSet results) throws CouponSystemException {
@@ -225,7 +225,7 @@ public class CustomersDB_DAO implements CustomersDAO {
             }
         }
         catch(SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return customers;
     }
@@ -233,7 +233,7 @@ public class CustomersDB_DAO implements CustomersDAO {
 
     /**
      * Creates a map of customerIDs vs couponsID listed in DB.
-     * @return Map<Integer, Integer> if succeeded, null if failed.
+     * @return A map of integers and integers if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public Map<Integer, Integer> CustomerIDsVScouponIDs() throws CouponSystemException {
@@ -263,7 +263,7 @@ public class CustomersDB_DAO implements CustomersDAO {
             }
         }
         catch(SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return customerIDsVScouponIDs;
     }

@@ -20,12 +20,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Customer Facade - for running admin methods
+ */
 public class CustomerFacade extends ClientFacade{
 
     private final CustomersDAO customersDAO = new CustomersDB_DAO();
     private final CouponsDAO couponsDAO = new CouponsDB_DAO();
 
     //Todo - test facade
+
+
     private int customerID; // Customer ID belonging to the customer that logged in
 
 
@@ -62,7 +67,7 @@ public class CustomerFacade extends ClientFacade{
         int couponDbId = couponsDAO.GetCouponIDByTitle(coupon.getTitle());
         Coupon couponForPurchase;
         if(couponDbId < 0) {
-            throw new CouponSystemException(Errors.COUPON_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_EXIST);
         }
         else {
             // Save the requested coupon details locally - for use in upcoming parts
@@ -71,21 +76,24 @@ public class CustomerFacade extends ClientFacade{
 
         // Part 2 - Verify the requested coupon doesn't exist for this customer
         ArrayList<Coupon> couponsForCustomer = GetAllCustomerCoupons();
-        for(Coupon customerCoupon: couponsForCustomer) {
-            if(customerCoupon.getId() == coupon.getId()) {
-                throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_CUSTOMER.getMessage());
+        if(couponsForCustomer == null) {}
+        else {
+            for (Coupon customerCoupon : couponsForCustomer) {
+                if (customerCoupon.getId() == coupon.getId()) {
+                    throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_CUSTOMER);
+                }
             }
         }
 
         // Part 3 - Verify amount is more than 0
         if(couponForPurchase.getAmount() <= 0) {
-            throw new CouponSystemException(Errors.COUPON_AMOUNT_IS_ZERO.getMessage());
+            throw new CouponSystemException(Errors.COUPON_AMOUNT_IS_ZERO);
         }
 
         // Part 4 - Verify end date has not passed
         LocalDate today = LocalDate.now();
         if( today.isAfter(couponForPurchase.getEndDate()) ) {
-            throw new CouponSystemException(Errors.COUPON_DATE_EXPIRED.getMessage());
+            throw new CouponSystemException(Errors.COUPON_DATE_EXPIRED);
         }
 
         // Part 5 - Buy coupon
@@ -102,7 +110,7 @@ public class CustomerFacade extends ClientFacade{
 
     /**
      * Get all the coupons listed in DB for the customer logged on
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetAllCustomerCoupons() throws CouponSystemException {
@@ -114,7 +122,7 @@ public class CustomerFacade extends ClientFacade{
     /**
      * Get all the coupons listed in DB for the logged on customer belonging to a specific category
      * @param category - category of coupons to add to coupon list
-     * @return ArrayList<Coupon> if succeeded, null if no coupons matching category were found.
+     * @return coupons ArrayList if succeeded, null if no coupons matching category were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetCustomerCouponsByCategory(Category category) throws CouponSystemException {
@@ -134,7 +142,7 @@ public class CustomerFacade extends ClientFacade{
     /**
      * Get all the coupons listed in DB for the logged on customer up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
-     * @return ArrayList<Coupon> if succeeded, null if no coupons matching max price were found.
+     * @return coupons ArrayList if succeeded, null if no coupons matching max price were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetCustomerCouponsByPrice(Double maxPrice) throws CouponSystemException {
@@ -158,6 +166,10 @@ public class CustomerFacade extends ClientFacade{
      */
     public Customer GetCustomerDetails() throws CouponSystemException {
         return customersDAO.GetOneCustomer(this.customerID);
+    }
+
+    public ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {
+        return couponsDAO.GetAllCoupons();
     }
 
 }

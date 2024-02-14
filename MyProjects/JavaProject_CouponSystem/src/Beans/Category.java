@@ -1,5 +1,8 @@
 package Beans;
 
+/**
+ * Category enum - contains Category list
+ */
 public enum Category {
     Food, Electricity, Restaurant, Vacation, Toys, Automotive, Tires,
     BabyToddler, Computers, CellPhones, Televisions, VideoGamesConsoles,

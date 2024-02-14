@@ -101,7 +101,6 @@ public class InitDB {
 
     /**
      * Initiates DataBase by running all SQL commands in InitDB class.
-     * @return void
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public static void InitiateDB() throws CouponSystemException {
@@ -151,7 +150,7 @@ public class InitDB {
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR);
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }

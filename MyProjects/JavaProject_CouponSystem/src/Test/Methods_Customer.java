@@ -20,13 +20,14 @@ public class Methods_Customer extends Methods{
         int companyId = customerFacade.GetCustomerDetails().getId();
         System.out.println("*** Method: Purchase Coupon ***");
         // Create new coupon
-        Coupon coupon = new Coupon(150,companyId, Category.GetRandomCategory(),
-                "CustomerAddCouponTitle"+GetrandInt(100),"CustomerAddCouponDescription",
-                DateFactory.getLocalDate(false),DateFactory.getLocalDate(true),
-                GetrandInt(50),Math.random()*(maxPrice),"Image"+GetrandInt(10));
+        ArrayList<Coupon> coupons = customerFacade.GetAllCoupons();
+        int couponForPurchaseId = GetrandInt(coupons.size());
+        System.out.println("Coupon for purchase: ");
+        System.out.println(coupons.get(couponForPurchaseId));
         // Add coupon to DB
-        System.out.println("Purchased Coupon: "+
-                customerFacade.PurchaseCoupon(coupon));
+        int dbCouponForPurchaseId = coupons.get(couponForPurchaseId).getId();
+        System.out.println("Purchased Coupon? "+
+                customerFacade.PurchaseCoupon(coupons.get(couponForPurchaseId)));
         System.out.println();
     }
 
@@ -84,6 +85,8 @@ public class Methods_Customer extends Methods{
      */
     public void GetCustomerDetails(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Details ***");
+        System.out.println("The logged on customer details are: ");
         System.out.println(customerFacade.GetCustomerDetails());
+        System.out.println();
     }
 }

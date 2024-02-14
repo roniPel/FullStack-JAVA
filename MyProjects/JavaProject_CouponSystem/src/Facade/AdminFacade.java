@@ -14,6 +14,9 @@ import ErrorHandling.Errors;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Admin Facade - for running admin methods
+ */
 public class AdminFacade extends ClientFacade{
     private final String email = "admin@admin.com";
     private final String password = "admin";
@@ -23,8 +26,9 @@ public class AdminFacade extends ClientFacade{
 
 
 
-    public AdminFacade() {
-    }
+    //Todo - uncomment constructor?
+    /*public AdminFacade() {
+    }*/
 
     /**
      * Checks whether a user exists in the DB
@@ -39,7 +43,7 @@ public class AdminFacade extends ClientFacade{
         if((Objects.equals(email, this.email)) && (Objects.equals(password, this.password))) {
             return true;
         }
-        throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS.getMessage());
+        throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS);
     }
 
     /**
@@ -66,14 +70,15 @@ public class AdminFacade extends ClientFacade{
             // Part 3 - verify company name doesn't exist in DB
             ArrayList<Company> companies = GetAllCompanies();
             for(Company comp: companies) {
-                if (Objects.equals(comp.getName(), company.getName())) {
-                    throw new CouponSystemException(Errors.COMPANY_NAME_ALREADY_EXISTS.getMessage());
+                if(company.getId() == comp.getId()){}
+                else if (Objects.equals(comp.getName(), company.getName())) {
+                    throw new CouponSystemException(Errors.COMPANY_NAME_ALREADY_EXISTS);
                 }
             }
             return companiesDAO.UpdateCompany(company);
         }
         else {
-            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST);
         }
     }
 
@@ -90,7 +95,7 @@ public class AdminFacade extends ClientFacade{
         // Part 1 - Verify company exists in DB
         Company company = companiesDAO.GetOneCompany(companyID);
         if (company == null) {
-            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST);
         }
         // Part 2 - Delete company from DB
         return companiesDAO.DeleteCompany(companyID);
@@ -106,7 +111,7 @@ public class AdminFacade extends ClientFacade{
         ArrayList<Company> companies = companiesDAO.GetAllCompanies();
         // Part 1 - Verify companies exist in DB
         if(companies == null) {
-            throw new CouponSystemException(Errors.TABLE_IS_EMPTY.getMessage());
+            throw new CouponSystemException(Errors.TABLE_IS_EMPTY);
         }
         // Part 2 - return companies array
         return companies;
@@ -123,7 +128,7 @@ public class AdminFacade extends ClientFacade{
         Company company = companiesDAO.GetOneCompany(companyID);
         // Part 1 - Verify company exists in DB
         if(company == null) {
-            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.COMPANY_DOES_NOT_EXIST);
         }
         // Part 2 - return company
         return company;
@@ -155,7 +160,7 @@ public class AdminFacade extends ClientFacade{
             return customersDAO.UpdateCustomer(customer);
         }
         else {
-            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST);
         }
     }
 
@@ -171,7 +176,7 @@ public class AdminFacade extends ClientFacade{
         // Part 1 - Verify customer exists in DB
         Customer customer = customersDAO.GetOneCustomer(customerID);
         if (customer == null) {
-            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST);
         }
         // Part 2 - Delete customer from DB
         return customersDAO.DeleteCustomer(customerID);
@@ -187,7 +192,7 @@ public class AdminFacade extends ClientFacade{
         ArrayList<Customer> customers = customersDAO.GetAllCustomers();
         // Part 1 - Verify customers exist in DB
         if(customers == null) {
-            throw new CouponSystemException(Errors.TABLE_IS_EMPTY.getMessage());
+            throw new CouponSystemException(Errors.TABLE_IS_EMPTY);
         }
         // Part 2 - return customers array
         return customers;
@@ -204,7 +209,7 @@ public class AdminFacade extends ClientFacade{
         Customer customer = customersDAO.GetOneCustomer(customerID);
         // Part 1 - Verify customer exists in DB
         if(customer == null) {
-            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.CUSTOMER_DOES_NOT_EXIST);
         }
         // Part 2 - return customer
         return customer;

@@ -87,7 +87,7 @@ public class DB_DAO_MockData {
             return couponIDForCustomers;
         }
         catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR);
         }
     }
 
@@ -309,7 +309,7 @@ public class DB_DAO_MockData {
             return numberOfItems;
         }
         catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR);
         }
     }
 }

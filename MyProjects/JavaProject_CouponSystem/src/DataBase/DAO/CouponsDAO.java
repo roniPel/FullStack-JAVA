@@ -4,7 +4,9 @@ import Beans.Coupon;
 import ErrorHandling.CouponSystemException;
 
 import java.util.ArrayList;
-
+/**
+ * Interface used for creating coupons DB DAO class
+ */
 public interface CouponsDAO {
 
     /**
@@ -43,7 +45,7 @@ public interface CouponsDAO {
 
     /**
      * Get all the coupons listed in DB
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     ArrayList<Coupon> GetAllCoupons() throws CouponSystemException;
@@ -61,7 +63,7 @@ public interface CouponsDAO {
     /**
      * Get all the coupons listed in DB for a specific customer
      * @param customerID ID belonging to the customer the coupons belong to
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException;

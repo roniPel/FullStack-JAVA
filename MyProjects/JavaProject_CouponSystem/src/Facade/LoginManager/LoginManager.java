@@ -46,7 +46,7 @@ public class LoginManager {
             return clientFacade;
         }
         else {
-            throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS.getMessage());
+            throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS);
         }
 
     }

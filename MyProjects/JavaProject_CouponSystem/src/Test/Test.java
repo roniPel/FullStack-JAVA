@@ -51,21 +51,17 @@ public class Test {
         mockDataMap.put("numberOfCouponsPerCompany", 50);
         mockDataMap.put("amountCouponsPerType", 40);
         mockDataMap.put("maxPrice", 160.00);
-        mockDataMap
-                .put("numberOfCustomers", 8);
+        mockDataMap.put("numberOfCustomers", 8);
 
-        // Prepare data for logins
+        // Prepare data for admin logins
         emailsPassowrdsMap = new HashMap<>();
         emailsPassowrdsMap.put("adminEmail","admin@admin.com");
         emailsPassowrdsMap.put("adminPassword","admin");
-        emailsPassowrdsMap.put("companyEmail","Company5@hotmail.com");
-        emailsPassowrdsMap.put("companyPassword","PassComp5");
-        emailsPassowrdsMap.put("customerEmail","Customer15@hotmail.com");
-        emailsPassowrdsMap.put("customerPassword","Pass15");
 
         String email, password;
         try {
             // Prepare the system - Create DB + schema and fill DB with mock data
+            //Todo - uncomment section below:
             CreateAndFillDB();
 
             // Action 1 - Run daily job
@@ -99,9 +95,11 @@ public class Test {
             System.exit(0);
 
         } catch (CouponSystemException e) {
-            System.out.println((Errors.GENERAL_SYSTEM_ERROR.getMessage()+e));
+            System.out.println(e.getMessage());
         }
     }
+
+
 
     /**
      * Tries to log into the system with provided params
@@ -115,7 +113,7 @@ public class Test {
         ClientFacade clientFacade = loginManager.Login(email,password, clientType);
         if(CheckFacadeInstance(clientFacade,clientType)) {
             isLoggedOn = true;
-            System.out.println(clientType +" is logged on. \n");
+            System.out.println(clientType + " is logged on. \n");
             // Run all Methods:
             switch(clientType) {
                 case Administrator:
@@ -131,7 +129,7 @@ public class Test {
             isLoggedOn = false;
         }
         else {
-            throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS.getMessage());
+            throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS);
         }
     }
 
@@ -141,11 +139,12 @@ public class Test {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private void RunAllMethods_Customer(CustomerFacade customerFacade) throws CouponSystemException {
+        customerMethods.GetCustomerDetails(customerFacade);
         customerMethods.PurchaseCoupon(customerFacade);
         customerMethods.GetCustomerCoupons(customerFacade);
         customerMethods.GetCustomerCouponsByCategory(customerFacade);
         customerMethods.GetCustomerCouponsByMaxPrice(customerFacade);
-        customerMethods.GetCustomerDetails(customerFacade);
+        System.out.println("====================================================================================");
     }
 
     /**
@@ -154,13 +153,14 @@ public class Test {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private void RunAllMethods_Company(CompanyFacade companyFacade) throws CouponSystemException {
+        companyMethods.GetCompanyDetails(companyFacade);
         companyMethods.AddCoupon(companyFacade);
         companyMethods.UpdateCoupon(companyFacade);
         companyMethods.DeleteCoupon(companyFacade);
         companyMethods.GetCompanyCoupons(companyFacade);
         companyMethods.GetCompanyCouponsByCategory(companyFacade);
         companyMethods.GetCompanyCouponsByMaxPrice(companyFacade);
-        companyMethods.GetCompanyDetails(companyFacade);
+        System.out.println("====================================================================================");
     }
 
     /**
@@ -170,15 +170,36 @@ public class Test {
      */
     private void RunAllMethods_Admin(AdminFacade adminFacade) throws CouponSystemException {
         adminMethods.Method_GetAllCompanies(adminFacade);
-        adminMethods.Method_AddCompany(adminFacade);
-        adminMethods.Method_UpdateCompany(adminFacade);
-        adminMethods.Method_DeleteCompany(adminFacade);
-        adminMethods.Method_GetOneCompany(adminFacade);
         adminMethods.Method_GetAllCustomers(adminFacade);
+        adminMethods.Method_AddCompany(adminFacade);
         adminMethods.Method_AddCustomer(adminFacade);
+        adminMethods.Method_UpdateCompany(adminFacade);
         adminMethods.Method_UpdateCustomer(adminFacade);
-        adminMethods.Method_DeleteCustomer(adminFacade);
+        adminMethods.Method_GetOneCompany(adminFacade);
         adminMethods.Method_GetOneCustomer(adminFacade);
+        adminMethods.Method_DeleteCompany(adminFacade);
+        adminMethods.Method_DeleteCustomer(adminFacade);
+        System.out.println("====================================================================================");
+
+        // Prepare data for company and customer logins:
+        AddCompAndCustomerLogin(adminFacade);
+    }
+
+    /**
+     * Add email and passwords to login map after verifying company and customer exist in DB
+     * @param adminFacade Facade used to connect to DB
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    private void AddCompAndCustomerLogin(AdminFacade adminFacade) throws CouponSystemException                          {
+        // Get company and customer details that exist in DB:
+        String[] compDetails = adminMethods.AddCompanyDetailsForLogin(adminFacade);
+        String[] custDetails =adminMethods.AddCustomerDetailsForLogin(adminFacade);
+
+        // Add details to map:
+        emailsPassowrdsMap.put("companyEmail",compDetails[0]);
+        emailsPassowrdsMap.put("companyPassword",compDetails[1]);
+        emailsPassowrdsMap.put("customerEmail",custDetails[0]);
+        emailsPassowrdsMap.put("customerPassword",custDetails[1]);
     }
 
     /**

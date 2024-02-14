@@ -16,7 +16,7 @@ public class DButils {
      * Prepares 'param' map for login check
      * @param email login email
      * @param password login password
-     * @return Map<Integer, Object> params if succeeded, null if failed.
+     * @return A map of integers and objects named params if succeeded, null if failed.
      */
     public Map<Integer, Object> PrepareParamsForLoginCheck(String email, String password) {
         Map<Integer,Object> params = new HashMap<>();
@@ -114,7 +114,7 @@ public class DButils {
 
             if (params.isEmpty()) {
                 ConnectionPool.getInstance().returnConnection(connection);
-                throw new CouponSystemException(EMPTY_OR_NULL.getMessage());
+                throw new CouponSystemException(EMPTY_OR_NULL);
             }
             else {
                 preparedStatement = fillInPreparedStatementFromParams(preparedStatement,params);
@@ -123,9 +123,9 @@ public class DButils {
             return true;
         } catch (SQLException e) {
             if(e.getErrorCode() == 1062){
-                throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e+"\n");
+                throw new CouponSystemException(DUPLICATE_ENTRY);
             }
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e+"\n");
+            throw new CouponSystemException(SQL_ERROR);
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
@@ -160,7 +160,7 @@ public class DButils {
                     preparedStatement.setDate(key, Date.valueOf((LocalDate) value));
                 }
             } catch (SQLException e) {
-                throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+                throw new CouponSystemException(SQL_ERROR);
             }
         }
         return preparedStatement;
@@ -184,7 +184,7 @@ public class DButils {
 
             if (params.isEmpty()) {
                 ConnectionPool.getInstance().returnConnection(connection);
-                throw new CouponSystemException(EMPTY_OR_NULL.getMessage()+"\n");
+                throw new CouponSystemException(EMPTY_OR_NULL);
             }
             else  {
                 for (Map.Entry<Integer, Object> entry : params.entrySet()) {
@@ -206,15 +206,15 @@ public class DButils {
                         }
                     } catch (SQLException e) {
                         if(e.getErrorCode() == 1062){
-                            throw new CouponSystemException(DUPLICATE_ENTRY.getMessage() + e+"\n");
+                            throw new CouponSystemException(DUPLICATE_ENTRY);
                         }
-                        throw new CouponSystemException(SQL_ERROR.getMessage()+"\n");
+                        throw new CouponSystemException(SQL_ERROR);
                     }
                 }
             }
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e+"\n");
+            throw new CouponSystemException(SQL_ERROR);
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
@@ -234,7 +234,7 @@ public class DButils {
                 numberOfReturns = results.getInt(1);
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e+"\n");
+            throw new CouponSystemException(SQL_ERROR);
         }
         return numberOfReturns == 1;
     }

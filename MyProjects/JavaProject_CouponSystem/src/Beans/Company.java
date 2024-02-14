@@ -2,6 +2,9 @@ package Beans;
 
 import java.util.ArrayList;
 
+/**
+ * Company class - for creating a company
+ */
 public class Company {
     // Fields
     private int id;
@@ -10,8 +13,9 @@ public class Company {
     private String password;
     private ArrayList<Coupon> coupons;
 
-    // Constructors
-
+    /**
+     * Constructors
+      */
     public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
         this.id = id;
         this.name = name;

@@ -6,6 +6,9 @@ import ErrorHandling.CouponSystemException;
 
 import java.util.ArrayList;
 
+/**
+ * Interface used for creating companies DB DAO class
+ */
 public interface CompaniesDAO {
     /**
      * Checks whether a company exists in the DB

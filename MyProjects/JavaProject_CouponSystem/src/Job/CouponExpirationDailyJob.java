@@ -8,6 +8,9 @@ import ErrorHandling.Errors;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Coupons expiration daily job - for deleting expired coupons
+ */
 public class CouponExpirationDailyJob implements Runnable{
 
     private CouponsDAO couponsDAO;
@@ -16,6 +19,9 @@ public class CouponExpirationDailyJob implements Runnable{
     //Todo - change time to 24 hours (below)
     private final Integer TIME = 1000*60*2; // 1000*60*60*24; // 24 hours
 
+    /**
+     * Daily job Constructor
+     */
     public CouponExpirationDailyJob() {
         this.couponsDAO = new CouponsDB_DAO();
         this.quit = false;
@@ -47,6 +53,7 @@ public class CouponExpirationDailyJob implements Runnable{
     @Override
     public void run() {
 
+        //Todo - test job!
         //Todo - Delete sout below:
         System.out.println("Entered job");
         // Part 1 - Get all coupons from DB
@@ -66,6 +73,8 @@ public class CouponExpirationDailyJob implements Runnable{
 
             // Part 3 - Thread loop - continues as long as 'quit' is false
             while (!quit) {
+                //Todo - delete below sout
+                System.out.println("Entered job loop!");
                 for (Coupon coupon : coupons) {
                     if (isExpired(coupon)) {
                         try {

@@ -2,6 +2,9 @@ package DataBase.CRUD;
 
 import DataBase.DBmanager;
 
+/**
+ * Class for Create commands in SQL
+ */
 public class Create {
 
     // Company

@@ -5,6 +5,9 @@ import DataBase.DAO.CouponsDAO;
 import DataBase.DAO.CustomersDAO;
 import ErrorHandling.CouponSystemException;
 
+/**
+ * Abstract client Facade - for creating all facades
+ */
 public abstract class ClientFacade {
     protected CompaniesDAO companiesDAO;
     protected CustomersDAO customersDAO;

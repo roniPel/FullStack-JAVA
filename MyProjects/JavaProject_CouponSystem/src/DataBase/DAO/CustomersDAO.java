@@ -74,7 +74,7 @@ public interface CustomersDAO {
 
     /**
      * Creates a map of customerIDs vs couponsID listed in DB.
-     * @return Map<Integer, Integer> if succeeded, null if failed.
+     * @return A map of integers and integers if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     Map<Integer, Integer> CustomerIDsVScouponIDs() throws CouponSystemException;

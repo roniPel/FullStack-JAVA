@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import static ErrorHandling.Errors.SQL_ERROR;
 
+/**
+ * Class used for sending coupons CRUD actions to DB
+ */
 public class CouponsDB_DAO implements CouponsDAO {
     private final DButils dButils = new DButils();
 
@@ -41,7 +44,7 @@ public class CouponsDB_DAO implements CouponsDAO {
     /**
      * Prepares 'param' map for adding coupons to DB
      * @param coupons an array list of coupons to be added to params map
-     * @return Map<Integer, Object> params if succeeded, null if failed.
+     * @return A map of integers and objects named 'params' if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public Map<Integer, Object> PrepareParamsForAddCoupons(ArrayList<Coupon> coupons) throws CouponSystemException {
@@ -85,7 +88,7 @@ public class CouponsDB_DAO implements CouponsDAO {
                 couponID = results.getInt(1);
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return couponID;
     }
@@ -109,7 +112,7 @@ public class CouponsDB_DAO implements CouponsDAO {
             }
             return -1;
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
     }
 
@@ -148,7 +151,7 @@ public class CouponsDB_DAO implements CouponsDAO {
 
     /**
      * Get all the coupons listed in DB
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {
@@ -214,7 +217,7 @@ public class CouponsDB_DAO implements CouponsDAO {
             }
             return coupons;
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR);
         }
     }
 
@@ -271,7 +274,7 @@ public class CouponsDB_DAO implements CouponsDAO {
     /**
      * Get all the coupons listed in DB for a specific company
      * @param companyID ID belonging to the company the coupons belong to
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetCouponsForCompany(int companyID) throws CouponSystemException {
@@ -288,7 +291,7 @@ public class CouponsDB_DAO implements CouponsDAO {
     /**
      * Get all the coupons listed in DB for a specific customer
      * @param customerID ID belonging to the customer the coupons belong to
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetCouponsForCustomer(int customerID) throws CouponSystemException {
@@ -316,7 +319,7 @@ public class CouponsDB_DAO implements CouponsDAO {
     /**
      * Converts a result set from SQL DB to an Array list of coupon objects
      * @param results result set containing all Coupons from DB
-     * @return ArrayList<Coupon> if succeeded, null if failed.
+     * @return coupons ArrayList if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException {
@@ -345,7 +348,7 @@ public class CouponsDB_DAO implements CouponsDAO {
             }
         }
         catch(SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return couponList;
     }
@@ -354,7 +357,7 @@ public class CouponsDB_DAO implements CouponsDAO {
     /**
      * Converts a result set from SQL DB to a map of coupon IDs to use as parameters for a DB query
      * @param results result set containing coupon IDs needed to use as parameters in params map
-     * @return Map<Integer, Object> of parameters (Counter, CouponID) if succeeded, null if failed.
+     * @return A map of integers and integers of parameters (Counter, CouponID) if succeeded, null if failed.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public Map<Integer, Object> PrepareParamsMapFromResultSet(ResultSet results) throws CouponSystemException {
@@ -367,7 +370,7 @@ public class CouponsDB_DAO implements CouponsDAO {
                 params.put(counter++,couponId);
             }
         } catch (SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage() + e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return params;
     }
@@ -394,7 +397,7 @@ public class CouponsDB_DAO implements CouponsDAO {
             }
         }
         catch(SQLException e) {
-            throw new CouponSystemException(SQL_ERROR.getMessage()+e);
+            throw new CouponSystemException(SQL_ERROR);
         }
         return categories;
     }

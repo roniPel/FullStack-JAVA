@@ -14,6 +14,9 @@ import ErrorHandling.Errors;
 
 import java.util.ArrayList;
 
+/**
+ * Company Facade - for running admin methods
+ */
 public class CompanyFacade extends ClientFacade{
 
     private final CompaniesDAO companiesDAO = new CompaniesDB_DAO();
@@ -23,6 +26,10 @@ public class CompanyFacade extends ClientFacade{
 
     //Todo - test facade
 
+    /**
+     * Constructor
+     * @param companyID company ID belonging to company logged on
+     */
     public CompanyFacade(int companyID) {
         this.companyID = companyID;
     }
@@ -57,7 +64,7 @@ public class CompanyFacade extends ClientFacade{
         ArrayList<Coupon> coupons = companiesDAO.GetOneCompany(this.companyID).getCoupons();
         for(Coupon coup: coupons) {
             if(coup.getTitle().equals(coupon.getTitle())) {
-                throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_COMPANY.getMessage());
+                throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_COMPANY);
             }
         }
         // Part 2 - verify companyID listed in coupon matches logged on company
@@ -66,7 +73,7 @@ public class CompanyFacade extends ClientFacade{
             return couponsDAO.AddCoupon(coupon);
         }
         else {
-            throw new CouponSystemException(Errors.COUPON_COMPANY_ID_INCORRECT.getMessage());
+            throw new CouponSystemException(Errors.COUPON_COMPANY_ID_INCORRECT);
         }
     }
 
@@ -86,7 +93,7 @@ public class CompanyFacade extends ClientFacade{
             return couponsDAO.UpdateCoupon(coupon);
         }
         else {
-            throw new CouponSystemException(Errors.COUPON_DOES_NOT_BELONG_TO_COMPANY.getMessage());
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
     }
 
@@ -102,7 +109,7 @@ public class CompanyFacade extends ClientFacade{
         // Part 1 - Verify coupon exists in DB
         Coupon coupon = couponsDAO.GetOneCoupon(couponID);
         if(coupon == null) {
-            throw new CouponSystemException(Errors.COUPON_DOES_NOT_EXIST.getMessage());
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_EXIST);
         }
         // Part 2 - Verify coupon is linked to the company logged on (company ID)
         if(coupon.getCompanyID() == this.companyID) {
@@ -110,14 +117,14 @@ public class CompanyFacade extends ClientFacade{
             return couponsDAO.DeleteCoupon(couponID);
         }
         else {
-            throw new CouponSystemException(Errors.COUPON_DOES_NOT_BELONG_TO_COMPANY.getMessage());
+            throw new CouponSystemException(Errors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
     }
 
 
     /**
      * Get all the coupons listed in DB for a specific company
-     * @return ArrayList<Coupon> if succeeded, null if no coupons were found.
+     * @return coupon ArrayList if succeeded, null if no coupons were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetAllCompanyCoupons() throws CouponSystemException {
@@ -128,7 +135,7 @@ public class CompanyFacade extends ClientFacade{
     /**
      * Get all the coupons listed in DB for the logged on company belonging to a specific category
      * @param category - category of coupons to add to coupon list
-     * @return ArrayList<Coupon> if succeeded, null if no coupons matching category were found.
+     * @return coupon ArrayList if succeeded, null if no coupons matching category were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetCompanyCouponsByCategory(Category category) throws CouponSystemException {
@@ -148,7 +155,7 @@ public class CompanyFacade extends ClientFacade{
     /**
      * Get all the coupons listed in DB for the logged on company up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
-     * @return ArrayList<Coupon> if succeeded, null if no coupons matching max price were found.
+     * @return coupon ArrayList if succeeded, null if no coupons matching max price were found.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public ArrayList<Coupon> GetCompanyCouponsByPrice(Double maxPrice) throws CouponSystemException {
