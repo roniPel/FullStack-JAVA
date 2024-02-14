@@ -45,16 +45,21 @@ public class Test {
      * Action 6 - Close all connections
      */
     public void testAll() {
+        // Start system message
+        System.out.println("********* WELCOME TO THE COUPON SYSTEM *********");
+        System.out.println();
+
         // Create a new daily job
         dailyJob = new CouponExpirationDailyJob();
 
         // Prepare
         mockDataMap = new HashMap<>();
         mockDataMap.put("numberOfCompanies", 3);
-        mockDataMap.put("numberOfCouponsPerCompany", 10);
+        mockDataMap.put("numberOfCouponsPerCompany", 8);
         mockDataMap.put("amountCouponsPerType", 5);
         mockDataMap.put("maxPrice", 200.00);
-        mockDataMap.put("numberOfCustomers", 20);
+        mockDataMap.put("numberOfCustomers", 10);
+        mockDataMap.put("numCouponsPerCustomer",1);
 
         // Prepare data for admin logins
         emailsPassowrdsMap = new HashMap<>();
@@ -96,7 +101,7 @@ public class Test {
             ConnectionPool.getInstance().closeAllConnections();
 
             // END
-            System.out.println("That's all, folks!");
+            System.out.println("********* (-:  So long, and thanks for all the fish!  :-) *********");
             System.exit(0);
 
         } catch (CouponSystemException e) {
@@ -125,7 +130,7 @@ public class Test {
         if(CheckFacadeInstance(clientFacade,clientType)) {
             isLoggedOn = true;
             System.out.println("====================================================================================");
-            System.out.println(clientType + " is logged on. \n");
+            System.out.print(clientType + " is logged on. \n");
             System.out.println("====================================================================================");
             // Run all Methods:
             switch(clientType) {
@@ -251,6 +256,7 @@ public class Test {
         int amountCouponsPerType = (int) mockDataMap.get("amountCouponsPerType");
         double maxPrice = (double) mockDataMap.get("maxPrice");
         int numberOfCustomers = (int) mockDataMap.get("numberOfCustomers");
+        int numCouponsPerCustomer = (int) mockDataMap.get("numCouponsPerCustomer");
 
         mockData.FillInCategoryTable();
         mockData.FillInCompanyTable(numberOfCompanies);

@@ -62,9 +62,12 @@ public class CompanyFacade extends ClientFacade{
         // Can't add a coupon with same Title as coupon belonging to this company (based on this.companyID)
         // Part 1 - Check there is no coupon with same title listed on companyID
         ArrayList<Coupon> coupons = companiesDAO.GetOneCompany(this.companyID).getCoupons();
-        for(Coupon coup: coupons) {
-            if(coup.getTitle().equals(coupon.getTitle())) {
-                throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_COMPANY);
+        if(coupons == null);
+        else {
+            for (Coupon coup : coupons) {
+                if (coup.getTitle().equals(coupon.getTitle())) {
+                    throw new CouponSystemException(Errors.COUPON_EXISTS_FOR_COMPANY);
+                }
             }
         }
         // Part 2 - verify companyID listed in coupon matches logged on company

@@ -7,7 +7,7 @@ public enum Errors {
 
     // Database errors
     SQL_ERROR("Coupon System encountered an SQL error! \n"),
-    DUPLICATE_ENTRY("The value inserted (name/ email/ user) already exist in the system. \n"),
+    DUPLICATE_ENTRY("The value inserted (name/ email/ user) already exists in the system. \n"),
     TABLE_IS_EMPTY("The requested table is empty. \n"),
 
     // General errors

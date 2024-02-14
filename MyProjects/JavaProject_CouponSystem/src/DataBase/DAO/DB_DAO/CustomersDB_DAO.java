@@ -219,7 +219,6 @@ public class CustomersDB_DAO implements CustomersDAO {
                 String email = results.getString(4);
                 String password = results.getString(5);
 
-                // Todo - remove coupons section / mark 'null'?
                 // Part 2 - Get coupons for customer - query from DB
                 ArrayList<Coupon> coupons = couponsDBDao.GetCouponsForCustomer(id);
 

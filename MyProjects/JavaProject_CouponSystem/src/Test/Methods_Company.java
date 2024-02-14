@@ -44,8 +44,14 @@ public class Methods_Company extends Methods{
         // Get all company coupons
         ArrayList<Coupon> coupons = companyFacade.GetAllCompanyCoupons();
         // Select a random coupon for update
-        int updateCouponId = GetrandInt( coupons.size() );
-        Coupon updatedCoupon = coupons.get(updateCouponId);
+        int updateCouponId = GetRandIdFromCouponsArray(coupons);
+        Coupon updatedCoupon = null;
+        for (Coupon coupon: coupons){
+            if(coupon.getId() == updateCouponId){
+                updatedCoupon = coupon;
+                break;
+            }
+        }
         // Update fields
         updatedCoupon.setTitle("CompanyUpdatedTitle"+GetrandInt(10));
         updatedCoupon.setDescription("CompanyUpdatedDescription");
@@ -72,13 +78,10 @@ public class Methods_Company extends Methods{
         // Get all company coupons
         ArrayList<Coupon> coupons = companyFacade.GetAllCompanyCoupons();
         // Select random coupon ID for delete
-        int delCouponId = GetrandInt( coupons.size() );
-        System.out.println("Deleted Coupon details: ");
-        System.out.print(coupons.get(delCouponId));
+        int delCouponId = GetRandIdFromCouponsArray(coupons);
         // Delete coupon in DB
-        int dbIdToDelete = coupons.get(delCouponId).getId();
         System.out.println("Deleted Coupon? "+
-                companyFacade.DeleteCoupon(dbIdToDelete) );
+                companyFacade.DeleteCoupon(delCouponId) );
         System.out.println();
     }
 

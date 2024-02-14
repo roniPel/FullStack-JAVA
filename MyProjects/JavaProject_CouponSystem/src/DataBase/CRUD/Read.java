@@ -18,8 +18,6 @@ public class Read {
 
     public static final String getCompanyIdByEmail =
             "SELECT id FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? ;";
-    public static final String isCompanyNameExists =
-            "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE name = ? ;";
     public static final String isCompanyEmailExists =
             "SELECT COUNT(*) FROM "+ DBmanager.SQL_DB+".companies WHERE email = ? ;";
     public static final String isCompanyIdExists =

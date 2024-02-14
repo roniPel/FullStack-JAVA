@@ -24,10 +24,10 @@ public class Methods_Admin extends Methods {
     void Method_GetOneCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Get One Customer ***");
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
-        int getOneCustId = GetrandInt( customers.size() );
-        int dbId = customers.get(getOneCustId).getId();
+        // Get random ID
+        int getOneCustId = GetRandIdFromCustomerArray(customers);
         System.out.println("One Customer: ");
-        System.out.println(adminFacade.GetOneCustomer(dbId));
+        System.out.println(adminFacade.GetOneCustomer(getOneCustId));
         System.out.println();
     }
 
@@ -39,12 +39,10 @@ public class Methods_Admin extends Methods {
     void Method_DeleteCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Delete Customer ***");
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
-        int delCustId = GetrandInt( customers.size() );
-        System.out.println("Details of customer to be deleted: ");
-        System.out.print(customers.get(delCustId));
-        int dbIdToDelete = customers.get(delCustId).getId();
+        // Select random Id for deleting
+        int delCustId = GetRandIdFromCustomerArray(customers);
         System.out.println("Deleted Customer? "+
-                adminFacade.DeleteCustomer(dbIdToDelete) );
+                adminFacade.DeleteCustomer(delCustId) );
         System.out.println();
     }
 
@@ -56,7 +54,9 @@ public class Methods_Admin extends Methods {
     void Method_UpdateCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Update Customer ***");
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
-        int updateCustId = GetrandInt( customers.size() );
+        // Select random Id for updating
+        int updateCustId = GetRandIdFromCustomerArray(customers);
+        // Update fields
         Customer updatedCust = new Customer(updateCustId,"UpdatedFirstAdmin", "UpdatedLastAdmin","updatedEmail@email.com","AdminPass",null);
         System.out.println("Updated Customer details: ");
         System.out.print(updatedCust);
@@ -99,10 +99,9 @@ public class Methods_Admin extends Methods {
     void Method_GetOneCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Get One Company ***");
         ArrayList<Company> companies = adminFacade.GetAllCompanies();
-        int getOneCompId = GetrandInt( companies.size() );
-        int dbId = companies.get(getOneCompId).getId();
+        int getOneCompId = GetRandIdFromCompanyArray(companies);
         System.out.println("One Company: "+
-                adminFacade.GetOneCompany(dbId));
+                adminFacade.GetOneCompany(getOneCompId));
         System.out.println();
     }
 
@@ -115,13 +114,9 @@ public class Methods_Admin extends Methods {
         System.out.println("*** Method: Delete Company ***");
         ArrayList<Company> companies = adminFacade.GetAllCompanies();
         // Select random ID for deletion
-        int delCompId = GetrandInt( companies.size() );
-        //Todo - incorrect company for deletion is displayed - check!
-        System.out.println("Company for deletion: ");
-        System.out.print(companies.get(delCompId));
-        int dbIdToDelete = companies.get(delCompId).getId();
+        int delCompId = GetRandIdFromCompanyArray(companies);
         System.out.println("Deleted Company? "+
-                adminFacade.DeleteCompany(dbIdToDelete) );
+                adminFacade.DeleteCompany(delCompId) );
         System.out.println();
     }
 
@@ -134,8 +129,14 @@ public class Methods_Admin extends Methods {
         System.out.println("*** Method: Update Company ***");
         ArrayList<Company> companies = adminFacade.GetAllCompanies();
         // Select random ID for updating company
-        int updateCompId = GetrandInt( companies.size() );
-        Company updatedComp = companies.get(updateCompId);
+        int updateCompId = GetRandIdFromCompanyArray(companies);
+        Company updatedComp = null;
+        for (Company company: companies){
+            if(company.getId() == updateCompId){
+                updatedComp = company;
+                break;
+            }
+        }
         // Update email and password
         updatedComp.setEmail("AdminUpdateComp"+GetrandInt(10)+"@email.com");
         updatedComp.setPassword("PassAdmin");

@@ -24,7 +24,7 @@ public class CouponExpirationDailyJob implements Runnable{
      */
     public CouponExpirationDailyJob() {
         this.couponsDAO = new CouponsDB_DAO();
-        this.quit = false;
+        setQuit(false);
     }
 
     public void setQuit(boolean quit) {
@@ -37,7 +37,7 @@ public class CouponExpirationDailyJob implements Runnable{
      * @return True if expired, false if not expired
      */
     private boolean isExpired(Coupon coupon) {
-        return LocalDate.now().isEqual( coupon.getEndDate() );
+        return LocalDate.now().isAfter( coupon.getEndDate() );
     }
 
     /**
@@ -52,9 +52,6 @@ public class CouponExpirationDailyJob implements Runnable{
 
     @Override
     public void run() {
-
-        //Todo - test job!
-
         // Part 1 - Get all coupons from DB
         ArrayList<Coupon> coupons = null;
         try {
@@ -75,9 +72,9 @@ public class CouponExpirationDailyJob implements Runnable{
                 for (Coupon coupon : coupons) {
                     if (isExpired(coupon)) {
                         try {
-                            // Todo - delete below sout
-                            System.out.println("Deleting expired coupon!");
                             DeleteCoupon(coupon);
+                            // Todo - delete below sout and comments in method
+                            System.out.println("Thread has deleted an expired coupon!");
                         } catch (CouponSystemException e) {
                             System.out.println((Errors.THREAD_ERROR.getMessage()));
                             stop();

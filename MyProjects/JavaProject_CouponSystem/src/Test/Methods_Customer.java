@@ -24,11 +24,10 @@ public class Methods_Customer extends Methods{
         System.out.println("*** Method: Purchase Coupon ***");
         // Create new coupon
         ArrayList<Coupon> coupons = customerFacade.GetAllCoupons();
-        int couponForPurchaseId = GetrandInt(coupons.size());
+        int couponForPurchaseId = GetRandIdFromCouponsArray(coupons);
         System.out.println("Coupon for purchase: ");
-        System.out.println(coupons.get(couponForPurchaseId));
+        System.out.print(coupons.get(couponForPurchaseId));
         // Add coupon to DB
-        int dbCouponForPurchaseId = coupons.get(couponForPurchaseId).getId();
         System.out.println("Purchased Coupon? "+
                 customerFacade.PurchaseCoupon(coupons.get(couponForPurchaseId)));
         System.out.println();

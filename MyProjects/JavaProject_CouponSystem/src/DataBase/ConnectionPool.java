@@ -25,8 +25,6 @@ public class ConnectionPool {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     private ConnectionPool() throws CouponSystemException {
-        //Todo - remove sout below:
-        System.out.println("We created new connection pool instance");
         openAllConnections();
     }
 

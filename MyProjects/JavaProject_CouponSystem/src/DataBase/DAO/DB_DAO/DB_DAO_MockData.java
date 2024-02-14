@@ -63,7 +63,7 @@ public class DB_DAO_MockData {
                     // Check if 'customers_vs_coupons' table is empty
                     if(countItemsInTable(Read.countCustomersVsCoupons) == 0) {
                         // Prepare multiple values SQL String
-                        String insertCustVsCoupMulti = dButils.sqlInsertMultipleValues(customers.size(), SQLmultipleValues.CustomerVsCoupon);
+                        String insertCustVsCoupMulti = dButils.sqlInsertMultipleValues((params.size()/2), SQLmultipleValues.CustomerVsCoupon);
                         return dButils.runQueryWithMap(insertCustVsCoupMulti, params);
                     }
                 }
@@ -105,6 +105,7 @@ public class DB_DAO_MockData {
     private Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
         Map<Integer, Object> params = new HashMap<>();
         int counter = 1;
+        // For each customer, add coupons
         for (Customer customer : customers) {
             int couponID = (int) (Math.random() * coupons.size()) + 1;
             params.put(counter++, customer.getId());

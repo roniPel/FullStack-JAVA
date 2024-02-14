@@ -79,24 +79,6 @@ public class CompaniesDB_DAO implements CompaniesDAO {
         return dButils.CheckLoginResults(results);
     }
 
-    //Todo - delete below functions if not in use
-
-    /**
-     * Checks whether a company name exists in the DB
-     * @param name company's name
-     * @return true if company name exists, false if company doesn't exist or if the email + password combo are incorrect.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
-     */
-    public boolean IsCompanyNameExists(String name) throws CouponSystemException {
-        // Part 1 - prepare params
-        Map<Integer,Object> params = new HashMap<>();
-        params.put(1,name);
-        // Part 2 - run query for results in DB
-        ResultSet results = dButils.runQueryForResult(Read.isCompanyNameExists, params);
-        // Part 3 - check results
-        return dButils.CheckLoginResults(results);
-    }
-
     /**
      * Checks whether a company email exists in the DB
      * @param email company's email
@@ -238,8 +220,6 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 String email = results.getString(3);
                 String password = results.getString(4);
 
-                //Todo - Delete section so that company has 'null' coupons
-                // Convert SQL array to Coupons array
                 ArrayList<Coupon> coupons = couponsDBDao.GetCouponsForCompany(id);
 
                 // add a Company object with all details to companies array
