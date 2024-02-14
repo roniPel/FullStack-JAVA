@@ -5,6 +5,9 @@ import ErrorHandling.CouponSystemException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Contains methods for creating and displaying dates
+ */
 public class DateFactory {
     /**
      * Provides a startDate or endDate, based on inserted param

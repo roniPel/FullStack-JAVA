@@ -9,6 +9,9 @@ import Utils.FactoryUtils;
 
 import java.util.ArrayList;
 
+/**
+ * Customer Methods class - contains methods used for testing Customer user
+ */
 public class Methods_Customer extends Methods{
 
     /**

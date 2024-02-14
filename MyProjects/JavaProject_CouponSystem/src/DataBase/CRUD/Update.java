@@ -2,6 +2,9 @@ package DataBase.CRUD;
 
 import DataBase.DBmanager;
 
+/**
+ * Class for Update commands in SQL
+ */
 public class Update {
 
     // Company

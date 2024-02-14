@@ -13,13 +13,17 @@ import Utils.DateFactory;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
-
+/**
+ * Used to fill up the DB with MockData
+ */
 public class DB_DAO_MockData {
 
     private final DButils dButils = new DButils();
@@ -311,5 +315,27 @@ public class DB_DAO_MockData {
         catch (SQLException e) {
             throw new CouponSystemException(SQL_ERROR);
         }
+    }
+
+    /**
+     * Adding an expired coupon to the DB
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    public void AddExpiredCoupon() throws CouponSystemException {
+        // Get categories currently in DB
+        List<Company> companies = companiesDBDao.GetAllCompanies();
+
+        // Create random info (and expired date)
+        int randcompId = (int)(Math.random()*companies.size())+1;
+        Category category = Category.GetRandomCategory();
+        String title = "ExpiredCouponTitle";
+        String description = "ExpiredCouponTitle";
+        LocalDate startDate = LocalDate.of(2015,8,20);
+        LocalDate endDate = LocalDate.of(2020,10,5);
+        double price = Math.random()*(150.00);
+        String image = "Image";
+        Coupon coupon = new Coupon(200,randcompId,category,title,description,startDate,endDate,15,price,image);
+        // Add Coupon to DB
+        couponsDBDao.AddCoupon(coupon);
     }
 }

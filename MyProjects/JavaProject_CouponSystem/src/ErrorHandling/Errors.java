@@ -1,5 +1,8 @@
 package ErrorHandling;
 
+/**
+ * Enum containing the errors that exist in the System
+ */
 public enum Errors {
 
     // Database errors

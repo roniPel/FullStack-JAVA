@@ -2,6 +2,9 @@ package Utils;
 
 import java.text.DecimalFormat;
 
+/**
+ * Contains methods for displaying prices
+ */
 public class FactoryUtils {
     /**
      * Changes price format into organized decimal String format

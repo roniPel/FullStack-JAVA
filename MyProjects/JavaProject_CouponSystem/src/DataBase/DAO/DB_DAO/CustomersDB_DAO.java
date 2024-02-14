@@ -17,6 +17,9 @@ import java.util.Map;
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
+/**
+ * Class used for sending customers CRUD actions to DB
+ */
 public class CustomersDB_DAO implements CustomersDAO {
     private final DButils dButils = new DButils();
     private final CouponsDB_DAO couponsDBDao = new CouponsDB_DAO();

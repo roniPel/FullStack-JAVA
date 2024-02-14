@@ -2,7 +2,15 @@ package DataBase.CRUD;
 
 import DataBase.DBmanager;
 
+/**
+ * Class for Read commands in SQL
+ */
 public class Read {
+    // General
+    public static final String isSchemaExists =
+            "SELECT COUNT(SCHEMA_NAME)" +
+                    "  FROM INFORMATION_SCHEMA.SCHEMATA" +
+                    " WHERE SCHEMA_NAME = '"+ DBmanager.SQL_DB+"'";
 
     // Company
     public static final String isCompanyExists =

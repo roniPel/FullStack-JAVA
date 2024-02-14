@@ -5,6 +5,9 @@ import Utils.FactoryUtils;
 
 import java.time.LocalDate;
 
+/**
+ * Coupon class - for creating a coupon
+ */
 public class Coupon {
     // Fields
     private int id;

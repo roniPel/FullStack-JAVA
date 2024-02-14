@@ -7,6 +7,9 @@ import Facade.ClientFacade;
 import Facade.CompanyFacade;
 import Facade.CustomerFacade;
 
+/**
+ * Class used to manage user logins into system
+ */
 public class LoginManager {
     private static LoginManager instance = null;
     public LoginManager() {

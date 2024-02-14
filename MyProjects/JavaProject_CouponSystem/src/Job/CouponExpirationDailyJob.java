@@ -54,8 +54,7 @@ public class CouponExpirationDailyJob implements Runnable{
     public void run() {
 
         //Todo - test job!
-        //Todo - Delete sout below:
-        System.out.println("Entered job");
+
         // Part 1 - Get all coupons from DB
         ArrayList<Coupon> coupons = null;
         try {
@@ -73,11 +72,11 @@ public class CouponExpirationDailyJob implements Runnable{
 
             // Part 3 - Thread loop - continues as long as 'quit' is false
             while (!quit) {
-                //Todo - delete below sout
-                System.out.println("Entered job loop!");
                 for (Coupon coupon : coupons) {
                     if (isExpired(coupon)) {
                         try {
+                            // Todo - delete below sout
+                            System.out.println("Deleting expired coupon!");
                             DeleteCoupon(coupon);
                         } catch (CouponSystemException e) {
                             System.out.println((Errors.THREAD_ERROR.getMessage()));

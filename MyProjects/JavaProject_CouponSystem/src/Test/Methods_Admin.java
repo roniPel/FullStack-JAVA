@@ -12,6 +12,9 @@ import Utils.DateFactory;
 
 import java.util.ArrayList;
 
+/**
+ * Admin Methods class - contains methods used for testing Admin user
+ */
 public class Methods_Admin extends Methods {
     /**
      * Admin Method - Get One Customer
@@ -22,8 +25,9 @@ public class Methods_Admin extends Methods {
         System.out.println("*** Method: Get One Customer ***");
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
         int getOneCustId = GetrandInt( customers.size() );
-        System.out.println("One Customer: "+
-                adminFacade.GetOneCustomer(getOneCustId));
+        int dbId = customers.get(getOneCustId).getId();
+        System.out.println("One Customer: ");
+        System.out.println(adminFacade.GetOneCustomer(dbId));
         System.out.println();
     }
 
@@ -36,7 +40,7 @@ public class Methods_Admin extends Methods {
         System.out.println("*** Method: Delete Customer ***");
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
         int delCustId = GetrandInt( customers.size() );
-        System.out.println("Customer for deletion's details: ");
+        System.out.println("Details of customer to be deleted: ");
         System.out.print(customers.get(delCustId));
         int dbIdToDelete = customers.get(delCustId).getId();
         System.out.println("Deleted Customer? "+
@@ -96,8 +100,9 @@ public class Methods_Admin extends Methods {
         System.out.println("*** Method: Get One Company ***");
         ArrayList<Company> companies = adminFacade.GetAllCompanies();
         int getOneCompId = GetrandInt( companies.size() );
+        int dbId = companies.get(getOneCompId).getId();
         System.out.println("One Company: "+
-                adminFacade.GetOneCompany(getOneCompId));
+                adminFacade.GetOneCompany(dbId));
         System.out.println();
     }
 

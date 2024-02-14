@@ -15,6 +15,9 @@ import Job.CouponExpirationDailyJob;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Test class - for testing all user type methods
+ */
 public class Test {
     // Variables for log-ins:
     public LoginManager loginManager = LoginManager.getInstance();
@@ -47,11 +50,11 @@ public class Test {
 
         // Prepare
         mockDataMap = new HashMap<>();
-        mockDataMap.put("numberOfCompanies", 8);
-        mockDataMap.put("numberOfCouponsPerCompany", 50);
-        mockDataMap.put("amountCouponsPerType", 40);
-        mockDataMap.put("maxPrice", 160.00);
-        mockDataMap.put("numberOfCustomers", 8);
+        mockDataMap.put("numberOfCompanies", 3);
+        mockDataMap.put("numberOfCouponsPerCompany", 10);
+        mockDataMap.put("amountCouponsPerType", 5);
+        mockDataMap.put("maxPrice", 200.00);
+        mockDataMap.put("numberOfCustomers", 20);
 
         // Prepare data for admin logins
         emailsPassowrdsMap = new HashMap<>();
@@ -61,7 +64,6 @@ public class Test {
         String email, password;
         try {
             // Prepare the system - Create DB + schema and fill DB with mock data
-            //Todo - uncomment section below:
             CreateAndFillDB();
 
             // Action 1 - Run daily job
@@ -85,6 +87,9 @@ public class Test {
             password = emailsPassowrdsMap.get("customerPassword");
             Logon_RunAllMethods(email,password,ClientType.Customer);
 
+            // Verify job deletes expired coupons
+            TestExpiredCouponsJob();
+
             // Action 5 - Stop daily job - No need.  Thread is configured as daemon, will stop upon system exit.
 
             // Action 6 - Close all connections
@@ -99,7 +104,13 @@ public class Test {
         }
     }
 
-
+    /**
+     * Verify daily job deletes expired coupons
+     */
+    private void TestExpiredCouponsJob() {
+        // Todo - finish writing method
+        System.out.println();
+    }
 
     /**
      * Tries to log into the system with provided params
@@ -113,7 +124,9 @@ public class Test {
         ClientFacade clientFacade = loginManager.Login(email,password, clientType);
         if(CheckFacadeInstance(clientFacade,clientType)) {
             isLoggedOn = true;
+            System.out.println("====================================================================================");
             System.out.println(clientType + " is logged on. \n");
+            System.out.println("====================================================================================");
             // Run all Methods:
             switch(clientType) {
                 case Administrator:
@@ -144,7 +157,6 @@ public class Test {
         customerMethods.GetCustomerCoupons(customerFacade);
         customerMethods.GetCustomerCouponsByCategory(customerFacade);
         customerMethods.GetCustomerCouponsByMaxPrice(customerFacade);
-        System.out.println("====================================================================================");
     }
 
     /**
@@ -160,7 +172,6 @@ public class Test {
         companyMethods.GetCompanyCoupons(companyFacade);
         companyMethods.GetCompanyCouponsByCategory(companyFacade);
         companyMethods.GetCompanyCouponsByMaxPrice(companyFacade);
-        System.out.println("====================================================================================");
     }
 
     /**
@@ -179,7 +190,6 @@ public class Test {
         adminMethods.Method_GetOneCustomer(adminFacade);
         adminMethods.Method_DeleteCompany(adminFacade);
         adminMethods.Method_DeleteCustomer(adminFacade);
-        System.out.println("====================================================================================");
 
         // Prepare data for company and customer logins:
         AddCompAndCustomerLogin(adminFacade);
@@ -247,6 +257,7 @@ public class Test {
         mockData.CreateCouponsForAllCompanies(numberOfCouponsPerCompany,amountCouponsPerType,maxPrice);
         mockData.FillInCustomerTable(numberOfCustomers);
         mockData.FillInCustomerVsCouponsTable();
+        mockData.AddExpiredCoupon();
     }
 
 }

@@ -2,6 +2,9 @@ package Beans;
 
 import java.util.ArrayList;
 
+/**
+ * Customer class - for creating a customer
+ */
 public class Customer {
     // Fields
     private int id;

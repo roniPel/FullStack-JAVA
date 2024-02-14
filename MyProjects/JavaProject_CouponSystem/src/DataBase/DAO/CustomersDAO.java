@@ -7,6 +7,9 @@ import ErrorHandling.CouponSystemException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Interface used for creating customers DB DAO class
+ */
 public interface CustomersDAO {
     /**
      * Checks whether a customer exists in the DB

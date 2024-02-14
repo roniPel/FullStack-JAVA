@@ -2,6 +2,9 @@ package DataBase.CRUD;
 
 import DataBase.DBmanager;
 
+/**
+ * Class for Delete commands in SQL
+ */
 public class Delete {
 
     // Company

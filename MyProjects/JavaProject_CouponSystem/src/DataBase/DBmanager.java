@@ -1,5 +1,8 @@
 package DataBase;
 
+/**
+ * Class used to manage connection to DB - credentials, DB name, etc.
+ */
 public class DBmanager {
     //connection credentials to the Data Base
     public static final String URL = "jdbc:mysql://localhost:3306";

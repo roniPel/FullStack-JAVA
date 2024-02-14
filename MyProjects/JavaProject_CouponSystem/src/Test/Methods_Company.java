@@ -9,6 +9,9 @@ import Utils.FactoryUtils;
 
 import java.util.ArrayList;
 
+/**
+ * Company Methods class - contains methods used for testing Company user
+ */
 public class Methods_Company extends Methods{
     /**
      * Company Method - Add Coupon

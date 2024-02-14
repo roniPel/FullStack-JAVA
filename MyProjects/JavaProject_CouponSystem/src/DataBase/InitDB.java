@@ -1,17 +1,24 @@
 package DataBase;
 
+import DataBase.CRUD.Read;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
 
 import static ErrorHandling.Errors.SQL_ERROR;
 
+/**
+ * Initiates and creates DB schema and tables
+ */
 public class InitDB {
+    private static DButils dbUtils = new DButils();
+
     // Create DB (schema)
     public static final String CREATE_SCHEMA = "CREATE SCHEMA IF NOT EXISTS "+DBmanager.SQL_DB;
 
@@ -104,6 +111,10 @@ public class InitDB {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     public static void InitiateDB() throws CouponSystemException {
+        // Check if exists:
+        if(IsSchemaExist()){
+            return;
+        }
         // Create schema, all tables, links, and foreign keys
 
         // Add SQL commands to set
@@ -126,6 +137,13 @@ public class InitDB {
                 return;
             }
         }
+    }
+
+    private static boolean IsSchemaExist() throws CouponSystemException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,null);
+        ResultSet results = dbUtils.runQueryForResult(Read.isSchemaExists,params);
+        return dbUtils.CheckLoginResults(results);
     }
 
 
