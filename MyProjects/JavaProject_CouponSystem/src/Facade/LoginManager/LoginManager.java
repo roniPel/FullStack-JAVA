@@ -33,7 +33,7 @@ public class LoginManager {
      * @param password The password for login.
      * @param clientType The client type - used to select which type of Facade to attempt login with
      * @return The relevant client facade (based on chosen client type) if succeeded, null if failed
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ClientFacade Login(String email, String password, ClientType clientType) throws CouponSystemException {
         ClientFacade clientFacade;
@@ -60,7 +60,7 @@ public class LoginManager {
      * @param password The password for login.
      * @param clientFacade The selected client facade type for the login.
      * @return True if login succeeded, false if login failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     private static boolean CheckLogin(String email, String password, ClientFacade clientFacade) throws CouponSystemException {
         return clientFacade.Login(email, password);

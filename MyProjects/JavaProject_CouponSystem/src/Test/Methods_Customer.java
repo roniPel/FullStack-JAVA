@@ -17,16 +17,15 @@ public class Methods_Customer extends Methods{
     /**
      * Customer Method - Purchase Coupon
      * @param customerFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public void PurchaseCoupon(CustomerFacade customerFacade) throws CouponSystemException {
         int companyId = customerFacade.GetCustomerDetails().getId();
         System.out.println("*** Method: Purchase Coupon ***");
         // Create new coupon
         ArrayList<Coupon> coupons = customerFacade.GetAllCoupons();
-        int couponForPurchaseId = GetRandIdFromCouponsArray(coupons);
-        System.out.println("Coupon for purchase: ");
-        System.out.print(coupons.get(couponForPurchaseId));
+        //int couponForPurchaseId = GetRandIdFromCouponsArray(coupons);
+        int couponForPurchaseId = 3;
         // Add coupon to DB
         System.out.println("Purchased Coupon? "+
                 customerFacade.PurchaseCoupon(coupons.get(couponForPurchaseId)));
@@ -36,7 +35,7 @@ public class Methods_Customer extends Methods{
     /**
      * Customer Method - Get Customer Coupons
      * @param customerFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public void GetCustomerCoupons(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Coupons ***");
@@ -51,7 +50,7 @@ public class Methods_Customer extends Methods{
     /**
      * Customer Method - Get Customer Coupons by Category
      * @param customerFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     public void GetCustomerCouponsByCategory(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Coupons by Category ***");
@@ -67,7 +66,7 @@ public class Methods_Customer extends Methods{
     /**
      * Customer Method - Get Customer Coupons by max price
      * @param customerFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public void GetCustomerCouponsByMaxPrice(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Coupons by Max Price ***");
@@ -83,7 +82,7 @@ public class Methods_Customer extends Methods{
     /**
      * Customer Method - Get Customer Details
      * @param customerFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public void GetCustomerDetails(CustomerFacade customerFacade) throws CouponSystemException {
         System.out.println("*** Method: Get Customer Details ***");

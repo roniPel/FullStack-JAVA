@@ -22,7 +22,7 @@ public class ConnectionPool {
 
     /**
      * Singleton constructor - opens all connections
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     private ConnectionPool() throws CouponSystemException {
         openAllConnections();
@@ -30,7 +30,7 @@ public class ConnectionPool {
 
     /**
      * Opens all connections when Connection Pool is created
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     private void openAllConnections() throws CouponSystemException {
         //Create connections according to NUMBER_OF_CONNECTION variable
@@ -49,7 +49,7 @@ public class ConnectionPool {
     /**
      * Returns the single connection pool instance or creates one if it doesn't exist - with double check
      * @return Connection Pool instance (singleton)
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     public static ConnectionPool getInstance() throws CouponSystemException {
         //Check if instance is null
@@ -66,7 +66,7 @@ public class ConnectionPool {
 
     /**
      * Closes all connections upon system close
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     public void closeAllConnections() throws CouponSystemException {
         //lock connections, that we will not give any new connection
@@ -86,7 +86,7 @@ public class ConnectionPool {
     /**
      * Provides a connection to the DB from the connection pool
      * @return A connection to the DB
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     public Connection getConnection() throws CouponSystemException {
         //lock the connections

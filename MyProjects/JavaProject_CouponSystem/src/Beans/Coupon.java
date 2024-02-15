@@ -80,11 +80,11 @@ public class Coupon {
     }
 
     public void setTitle(String title) {
-        this.title = title+this.category;
+        this.title = title;
     }
 
     public String getDescription() {
-        return description+this.category;
+        return description;
     }
 
     public void setDescription(String description) {

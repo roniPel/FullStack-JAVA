@@ -27,12 +27,7 @@ public class CustomerFacade extends ClientFacade{
 
     private final CustomersDAO customersDAO = new CustomersDB_DAO();
     private final CouponsDAO couponsDAO = new CouponsDB_DAO();
-
-    //Todo - test facade
-
-
     private int customerID; // Customer ID belonging to the customer that logged in
-
 
     public CustomerFacade(int customerID) {
         this.customerID = customerID;
@@ -43,7 +38,7 @@ public class CustomerFacade extends ClientFacade{
      * @param email user's email
      * @param password user's password
      * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     @Override
     public boolean Login(String email, String password) throws CouponSystemException {
@@ -59,7 +54,7 @@ public class CustomerFacade extends ClientFacade{
      * Adds a coupon purchase in the DB for the logged on customer
      * @param coupon 'coupon' object to purchase
      * @return true if succeeded, false if failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public boolean PurchaseCoupon(Coupon coupon) throws CouponSystemException {
 
@@ -111,7 +106,7 @@ public class CustomerFacade extends ClientFacade{
     /**
      * Get all the coupons listed in DB for the customer logged on
      * @return coupons ArrayList if succeeded, null if failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetAllCustomerCoupons() throws CouponSystemException {
         return couponsDAO.GetCouponsForCustomer(this.customerID);
@@ -123,7 +118,7 @@ public class CustomerFacade extends ClientFacade{
      * Get all the coupons listed in DB for the logged on customer belonging to a specific category
      * @param category - category of coupons to add to coupon list
      * @return coupons ArrayList if succeeded, null if no coupons matching category were found.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCustomerCouponsByCategory(Category category) throws CouponSystemException {
         // Part 1 - get all customer coupons
@@ -143,7 +138,7 @@ public class CustomerFacade extends ClientFacade{
      * Get all the coupons listed in DB for the logged on customer up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
      * @return coupons ArrayList if succeeded, null if no coupons matching max price were found.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCustomerCouponsByPrice(Double maxPrice) throws CouponSystemException {
         // Part 1 - get all customer coupons
@@ -162,7 +157,7 @@ public class CustomerFacade extends ClientFacade{
     /**
      * Gets a customer (according to the customer ID belonging to the customer logged on)
      * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public Customer GetCustomerDetails() throws CouponSystemException {
         return customersDAO.GetOneCustomer(this.customerID);

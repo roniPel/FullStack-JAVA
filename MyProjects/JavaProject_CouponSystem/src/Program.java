@@ -1,10 +1,6 @@
-import Job.CouponExpirationDailyJob;
 import Test.Test;
-
-import java.util.HashMap;
-
 /**
- * Program contains 'main' function
+ * Program class, contains 'main' function, runs the entire system
  */
 public class Program {
     public static void main(String[] args) {

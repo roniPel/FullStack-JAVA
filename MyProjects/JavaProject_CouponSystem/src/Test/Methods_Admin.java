@@ -19,7 +19,7 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Get One Customer
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     void Method_GetOneCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Get One Customer ***");
@@ -28,13 +28,12 @@ public class Methods_Admin extends Methods {
         int getOneCustId = GetRandIdFromCustomerArray(customers);
         System.out.println("One Customer: ");
         System.out.println(adminFacade.GetOneCustomer(getOneCustId));
-        System.out.println();
     }
 
     /**
      * Admin Method - Delete Customer
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     void Method_DeleteCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Delete Customer ***");
@@ -49,17 +48,16 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Update Customer
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     void Method_UpdateCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Update Customer ***");
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
-        // Select random Id for updating
+        // Select random ID for updating
         int updateCustId = GetRandIdFromCustomerArray(customers);
         // Update fields
-        Customer updatedCust = new Customer(updateCustId,"UpdatedFirstAdmin", "UpdatedLastAdmin","updatedEmail@email.com","AdminPass",null);
-        System.out.println("Updated Customer details: ");
-        System.out.print(updatedCust);
+        Customer updatedCust = new Customer(updateCustId,"UpdatedFirstAdmin",
+                "UpdatedLastAdmin","updatedEmail@email.com","PassAdmin",null);
         System.out.println("Updated Customer? "+
                 adminFacade.UpdateCustomer(updatedCust));
         System.out.println();
@@ -68,13 +66,12 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Add Customer
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     void Method_AddCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Add Customer ***");
-        Customer addCustomer = new Customer(24,"FirstAdminAdd", "LastAdminAdd","custAdmin@email.com","adminPass",null);
-        System.out.println("Customer details: ");
-        System.out.print(addCustomer);
+        // Create customer
+        Customer addCustomer = new Customer(50,"FirstAdminAdd", "LastAdminAdd","custAdmin@email.com","PassAdmin",null);
         System.out.println("Added Customer? "+ adminFacade.AddCustomer(addCustomer));
         System.out.println();
     }
@@ -82,7 +79,7 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Get All Customers
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     void Method_GetAllCustomers(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Get All Customers ***");
@@ -94,7 +91,7 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Get One Company
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     void Method_GetOneCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Get One Company ***");
@@ -102,13 +99,12 @@ public class Methods_Admin extends Methods {
         int getOneCompId = GetRandIdFromCompanyArray(companies);
         System.out.println("One Company: "+
                 adminFacade.GetOneCompany(getOneCompId));
-        System.out.println();
     }
 
     /**
      * Admin Method - Delete Company
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     void Method_DeleteCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Delete Company ***");
@@ -123,7 +119,7 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Update Company
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     void Method_UpdateCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Update Company ***");
@@ -137,12 +133,10 @@ public class Methods_Admin extends Methods {
                 break;
             }
         }
-        // Update email and password
+        // Update fields
         updatedComp.setEmail("AdminUpdateComp"+GetrandInt(10)+"@email.com");
-        updatedComp.setPassword("PassAdmin");
+        updatedComp.setPassword("PassUpd");
         updatedComp.setCoupons(null);
-        System.out.println("Updated Company details: ");
-        System.out.print(updatedComp);
         // Update company
         System.out.println("Updated Company? "+
                 adminFacade.UpdateCompany(updatedComp));
@@ -152,13 +146,12 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Add Company
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     void Method_AddCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Add Company ***");
+        // Create company
         Company addCompany = new Company(150, "CompanyAddByAdmin","AdminAddComp"+GetrandInt(10)+"@email.com","PassAdmin",null);
-        System.out.println("Company details: ");
-        System.out.print(addCompany);
         System.out.println("Added Company? "+ adminFacade.AddCompany(addCompany));
         System.out.println();
     }
@@ -166,7 +159,7 @@ public class Methods_Admin extends Methods {
     /**
      * Admin Method - Get all Companies
      * @param adminFacade used to run method
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     void Method_GetAllCompanies(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Get All Companies ***");
@@ -175,21 +168,27 @@ public class Methods_Admin extends Methods {
         System.out.println();
     }
 
+    /**
+     * After running all admin methods, add random company details for login
+     * @param adminFacade Facade used to query data in DB
+     * @return String array with email and password that exist in the DB
+     * @throws CouponSystemException If we get any exception.  Details are provided
+     */
     String[] AddCompanyDetailsForLogin(AdminFacade adminFacade) throws CouponSystemException {
+        int companyId = adminFacade.AddCompanyWithFullCoupons();
         String[] compDetails = new String[2];
-        ArrayList<Company> companies = adminFacade.GetAllCompanies();
-        int getOneCompId = GetrandInt( companies.size() );
-        compDetails[0] = companies.get(getOneCompId).getEmail();
-        compDetails[1] = companies.get(getOneCompId).getPassword();
+        Company company = adminFacade.GetOneCompany(companyId);
+        compDetails[0] = company.getEmail();
+        compDetails[1] = company.getPassword();
         return compDetails;
     }
 
     String[] AddCustomerDetailsForLogin(AdminFacade adminFacade) throws CouponSystemException {
+        int customerId = adminFacade.AddCustomerWithFullCoupons();
         String[] custDetails = new String[2];
-        ArrayList<Customer> customers = adminFacade.GetAllCustomers();
-        int getOneCustId = GetrandInt( customers.size() );
-        custDetails[0] = customers.get(getOneCustId).getEmail();
-        custDetails[1] = customers.get(getOneCustId).getPassword();
+        Customer customer = adminFacade.GetOneCustomer(customerId);
+        custDetails[0] = customer.getEmail();
+        custDetails[1] = customer.getPassword();
         return custDetails;
     }
 

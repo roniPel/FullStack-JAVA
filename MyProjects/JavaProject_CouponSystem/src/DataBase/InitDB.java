@@ -108,7 +108,7 @@ public class InitDB {
 
     /**
      * Initiates DataBase by running all SQL commands in InitDB class.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     public static void InitiateDB() throws CouponSystemException {
         // Check if exists:

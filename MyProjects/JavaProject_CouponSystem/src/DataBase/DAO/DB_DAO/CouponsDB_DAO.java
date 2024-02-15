@@ -23,14 +23,11 @@ import static ErrorHandling.Errors.SQL_ERROR;
 public class CouponsDB_DAO implements CouponsDAO {
     private final DButils dButils = new DButils();
 
-    // Todo - test all methods
-
-
     /**
      * Adds a coupon to the DB - based on the details listed in the param
      * @param coupon a 'Coupon' class instance containing coupon details
      * @return true if succeeded, false if failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     public boolean AddCoupon(Coupon coupon) throws CouponSystemException {
         ArrayList<Coupon> coupons = new ArrayList<>();

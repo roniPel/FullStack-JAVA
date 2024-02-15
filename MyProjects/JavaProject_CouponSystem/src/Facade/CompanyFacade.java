@@ -24,8 +24,6 @@ public class CompanyFacade extends ClientFacade{
     private final CouponsDAO couponsDAO = new CouponsDB_DAO();
     private int companyID;  // Company ID belonging to the company that logged in
 
-    //Todo - test facade
-
     /**
      * Constructor
      * @param companyID company ID belonging to company logged on
@@ -40,7 +38,7 @@ public class CompanyFacade extends ClientFacade{
      * @param email user's email
      * @param password user's password
      * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     @Override
     public boolean Login(String email, String password) throws CouponSystemException {
@@ -56,7 +54,7 @@ public class CompanyFacade extends ClientFacade{
      * Adds a coupon to the DB - based on the details listed in the param
      * @param coupon a 'Coupon' class instance containing coupon details
      * @return true if succeeded, false if failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public boolean AddCoupon(Coupon coupon) throws CouponSystemException {
         // Can't add a coupon with same Title as coupon belonging to this company (based on this.companyID)
@@ -85,7 +83,7 @@ public class CompanyFacade extends ClientFacade{
      * Update Coupon in DB - based on the details listed in the param
      * @param coupon a 'Coupon' object used to update an object in the DB
      * @return true if succeeded, false if failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public boolean UpdateCoupon(Coupon coupon) throws CouponSystemException {
         // Verify can't update company ID - option not available in DB
@@ -105,7 +103,7 @@ public class CompanyFacade extends ClientFacade{
      * Deletes a Coupon in DB - based on the details listed in the param
      * @param couponID the ID of the coupon to be deleted in the DB
      * @return true if succeeded, false if failed.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public boolean DeleteCoupon(int couponID) throws CouponSystemException {
         // Delete linked coupon purchases - performed by DB with cascade config.
@@ -128,7 +126,7 @@ public class CompanyFacade extends ClientFacade{
     /**
      * Get all the coupons listed in DB for a specific company
      * @return coupon ArrayList if succeeded, null if no coupons were found.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetAllCompanyCoupons() throws CouponSystemException {
         return companiesDAO.GetOneCompany(this.companyID).getCoupons();
@@ -139,7 +137,7 @@ public class CompanyFacade extends ClientFacade{
      * Get all the coupons listed in DB for the logged on company belonging to a specific category
      * @param category - category of coupons to add to coupon list
      * @return coupon ArrayList if succeeded, null if no coupons matching category were found.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCompanyCouponsByCategory(Category category) throws CouponSystemException {
         // Part 1 - get all company coupons
@@ -159,7 +157,7 @@ public class CompanyFacade extends ClientFacade{
      * Get all the coupons listed in DB for the logged on company up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
      * @return coupon ArrayList if succeeded, null if no coupons matching max price were found.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCompanyCouponsByPrice(Double maxPrice) throws CouponSystemException {
         // Part 1 - get all company coupons
@@ -178,7 +176,7 @@ public class CompanyFacade extends ClientFacade{
     /**
      * Gets a company (according to the company ID belonging to the company logged on)
      * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public Company GetCompanyDetails() throws CouponSystemException {
         return companiesDAO.GetOneCompany(this.companyID);

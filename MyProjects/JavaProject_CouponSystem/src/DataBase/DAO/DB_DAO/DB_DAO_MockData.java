@@ -102,7 +102,7 @@ public class DB_DAO_MockData {
      * @param customers an array list of customers to add to table
      * @return Map<Integer, Object> params if succeeded, null if failed.
      */
-    private Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
+    public Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
         Map<Integer, Object> params = new HashMap<>();
         int counter = 1;
         // For each customer, add coupons
@@ -330,7 +330,7 @@ public class DB_DAO_MockData {
         int randcompId = (int)(Math.random()*companies.size())+1;
         Category category = Category.GetRandomCategory();
         String title = "ExpiredCouponTitle";
-        String description = "ExpiredCouponTitle";
+        String description = "ExpiredCouponDescription";
         LocalDate startDate = LocalDate.of(2015,8,20);
         LocalDate endDate = LocalDate.of(2020,10,5);
         double price = Math.random()*(150.00);

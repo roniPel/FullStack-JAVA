@@ -15,9 +15,7 @@ public class CouponExpirationDailyJob implements Runnable{
 
     private CouponsDAO couponsDAO;
     private boolean quit;
-
-    //Todo - change time to 24 hours (below)
-    private final Integer TIME = 1000*60*2; // 1000*60*60*24; // 24 hours
+    private final Integer TIME = 1000*60*60*24; // 24 hours
 
     /**
      * Daily job Constructor
@@ -43,7 +41,7 @@ public class CouponExpirationDailyJob implements Runnable{
     /**
      * Deletes a coupon (by using the couponsDAO methods)
      * @param coupon 'Coupon' object to be deleted
-     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     * @throws CouponSystemException If we get any exception.  Details are provided
      */
     private void DeleteCoupon(Coupon coupon) throws CouponSystemException {
         // Verify deletion of coupon and of purchase history - performed by DB cascade config.
@@ -73,8 +71,6 @@ public class CouponExpirationDailyJob implements Runnable{
                     if (isExpired(coupon)) {
                         try {
                             DeleteCoupon(coupon);
-                            // Todo - delete below sout and comments in method
-                            System.out.println("Thread has deleted an expired coupon!");
                         } catch (CouponSystemException e) {
                             System.out.println((Errors.THREAD_ERROR.getMessage()));
                             stop();
