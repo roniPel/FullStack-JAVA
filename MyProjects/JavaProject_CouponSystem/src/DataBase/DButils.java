@@ -11,7 +11,7 @@ import java.util.Map;
 import static ErrorHandling.Errors.*;
 
 /**
- * Contains Methods used to connect to run queries on DB and prepare queries
+ * Contains Methods used to run queries on DB and prepare queries
  */
 public class DButils {
 

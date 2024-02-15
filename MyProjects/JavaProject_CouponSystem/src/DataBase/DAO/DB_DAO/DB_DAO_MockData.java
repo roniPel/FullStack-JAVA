@@ -100,7 +100,7 @@ public class DB_DAO_MockData {
      * Prepares a params map for filling in the customerVsCoupons table
      * @param coupons an array list of coupons to add to table
      * @param customers an array list of customers to add to table
-     * @return Map<Integer, Object> params if succeeded, null if failed.
+     * @return a map of Integer and objects named params if succeeded, null if failed.
      */
     public Map<Integer, Object> PrepareParamsCustomersVsCoupons(ArrayList<Coupon> coupons, ArrayList<Customer> customers) {
         Map<Integer, Object> params = new HashMap<>();

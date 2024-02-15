@@ -1,7 +1,7 @@
 package DataBase;
 
 /**
- * Class used to manage connection to DB - credentials, DB name, etc.
+ * Class used to configure connection details to DB - credentials, DB name, etc.
  */
 public class DBmanager {
     //connection credentials to the Data Base
