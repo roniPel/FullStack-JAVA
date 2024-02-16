@@ -15,7 +15,7 @@ public enum Category {
 
     /**
      * Provides a random category based on values in Category Enum
-     * @return String with a random category name
+     * @return random Category name
      */
     public static Category GetRandomCategory() {
         String category = "";
