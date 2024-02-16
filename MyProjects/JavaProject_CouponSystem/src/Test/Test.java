@@ -1,6 +1,5 @@
 package Test;
 
-import Beans.Customer;
 import DataBase.ConnectionPool;
 import DataBase.DAO.DB_DAO.DB_DAO_MockData;
 import DataBase.InitDB;
@@ -21,6 +20,13 @@ import java.util.Objects;
 
 /**
  * Test class - for testing all user type methods
+ * Performs the following actions:
+ * Action 1 - Run daily job.
+ * Action 2 - Connect as Admin + perform all methods.
+ * Action 3 - Connect as Company + perform all methods.
+ * Action 4 - Connect as Customer + perform all methods.
+ * Action 5 - Stop daily job - No need. Thread is configured as daemon, will stop upon system exit.
+ * Action 6 - Close all connections.
  */
 public class Test {
     // Variables for log-ins:
@@ -202,8 +208,6 @@ public class Test {
 
     }
 
-
-
     /**
      * Add email and passwords to login map after verifying company and customer exist in DB
      * @param adminFacade Facade used to connect to DB
@@ -268,5 +272,4 @@ public class Test {
         mockData.FillInCustomerVsCouponsTable();
         mockData.AddExpiredCoupon();
     }
-
 }
