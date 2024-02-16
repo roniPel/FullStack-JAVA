@@ -51,7 +51,7 @@ public class Methods_Company extends Methods{
             }
         }
         // Update fields
-        updatedCoupon.setTitle("CompanyUpdatedTitle"+GetrandInt(10));
+        updatedCoupon.setTitle("CompanyUpdatedTitle"+GetrandInt(100));
         updatedCoupon.setDescription("CompanyUpdatedDescription");
         updatedCoupon.setAmount(GetrandInt(50));
         updatedCoupon.setCategory(Category.GetRandomCategory());

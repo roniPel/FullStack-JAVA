@@ -57,7 +57,7 @@ public class Methods_Admin extends Methods {
         int updateCustId = GetRandIdFromCustomerArray(customers);
         // Update fields
         Customer updatedCust = new Customer(updateCustId,"UpdatedFirstAdmin",
-                "UpdatedLastAdmin","updatedEmail@email.com","PassAdmin",null);
+                "UpdatedLastAdmin","updatedEmail"+GetrandInt(100)+"@email.com","PassAdmin",null);
         System.out.println("Updated Customer? "+
                 adminFacade.UpdateCustomer(updatedCust));
         System.out.println();
@@ -71,7 +71,8 @@ public class Methods_Admin extends Methods {
     void Method_AddCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Add Customer ***");
         // Create customer
-        Customer addCustomer = new Customer(50,"FirstAdminAdd", "LastAdminAdd","custAdmin@email.com","PassAdmin",null);
+        Customer addCustomer = new Customer(50,"FirstAdminAdd", "LastAdminAdd",
+                "custAdmin"+GetrandInt(100)+"@email.com","PassAdmin",null);
         System.out.println("Added Customer? "+ adminFacade.AddCustomer(addCustomer));
         System.out.println();
     }
@@ -134,7 +135,7 @@ public class Methods_Admin extends Methods {
             }
         }
         // Update fields
-        updatedComp.setEmail("AdminUpdateComp"+GetrandInt(10)+"@email.com");
+        updatedComp.setEmail("AdminUpdateComp"+GetrandInt(100)+"@email.com");
         updatedComp.setPassword("PassUpd");
         updatedComp.setCoupons(null);
         // Update company
@@ -151,7 +152,8 @@ public class Methods_Admin extends Methods {
     void Method_AddCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Add Company ***");
         // Create company
-        Company addCompany = new Company(150, "CompanyAddByAdmin","AdminAddComp"+GetrandInt(10)+"@email.com","PassAdmin",null);
+        Company addCompany = new Company(150, "CompanyAddByAdmin",
+                "AdminAddComp"+GetrandInt(100)+"@email.com","PassAdmin",null);
         System.out.println("Added Company? "+ adminFacade.AddCompany(addCompany));
         System.out.println();
     }
@@ -183,6 +185,12 @@ public class Methods_Admin extends Methods {
         return compDetails;
     }
 
+    /**
+     * After running all admin methods, add random customer details for login
+     * @param adminFacade Facade used to query data in DB
+     * @return String array with email and password that exist in the DB
+     * @throws CouponSystemException If we get any exception.  Details are provided
+     */
     String[] AddCustomerDetailsForLogin(AdminFacade adminFacade) throws CouponSystemException {
         int customerId = adminFacade.AddCustomerWithFullCoupons();
         String[] custDetails = new String[2];
