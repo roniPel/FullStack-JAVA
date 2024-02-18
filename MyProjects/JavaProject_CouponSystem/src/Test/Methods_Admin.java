@@ -40,6 +40,8 @@ public class Methods_Admin extends Methods {
         ArrayList<Customer> customers = adminFacade.GetAllCustomers();
         // Select random Id for deleting
         int delCustId = GetRandIdFromCustomerArray(customers);
+        System.out.println("Customer to delete: ");
+        System.out.print(adminFacade.GetOneCustomer(delCustId));
         System.out.println("Deleted Customer? "+
                 adminFacade.DeleteCustomer(delCustId) );
         System.out.println();
@@ -58,6 +60,8 @@ public class Methods_Admin extends Methods {
         // Update fields
         Customer updatedCust = new Customer(updateCustId,"UpdatedFirstAdmin",
                 "UpdatedLastAdmin","updatedEmail"+GetrandInt(100)+"@email.com","PassAdmin",null);
+        System.out.println("Customer to update: ");
+        System.out.print(updatedCust);
         System.out.println("Updated Customer? "+
                 adminFacade.UpdateCustomer(updatedCust));
         System.out.println();
@@ -73,6 +77,8 @@ public class Methods_Admin extends Methods {
         // Create customer
         Customer addCustomer = new Customer(50,"FirstAdminAdd", "LastAdminAdd",
                 "custAdmin"+GetrandInt(100)+"@email.com","PassAdmin",null);
+        System.out.println("Customer to add: ");
+        System.out.print(addCustomer);
         System.out.println("Added Customer? "+ adminFacade.AddCustomer(addCustomer));
         System.out.println();
     }
@@ -112,6 +118,8 @@ public class Methods_Admin extends Methods {
         ArrayList<Company> companies = adminFacade.GetAllCompanies();
         // Select random ID for deletion
         int delCompId = GetRandIdFromCompanyArray(companies);
+        System.out.println("Company to delete: ");
+        System.out.print(adminFacade.GetOneCompany(delCompId));
         System.out.println("Deleted Company? "+
                 adminFacade.DeleteCompany(delCompId) );
         System.out.println();
@@ -139,6 +147,8 @@ public class Methods_Admin extends Methods {
         updatedComp.setPassword("PassUpd");
         updatedComp.setCoupons(null);
         // Update company
+        System.out.println("Company to update: ");
+        System.out.print(updatedComp);
         System.out.println("Updated Company? "+
                 adminFacade.UpdateCompany(updatedComp));
         System.out.println();
@@ -154,6 +164,8 @@ public class Methods_Admin extends Methods {
         // Create company
         Company addCompany = new Company(150, "CompanyAddByAdmin",
                 "AdminAddComp"+GetrandInt(100)+"@email.com","PassAdmin",null);
+        System.out.println("Company to add: ");
+        System.out.print(addCompany);
         System.out.println("Added Company? "+ adminFacade.AddCompany(addCompany));
         System.out.println();
     }

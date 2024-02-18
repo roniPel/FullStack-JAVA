@@ -66,7 +66,6 @@ public class Test {
         emailsPassowrdsMap = new HashMap<>();
         emailsPassowrdsMap.put("adminEmail","admin@admin.com");
         emailsPassowrdsMap.put("adminPassword","admin");
-
     }
 
     /**

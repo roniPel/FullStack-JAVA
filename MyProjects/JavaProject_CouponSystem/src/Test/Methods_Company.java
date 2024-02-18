@@ -27,6 +27,8 @@ public class Methods_Company extends Methods{
                 DateFactory.getLocalDate(false),DateFactory.getLocalDate(true),
                 GetrandInt(50),Math.random()*(maxPrice),"Image"+GetrandInt(10));
         // Add coupon to DB
+        System.out.println("Coupon to add: ");
+        System.out.print(coupon);
         System.out.println("Added Coupon? "+
                 companyFacade.AddCoupon(coupon));
         System.out.println();
@@ -59,6 +61,8 @@ public class Methods_Company extends Methods{
         updatedCoupon.setStartDate(DateFactory.getLocalDate(false));
         updatedCoupon.setEndDate(DateFactory.getLocalDate(true));
         // Update coupon in DB
+        System.out.println("Coupon to update: ");
+        System.out.print(updatedCoupon);
         System.out.println("Updated Coupon? "+
                 companyFacade.UpdateCoupon(updatedCoupon));
         System.out.println();
@@ -76,6 +80,13 @@ public class Methods_Company extends Methods{
         // Select random coupon ID for delete
         int delCouponId = GetRandIdFromCouponsArray(coupons);
         // Delete coupon in DB
+        System.out.println("Coupon to delete: ");
+        coupons.forEach((coupon -> {
+            if(coupon.getId() == delCouponId){
+                System.out.print(coupon);
+                return;
+            }
+        }));
         System.out.println("Deleted Coupon? "+
                 companyFacade.DeleteCoupon(delCouponId) );
         System.out.println();
