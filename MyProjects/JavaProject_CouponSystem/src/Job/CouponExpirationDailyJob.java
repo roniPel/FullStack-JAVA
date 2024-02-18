@@ -51,6 +51,7 @@ public class CouponExpirationDailyJob implements Runnable{
     @Override
     public void run() {
         // Part 1 - Get all coupons from DB
+        ArrayList<Coupon> deletedCoupons = new ArrayList<>();
         ArrayList<Coupon> coupons = null;
         try {
             coupons = couponsDAO.GetAllCoupons();
@@ -71,6 +72,7 @@ public class CouponExpirationDailyJob implements Runnable{
                     if (isExpired(coupon)) {
                         try {
                             DeleteCoupon(coupon);
+                            deletedCoupons.add(coupon);
                         } catch (CouponSystemException e) {
                             System.out.println((Errors.THREAD_ERROR.getMessage()));
                             stop();
@@ -81,6 +83,7 @@ public class CouponExpirationDailyJob implements Runnable{
                         }
                     }
                 }
+                PrintCouponJobStatus(deletedCoupons);
                 try {
                     Thread.sleep(TIME);
                 } catch (InterruptedException e) {
@@ -91,6 +94,21 @@ public class CouponExpirationDailyJob implements Runnable{
             }
         }
     }
+
+    /**
+     * Prints the coupon expiration job status summary.
+     * @param deletedCoupons - Array of expired coupons that were deleted from DB
+     */
+    private void PrintCouponJobStatus(ArrayList<Coupon> deletedCoupons) {
+        System.out.println("--------     COUPON JOB STATUS     --------");
+        System.out.println("| Coupon Expiration Job ran successfully.  |");
+        System.out.println("| The coupons that were deleted due to     |\n" +
+                           "| expiration date are:                     |");
+        System.out.println(deletedCoupons);
+        System.out.println("--------    END COUPON JOB STATUS  --------");
+        System.out.println();
+    }
+
     public void stop() {
         setQuit(true);
     }

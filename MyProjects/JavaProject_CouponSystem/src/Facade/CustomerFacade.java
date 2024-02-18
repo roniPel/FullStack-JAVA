@@ -125,11 +125,11 @@ public class CustomerFacade extends ClientFacade{
         ArrayList<Coupon> coupons = GetAllCustomerCoupons();
         // Part 2 - iterate over customer coupons and add relevant coupons to couponsByCategory list
         ArrayList<Coupon> couponsByCategory = new ArrayList<>();
-        for(Coupon coupon: coupons) {
+        coupons.forEach((coupon -> {
             if(coupon.getCategory().equals(category)) {
                 couponsByCategory.add(coupon);
             }
-        }
+        }));
         return couponsByCategory;
     }
 
@@ -145,11 +145,11 @@ public class CustomerFacade extends ClientFacade{
         ArrayList<Coupon> coupons = GetAllCustomerCoupons();
         // Part 2 - iterate over customer coupons and add relevant coupons to couponsByMaxPrice list
         ArrayList<Coupon> couponsByMaxPrice = new ArrayList<>();
-        for(Coupon coupon: coupons) {
+        coupons.forEach((coupon -> {
             if(coupon.getPrice() <= maxPrice) {
                 couponsByMaxPrice.add(coupon);
             }
-        }
+        }));
         return couponsByMaxPrice;
     }
 

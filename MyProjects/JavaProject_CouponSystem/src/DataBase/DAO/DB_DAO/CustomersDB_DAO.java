@@ -101,9 +101,10 @@ public class CustomersDB_DAO implements CustomersDAO {
             // Part 2 - Add customer coupon purchases into DB
             // Prepare params map for multiple coupon purchase
             Map<Integer, Integer> customerVsCouponsMap = new HashMap<>();
-            for(Coupon coupon: customer.getCoupons()){
+            customer.getCoupons().forEach((coupon) -> {
                 customerVsCouponsMap.put(customer.getId(), coupon.getId());
-            }
+                    }
+            );
             params.clear();
             params = CouponsDB_DAO.PrepareParamsMapCouponPurchaseDel(customerVsCouponsMap);
             // Prepare multiple insert SQL statement
