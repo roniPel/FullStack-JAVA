@@ -13,6 +13,9 @@ import Facade.LoginManager.ClientType;
 import Facade.LoginManager.LoginManager;
 import Job.CouponExpirationDailyJob;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,17 +46,24 @@ public class Test {
     // Thread
     private CouponExpirationDailyJob dailyJob;
 
+    /**
+     * Constructor - runs methods that prepare data for the system after startup
+     */
     public Test() {
         // Start system message
-        System.out.println("*******************************************************************");
-        System.out.println("**********         WELCOME TO THE COUPON SYSTEM          **********");
-        System.out.println("*******************************************************************");
-        System.out.println();
+        PrintWelcomeMessage();
 
         // Create a new daily job
         dailyJob = new CouponExpirationDailyJob();
 
-        // Prepare
+        // Prepare system data
+        PrepareSystemData();
+    }
+
+    /**
+     * Prepares variables for mockData to insert into DB. Prepares login details for admin user
+     */
+    private void PrepareSystemData() {
         mockDataMap = new HashMap<>();
         mockDataMap.put("numberOfCompanies", 3);
         mockDataMap.put("numberOfCouponsPerCompany", 8);
@@ -62,10 +72,21 @@ public class Test {
         mockDataMap.put("numberOfCustomers", 10);
         mockDataMap.put("numCouponsPerCustomer",1);
 
-        // Prepare data for admin logins
+        // Prepare data for admin login
         emailsPassowrdsMap = new HashMap<>();
         emailsPassowrdsMap.put("adminEmail","admin@admin.com");
         emailsPassowrdsMap.put("adminPassword","admin");
+    }
+
+    /**
+     * Prints the coupon system welcome message on system startup
+     */
+    private void PrintWelcomeMessage() {
+        System.out.println();
+        System.out.println("*******************************************************************");
+        System.out.println("**********         WELCOME TO THE COUPON SYSTEM          **********");
+        System.out.println("*******************************************************************");
+        System.out.println();
     }
 
     /**
