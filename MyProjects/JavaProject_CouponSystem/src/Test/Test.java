@@ -133,14 +133,22 @@ public class Test {
             ConnectionPool.getInstance().closeAllConnections();
 
             // END
-            System.out.println("*******************************************************************");
-            System.out.println("********* (-:  So long, and thanks for all the fish!  :-) *********");
-            System.out.println("*******************************************************************");
-            System.exit(0);
+            PrintEndMessage();
+
 
         } catch (CouponSystemException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Prints the coupon system goodbye message upon system close
+     */
+    private void PrintEndMessage() {
+        System.out.println("*******************************************************************");
+        System.out.println("********* (-:  So long, and thanks for all the fish!  :-) *********");
+        System.out.println("*******************************************************************");
+        System.exit(0);
     }
 
     /**
