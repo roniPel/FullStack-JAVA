@@ -20,9 +20,9 @@ public class FactoryUtils {
     }
 
     /**
-     * Rounds a value to the number of decimal places user wants
+     * Rounds a value to the number of decimal places specified in params
      * @param value Value to be rounded
-     * @param places Number of decimal places after the point
+     * @param places Number of decimal places after the decimal point
      * @return A rounded 'value'
      */
     public static double round(double value, int places) {
