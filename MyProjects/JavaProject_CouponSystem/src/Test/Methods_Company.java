@@ -7,6 +7,7 @@ import Facade.CompanyFacade;
 import Utils.DateFactory;
 import Utils.FactoryUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -22,10 +23,17 @@ public class Methods_Company extends Methods{
         int companyId = companyFacade.GetCompanyDetails().getId();
         System.out.println("*** Method: Add Coupon ***");
         // Create new coupon
-        Coupon coupon = new Coupon(150,companyId, Category.GetRandomCategory(),
-                "CompanyAddCouponTitle"+GetrandInt(100),"CompanyAddCouponDescription",
-                DateFactory.getLocalDate(false),DateFactory.getLocalDate(true),
-                GetrandInt(50),Math.random()*(maxPrice),"Image"+GetrandInt(10));
+        Category category = Category.GetRandomCategory();
+        String title = "CompanyAddCouponTitle"+GetrandInt(100);
+        String description = "CompanyAddCouponDescription";
+        LocalDate startDate = DateFactory.getLocalDate(false);
+        LocalDate endDate = DateFactory.getLocalDate(true);
+        double price = FactoryUtils.round(Math.random()*(maxPrice),2);
+        int amount = GetrandInt(50);
+        String image = "Image"+GetrandInt(10);
+
+        Coupon coupon = new Coupon(150,companyId, category,title,description,
+                        startDate,endDate, amount,price,image);
         // Add coupon to DB
         System.out.println("Coupon to add: ");
         System.out.print(coupon);

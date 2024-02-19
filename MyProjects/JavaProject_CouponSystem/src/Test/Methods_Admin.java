@@ -75,8 +75,12 @@ public class Methods_Admin extends Methods {
     void Method_AddCustomer(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Add Customer ***");
         // Create customer
-        Customer addCustomer = new Customer(50,"FirstAdminAdd", "LastAdminAdd",
-                "custAdmin"+GetrandInt(100)+"@email.com","PassAdmin",null);
+        String firstName = "FirstAdminAdd";
+        String lastName = "LastAdminAdd";
+        String email = "custAdmin"+GetrandInt(100)+"@email.com";
+        String password = "PassAdmin";
+        Customer addCustomer = new Customer(50,firstName, lastName, email, password,null);
+
         System.out.println("Customer to add: ");
         System.out.print(addCustomer);
         System.out.println("Added Customer? "+ adminFacade.AddCustomer(addCustomer));
@@ -162,8 +166,11 @@ public class Methods_Admin extends Methods {
     void Method_AddCompany(AdminFacade adminFacade) throws CouponSystemException {
         System.out.println("*** Method: Add Company ***");
         // Create company
-        Company addCompany = new Company(150, "CompanyAddByAdmin",
-                "AdminAddComp"+GetrandInt(100)+"@email.com","PassAdmin",null);
+        String name = "CompanyAddByAdmin";
+        String email = "AdminAddComp"+GetrandInt(100)+"@email.com";
+        String password = "PassAdmin";
+        Company addCompany = new Company(150, name, email, password,null);
+
         System.out.println("Company to add: ");
         System.out.print(addCompany);
         System.out.println("Added Company? "+ adminFacade.AddCompany(addCompany));

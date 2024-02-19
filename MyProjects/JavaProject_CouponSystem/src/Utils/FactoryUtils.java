@@ -1,5 +1,7 @@
 package Utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
@@ -15,5 +17,19 @@ public class FactoryUtils {
         String pattern = "###,###.##";
         DecimalFormat myFormatter = new DecimalFormat(pattern);
         return myFormatter.format(price);
+    }
+
+    /**
+     * Rounds a value to the number of decimal places user wants
+     * @param value Value to be rounded
+     * @param places Number of decimal places after the point
+     * @return A rounded 'value'
+     */
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

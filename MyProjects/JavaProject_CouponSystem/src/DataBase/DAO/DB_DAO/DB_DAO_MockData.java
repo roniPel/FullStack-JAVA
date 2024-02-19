@@ -9,6 +9,7 @@ import DataBase.DButils;
 import DataBase.SQLmultipleValues;
 import ErrorHandling.CouponSystemException;
 import Utils.DateFactory;
+import Utils.FactoryUtils;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -269,7 +270,7 @@ public class DB_DAO_MockData {
             String description = "Description"+i;
             Date startDate = Date.valueOf(DateFactory.getLocalDate(false));
             Date endDate = Date.valueOf(DateFactory.getLocalDate(true));
-            double price = Math.random()*(maxPrice+1);
+            double price = FactoryUtils.round(Math.random()*(maxPrice+1),2);
             String image = "Image"+i;
 
             // Add params to map
@@ -333,7 +334,7 @@ public class DB_DAO_MockData {
         String description = "ExpiredCouponDescription";
         LocalDate startDate = LocalDate.of(2015,8,20);
         LocalDate endDate = LocalDate.of(2020,10,5);
-        double price = Math.random()*(150.00);
+        double price = FactoryUtils.round(Math.random()*(150.00),2);
         String image = "Image";
         Coupon coupon = new Coupon(200,randcompId,category,title,description,startDate,endDate,15,price,image);
         // Add Coupon to DB

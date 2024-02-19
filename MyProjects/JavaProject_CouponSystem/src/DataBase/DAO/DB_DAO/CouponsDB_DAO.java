@@ -400,4 +400,16 @@ public class CouponsDB_DAO implements CouponsDAO {
         }
         return categories;
     }
+
+    /**
+     * Sends a query to DB asking for expired coupons
+     * @return Result set of expired coupons
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    @Override
+    public ResultSet GetExpiredCoupons() throws CouponSystemException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,null);
+        return dButils.runQueryForResult(Read.getExpiredCoupons,params);
+    }
 }

@@ -3,8 +3,11 @@ package Job;
 import Beans.Coupon;
 import DataBase.DAO.CouponsDAO;
 import DataBase.DAO.DB_DAO.CouponsDB_DAO;
+import DataBase.DButils;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
+
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -50,22 +53,19 @@ public class CouponExpirationDailyJob implements Runnable{
 
     @Override
     public void run() {
-        // Part 1 - Get all coupons from DB
+        // Part 1 - Get expired coupons from DB
         ArrayList<Coupon> deletedCoupons = new ArrayList<>();
         ArrayList<Coupon> coupons = null;
         try {
-            coupons = couponsDAO.GetAllCoupons();
+            ResultSet results = couponsDAO.GetExpiredCoupons();
+            coupons = couponsDAO.AddResultsToCouponList(results);
         } catch (CouponSystemException e) {
             System.out.println(Errors.GENERAL_SYSTEM_ERROR.getMessage()+ e);
             stop();
         }
-        // Part 2 - Verify 'coupons' is not null
-        if(coupons == null) {
-            //throw new CouponSystemException(Errors.EMPTY_OR_NULL.getMessage() + e)
-            System.out.println(Errors.EMPTY_OR_NULL.getMessage()) ;
-        }
+        // Part 2 - Verify 'coupons' array is not null
+        if(coupons == null);    // There are no expired coupons
         else {
-
             // Part 3 - Thread loop - continues as long as 'quit' is false
             while (!quit) {
                 for (Coupon coupon : coupons) {
@@ -77,7 +77,6 @@ public class CouponExpirationDailyJob implements Runnable{
                             System.out.println((Errors.THREAD_ERROR.getMessage()));
                             stop();
                         } catch (NullPointerException e) {
-                            //throw new CouponSystemException(Errors.EMPTY_OR_NULL.getMessage() + e);
                             System.out.println((Errors.EMPTY_OR_NULL.getMessage()));
                             stop();
                         }
@@ -87,7 +86,6 @@ public class CouponExpirationDailyJob implements Runnable{
                 try {
                     Thread.sleep(TIME);
                 } catch (InterruptedException e) {
-                    //throw new CouponSystemException(Errors.THREAD_ERROR.getMessage());
                     System.out.println(Errors.THREAD_ERROR.getMessage() + e);
                     stop();
                 }

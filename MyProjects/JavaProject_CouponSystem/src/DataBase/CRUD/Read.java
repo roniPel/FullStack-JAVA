@@ -39,6 +39,8 @@ public class Read {
 
 
     // Coupons
+    public static final String getExpiredCoupons =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE endDate <= DATE(NOW());";
     public static final String countNumberOfCoupons =
             "SELECT COUNT(*) FROM "+DBmanager.SQL_DB+".coupons;";
     public static final String getAllCoupons =

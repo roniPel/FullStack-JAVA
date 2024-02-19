@@ -13,6 +13,7 @@ import DataBase.DAO.DB_DAO.CompaniesDB_DAO;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 import Utils.DateFactory;
+import Utils.FactoryUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -247,7 +248,7 @@ public class AdminFacade extends ClientFacade{
             LocalDate startDate = DateFactory.getLocalDate(false);
             LocalDate endDate = DateFactory.getLocalDate(true);
             int amount = 10;
-            double price = Math.random()*200;
+            double price = FactoryUtils.round(Math.random()*200,2);
             String image = "Image Customer "+category;
             Coupon addCoupon = new Coupon(count++,companyId,category,title,description,startDate,endDate,amount,price,
                     image);
@@ -289,7 +290,7 @@ public class AdminFacade extends ClientFacade{
             LocalDate startDate = DateFactory.getLocalDate(false);
             LocalDate endDate = DateFactory.getLocalDate(true);
             int amount = 10;
-            double price = Math.random()*200;
+            double price = FactoryUtils.round(Math.random()*200,2);
             String image = "Image Company "+category;
             Coupon addCoupon = new Coupon(count++,newCompanyId,category,title,description,startDate,endDate,amount,price,
                     image);

@@ -3,6 +3,7 @@ package DataBase.DAO;
 import Beans.Coupon;
 import ErrorHandling.CouponSystemException;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -95,5 +96,19 @@ public interface CouponsDAO {
      * @return a map of categoryID (Integer) and name (String) if succeeded, 'null' if failed or if no categories exist.
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
-    public Map<Integer, String> GetAllCategories() throws CouponSystemException;
+    Map<Integer, String> GetAllCategories() throws CouponSystemException;
+
+    /**
+     * Sends a query to DB and returns a list of expired coupons for deletion
+     * @return ResultSet containing a list of expired coupons (to be deleted)
+     */
+    ResultSet GetExpiredCoupons() throws CouponSystemException;
+
+    /**
+     * Converts a result set from SQL DB to an Array list of coupon objects
+     * @param results result set containing all Coupons from DB
+     * @return coupons ArrayList if succeeded, null if failed.
+     * @throws CouponSystemException If we get any SQL exception.  Details are provided
+     */
+    ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException;
 }
