@@ -412,4 +412,64 @@ public class CouponsDB_DAO implements CouponsDAO {
         params.put(1,null);
         return dButils.runQueryForResult(Read.getExpiredCoupons,params);
     }
+
+    /**
+     * Sends a query to the DB for coupons from a specific company and specific category Id - specified in params
+     * @param categoryId Category id for the coupons
+     * @param companyId Company id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetCompanyCouponsByCategoryId(int categoryId, int companyId) throws CouponSystemException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,companyId);
+        params.put(2,categoryId);
+        ResultSet results = dButils.runQueryForResult(Read.getCompanyCouponsByCategoryId,params);
+        return AddResultsToCouponList(results);
+    }
+
+    /**
+     * Sends a query to the DB for coupons from a specific company and under a maximum price - specified in params
+     * @param maxPrice Max price for the coupons
+     * @param companyId Company id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetCompanyCouponsByMaxPrice(double maxPrice, int companyId) throws CouponSystemException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,companyId);
+        params.put(2,maxPrice);
+        ResultSet results = dButils.runQueryForResult(Read.getCompanyCouponsByMaxPrice,params);
+        return AddResultsToCouponList(results);
+    }
+
+    /**
+     * Sends a query to the DB for coupons from a specific customer and specific category Id - specified in params
+     * @param categoryId Category id for the coupons
+     * @param customerId Customer id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetCustomerCouponsByCategoryId(int categoryId, int customerId) throws CouponSystemException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,customerId);
+        params.put(2,categoryId);
+        ResultSet results = dButils.runQueryForResult(Read.getCustomerCouponsByCategoryId,params);
+        return AddResultsToCouponList(results);
+    }
+
+    /**
+     * Sends a query to the DB for coupons from a specific customer and under a maximum price - specified in params
+     * @param maxPrice Max price for the coupons
+     * @param customerId Customer id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    public ArrayList<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice, int customerId) throws CouponSystemException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1,customerId);
+        params.put(2,maxPrice);
+        ResultSet results = dButils.runQueryForResult(Read.getCustomerCouponsByMaxPrice,params);
+        return AddResultsToCouponList(results);
+    }
 }

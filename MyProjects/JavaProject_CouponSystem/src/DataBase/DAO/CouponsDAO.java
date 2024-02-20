@@ -111,4 +111,40 @@ public interface CouponsDAO {
      * @throws CouponSystemException If we get any SQL exception.  Details are provided
      */
     ArrayList<Coupon> AddResultsToCouponList(ResultSet results) throws CouponSystemException;
+
+    /**
+     * Sends a query to the DB for coupons from a specific company and specific category Id - specified in params
+     * @param categoryId Category id for the coupons
+     * @param companyId Company id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    ArrayList<Coupon> GetCompanyCouponsByCategoryId(int categoryId, int companyId) throws CouponSystemException;
+
+    /**
+     * Sends a query to the DB for coupons from a specific company and under a maximum price - specified in params
+     * @param maxPrice Max price for the coupons
+     * @param companyId Company id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    ArrayList<Coupon> GetCompanyCouponsByMaxPrice(double maxPrice, int companyId) throws CouponSystemException;
+
+    /**
+     * Sends a query to the DB for coupons from a specific customer and specific category Id - specified in params
+     * @param categoryId Category id for the coupons
+     * @param customerId Customer id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    ArrayList<Coupon> GetCustomerCouponsByCategoryId(int categoryId, int customerId) throws CouponSystemException;
+
+    /**
+     * Sends a query to the DB for coupons from a specific customer and under a maximum price - specified in params
+     * @param maxPrice Max price for the coupons
+     * @param customerId Customer id for the coupons
+     * @return An array list of coupons that answer the specifications
+     * @throws CouponSystemException  If we get any SQL exception.  Details are provided
+     */
+    ArrayList<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice, int customerId) throws CouponSystemException;
 }

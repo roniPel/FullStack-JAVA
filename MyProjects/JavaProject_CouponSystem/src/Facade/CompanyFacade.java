@@ -12,7 +12,11 @@ import DataBase.DAO.DB_DAO.CustomersDB_DAO;
 import ErrorHandling.CouponSystemException;
 import ErrorHandling.Errors;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Company Facade - for running admin methods
@@ -140,18 +144,18 @@ public class CompanyFacade extends ClientFacade{
      * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCompanyCouponsByCategory(Category category) throws CouponSystemException {
-        // Part 1 - get all company coupons
-        ArrayList<Coupon> coupons = GetAllCompanyCoupons();
-        // Part 2 - iterate over company coupons and add relevant coupons to couponsByCategory list
-        ArrayList<Coupon> couponsByCategory = new ArrayList<>();
-        coupons.forEach((coupon -> {
-            if(coupon.getCategory().equals(category)) {
-                couponsByCategory.add(coupon);
-            }
-        }));
-        return couponsByCategory;
-    }
+        // Part 1 - find relevant category Id
+        Map<Integer,String> categories = couponsDAO.GetAllCategories();
+        Stream<Integer> categoryIdStream = categories
+                .entrySet()
+                .stream()
+                .filter(categoryName -> category.toString().equals(categoryName.getValue()))
+                .map(Map.Entry::getKey);
+        int categoryId = categoryIdStream.findAny().orElse(-1);
 
+        // Part 2 - Send query to DB for coupons by category
+        return couponsDAO.GetCompanyCouponsByCategoryId(categoryId, this.companyID);
+    }
 
     /**
      * Get all the coupons listed in DB for the logged on company up to a max price
@@ -160,18 +164,8 @@ public class CompanyFacade extends ClientFacade{
      * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCompanyCouponsByPrice(Double maxPrice) throws CouponSystemException {
-        // Part 1 - get all company coupons
-        ArrayList<Coupon> coupons = GetAllCompanyCoupons();
-        // Part 2 - iterate over company coupons and add relevant coupons to couponsByMaxPrice list
-        ArrayList<Coupon> couponsByMaxPrice = new ArrayList<>();
-        coupons.forEach((coupon -> {
-            if(coupon.getPrice() <= maxPrice) {
-                couponsByMaxPrice.add(coupon);
-            }
-        }));
-        return couponsByMaxPrice;
+        return couponsDAO.GetCompanyCouponsByMaxPrice(maxPrice,this.companyID);
     }
-
 
     /**
      * Gets a company (according to the company ID belonging to the company logged on)

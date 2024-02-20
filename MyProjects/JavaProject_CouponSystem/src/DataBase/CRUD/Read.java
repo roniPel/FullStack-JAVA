@@ -49,11 +49,24 @@ public class Read {
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ?;";
     public static final String getCouponsForCustomer =
             "SELECT * FROM "+DBmanager.SQL_DB+".customers_vs_coupons WHERE customerID = ?;";
-
     public static final String getCouponIdByTitle =
             "SELECT id FROM "+ DBmanager.SQL_DB+".coupons WHERE title = ? ;";
     public static final String getCouponsById =
             "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE id IN (?);";
+    public static final String getCompanyCouponsByMaxPrice =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ? AND price <= ?";
+    public static final String getCompanyCouponsByCategoryId =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons WHERE companyID = ? AND categoryID = ?;";
+
+    public static final String getCustomerCouponsByCategoryId =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons JOIN "+DBmanager.SQL_DB+".customers_vs_coupons " +
+                    "ON coupons.id = customers_vs_coupons.couponID " +
+                    "WHERE customers_vs_coupons.customerID = ? AND coupons.categoryID = ?;";
+
+    public static final String getCustomerCouponsByMaxPrice =
+            "SELECT * FROM "+DBmanager.SQL_DB+".coupons JOIN "+DBmanager.SQL_DB+".customers_vs_coupons " +
+                    "ON coupons.id = customers_vs_coupons.couponID " +
+                    "WHERE customers_vs_coupons.customerID = ? AND coupons.price <= ?;";
 
 
     // Customer

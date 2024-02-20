@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Customer Facade - for running admin methods
@@ -121,18 +122,18 @@ public class CustomerFacade extends ClientFacade{
      * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCustomerCouponsByCategory(Category category) throws CouponSystemException {
-        // Part 1 - get all customer coupons
-        ArrayList<Coupon> coupons = GetAllCustomerCoupons();
-        // Part 2 - iterate over customer coupons and add relevant coupons to couponsByCategory list
-        ArrayList<Coupon> couponsByCategory = new ArrayList<>();
-        coupons.forEach((coupon -> {
-            if(coupon.getCategory().equals(category)) {
-                couponsByCategory.add(coupon);
-            }
-        }));
-        return couponsByCategory;
-    }
+        // Part 1 - find relevant category Id
+        Map<Integer,String> categories = couponsDAO.GetAllCategories();
+        Stream<Integer> categoryIdStream = categories
+                .entrySet()
+                .stream()
+                .filter(categoryName -> category.toString().equals(categoryName.getValue()))
+                .map(Map.Entry::getKey);
+        int categoryId = categoryIdStream.findAny().orElse(-1);
 
+        // Part 2 - Send query to DB for coupons by category
+        return couponsDAO.GetCustomerCouponsByCategoryId(categoryId, this.customerID);
+    }
 
     /**
      * Get all the coupons listed in DB for the logged on customer up to a max price
@@ -141,18 +142,8 @@ public class CustomerFacade extends ClientFacade{
      * @throws CouponSystemException If we get any exception.  Details are provided
      */
     public ArrayList<Coupon> GetCustomerCouponsByPrice(Double maxPrice) throws CouponSystemException {
-        // Part 1 - get all customer coupons
-        ArrayList<Coupon> coupons = GetAllCustomerCoupons();
-        // Part 2 - iterate over customer coupons and add relevant coupons to couponsByMaxPrice list
-        ArrayList<Coupon> couponsByMaxPrice = new ArrayList<>();
-        coupons.forEach((coupon -> {
-            if(coupon.getPrice() <= maxPrice) {
-                couponsByMaxPrice.add(coupon);
-            }
-        }));
-        return couponsByMaxPrice;
+        return couponsDAO.GetCustomerCouponsByMaxPrice(maxPrice,this.customerID);
     }
-
 
     /**
      * Gets a customer (according to the customer ID belonging to the customer logged on)
