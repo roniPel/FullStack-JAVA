@@ -20,9 +20,9 @@ public class Company {
     private String b_name;
     @Column(unique = true,nullable = false,name = "email")
     private String c_email;
-    @Column(length=10,name = "password")
+    @Column(length=10,name = "password",nullable = false)
     private String d_password;
     @Singular
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "a_id",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "b_company_id",cascade = CascadeType.ALL)
     private List<Coupon> coupons;
 }

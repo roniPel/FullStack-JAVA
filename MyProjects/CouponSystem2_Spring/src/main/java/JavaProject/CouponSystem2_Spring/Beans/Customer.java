@@ -22,12 +22,11 @@ public class Customer {
     private String c_lastName;
     @Column(unique = true,nullable = false,name = "email")
     private String d_email;
-    @Column(length=10,name = "password")
+    @Column(length=10,name = "password",nullable = false)
     private String e_password;
     @Singular
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "customers_vs_coupons",
-    joinColumns = @JoinColumn(name = "customer_id"),
-    inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+    @PrimaryKeyJoinColumn
+    @JoinTable(name = "customers_vs_coupons")
     private List<Coupon> coupons;
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "coupons")
@@ -19,15 +20,15 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int a_id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "companyId")
-    private Company b_company;
+    @ManyToOne(targetEntity = Company.class)
+    @JoinColumn(name = "company_id",nullable = false,referencedColumnName = "id")
+    private int b_company_id;
     //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
     //private int companyId;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "category_id")
     private Category c_category;
-    @Column(name = "title")
+    @Column(name = "title",unique = true)
     private String d_title;
     @Column(name = "description")
     private String e_description;
@@ -41,4 +42,8 @@ public class Coupon {
     private double i_price;
     @Column(name = "image")
     private String j_image;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    @Transient
+    private List<Customer> customers;
 }
