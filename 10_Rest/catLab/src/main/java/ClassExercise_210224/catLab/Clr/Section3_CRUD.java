@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+//@Component
 @Order(1)
 public class Section3_CRUD implements CommandLineRunner {
 

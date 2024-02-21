@@ -5,9 +5,11 @@ import ClassExercise_210224.catLab.Repositories.CatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @Order(2)
 public class Section4_Statistics implements CommandLineRunner {
     @Autowired
