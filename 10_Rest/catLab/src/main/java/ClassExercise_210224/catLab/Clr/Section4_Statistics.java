@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+//@Component
 @Order(2)
 public class Section4_Statistics implements CommandLineRunner {
     @Autowired

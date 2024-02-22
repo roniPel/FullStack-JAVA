@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface CatService {
     void AddCat(Cat cat) throws CatsException;
+
     void UpdateCat(Cat cat) throws CatsException;
+
     void DeleteCatById(int id) throws CatsException;
     List<Cat> GetAllCats();
     Cat GetOneCatById(int id) throws CatsException;

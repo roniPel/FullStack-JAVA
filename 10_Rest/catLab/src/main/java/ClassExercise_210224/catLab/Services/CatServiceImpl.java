@@ -5,9 +5,11 @@ import ClassExercise_210224.catLab.Exceptions.CatsException;
 import ClassExercise_210224.catLab.Exceptions.Errors;
 import ClassExercise_210224.catLab.Repositories.CatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CatServiceImpl implements CatService{
     @Autowired
     private CatRepository catRepo;
@@ -23,8 +25,7 @@ public class CatServiceImpl implements CatService{
 
     @Override
     public void UpdateCat(Cat cat) throws CatsException {
-        int id = cat.getId();
-        if(!catRepo.existsById(id)){
+        if(!catRepo.existsById(cat.getId())){
             throw new CatsException(Errors.ID_NOT_FOUND);
         }
         catRepo.saveAndFlush(cat);
