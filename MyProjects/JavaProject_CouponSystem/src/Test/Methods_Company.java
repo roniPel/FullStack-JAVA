@@ -32,7 +32,7 @@ public class Methods_Company extends Methods{
         int amount = GetrandInt(50);
         String image = "Image"+GetrandInt(10);
 
-        Coupon coupon = new Coupon(150,companyId, category,title,description,
+        Coupon coupon = new Coupon(50,companyId, category,title,description,
                         startDate,endDate, amount,price,image);
         // Add coupon to DB
         System.out.println("Coupon to add: ");

@@ -120,6 +120,9 @@ public class CompaniesDB_DAO implements CompaniesDAO {
                 return false;
             }
         }
+        else {
+            return false;
+        }
         return true;
     }
 
@@ -157,7 +160,7 @@ public class CompaniesDB_DAO implements CompaniesDAO {
     }
 
     /**
-     * Delete all existing company coupons
+     * Delete all existing company coupons - Already defined in DB using 'cascade' option
      * @param couponsForCompany coupons to be deleted from company
      * @return true if succeeded, false if failed
      * @throws CouponSystemException  If we get any exception.  Details are provided
@@ -165,22 +168,6 @@ public class CompaniesDB_DAO implements CompaniesDAO {
     private boolean DeleteCompanyCoupons(ArrayList<Coupon> couponsForCompany) throws CouponSystemException {
         for(Coupon coupon: couponsForCompany){
             if(couponsDBDao.DeleteCoupon(coupon.getId()));
-            else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Add all coupons to company
-     * @param couponsForCompany coupons to be added to company
-     * @return true if succeeded, false if failed
-     * @throws CouponSystemException  If we get any exception.  Details are provided
-     */
-    private boolean AddCompanyCoupons(ArrayList<Coupon> couponsForCompany) throws CouponSystemException {
-        for(Coupon coupon: couponsForCompany){
-            if(couponsDBDao.AddCoupon(coupon));
             else {
                 return false;
             }

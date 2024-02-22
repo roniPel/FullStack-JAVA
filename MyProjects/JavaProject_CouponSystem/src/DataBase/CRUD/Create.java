@@ -11,7 +11,6 @@ public class Create {
     public static final String insertCompany =
             "INSERT INTO `"+DBmanager.SQL_DB+"`.`companies` (`name`, `email`, `password`) VALUES (?, ?, ?);";
 
-
     // Category
     public static final String insertCategory =
             "INSERT INTO `"+ DBmanager.SQL_DB+"`.`categories` (`name`) VALUES (?);";

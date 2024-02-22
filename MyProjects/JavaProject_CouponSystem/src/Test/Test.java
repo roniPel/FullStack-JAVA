@@ -135,7 +135,6 @@ public class Test {
             // END
             PrintEndMessage();
 
-
         } catch (CouponSystemException e) {
             System.out.println(e.getMessage());
         }

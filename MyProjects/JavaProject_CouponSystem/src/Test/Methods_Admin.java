@@ -79,7 +79,7 @@ public class Methods_Admin extends Methods {
         String lastName = "LastAdminAdd";
         String email = "custAdmin"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
-        Customer addCustomer = new Customer(50,firstName, lastName, email, password,null);
+        Customer addCustomer = new Customer(11,firstName, lastName, email, password,null);
 
         System.out.println("Customer to add: ");
         System.out.print(addCustomer);
@@ -169,7 +169,7 @@ public class Methods_Admin extends Methods {
         String name = "CompanyAddByAdmin";
         String email = "AdminAddComp"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
-        Company addCompany = new Company(150, name, email, password,null);
+        Company addCompany = new Company(4, name, email, password,null);
 
         System.out.println("Company to add: ");
         System.out.print(addCompany);
