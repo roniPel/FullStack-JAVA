@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class CompaniesServiceImpl implements CompaniesService{
+public class CompaniesServiceImpl implements CompanyService {
     @Autowired
     private CompanyRepository companyRepo;
     //Todo - write all methods

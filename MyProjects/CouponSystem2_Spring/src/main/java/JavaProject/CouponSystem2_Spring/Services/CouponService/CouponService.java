@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Map;
 
-public interface CouponsService {
+public interface CouponService {
 
     /**
      * Adds a coupon to the DB - based on the details listed in the param

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Service
-public class CouponsServiceImpl implements CouponsService{
+public class CouponServiceImpl implements CouponService {
     @Autowired
     private CouponRepository couponRepo;
     //Todo - write all methods

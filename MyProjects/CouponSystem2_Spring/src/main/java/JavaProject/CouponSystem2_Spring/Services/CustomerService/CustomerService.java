@@ -3,12 +3,11 @@ package JavaProject.CouponSystem2_Spring.Services.CustomerService;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public interface CustomersService {
+public interface CustomerService {
 
     /**
      * Checks whether a customer exists in the DB

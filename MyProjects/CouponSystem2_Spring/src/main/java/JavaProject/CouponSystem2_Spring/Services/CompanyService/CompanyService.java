@@ -5,7 +5,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyExce
 
 import java.util.ArrayList;
 
-public interface CompaniesService {
+public interface CompanyService {
 
     /**
      * Checks whether a company exists in the DB

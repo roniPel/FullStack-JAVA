@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Service
-public class CustomersServiceImpl implements CustomersService{
+public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepo;
 
