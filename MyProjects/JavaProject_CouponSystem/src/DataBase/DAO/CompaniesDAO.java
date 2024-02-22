@@ -51,7 +51,6 @@ public interface CompaniesDAO {
      */
     boolean DeleteCompany(int companyID) throws CouponSystemException;
 
-
     /**
      * Updates a company in the DB - updates the company's details (according to the company ID, based on param provided)
      * @param company a 'Company' class instance containing company details

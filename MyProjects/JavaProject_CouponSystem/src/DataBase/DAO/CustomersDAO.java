@@ -34,7 +34,7 @@ public interface CustomersDAO {
      * @return true if customer exists, false if customer doesn't exist.
      * @throws CouponSystemException  If we get any exception.  Details are provided
      */
-    public boolean IsCustomerIdExists(int customerID) throws CouponSystemException;
+    boolean IsCustomerIdExists(int customerID) throws CouponSystemException;
 
     /**
      * Adds a customer to the DB, based on param

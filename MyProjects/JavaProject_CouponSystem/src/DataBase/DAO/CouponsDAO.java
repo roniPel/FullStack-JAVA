@@ -36,7 +36,6 @@ public interface CouponsDAO {
      */
     boolean UpdateCoupon(Coupon coupon) throws CouponSystemException;
 
-
     /**
      * Deletes a Coupon in DB - based on the details listed in the param
      * @param couponID the ID of the coupon to be deleted in the DB
@@ -44,7 +43,6 @@ public interface CouponsDAO {
      * @throws CouponSystemException  If we get any exception.  Details are provided
      */
     boolean DeleteCoupon(int couponID) throws CouponSystemException;
-
 
     /**
      * Get all the coupons listed in DB
