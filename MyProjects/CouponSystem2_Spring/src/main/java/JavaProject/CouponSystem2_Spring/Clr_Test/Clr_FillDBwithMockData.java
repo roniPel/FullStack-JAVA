@@ -6,5 +6,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(1)
 public class Clr_FillDBwithMockData {
-    //Todo - copy from MockData class in project1
+    //Todo - write methods (copy from MockData?):
+    // FillInCategoryTable();
+    // FillInCompanyTable(numberOfCompanies);
+    // CreateCouponsForAllCompanies(numberOfCouponsPerCompany,amountCouponsPerType,maxPrice);
+    // FillInCustomerTable(numberOfCustomers);
+    // FillInCustomerVsCouponsTable();
+    // AddExpiredCoupon();
 }
