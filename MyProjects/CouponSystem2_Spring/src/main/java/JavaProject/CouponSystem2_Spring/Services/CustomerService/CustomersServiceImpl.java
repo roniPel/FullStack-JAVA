@@ -5,10 +5,12 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+@Service
 public class CustomersServiceImpl implements CustomersService{
     @Autowired
     private CustomerRepository customerRepo;

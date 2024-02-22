@@ -4,4 +4,5 @@ import JavaProject.CouponSystem2_Spring.Beans.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CompanyRepository extends JpaRepository<Company,Integer> {
+    //Todo - add all CRUD actions
 }

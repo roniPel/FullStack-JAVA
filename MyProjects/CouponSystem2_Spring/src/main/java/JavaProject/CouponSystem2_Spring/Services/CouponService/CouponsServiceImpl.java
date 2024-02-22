@@ -6,11 +6,13 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyExce
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Map;
 
+@Service
 public class CouponsServiceImpl implements CouponsService{
     @Autowired
     private CouponRepository couponRepo;

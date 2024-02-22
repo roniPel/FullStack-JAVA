@@ -4,8 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum CompanyErrors {
-    GENERAL_COMPANY_ERROR("There was an error when trying to perform the company method. \n"),
+    GENERAL_COMPANY_ERROR("ERROR! There was an error when trying to perform the company method. \n"),
     INCORRECT_LOGIN_DETAILS("ERROR! Incorrect username and/or password. \n"),
+    DUPLICATE_ENTRY("ERROR! The value inserted (id/ name/ email/ user) already exists in the system. \n"),
 
     // Coupon related actions
     COUPON_EXISTS_FOR_COMPANY("ERROR! The coupon already exists for this company. \n"),

@@ -4,9 +4,11 @@ import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class CompaniesServiceImpl implements CompaniesService{
     @Autowired
     private CompanyRepository companyRepo;
