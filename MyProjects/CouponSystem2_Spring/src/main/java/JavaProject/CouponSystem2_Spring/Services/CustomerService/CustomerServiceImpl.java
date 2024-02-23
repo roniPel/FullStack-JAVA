@@ -22,6 +22,37 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     protected CustomerRepository customerRepo;
 
+    @Override
+    public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
+        return false;
+    }
+
+    @Override
+    public void PurchaseCoupon() throws CustomerException {
+
+    }
+
+    @Override
+    public void GetCustomerCoupons() throws CustomerException {
+
+    }
+
+    @Override
+    public void GetCustomerCouponsByCategory() throws CustomerException {
+
+    }
+
+    @Override
+    public void GetCustomerCouponsByMaxPrice() throws CustomerException {
+
+    }
+
+    @Override
+    public void GetCustomerDetails() throws CustomerException {
+
+    }
+
     //Todo - write all methods
+
 
 }

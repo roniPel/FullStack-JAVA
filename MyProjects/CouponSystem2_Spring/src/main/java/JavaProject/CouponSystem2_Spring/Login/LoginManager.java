@@ -7,11 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Component
-@Data
 public class LoginManager {
     public ClientService Login(String email, String password, ClientType clientType) {
         // Todo - finish writing method (singleton, compare to zeev's)

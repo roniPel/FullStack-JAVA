@@ -26,6 +26,47 @@ public class CompaniesServiceImpl implements CompanyService {
     @Autowired
     protected CustomerRepository customerRepo;
 
+    @Override
+    public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
+        return false;
+    }
+
+    @Override
+    public void AddCoupon() throws CompanyException {
+
+    }
+
+    @Override
+    public void UpdateCoupon() throws CompanyException {
+
+    }
+
+    @Override
+    public void DeleteCoupon() throws CompanyException {
+
+    }
+
+    @Override
+    public void GetCompanyCoupons() throws CompanyException {
+
+    }
+
+    @Override
+    public void GetCompanyCouponsByCategory() throws CompanyException {
+
+    }
+
+    @Override
+    public void GetCompanyCouponsByMaxPrice() throws CompanyException {
+
+    }
+
+    @Override
+    public void GetCompanyDetails() throws CompanyException {
+
+    }
+
     //Todo - write all methods
+
 
 }

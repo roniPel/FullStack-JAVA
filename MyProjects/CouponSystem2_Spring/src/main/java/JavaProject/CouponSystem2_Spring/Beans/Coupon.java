@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -33,9 +34,9 @@ public class Coupon {
     @Column(name = "description")
     private String e_description;
     @Column(name = "start_date")
-    private Date f_startDate;
+    private LocalDate f_startDate;
     @Column(name = "end_date")
-    private Date g_endDate;
+    private LocalDate g_endDate;
     @Column(name = "amount")
     private int h_amount;
     @Column(scale = 2,name = "price")
