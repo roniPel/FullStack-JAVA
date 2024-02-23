@@ -1,90 +1,57 @@
 package JavaProject.CouponSystem2_Spring.Services.CustomerService;
 
+import JavaProject.CouponSystem2_Spring.Beans.Category;
+import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Services.ClientService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Stream;
 
-public interface CustomerService {
+public interface CustomerService extends ClientService {
 
     /**
-     * Checks whether a customer exists in the DB
-     * @param email - customer's email
-     * @param password - customer's password
-     * @return - true if customer exists, false if customer doesn't exist or if the email + password combo are incorrect.
+     * Checks whether a user exists in the DB
+     * @param email user's email
+     * @param password user's password
+     * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
      * @throws CustomerException If we get any exception.  Details are provided
      */
-    boolean IsCustomerExists(String email, String password) throws CustomerException;
-
+    @Override
+    public boolean Login(String email, String password) throws CustomerException,AdminException, CompanyException;
 
     /**
-     * Returns a customer's ID based on email (unique)
-     * @param email customer's email
-     * @return customerID if customer exists, -1 if customer doesn't exist.
+     * Customer Method - Purchase Coupon
+     * @throws CustomerException If we get any exception.  Details are provided
+     */
+    public void PurchaseCoupon() throws CustomerException;
+
+    /**
+     * Customer Method - Get Customer Coupons
+     * @throws CustomerException If we get any exception.  Details are provided
+     */
+    public void GetCustomerCoupons() throws CustomerException;
+
+    /**
+     * Customer Method - Get Customer Coupons by Category
      * @throws CustomerException  If we get any exception.  Details are provided
      */
-    int GetCustomerIDByEmail(String email) throws CustomerException;
-
-
-    /**
-     * Checks whether a customer exists in the DB
-     * @param customerID customer's id
-     * @return true if customer exists, false if customer doesn't exist.
-     * @throws AdminException  If we get any exception.  Details are provided
-     */
-    boolean IsCustomerIdExists(int customerID) throws AdminException;
-
+    public void GetCustomerCouponsByCategory() throws CustomerException;
 
     /**
-     * Adds a customer to the DB, based on param
-     * @param customer - 'Customer' object instance with all customer details
-     * @return - true if succeeded, false if failed.
-     * @throws AdminException  If we get any exception.  Details are provided
+     * Customer Method - Get Customer Coupons by max price
+     * @throws CustomerException If we get any exception.  Details are provided
      */
-    boolean AddCustomer(Customer customer) throws AdminException;
-
+    public void GetCustomerCouponsByMaxPrice() throws CustomerException;
 
     /**
-     * Updates a customer to the DB, based on param
-     * @param customer - 'Customer' object instance with all customer details
-     * @return - true if succeeded, false if failed.
-     * @throws AdminException  If we get any exception.  Details are provided
+     * Customer Method - Get Customer Details
+     * @throws CustomerException If we get any exception.  Details are provided
      */
-    boolean UpdateCustomer(Customer customer) throws AdminException;
-
-
-    /**
-     * Deletes a customer (according to the customer ID provided)
-     * @param customerID a customer's ID, as listed in the DB
-     * @return true if succeeded, false if failed.
-     * @throws AdminException  If we get any exception.  Details are provided
-     */
-    boolean DeleteCustomer(int customerID) throws AdminException;
-
-
-    /**
-     * Gets an ArrayList of all the customers listed in the DB
-     * @return an ArrayList of 'Customer' class items if succeeded, 'null' if failed or if no customers exist.
-     * @throws AdminException If we get any exception.  Details are provided
-     */
-    ArrayList<Customer> GetAllCustomers() throws AdminException;
-
-
-    /**
-     * Gets a customer (according to data provided in params)
-     * @param customerID a customer's ID, as listed in the DB
-     * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.
-     * @throws AdminException,CustomerException  If we get any exception.  Details are provided
-     */
-    Customer GetOneCustomer(int customerID) throws AdminException,CustomerException;
-
-
-    /**
-     * Creates a map of customerIDs vs couponsID listed in DB.
-     * @return A map of integers and integers if succeeded, null if failed.
-     * @throws AdminException  If we get any exception.  Details are provided
-     */
-    Map<Integer, Integer> CustomerIDsVScouponIDs() throws AdminException;
+    public void GetCustomerDetails() throws CustomerException;
 }
