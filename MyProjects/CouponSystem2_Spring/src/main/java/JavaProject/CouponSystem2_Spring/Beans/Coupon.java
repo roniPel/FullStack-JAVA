@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "coupons")
@@ -20,10 +18,10 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int a_id;
-    @ManyToOne(targetEntity = Company.class)
-    @JoinColumn(name = "company_id",nullable = false,referencedColumnName = "id")
-    private int b_company_id;
+    private Integer a_id;
+    //@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
+    @Column(name = "company_id")
+    private Integer b_company_id;
     //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
     //private int companyId;
     @Enumerated(EnumType.ORDINAL)
@@ -39,12 +37,21 @@ public class Coupon {
     private LocalDate g_endDate;
     @Column(name = "amount")
     private int h_amount;
-    @Column(scale = 2,name = "price")
+    @Column(scale = 2,
+            name = "price")
     private double i_price;
     @Column(name = "image")
     private String j_image;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    @Transient
-    private List<Customer> customers;
+
+    /*@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Coupon )) return false;
+        return a_id != null && a_id.equals(((Coupon) o).getA_id());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }*/
 }

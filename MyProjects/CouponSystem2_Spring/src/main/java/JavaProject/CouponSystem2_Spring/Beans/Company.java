@@ -15,14 +15,32 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int a_id;
-    @Column(unique = true,nullable = false,updatable = false,name = "name")
+    private Integer a_id;
+    @Column(unique = true,
+            nullable = false,
+            updatable = false,
+            name = "name")
     private String b_name;
-    @Column(unique = true,nullable = false,name = "email")
+    @Column(unique = true,
+            nullable = false,
+            name = "email")
     private String c_email;
-    @Column(length=10,name = "password",nullable = false)
+    @Column(length=10,name = "password",
+            nullable = false)
     private String d_password;
     @Singular
-    @OneToMany(mappedBy = "b_company_id",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "company_id")
     private List<Coupon> coupons;
+
+    /*public void addCoupon(Coupon coupon) {
+        coupons.add(coupon);
+        coupon.setB_company_id(this.getA_id());
+    }
+
+    public void removeCoupon(Coupon coupon) {
+        coupons.remove(coupon);
+        coupon.setB_company_id(null);
+    }*/
 }

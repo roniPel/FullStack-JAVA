@@ -91,6 +91,11 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         return true;
     }
 
+    /**
+     * Fills in customer Vs coupons table (links customers to coupons)
+     * @return true if succeeded, false if failed.
+     * @throws CustomerException If we get any exception.  Details are provided
+     */
     private boolean FillInCustomerVsCouponsTable() throws CustomerException {
         // Part 1 - check if DB contains customers
         int numberOfCustomers = (int)customerRepo.count();
@@ -144,6 +149,13 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         return true;
     }
 
+    /**
+     * Creates coupons for all companies based on params
+     * @param numberOfCouponsPerCompany Number of coupons to create for each company
+     * @param amountCouponsPerType Amount of coupons of each type
+     * @param maxPrice Maximum price of each coupon
+     * @return true if succeeded, false if failed.
+     */
     private boolean CreateCouponsForAllCompanies(int numberOfCouponsPerCompany, int amountCouponsPerType, double maxPrice) {
         // Part 1 - check if DB contains companies
         int numOfCompanies = (int)companyRepo.count();
@@ -178,7 +190,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     private List<Coupon> CreateRandomCouponsForCompany(int companyId, int numberOfCouponsPerCompany, double maxPrice, int amountCouponsPerType) {
         List<Coupon> couponsForCompany = new ArrayList<>();
         // Create a List of coupons for the company, based on inserted params
-        for (int i = 0; i < numberOfCouponsPerCompany; i++) {
+        for (int i = 1+numberOfCouponsPerCompany*(companyId-1); i <= numberOfCouponsPerCompany*companyId; i++) {
             // Create a random coupon for company
             Category category = Category.GetRandomCategory();
             String title = "Title" + i + " Company" + companyId;
