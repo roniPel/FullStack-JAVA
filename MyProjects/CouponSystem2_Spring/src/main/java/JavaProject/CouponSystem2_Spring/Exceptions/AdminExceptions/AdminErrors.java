@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum AdminErrors {
 
     GENERAL_ADMIN_ERROR("ERROR! There was an error when trying to perform the admin method. \n"),
-    INCORRECT_LOGIN_DETAILS("ERROR! Incorrect username and/or password. \n"),
+    INCORRECT_LOGIN_DETAILS("ERROR! Incorrect admin username and/or password. \n"),
     DUPLICATE_ENTRY("ERROR! The value inserted (id/ name/ email/ user) already exists in the system. \n"),
 
     // Actions on Company

@@ -4,7 +4,6 @@ import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
@@ -17,10 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Order(1)
@@ -35,8 +32,6 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     private CustomerRepository customerRepo;
     @Autowired
     private CouponRepository couponRepo;
-
-    private Map<String, String> emailsPassowrdsMap;
     private Map<String, Object> mockDataMap;
 
     @Override
@@ -228,11 +223,6 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         mockDataMap.put("maxPrice", 200.00);
         mockDataMap.put("numberOfCustomers", 10);
         mockDataMap.put("numCouponsPerCustomer",1);
-
-        // Prepare data for admin login
-        emailsPassowrdsMap = new HashMap<>();
-        emailsPassowrdsMap.put("adminEmail","admin@admin.com");
-        emailsPassowrdsMap.put("adminPassword","admin");
     }
 
     /**

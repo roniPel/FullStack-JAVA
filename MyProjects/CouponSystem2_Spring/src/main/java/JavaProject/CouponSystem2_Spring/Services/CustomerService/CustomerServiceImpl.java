@@ -22,6 +22,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     protected CustomerRepository customerRepo;
 
+    private int customerId;  // Customer ID belonging to the customer that logged in
+
+    /**
+     * Constructor
+     * @param customerId customer ID belonging to customer logged on
+     */
+    public CustomerServiceImpl(int customerId) {
+        this.customerId = customerId;
+    }
+
     @Override
     public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
         return false;
