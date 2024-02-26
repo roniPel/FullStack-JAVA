@@ -20,11 +20,20 @@ public class Section3_CRUD implements CommandLineRunner {
     private CatRepository catRepo;
     @Override
     public void run(String... args) throws Exception {
+        PrintSectionHeader();
         CreateCats();
         UpdateCat();
         DeleteCatById();
         GetOneCatById();
         GetAllCats();
+    }
+
+    private void PrintSectionHeader() {
+        System.out.println();
+        System.out.println("*******************************************************************");
+        System.out.println("*************          Section: Repositories          *************");
+        System.out.println("*******************************************************************");
+        System.out.println();
     }
 
     private void GetAllCats() {

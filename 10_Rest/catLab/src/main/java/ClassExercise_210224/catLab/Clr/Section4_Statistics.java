@@ -16,14 +16,24 @@ public class Section4_Statistics implements CommandLineRunner {
     private CatRepository catRepo;
     @Override
     public void run(String... args) throws Exception {
+        PrintSectionHeader();
         FindByNameWeight_AND();
         FindByNameWeight_OR();
         FindByWeight_Asc();
         FindByWeight_Desc();
-        FindAllStartWith("Jo");
+        FindAllStartWith();
     }
 
-    private void FindAllStartWith(String name) {
+    private void PrintSectionHeader() {
+        System.out.println();
+        System.out.println("*******************************************************************");
+        System.out.println("**************          Section: Statistics          **************");
+        System.out.println("*******************************************************************");
+        System.out.println();
+    }
+
+    private void FindAllStartWith() {
+        String name = "Jo";
         List<Cat> findByStartsWith = catRepo.findByNameStartingWith(name);
         System.out.println("Cats starting with: "+name);
         findByStartsWith.forEach(System.out::println);

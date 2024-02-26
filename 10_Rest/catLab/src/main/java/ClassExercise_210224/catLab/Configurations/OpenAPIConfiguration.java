@@ -22,7 +22,7 @@ public class OpenAPIConfiguration {
         myContact.setEmail("roni.rose@gmail.com");
 
         Info info = new Info()
-                .title("Cat Lab Managment System API")
+                .title("Cat Lab Management System API")
                 .version("1.0")
                 .description("This API exposes endpoints to manage Cats Lab")
                 .contact(myContact);
