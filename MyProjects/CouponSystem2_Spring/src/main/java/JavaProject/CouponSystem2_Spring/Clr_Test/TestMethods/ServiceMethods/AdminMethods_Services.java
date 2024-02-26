@@ -1,7 +1,8 @@
-package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods;
+package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AdminMethods extends TestMethods {
+public class AdminMethods_Services extends TestMethods {
     // Todo - Finish all methods
 
     /**

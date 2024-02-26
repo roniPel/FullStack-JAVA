@@ -21,6 +21,14 @@ public class CatController {
         return catService.GetAllCats();
     }
 
+    @GetMapping("/{name}/{weight}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Cat> getCatsByNameAndWeight(@PathVariable String name, @PathVariable float weight) throws CatsException {
+        return catService.GetCatsByNameAndWeight(name,weight);
+    }
+
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addCat(@Validated @RequestBody Cat cat) throws CatsException {
