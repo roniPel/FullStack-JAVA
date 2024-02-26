@@ -11,6 +11,7 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -21,21 +22,19 @@ import java.util.*;
 
 @Component
 @Order(1)
+@RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
     //Todo - write methods (copy from MockData?):
 
     //Todo - how to write login manager - getInstance?
 
-    @Autowired
     private CompanyRepository companyRepo;
-    @Autowired
     private CustomerRepository customerRepo;
-    @Autowired
     private CouponRepository couponRepo;
     private Map<String, Object> mockDataMap;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args){
         // Todo - Delete method? FillInCategoryTable();
         PrepareSystemData();
 
@@ -46,12 +45,16 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         double maxPrice = (double) mockDataMap.get("maxPrice");
         int numberOfCustomers = (int) mockDataMap.get("numberOfCustomers");
 
-        // Fill DB with mock data
-        FillInCompanyTable(numberOfCompanies);
-        CreateCouponsForAllCompanies(numberOfCouponsPerCompany,amountCouponsPerType,maxPrice);
-        FillInCustomerTable(numberOfCustomers);
-        FillInCustomerVsCouponsTable();
-        AddExpiredCoupon();
+        try {
+            // Fill DB with mock data
+            FillInCompanyTable(numberOfCompanies);
+            CreateCouponsForAllCompanies(numberOfCouponsPerCompany, amountCouponsPerType, maxPrice);
+            FillInCustomerTable(numberOfCustomers);
+            FillInCustomerVsCouponsTable();
+            AddExpiredCoupon();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

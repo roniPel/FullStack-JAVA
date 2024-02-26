@@ -1,22 +1,22 @@
 package JavaProject.CouponSystem2_Spring.Services.CompanyService;
 
+import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
-
-    @Autowired
     protected CouponRepository couponRepo;
-    @Autowired
     protected CompanyRepository companyRepo;
-    @Autowired
     protected CustomerRepository customerRepo;
 
     private int companyId;  // Company ID belonging to the company that logged in
@@ -31,7 +31,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        return false;
+        Company company = companyRepo.findByEmailAndPassword(email,password);
+        if(company == null) {
+            throw new CompanyException(CompanyErrors.INCORRECT_LOGIN_DETAILS);
+        }
+        else {
+            this.companyId = company.getA_id();
+            return true;
+        }
     }
 
     @Override

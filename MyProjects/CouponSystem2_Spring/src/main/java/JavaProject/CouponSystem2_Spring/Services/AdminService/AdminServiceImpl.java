@@ -4,6 +4,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
@@ -12,6 +13,7 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +22,22 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-    @Autowired
     protected CouponRepository couponRepo;
-    @Autowired
     protected CompanyRepository companyRepo;
-    @Autowired
     protected CustomerRepository customerRepo;
+    private final String email = "admin@admin.com";
+    private final String password = "admin";
 
     //Todo - write all methods
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        return false;
+        // Admin user - Check login details locally: (no need to check via DB query)
+        if((Objects.equals(email, this.email)) && (Objects.equals(password, this.password))) {
+            return true;
+        }
+        throw new AdminException(AdminErrors.INCORRECT_LOGIN_DETAILS);
     }
 
     @Override

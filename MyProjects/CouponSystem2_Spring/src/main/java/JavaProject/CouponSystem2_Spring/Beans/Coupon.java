@@ -20,26 +20,35 @@ public class Coupon {
     @Column(name = "id")
     private Integer a_id;
     //@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
-    @Column(name = "company_id")
+
+    @Column(name = "company_id",nullable = false)
     private Integer b_company_id;
     //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
     //private int companyId;
+
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "category_id")
+    @Column(name = "category_id",nullable = false)
     private Category c_category;
+
     @Column(name = "title",unique = true)
     private String d_title;
+
     @Column(name = "description")
     private String e_description;
+
     @Column(name = "start_date")
     private LocalDate f_startDate;
+
     @Column(name = "end_date")
     private LocalDate g_endDate;
+
     @Column(name = "amount")
     private int h_amount;
+
     @Column(scale = 2,
             name = "price")
     private double i_price;
+
     @Column(name = "image")
     private String j_image;
 

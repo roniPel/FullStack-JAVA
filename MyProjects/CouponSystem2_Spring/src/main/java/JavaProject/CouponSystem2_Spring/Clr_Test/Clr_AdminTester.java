@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 public class Clr_AdminTester implements CommandLineRunner {
     private LogonUtil logonUtil;
     private AdminMethods_Services adminMethods;
+
+    // private AdminService adminService; - Preparation for Client Side (section 3)
     public boolean isLoggedOn = false;
     @Override
     public void run(String... args) {
