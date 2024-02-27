@@ -23,7 +23,7 @@ public interface AdminService extends ClientService {
      * @param email user's email
      * @param password user's password
      * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws CustomerException If we get any exception.  Details are provided
+     * @throws AdminException If we get any exception.  Details are provided
      */
     boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
@@ -53,9 +53,8 @@ public interface AdminService extends ClientService {
 
     /**
      * Admin Method - Get All Customers
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    List<Customer> GetAllCustomers() throws AdminException;
+    List<Customer> GetAllCustomers();
 
     /**
      * Admin Method - Get One Company
@@ -83,19 +82,18 @@ public interface AdminService extends ClientService {
 
     /**
      * Admin Method - Get all Companies
-     * @throws AdminException  If we get any exception.  Details are provided
      */
-    List<Company> GetAllCompanies() throws AdminException;
+    List<Company> GetAllCompanies() ;
 
     /**
-     * After running all admin methods, add random company details for login
+     * After running all admin methods, add company with full coupons and return details for login
      * @return String array with email and password that exist in the DB
      * @throws AdminException If we get any exception.  Details are provided
      */
     String[] AddCompanyDetailsForLogin() throws AdminException, CompanyException;
 
     /**
-     * After running all admin methods, add random customer details for login
+     * After running all admin methods, add customer with full coupons and return details for login
      * @return String array with email and password that exist in the DB
      * @throws AdminException If we get any exception.  Details are provided
      */

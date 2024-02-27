@@ -42,57 +42,91 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Customer GetOneCustomer(int customerId) throws AdminException {
-        return null;
+        return customerRepo.findById(customerId).orElseThrow(
+                ()->new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST) );
     }
 
     @Override
     public boolean DeleteCustomer(int customerId) throws AdminException {
-        return false;
+        if(!customerRepo.existsById(customerId)){
+            throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
+        }
+        customerRepo.deleteById(customerId);
+        return true;
     }
 
     @Override
     public boolean UpdateCustomer(Customer customer) throws AdminException {
-        return false;
+        if(!customerRepo.existsById(customer.getA_id())){
+            throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
+        }
+        customerRepo.saveAndFlush(customer);
+        return true;
     }
 
     @Override
     public boolean AddCustomer(Customer customer) throws AdminException {
-        return false;
+        int id = customer.getA_id();
+        if(customerRepo.existsById(id)){
+            throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
+        }
+        customerRepo.save(customer);
+        return true;
     }
 
     @Override
-    public List<Customer> GetAllCustomers() throws AdminException {
-        return null;
+    public List<Customer> GetAllCustomers() {
+        return customerRepo.findAll();
     }
 
     @Override
     public Company GetOneCompany(int companyId) throws AdminException {
-        return null;
+        return companyRepo.findById(companyId).orElseThrow(
+                ()->new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST) );
     }
 
     @Override
     public boolean DeleteCompany(int companyId) throws AdminException {
-        return false;
+        if(!companyRepo.existsById(companyId)){
+            throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
+        }
+        companyRepo.deleteById(companyId);
+        return true;
     }
 
     @Override
     public boolean UpdateCompany(Company company) throws AdminException {
-        return false;
+        int id = company.getA_id();
+        if(!companyRepo.existsById(id)) {
+            throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
+        }
+        companyRepo.saveAndFlush(company);
+        return true;
     }
 
     @Override
     public boolean AddCompany(Company company) throws AdminException {
-        return false;
+        int id = company.getA_id();
+        if(companyRepo.existsById(id)) {
+            throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
+        }
+        companyRepo.save(company);
+        return true;
     }
 
     @Override
-    public List<Company> GetAllCompanies() throws AdminException {
-        return null;
+    public List<Company> GetAllCompanies(){
+        return companyRepo.findAll();
     }
 
 
+    /**
+     * After running all admin methods, add company with full coupons and return details for login
+     * @return String array with email and password that exist in the DB
+     * @throws AdminException If we get any exception.  Details are provided
+     */
     @Override
-    public String[] AddCompanyDetailsForLogin() throws AdminException, CompanyException {
+    public String[] AddCompanyDetailsForLogin() throws AdminException {
         int companyId = AddCompanyWithFullCoupons();
         String[] compDetails = new String[2];
         Company company = GetOneCompany(companyId);
@@ -158,6 +192,11 @@ public class AdminServiceImpl implements AdminService {
         return couponsList;
     }
 
+    /**
+     * After running all admin methods, add customer with full coupons and return details for login
+     * @return String array with email and password that exist in the DB
+     * @throws AdminException If we get any exception.  Details are provided
+     */
     @Override
     public String[] AddCustomerDetailsForLogin() throws AdminException {
         int customerId = AddCustomerWithFullCoupons();

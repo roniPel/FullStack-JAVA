@@ -1,6 +1,8 @@
 package JavaProject.CouponSystem2_Spring.Services.CompanyService;
 
+import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
+import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
@@ -12,12 +14,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     protected CouponRepository couponRepo;
     protected CompanyRepository companyRepo;
-    protected CustomerRepository customerRepo;
 
     private int companyId;  // Company ID belonging to the company that logged in
 
@@ -28,6 +31,8 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyServiceImpl(int companyId) {
         this.companyId = companyId;
     }
+
+    //Todo - write all methods
 
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
@@ -42,41 +47,47 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void AddCoupon() throws CompanyException {
-
+    public boolean AddCoupon(Coupon coupon) throws CompanyException {
+        int id = coupon.getA_id();
+        if(companyRepo.existsById(id)){
+            throw new CompanyException(CompanyErrors.COUPON_EXISTS_FOR_COMPANY);
+        }
+        if(coupon.getB_company_id() != this.companyId){
+            throw new CompanyException(CompanyErrors.COUPON_COMPANY_ID_INCORRECT);
+        }
+        couponRepo.save(coupon);
+        return true;
     }
 
     @Override
-    public void UpdateCoupon() throws CompanyException {
-
+    public boolean UpdateCoupon(Coupon coupon) throws CompanyException {
+        return false;
     }
 
     @Override
-    public void DeleteCoupon() throws CompanyException {
-
+    public boolean DeleteCoupon(int couponId) throws CompanyException {
+        return false;
     }
 
     @Override
-    public void GetCompanyCoupons() throws CompanyException {
-
+    public List<Coupon> GetCompanyCoupons() throws CompanyException {
+        return null;
     }
 
     @Override
-    public void GetCompanyCouponsByCategory() throws CompanyException {
-
+    public List<Coupon> GetCompanyCouponsByCategory(Category category) throws CompanyException {
+        return null;
     }
 
     @Override
-    public void GetCompanyCouponsByMaxPrice() throws CompanyException {
-
+    public List<Coupon> GetCompanyCouponsByMaxPrice(Double maxPrice) throws CompanyException {
+        return null;
     }
 
     @Override
-    public void GetCompanyDetails() throws CompanyException {
-
+    public Company GetCompanyDetails() throws CompanyException {
+        return null;
     }
-
-    //Todo - write all methods
 
 
 }

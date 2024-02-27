@@ -1,14 +1,14 @@
 package JavaProject.CouponSystem2_Spring.Services.CompanyService;
 
+import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CompanyService extends ClientService {
 
@@ -25,41 +25,41 @@ public interface CompanyService extends ClientService {
      * Company Method - Add Coupon
      * @throws CompanyException  If we get any exception.  Details are provided
      */
-    void AddCoupon() throws CompanyException;
+    boolean AddCoupon(Coupon coupon) throws CompanyException;
 
     /**
      * Company Method - Update Coupon
      * @throws CompanyException  If we get any exception.  Details are provided
      */
-    void UpdateCoupon() throws CompanyException;
+    boolean UpdateCoupon(Coupon coupon) throws CompanyException;
 
     /**
      * Company Method - Delete Coupon
      * @throws CompanyException If we get any exception.  Details are provided
      */
-    void DeleteCoupon() throws CompanyException;
+    boolean DeleteCoupon(int couponId) throws CompanyException;
 
     /**
      * Company Method - Get company Coupons
      * @throws CompanyException If we get any exception.  Details are provided
      */
-    void GetCompanyCoupons() throws CompanyException;
+    List<Coupon> GetCompanyCoupons() throws CompanyException;
 
     /**
      * Company Method - Get Company Coupons by Category
      * @throws CompanyException If we get any exception.  Details are provided
      */
-    void GetCompanyCouponsByCategory() throws CompanyException;
+    List<Coupon> GetCompanyCouponsByCategory(Category category) throws CompanyException;
 
     /**
      * Company Method - Get Company Coupons by max price
      * @throws CompanyException If we get any exception.  Details are provided
      */
-    void GetCompanyCouponsByMaxPrice() throws CompanyException;
+    List<Coupon> GetCompanyCouponsByMaxPrice(Double maxPrice) throws CompanyException;
 
     /**
      * Company Method - Get Company Details
      * @throws CompanyException If we get any exception.  Details are provided
      */
-    void GetCompanyDetails() throws CompanyException;
+    Company GetCompanyDetails() throws CompanyException;
 }

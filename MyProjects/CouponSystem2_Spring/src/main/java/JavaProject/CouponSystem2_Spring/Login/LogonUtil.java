@@ -47,7 +47,7 @@ public class LogonUtil {
      * @param email email for logon
      * @param password password for logon
      * @param clientType client type requested for logon
-     * @throws AdminException, CustomerException, CompanyException  If we get any exception.  Details are provided
+     * @throws AdminException,CustomerException,CompanyException  If we get any exception.  Details are provided
      */
     void Logon_Message(String email, String password, ClientService clientType) throws AdminException, CustomerException, CompanyException {
         isLoggedOn = true;
