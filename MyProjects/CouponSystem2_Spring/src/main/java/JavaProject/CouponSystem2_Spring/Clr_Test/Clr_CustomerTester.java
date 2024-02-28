@@ -1,6 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CustomerMethods_Services;
+import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Login.LoginManager;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Order(4)
 public class Clr_CustomerTester implements CommandLineRunner {
     private LogonUtil logonUtil;
-    private CustomerMethods_Services customerMethods;
+    private CustomerMethods_Services customerMethods_services;
 
     // private CustomerService customerService; - Preparation for Client Side (section 3)
     public boolean isLoggedOn = false;
@@ -37,9 +38,17 @@ public class Clr_CustomerTester implements CommandLineRunner {
         }
     }
 
-    private void Customer_RunAllMethods(CustomerService customerService) {
+    /**
+     * Runs all Customer user methods
+     * @param customerService Service used to run the methods
+     */
+    private void Customer_RunAllMethods(CustomerService customerService) throws CustomerException {
         PrintSectionHeader();
-        //Todo - call company methods
+        customerMethods_services.GetCustomerDetails(customerService);
+        customerMethods_services.PurchaseCoupon(customerService);
+        customerMethods_services.GetCustomerCoupons(customerService);
+        customerMethods_services.GetCustomerCouponsByCategory(customerService);
+        customerMethods_services.GetCustomerCouponsByMaxPrice(customerService);
         PrintSectionFooter();
     }
 

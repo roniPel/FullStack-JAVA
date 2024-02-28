@@ -12,7 +12,6 @@ import java.util.List;
 
 @Component
 public class AdminMethods_Services extends TestMethods {
-    // Todo - Finish all methods
 
     /**
      * Admin Method - Get all Companies

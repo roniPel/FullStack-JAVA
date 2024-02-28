@@ -36,6 +36,10 @@ public class Clr_CompanyTester implements CommandLineRunner {
         }
     }
 
+    /**
+     * Runs all Company user methods
+     * @param companyService Service used to run the methods
+     */
     private void Company_RunAllMethods(CompanyService companyService) throws CompanyException {
         PrintSectionHeader();
         //Todo - call company methods
