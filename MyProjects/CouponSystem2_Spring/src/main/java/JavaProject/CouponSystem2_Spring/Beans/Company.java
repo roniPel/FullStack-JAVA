@@ -1,8 +1,8 @@
 package JavaProject.CouponSystem2_Spring.Beans;
 
-import com.jayway.jsonpath.internal.function.text.Length;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -13,27 +13,30 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Company {
+    //Todo - add annotations to all beans - Client side, server side
+    // for client side errors (Length, etc.. see coupons2 in github)
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer a_id;
+    private Integer id;
 
     @Column(unique = true,
             nullable = false,
             updatable = false,
             name = "name")
-    private String b_name;
+    private String name;
 
     @Column(unique = true,
             nullable = false,
             name = "email")
-    private String c_email;
+    private String email;
 
     @Column(length=10,name = "password",
             nullable = false)
-    //Todo - add annotations to all beans - for client side errors (Length, etc.. see coupons2 in github)
-    // @Length(min = 10,max = 40)
-    private String d_password;
+
+    @Length(min = 10, max = 40)
+    private String password;
 
     @Singular
     @OneToMany(cascade = CascadeType.ALL,

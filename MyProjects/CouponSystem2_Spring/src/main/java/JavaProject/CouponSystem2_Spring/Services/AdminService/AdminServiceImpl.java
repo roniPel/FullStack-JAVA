@@ -14,10 +14,8 @@ import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -57,10 +55,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean UpdateCustomer(Customer customer) throws AdminException {
-        if(!customerRepo.existsById(customer.getA_id())){
+        if(!customerRepo.existsById(customer.getId())){
             throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
         }
-        if(customerRepo.findByEmail(customer.getD_email()) != null){
+        if(customerRepo.findByEmail(customer.getEmail()) != null){
             throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
         customerRepo.saveAndFlush(customer);
@@ -69,11 +67,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean AddCustomer(Customer customer) throws AdminException {
-        int id = customer.getA_id();
+        int id = customer.getId();
         if(customerRepo.existsById(id)){
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
         }
-        if(customerRepo.findByEmail(customer.getD_email()) != null){
+        if(customerRepo.findByEmail(customer.getEmail()) != null){
             throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
         customerRepo.save(customer);
@@ -102,16 +100,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean UpdateCompany(Company company) throws AdminException {
-        int id = company.getA_id();
+        int id = company.getId();
         if(!companyRepo.existsById(id)) {
             throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
         }
         Company currentCompany = GetOneCompany(id);
-        if(!company.getB_name().equals(currentCompany.getB_name())) {
+        if(!company.getName().equals(currentCompany.getName())) {
             throw new AdminException(AdminErrors.CANT_UPDATE_COMPANY_NAME);
         }
-        String newEmail = companyRepo.findByEmail(company.getC_email()).getC_email();
-        if(newEmail.equals(currentCompany.getC_email())){
+        if(companyRepo.existsCompanyByEmail( company.getEmail() )){
             throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
         companyRepo.saveAndFlush(company);
@@ -120,14 +117,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean AddCompany(Company company) throws AdminException {
-        int id = company.getA_id();
+        int id = company.getId();
         if(companyRepo.existsById(id)) {
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
         }
-        if(companyRepo.findByName(company.getB_name()) != null){
+        if(companyRepo.findByName(company.getName()) != null){
             throw new AdminException(AdminErrors.COMPANY_NAME_ALREADY_EXISTS);
         }
-        if(companyRepo.findByEmail(company.getC_email()) != null){
+        if(companyRepo.findByEmail(company.getEmail()) != null){
             throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
         companyRepo.save(company);
@@ -150,8 +147,8 @@ public class AdminServiceImpl implements AdminService {
         int companyId = AddCompanyWithFullCoupons();
         String[] compDetails = new String[2];
         Company company = GetOneCompany(companyId);
-        compDetails[0] = company.getC_email();
-        compDetails[1] = company.getD_password();
+        compDetails[0] = company.getEmail();
+        compDetails[1] = company.getPassword();
         return compDetails;
     }
 
@@ -162,14 +159,14 @@ public class AdminServiceImpl implements AdminService {
     public int AddCompanyWithFullCoupons() {
         // Add Company to DB
         Company company = Company.builder()
-                .b_name("CompanyFullCoupons")
-                .c_email("CompCoupons@email.com")
-                .d_password("Pass")
+                .name("CompanyFullCoupons")
+                .email("CompCoupons@email.com")
+                .password("Pass")
                 .coupons(null)
                 .build();
         companyRepo.save(company);
         // Get company ID from DB
-        int newCompanyId = companyRepo.findByName(company.getB_name()).getA_id();
+        int newCompanyId = companyRepo.findByName(company.getName()).getId();
         List<Coupon> fullCouponsList = CreateCompanyCouponsForAllCategories(newCompanyId);
 
         // Add coupon List to DB
@@ -196,15 +193,15 @@ public class AdminServiceImpl implements AdminService {
             double price = FactoryUtils.round(Math.random()*200,2);
             String image = "Image Company "+category;
             Coupon addCoupon = Coupon.builder()
-                    .b_company_id(companyId)
-                    .c_category(category)
-                    .d_title(title)
-                    .e_description(description)
-                    .f_startDate(startDate)
-                    .g_endDate(endDate)
-                    .h_amount(amount)
-                    .i_price(price)
-                    .j_image(image)
+                    .company_id(companyId)
+                    .category(category)
+                    .title(title)
+                    .description(description)
+                    .start_date(startDate)
+                    .end_date(endDate)
+                    .amount(amount)
+                    .price(price)
+                    .image(image)
                     .build();
             // Add coupon to coupon List
             couponsList.add(addCoupon);
@@ -222,8 +219,8 @@ public class AdminServiceImpl implements AdminService {
         int customerId = AddCustomerWithFullCoupons();
         String[] custDetails = new String[2];
         Customer customer = GetOneCustomer(customerId);
-        custDetails[0] = customer.getD_email();
-        custDetails[1] = customer.getE_password();
+        custDetails[0] = customer.getEmail();
+        custDetails[1] = customer.getPassword();
         return custDetails;
     }
 
@@ -234,16 +231,16 @@ public class AdminServiceImpl implements AdminService {
     public int AddCustomerWithFullCoupons() {
         // Add Customer to DB
         Customer customer = Customer.builder()
-                .b_firstName("FirstFullCoupons")
-                .c_lastName("LastFullCoupons")
-                .d_email("FullCoupons@email.com")
-                .e_password("Password")
+                .first_name("FirstFullCoupons")
+                .last_name("LastFullCoupons")
+                .email("FullCoupons@email.com")
+                .password("Password")
                 .coupons(null)
                 .build();
         customerRepo.save(customer);
 
         // Get customer ID from DB
-        int newCustomerId = customerRepo.findByEmail(customer.getD_email()).getA_id();
+        int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();
 
         // Get random company ID from DB
         List<Company> companies = companyRepo.findAll();

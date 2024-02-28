@@ -12,18 +12,25 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Customer {
+    //Todo - add annotations to all beans - Client side, server side
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int a_id;
+    private int id;
+
     @Column(name = "first_name")
-    private String b_firstName;
+    private String first_name;
+
     @Column(name = "last_name")
-    private String c_lastName;
+    private String last_name;
+
     @Column(unique = true,nullable = false,name = "email")
-    private String d_email;
+    private String email;
+
     @Column(length=10,name = "password",nullable = false)
-    private String e_password;
+    private String password;
+
     @Singular
     @ManyToMany(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

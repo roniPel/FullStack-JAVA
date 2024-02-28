@@ -36,7 +36,7 @@ public class CompanyMethods_Services extends TestMethods {
      */
     public void AddCoupon(CompanyService companyService) throws CompanyException {
         System.out.println("*** Method: Add Coupon ***");
-        int companyId = companyService.GetCompanyDetails().getA_id();
+        int companyId = companyService.GetCompanyDetails().getId();
         System.out.println("*** Method: Add Coupon ***");
         // Create new coupon
         Category category = Category.GetRandomCategory();
@@ -49,16 +49,16 @@ public class CompanyMethods_Services extends TestMethods {
         String image = "Image"+GetrandInt(10);
 
         Coupon coupon = Coupon.builder()
-                .a_id(50)
-                .b_company_id(companyId)
-                .c_category(category)
-                .d_title(title)
-                .e_description(description)
-                .f_startDate(startDate)
-                .g_endDate(endDate)
-                .h_amount(amount)
-                .i_price(price)
-                .j_image(image)
+                .id(50)
+                .company_id(companyId)
+                .category(category)
+                .title(title)
+                .description(description)
+                .start_date(startDate)
+                .end_date(endDate)
+                .amount(amount)
+                .price(price)
+                .image(image)
                 .build();
         // Add coupon to DB
         System.out.println("Coupon to add: ");
@@ -79,13 +79,13 @@ public class CompanyMethods_Services extends TestMethods {
         int updateCouponId = GetRandIdFromList(companyService.GetCompanyCoupons());
         Coupon updatedCoupon = companyService.GetCompanyCoupons().get(updateCouponId);
         // Update fields
-        updatedCoupon.setD_title("CompanyUpdatedTitle"+GetrandInt(100));
-        updatedCoupon.setE_description("CompanyUpdatedDescription");
-        updatedCoupon.setH_amount(GetrandInt(50));
-        updatedCoupon.setC_category(Category.GetRandomCategory());
-        updatedCoupon.setJ_image("CompanyUpdatedImage");
-        updatedCoupon.setF_startDate(DateFactory.getLocalDate(false));
-        updatedCoupon.setG_endDate(DateFactory.getLocalDate(true));
+        updatedCoupon.setTitle("CompanyUpdatedTitle"+GetrandInt(100));
+        updatedCoupon.setDescription("CompanyUpdatedDescription");
+        updatedCoupon.setAmount(GetrandInt(50));
+        updatedCoupon.setCategory(Category.GetRandomCategory());
+        updatedCoupon.setImage("CompanyUpdatedImage");
+        updatedCoupon.setStart_date(DateFactory.getLocalDate(false));
+        updatedCoupon.setEnd_date(DateFactory.getLocalDate(true));
         // Update coupon in DB
         System.out.println("Coupon to update: ");
         System.out.print(updatedCoupon);

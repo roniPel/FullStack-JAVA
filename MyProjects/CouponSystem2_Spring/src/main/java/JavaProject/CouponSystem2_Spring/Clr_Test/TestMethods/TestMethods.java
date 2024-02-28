@@ -20,13 +20,13 @@ public class TestMethods {
         }
         Object firstObject = myList.get(0);
         if(firstObject instanceof Customer) {
-            return ((Customer) myList.get(randIdx)).getA_id();
+            return ((Customer) myList.get(randIdx)).getId();
         }
         else if(firstObject instanceof Company){
-            return ((Company) myList.get(randIdx)).getA_id();
+            return ((Company) myList.get(randIdx)).getId();
         }
         else if (firstObject instanceof Coupon) {
-            return ((Coupon) myList.get(randIdx)).getA_id();
+            return ((Coupon) myList.get(randIdx)).getId();
         }
         return -1;
     }

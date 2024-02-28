@@ -15,52 +15,42 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class Coupon {
+    //Todo - add annotations to all beans - Client side, server side
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer a_id;
+    private Integer id;
     //@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
 
     @Column(name = "company_id",nullable = false)
-    private Integer b_company_id;
+    private Integer company_id;
     //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
     //private int companyId;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "category_id",nullable = false)
-    private Category c_category;
+    private Category category;
 
     @Column(name = "title",unique = true)
-    private String d_title;
+    private String title;
 
     @Column(name = "description")
-    private String e_description;
+    private String description;
 
     @Column(name = "start_date")
-    private LocalDate f_startDate;
+    private LocalDate start_date;
 
     @Column(name = "end_date")
-    private LocalDate g_endDate;
+    private LocalDate end_date;
 
     @Column(name = "amount")
-    private int h_amount;
+    private int amount;
 
     @Column(scale = 2,
             name = "price")
-    private double i_price;
+    private double price;
 
     @Column(name = "image")
-    private String j_image;
-
-    /*@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Coupon )) return false;
-        return a_id != null && a_id.equals(((Coupon) o).getA_id());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }*/
+    private String image;
 }

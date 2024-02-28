@@ -49,9 +49,9 @@ public class AdminMethods_Services extends TestMethods {
         String email = "AdminAddComp"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
         Company addCompany = Company.builder()
-                .b_name(name)
-                .c_email(email)
-                .d_password(password)
+                .name(name)
+                .email(email)
+                .password(password)
                 .coupons(null)
                 .build();
 
@@ -74,11 +74,11 @@ public class AdminMethods_Services extends TestMethods {
         String email = "custAdmin"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
         Customer addCustomer = Customer.builder()
-                .a_id(11)
-                .b_firstName(firstName)
-                .c_lastName(lastName)
-                .d_email(email)
-                .e_password(password)
+                .id(11)
+                .first_name(firstName)
+                .last_name(lastName)
+                .email(email)
+                .password(password)
                 .coupon(null)
                 .build();
         System.out.println("Customer to add: ");
@@ -100,8 +100,8 @@ public class AdminMethods_Services extends TestMethods {
         int updateCompId = GetRandIdFromList(companies);
         Company updatedComp = adminService.GetOneCompany(updateCompId);
         // Update fields
-        updatedComp.setC_email("AdminUpdateComp"+GetrandInt(100)+"@email.com");
-        updatedComp.setD_password("PassUpd");
+        updatedComp.setEmail("AdminUpdateComp"+GetrandInt(100)+"@email.com");
+        updatedComp.setPassword("PassUpd");
         updatedComp.setCoupons(null);
         // Update company in DB
         System.out.println("Company to update: ");
@@ -123,11 +123,11 @@ public class AdminMethods_Services extends TestMethods {
         int updateCustId = GetRandIdFromList(customers);
         // Update fields
         Customer updatedCust = Customer.builder()
-                .a_id(updateCustId)
-                .b_firstName("UpdatedFirstAdmin")
-                .c_lastName("UpdatedLastAdmin")
-                .d_email("updatedEmail"+GetrandInt(100)+"@email.com")
-                .e_password("PassAdmin")
+                .id(updateCustId)
+                .first_name("UpdatedFirstAdmin")
+                .last_name("UpdatedLastAdmin")
+                .email("updatedEmail"+GetrandInt(100)+"@email.com")
+                .password("PassAdmin")
                 .coupons(null)
                 .build();
         System.out.println("Customer to update: ");

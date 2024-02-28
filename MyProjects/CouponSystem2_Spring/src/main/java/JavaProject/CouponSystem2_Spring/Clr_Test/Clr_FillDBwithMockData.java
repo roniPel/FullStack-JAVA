@@ -74,15 +74,15 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         double price = FactoryUtils.round(Math.random()*(150.00),2);
         String image = "Image";
         Coupon coupon = Coupon.builder()
-                .b_company_id(randcompId)
-                .c_category(category)
-                .d_title(title)
-                .e_description(description)
-                .f_startDate(startDate)
-                .g_endDate(endDate)
-                .h_amount(15)
-                .i_price(price)
-                .j_image(image)
+                .company_id(randcompId)
+                .category(category)
+                .title(title)
+                .description(description)
+                .start_date(startDate)
+                .end_date(endDate)
+                .amount(15)
+                .price(price)
+                .image(image)
                 .build();
         // Add Coupon to DB
         couponRepo.save(coupon);
@@ -136,11 +136,11 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
             String email = "Customer"+i+"@email.com";
             String password = "PassCust"+i;
             Customer customer = Customer.builder()
-                    .a_id(i)
-                    .b_firstName(firstname)
-                    .c_lastName(lastName)
-                    .d_email(email)
-                    .e_password(password)
+                    .id(i)
+                    .first_name(firstname)
+                    .last_name(lastName)
+                    .email(email)
+                    .password(password)
                     .build();
             customerRepo.save(customer);
         }
@@ -165,7 +165,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
             List<Coupon> couponsForCompanies = new ArrayList<>();
             companies.forEach(company -> {
                 List<Coupon> companyCoupons = CreateRandomCouponsForCompany
-                        (company.getA_id(),numberOfCouponsPerCompany,maxPrice,amountCouponsPerType);
+                        (company.getId(),numberOfCouponsPerCompany,maxPrice,amountCouponsPerType);
                 couponsForCompanies.addAll(companyCoupons);
             });
             // Save coupons in DB
@@ -199,16 +199,16 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
             String image = "Image" + i;
 
             Coupon coupon = Coupon.builder()
-                    .a_id(i)
-                    .b_company_id(companyId)
-                    .c_category(category)
-                    .d_title(title)
-                    .e_description(description)
-                    .f_startDate(startDate)
-                    .g_endDate(endDate)
-                    .h_amount(amountCouponsPerType)
-                    .i_price(price)
-                    .j_image(image)
+                    .id(i)
+                    .company_id(companyId)
+                    .category(category)
+                    .title(title)
+                    .description(description)
+                    .start_date(startDate)
+                    .end_date(endDate)
+                    .amount(amountCouponsPerType)
+                    .price(price)
+                    .image(image)
                     .build();
             couponsForCompany.add(coupon);
         }
@@ -239,10 +239,10 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
             String email = "Company"+i+"@email.com";
             String password = "PassComp"+i;
             Company company = Company.builder()
-                    .a_id(i)
-                    .b_name(name)
-                    .c_email(email)
-                    .d_password(password)
+                    .id(i)
+                    .name(name)
+                    .email(email)
+                    .password(password)
                     .build();
             companyRepo.save(company);
         }
