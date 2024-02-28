@@ -10,6 +10,7 @@ import JavaProject.CouponSystem2_Spring.Services.ClientService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -29,29 +30,25 @@ public interface CustomerService extends ClientService {
      * Customer Method - Purchase Coupon
      * @throws CustomerException If we get any exception.  Details are provided
      */
-    public void PurchaseCoupon() throws CustomerException;
+    boolean PurchaseCoupon(Coupon coupon) throws CustomerException;
 
     /**
      * Customer Method - Get Customer Coupons
-     * @throws CustomerException If we get any exception.  Details are provided
      */
-    public void GetCustomerCoupons() throws CustomerException;
+    List<Coupon> GetCustomerCoupons() ;
 
     /**
      * Customer Method - Get Customer Coupons by Category
-     * @throws CustomerException  If we get any exception.  Details are provided
      */
-    public void GetCustomerCouponsByCategory() throws CustomerException;
+    List<Coupon> GetCustomerCouponsByCategory(Category category) ;
 
     /**
      * Customer Method - Get Customer Coupons by max price
-     * @throws CustomerException If we get any exception.  Details are provided
      */
-    public void GetCustomerCouponsByMaxPrice() throws CustomerException;
+    List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) ;
 
     /**
      * Customer Method - Get Customer Details
-     * @throws CustomerException If we get any exception.  Details are provided
      */
-    public void GetCustomerDetails() throws CustomerException;
+    Customer GetCustomerDetails() ;
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Clr_AdminTester implements CommandLineRunner {
     private LogonUtil logonUtil;
-    private AdminMethods_Services adminMethods;
+    private AdminMethods_Services adminMethods_services;
 
     // private AdminService adminService; - Preparation for Client Side (section 3)
     public boolean isLoggedOn = false;
@@ -71,16 +71,16 @@ public class Clr_AdminTester implements CommandLineRunner {
      */
     private void Admin_RunAllMethods_Services(AdminService adminService) throws AdminException {
         PrintSectionHeader_Services();
-        adminMethods.Method_GetAllCompanies(adminService);
-        adminMethods.Method_GetAllCustomers(adminService);
-        adminMethods.Method_AddCompany(adminService);
-        adminMethods.Method_AddCustomer(adminService);
-        adminMethods.Method_UpdateCompany(adminService);
-        adminMethods.Method_UpdateCustomer(adminService);
-        adminMethods.Method_GetOneCompany(adminService);
-        adminMethods.Method_GetOneCustomer(adminService);
-        adminMethods.Method_DeleteCompany(adminService);
-        adminMethods.Method_DeleteCustomer(adminService);
+        adminMethods_services.Method_GetAllCompanies(adminService);
+        adminMethods_services.Method_GetAllCustomers(adminService);
+        adminMethods_services.Method_AddCompany(adminService);
+        adminMethods_services.Method_AddCustomer(adminService);
+        adminMethods_services.Method_UpdateCompany(adminService);
+        adminMethods_services.Method_UpdateCustomer(adminService);
+        adminMethods_services.Method_GetOneCompany(adminService);
+        adminMethods_services.Method_GetOneCustomer(adminService);
+        adminMethods_services.Method_DeleteCompany(adminService);
+        adminMethods_services.Method_DeleteCustomer(adminService);
         PrintSectionFooter_Services();
     }
     private void PrintSectionFooter_Services() {

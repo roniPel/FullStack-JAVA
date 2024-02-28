@@ -11,6 +11,7 @@ public enum CompanyErrors {
     // Coupon related actions
     COUPON_EXISTS_FOR_COMPANY("ERROR! The coupon already exists for this company. \n"),
     COUPON_COMPANY_ID_INCORRECT("ERROR! The coupon's company ID doesn't match login details. \n"),
+    COUPON_DOES_NOT_EXIST("ERROR! The coupon doesn't exist in the system. \n"),
     COUPON_DOES_NOT_BELONG_TO_COMPANY("ERROR! The coupon doesn't belong to this company. \n");
 
 

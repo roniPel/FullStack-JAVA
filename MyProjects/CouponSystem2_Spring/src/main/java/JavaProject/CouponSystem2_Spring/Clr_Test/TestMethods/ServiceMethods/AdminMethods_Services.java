@@ -7,6 +7,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -66,7 +67,26 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_AddCustomer(AdminService adminService) {
+    public void Method_AddCustomer(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Add Customer ***");
+        // Create customer
+        String firstName = "FirstAdminAdd";
+        String lastName = "LastAdminAdd";
+        String email = "custAdmin"+GetrandInt(100)+"@email.com";
+        String password = "PassAdmin";
+        Customer addCustomer = Customer.builder()
+                .a_id(11)
+                .b_firstName(firstName)
+                .c_lastName(lastName)
+                .d_email(email)
+                .e_password(password)
+                .coupon(null)
+                .build();
+        System.out.println("Customer to add: ");
+        System.out.print(addCustomer);
+        // Add customer to DB
+        System.out.println("Added Customer? "+ adminService.AddCustomer(addCustomer));
+        System.out.println();
     }
 
     /**
@@ -74,7 +94,22 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_UpdateCompany(AdminService adminService) {
+    public void Method_UpdateCompany(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Update Company ***");
+        List<Company> companies = adminService.GetAllCompanies();
+        // Select random ID for updating company
+        int updateCompId = GetRandIdFromList(companies);
+        Company updatedComp = adminService.GetOneCompany(updateCompId);
+        // Update fields
+        updatedComp.setC_email("AdminUpdateComp"+GetrandInt(100)+"@email.com");
+        updatedComp.setD_password("PassUpd");
+        updatedComp.setCoupons(null);
+        // Update company in DB
+        System.out.println("Company to update: ");
+        System.out.print(updatedComp);
+        System.out.println("Updated Company? "+
+                adminService.UpdateCompany(updatedComp));
+        System.out.println();
     }
 
     /**
@@ -82,7 +117,26 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_UpdateCustomer(AdminService adminService) {
+    public void Method_UpdateCustomer(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Update Customer ***");
+        List<Customer> customers = adminService.GetAllCustomers();
+        // Select random ID for updating
+        int updateCustId = GetRandIdFromList(customers);
+        // Update fields
+        Customer updatedCust = Customer.builder()
+                .a_id(updateCustId)
+                .b_firstName("UpdatedFirstAdmin")
+                .c_lastName("UpdatedLastAdmin")
+                .d_email("updatedEmail"+GetrandInt(100)+"@email.com")
+                .e_password("PassAdmin")
+                .coupons(null)
+                .build();
+        System.out.println("Customer to update: ");
+        System.out.print(updatedCust);
+        // Update customer in DB
+        System.out.println("Updated Customer? "+
+                adminService.UpdateCustomer(updatedCust));
+        System.out.println();
     }
 
     /**
@@ -90,7 +144,12 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException  If we get any exception.  Details are provided
      */
-    public void Method_GetOneCompany(AdminService adminService) {
+    public void Method_GetOneCompany(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Get One Company ***");
+        List<Company> companies = adminService.GetAllCompanies();
+        int getOneCompId = GetRandIdFromList(companies);
+        System.out.println("One Company: "+
+                adminService.GetOneCompany(getOneCompId));
     }
 
     /**
@@ -98,7 +157,13 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_GetOneCustomer(AdminService adminService) {
+    public void Method_GetOneCustomer(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Get One Customer ***");
+        List<Customer> customers = adminService.GetAllCustomers();
+        // Get random ID
+        int getOneCustId = GetRandIdFromList(customers);
+        System.out.println("One Customer: ");
+        System.out.println(adminService.GetOneCustomer(getOneCustId));
     }
 
     /**
@@ -106,7 +171,16 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_DeleteCompany(AdminService adminService) {
+    public void Method_DeleteCompany(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Delete Company ***");
+        List<Company> companies = adminService.GetAllCompanies();
+        // Select random ID for deletion
+        int delCompId = GetRandIdFromList(companies);
+        System.out.println("Company to delete: ");
+        System.out.print(adminService.GetOneCompany(delCompId));
+        System.out.println("Deleted Company? "+
+                adminService.DeleteCompany(delCompId) );
+        System.out.println();
     }
 
     /**
@@ -114,6 +188,15 @@ public class AdminMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException  If we get any exception.  Details are provided
      */
-    public void Method_DeleteCustomer(AdminService adminService) {
+    public void Method_DeleteCustomer(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Delete Customer ***");
+        List<Customer> customers = adminService.GetAllCustomers();
+        // Select random Id for deleting
+        int delCustId = GetRandIdFromList(customers);
+        System.out.println("Customer to delete: ");
+        System.out.print(adminService.GetOneCustomer(delCustId));
+        System.out.println("Deleted Customer? "+
+                adminService.DeleteCustomer(delCustId) );
+        System.out.println();
     }
 }

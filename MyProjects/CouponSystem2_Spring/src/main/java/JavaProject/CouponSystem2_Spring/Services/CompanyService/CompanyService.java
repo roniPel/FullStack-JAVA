@@ -41,25 +41,24 @@ public interface CompanyService extends ClientService {
 
     /**
      * Company Method - Get company Coupons
-     * @throws CompanyException If we get any exception.  Details are provided
      */
-    List<Coupon> GetCompanyCoupons() throws CompanyException;
+    List<Coupon> GetCompanyCoupons();
 
     /**
      * Company Method - Get Company Coupons by Category
-     * @throws CompanyException If we get any exception.  Details are provided
      */
-    List<Coupon> GetCompanyCouponsByCategory(Category category) throws CompanyException;
+    List<Coupon> GetCompanyCouponsByCategory(Category category);
 
     /**
      * Company Method - Get Company Coupons by max price
-     * @throws CompanyException If we get any exception.  Details are provided
      */
-    List<Coupon> GetCompanyCouponsByMaxPrice(Double maxPrice) throws CompanyException;
+    List<Coupon> GetCompanyCouponsByMaxPrice(Double maxPrice);
 
     /**
      * Company Method - Get Company Details
      * @throws CompanyException If we get any exception.  Details are provided
      */
     Company GetCompanyDetails() throws CompanyException;
+
+
 }

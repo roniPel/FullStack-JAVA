@@ -60,6 +60,9 @@ public class AdminServiceImpl implements AdminService {
         if(!customerRepo.existsById(customer.getA_id())){
             throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
         }
+        if(customerRepo.findByEmail(customer.getD_email()) != null){
+            throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
+        }
         customerRepo.saveAndFlush(customer);
         return true;
     }
@@ -69,6 +72,9 @@ public class AdminServiceImpl implements AdminService {
         int id = customer.getA_id();
         if(customerRepo.existsById(id)){
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
+        }
+        if(customerRepo.findByEmail(customer.getD_email()) != null){
+            throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
         customerRepo.save(customer);
         return true;
@@ -100,6 +106,14 @@ public class AdminServiceImpl implements AdminService {
         if(!companyRepo.existsById(id)) {
             throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
         }
+        Company currentCompany = GetOneCompany(id);
+        if(!company.getB_name().equals(currentCompany.getB_name())) {
+            throw new AdminException(AdminErrors.CANT_UPDATE_COMPANY_NAME);
+        }
+        String newEmail = companyRepo.findByEmail(company.getC_email()).getC_email();
+        if(newEmail.equals(currentCompany.getC_email())){
+            throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
+        }
         companyRepo.saveAndFlush(company);
         return true;
     }
@@ -109,6 +123,12 @@ public class AdminServiceImpl implements AdminService {
         int id = company.getA_id();
         if(companyRepo.existsById(id)) {
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
+        }
+        if(companyRepo.findByName(company.getB_name()) != null){
+            throw new AdminException(AdminErrors.COMPANY_NAME_ALREADY_EXISTS);
+        }
+        if(companyRepo.findByEmail(company.getC_email()) != null){
+            throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
         companyRepo.save(company);
         return true;

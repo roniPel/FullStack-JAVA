@@ -10,5 +10,6 @@ import java.util.List;
 public interface CompanyRepository extends JpaRepository<Company,Integer> {
     //Todo - add all CRUD actions
     Company findByName(String name);
+    Company findByEmail(String email);
     Company findByEmailAndPassword(String email,String password);
 }
