@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -32,8 +33,8 @@ public class Customer {
     private String password;
 
     @Singular
-    @ManyToMany(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @ManyToMany(targetEntity = Coupon.class, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn(name = "coupon_id")
     @JoinTable(name = "customers_vs_coupons")
-    private List<Coupon> coupons;
+    private Set<Coupon> coupons;
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "coupons")
@@ -53,4 +54,7 @@ public class Coupon {
 
     @Column(name = "image")
     private String image;
+
+    @ManyToMany(mappedBy = "coupons")
+    private Set<Customer> customers;
 }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.*;
 
-//@Component
+@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
@@ -112,7 +112,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     }
                     else {
                         Coupon coupon = couponRepo.findById(couponID).orElseThrow( ()->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));
-                        customer.setCoupons(List.of(coupon));
+                        customer.setCoupons(Set.of(coupon));
                     }
                 }
                 // Update customers in DB

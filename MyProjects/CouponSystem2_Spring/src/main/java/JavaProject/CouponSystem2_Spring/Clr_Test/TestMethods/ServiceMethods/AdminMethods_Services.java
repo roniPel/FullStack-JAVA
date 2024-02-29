@@ -101,8 +101,6 @@ public class AdminMethods_Services extends TestMethods {
         // Update fields
         updatedComp.setEmail("AdminUpdateComp"+GetrandInt(100)+"@email.com");
         updatedComp.setPassword("PassUpd");
-        //Todo - write method
-        adminService.DeleteCompanyCoupons();
         // Update company in DB
         System.out.println("Company to update: ");
         System.out.println(updatedComp);
@@ -128,7 +126,6 @@ public class AdminMethods_Services extends TestMethods {
                 .lastName("UpdatedLastAdmin")
                 .email("updatedEmail"+GetrandInt(100)+"@email.com")
                 .password("PassAdmin")
-                .coupons(null)
                 .build();
         System.out.println("Customer to update: ");
         System.out.println(updatedCust);
@@ -149,6 +146,7 @@ public class AdminMethods_Services extends TestMethods {
         int getOneCompId = GetRandIdFromList(companies);
         System.out.println("One Company: "+
                 adminService.GetOneCompany(getOneCompId));
+        System.out.println();
     }
 
     /**
@@ -163,6 +161,7 @@ public class AdminMethods_Services extends TestMethods {
         int getOneCustId = GetRandIdFromList(customers);
         System.out.println("One Customer: ");
         System.out.println(adminService.GetOneCustomer(getOneCustId));
+        System.out.println();
     }
 
     /**
@@ -177,8 +176,9 @@ public class AdminMethods_Services extends TestMethods {
         int delCompId = GetRandIdFromList(companies);
         System.out.println("Company to delete: ");
         System.out.println(adminService.GetOneCompany(delCompId));
-        System.out.println("Deleted Company? "+
-                adminService.DeleteCompany(delCompId) );
+        // Delete company coupons + delete company
+        System.out.println("Deleted Company? "+ (
+                adminService.DeleteCompanyCoupons(delCompId) && adminService.DeleteCompany(delCompId) ) );
         System.out.println();
     }
 
@@ -193,9 +193,12 @@ public class AdminMethods_Services extends TestMethods {
         // Select random Id for deleting
         int delCustId = GetRandIdFromList(customers);
         System.out.println("Customer to delete: ");
-        System.out.println(adminService.GetOneCustomer(delCustId));
-        System.out.println("Deleted Customer? "+
-                adminService.DeleteCustomer(delCustId) );
+        Customer customerToDelete = adminService.GetOneCustomer(delCustId);
+        System.out.println(customerToDelete);
+        // Delete company coupons + delete company
+        System.out.println("Deleted Customer? "+(
+                adminService.DeleteCustomerCoupons(delCustId) && adminService.DeleteCustomer(delCustId) ) );
+        System.out.println();
         System.out.println();
     }
 }

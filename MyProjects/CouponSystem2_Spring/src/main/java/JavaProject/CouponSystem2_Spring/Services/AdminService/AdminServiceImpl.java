@@ -53,6 +53,9 @@ public class AdminServiceImpl implements AdminService {
         if(!customerRepo.existsById(customerId)){
             throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
         }
+        // Delete customer coupons
+        //couponRepo.deleteByCustomerId(customerId);
+        // Delete customer
         customerRepo.deleteById(customerId);
         return true;
     }
@@ -98,6 +101,9 @@ public class AdminServiceImpl implements AdminService {
         if(!companyRepo.existsById(companyId)){
             throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
         }
+        // Delete company coupons
+        couponRepo.deleteByCompanyId(companyId);
+        // Delete company
         companyRepo.deleteById(companyId);
         return true;
     }
@@ -229,6 +235,24 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
+     * Deletes company coupons (for a company that will be deleted)
+     * @param companyId - company Id - marking coupons to be deleted
+     * @return true if succeeded, false if failed.
+     */
+    @Override
+    public boolean DeleteCompanyCoupons(int companyId) {
+        couponRepo.deleteAllInBatch(couponRepo.findByCompanyId(companyId));
+        return true;
+    }
+
+    @Override
+    public boolean DeleteCustomerCoupons(int customerId) {
+        couponRepo.deleteAllInBatch(couponRepo.findByCustomers_id(customerId));
+        return true;
+    }
+
+
+    /**
      * Add customer with coupons from all categories
      * @return the new customer id
      */
@@ -252,12 +276,14 @@ public class AdminServiceImpl implements AdminService {
 
         // Add coupons from all categories to customer
         List<Coupon> couponsForCustomer = CreateCompanyCouponsForAllCategories(companyId);
-        customer.setCoupons(couponsForCustomer);
+        customer.setCoupons((Set<Coupon>) couponsForCustomer);
 
         // Save coupons in DB
         customerRepo.saveAndFlush(customer);
 
         return newCustomerId;
     }
+
+
 
 }

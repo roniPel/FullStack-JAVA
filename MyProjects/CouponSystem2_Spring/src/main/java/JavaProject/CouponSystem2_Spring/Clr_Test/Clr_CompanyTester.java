@@ -12,7 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Clr_CompanyTester implements CommandLineRunner {

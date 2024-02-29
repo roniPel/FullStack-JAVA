@@ -6,6 +6,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerEx
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class LogonUtil {
 
     private Map<String, String> emailsPassowrdsMap;
     private boolean isLoggedOn = false;
+    @Autowired
     protected AdminService adminService;
 
     public LogonUtil() {

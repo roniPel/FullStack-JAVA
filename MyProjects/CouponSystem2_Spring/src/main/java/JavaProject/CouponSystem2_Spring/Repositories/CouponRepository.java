@@ -2,6 +2,8 @@ package JavaProject.CouponSystem2_Spring.Repositories;
 
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -35,6 +37,11 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     @Query(value = "select avg(weight) from cats",nativeQuery = true)
     double avg();
 
+    @Transactional
+    void deleteByCompanyId(int companyId);
+
+    void deleteByCustomers_id(int customerId);
+
 
     /*
     List findByLearner_guid(String learnerGuid);
@@ -49,8 +56,8 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
      */
 
     // Todo - how to solve?  Add query? Add a Repository Adapter? Use "_"?
-//    List<Coupon> findByCustomerId(int customerId);
-//    List<Coupon> findByCustomerIdAndCategory(int customerId, Category category);
-//    List<Coupon> findByCustomerIdAndPriceLessThanEqual(int customerId, double price);
+    List<Coupon> findByCustomers_id(int customerId);
+    //List<Coupon> findByCustomerIdAndCategory(int customerId, Category category);
+    //List<Coupon> findByCustomerIdAndPriceLessThanEqual(int customerId, double price);
 
 }
