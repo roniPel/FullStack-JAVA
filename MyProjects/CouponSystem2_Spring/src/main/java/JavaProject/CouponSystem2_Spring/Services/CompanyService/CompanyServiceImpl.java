@@ -10,6 +10,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerEx
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
+    @Autowired
     protected CouponRepository couponRepo;
+    @Autowired
     protected CompanyRepository companyRepo;
 
     private int companyId;  // Company ID belonging to the company that logged in
@@ -51,10 +54,10 @@ public class CompanyServiceImpl implements CompanyService {
         if(couponRepo.existsById(id)){  //Check if coupon Id exists in DB
             throw new CompanyException(CompanyErrors.DUPLICATE_ENTRY);
         }
-        if(couponRepo.findByTitleAndCompany_id(coupon.getTitle(),id) != null) {    // Check if coupon title exists for this company
+        if(couponRepo.findByTitleAndCompanyId(coupon.getTitle(),id) != null) {    // Check if coupon title exists for this company
             throw new CompanyException(CompanyErrors.COUPON_EXISTS_FOR_COMPANY);
         }
-        if(coupon.getCompany_id() != this.companyId){ //Verify coupon contains correct company Id
+        if(coupon.getCompanyId() != this.companyId){ //Verify coupon contains correct company Id
             throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
         couponRepo.save(coupon);
@@ -69,7 +72,7 @@ public class CompanyServiceImpl implements CompanyService {
                 () -> new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST)
         );
         // Verify company Id in new coupon matches company id listed in existing coupon
-        if(!Objects.equals(coupon.getCompany_id(), currentCoupon.getCompany_id())) {
+        if(!Objects.equals(coupon.getCompanyId(), currentCoupon.getCompanyId())) {
             throw new CompanyException(CompanyErrors.COUPON_COMPANY_ID_INCORRECT);
         }
         couponRepo.saveAndFlush(coupon);
@@ -87,17 +90,17 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Coupon> GetCompanyCoupons() {
-        return couponRepo.findByCompany_id(this.companyId);
+        return couponRepo.findByCompanyId(this.companyId);
     }
 
     @Override
     public List<Coupon> GetCompanyCouponsByCategory(Category category) {
-        return couponRepo.findByCompany_idAndCategory(this.companyId, category);
+        return couponRepo.findByCompanyIdAndCategory(this.companyId, category);
     }
 
     @Override
     public List<Coupon> GetCompanyCouponsByMaxPrice(Double maxPrice) {
-        return couponRepo.findByCompany_idAndPriceLowerThan(this.companyId, maxPrice);
+        return couponRepo.findByCompanyIdAndPriceLessThanEqual(this.companyId, maxPrice);
     }
 
     @Override

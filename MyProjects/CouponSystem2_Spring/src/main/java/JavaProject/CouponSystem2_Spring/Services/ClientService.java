@@ -8,7 +8,6 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-@Service
 public interface ClientService {
     boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 }

@@ -3,6 +3,7 @@ package JavaProject.CouponSystem2_Spring.Repositories;
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,14 +17,40 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     //Todo - don't use try/catch, use controller advice messages (see github)
 
     // Company Smart Dialect Queries
-    List<Coupon> findByCompany_idAndCategory(int company_id, Category category);
-    List<Coupon> findByCompany_idAndPriceLowerThan(int company_id, double price);
-    List<Coupon> findByCompany_id(int company_id);
-    Coupon findByTitleAndCompany_id(String title, int company_id);
+    List<Coupon> findByCompanyIdAndCategory(int companyId, Category category);
+    List<Coupon> findByCompanyIdAndPriceLessThanEqual(int companyId, double price);
+    List<Coupon> findByCompanyId(int companyId);
+    Coupon findByTitleAndCompanyId(String title, int companyId);
 
-    // Add a Repository Adapter
-    List<Coupon> findByCustomer_id(int customer_id);
-    List<Coupon> findByCustomer_idAndCategory(int customer_id, Category category);
-    List<Coupon> findByCustomer_idAndPriceLowerThan(int customer_id, double price);
+
+
+    //List<Coupon> findByCustomer_Id(int customerId);
+
+    /*
+    SELECT * FROM coupons
+    JOIN customers_vs_coupons
+    ON coupons.id = customers_vs_coupons.coupons_id
+    WHERE customer_id = ?
+     */
+    @Query(value = "select avg(weight) from cats",nativeQuery = true)
+    double avg();
+
+
+    /*
+    List findByLearner_guid(String learnerGuid);
+
+    The  findBy  method allows traversal through the related tables and their fields,
+    starting from the ProductUsage relation to Learner. By using "_", the framework can
+    clearly indicate a query by joining the Learner table where guid = ?.
+    In all other cases, the framework attempts the following two combinations:
+
+    where learnerGuid=?
+    join learner where guid=?
+     */
+
+    // Todo - how to solve?  Add query? Add a Repository Adapter? Use "_"?
+//    List<Coupon> findByCustomerId(int customerId);
+//    List<Coupon> findByCustomerIdAndCategory(int customerId, Category category);
+//    List<Coupon> findByCustomerIdAndPriceLessThanEqual(int customerId, double price);
 
 }

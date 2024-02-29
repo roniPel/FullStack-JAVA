@@ -20,16 +20,17 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.*;
 
-@Component
+//@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
-    //Todo - write methods (copy from MockData?):
-
     //Todo - how to write login manager - getInstance?
 
+    @Autowired
     private CompanyRepository companyRepo;
+    @Autowired
     private CustomerRepository customerRepo;
+    @Autowired
     private CouponRepository couponRepo;
     private Map<String, Object> mockDataMap;
 
@@ -74,7 +75,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         double price = FactoryUtils.round(Math.random()*(150.00),2);
         String image = "Image";
         Coupon coupon = Coupon.builder()
-                .company_id(randcompId)
+                .companyId(randcompId)
                 .category(category)
                 .title(title)
                 .description(description)
@@ -137,8 +138,8 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
             String password = "PassCust"+i;
             Customer customer = Customer.builder()
                     .id(i)
-                    .first_name(firstname)
-                    .last_name(lastName)
+                    .firstName(firstname)
+                    .lastName(lastName)
                     .email(email)
                     .password(password)
                     .build();
@@ -200,7 +201,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
 
             Coupon coupon = Coupon.builder()
                     .id(i)
-                    .company_id(companyId)
+                    .companyId(companyId)
                     .category(category)
                     .title(title)
                     .description(description)

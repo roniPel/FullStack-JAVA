@@ -10,13 +10,14 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public interface AdminService extends ClientService {
+
 
     /**
      * Checks whether a user exists in the DB
@@ -98,4 +99,7 @@ public interface AdminService extends ClientService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     String[] AddCustomerDetailsForLogin() throws AdminException;
+
+    //Todo - write method
+    boolean DeleteCompanyCoupons() throws AdminException;
 }

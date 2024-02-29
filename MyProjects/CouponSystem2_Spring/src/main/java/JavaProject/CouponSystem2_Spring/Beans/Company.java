@@ -35,12 +35,11 @@ public class Company {
     @Column(length=10,name = "password",
             nullable = false)
 
-    @Length(min = 10, max = 40)
+    //@Length(min = 10, max = 40)
     private String password;
 
     @Singular
-    @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     private List<Coupon> coupons;
 

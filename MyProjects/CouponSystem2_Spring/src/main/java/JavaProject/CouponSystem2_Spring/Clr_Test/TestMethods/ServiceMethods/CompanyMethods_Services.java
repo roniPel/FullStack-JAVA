@@ -50,7 +50,7 @@ public class CompanyMethods_Services extends TestMethods {
 
         Coupon coupon = Coupon.builder()
                 .id(50)
-                .company_id(companyId)
+                .companyId(companyId)
                 .category(category)
                 .title(title)
                 .description(description)

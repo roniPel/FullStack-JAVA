@@ -7,6 +7,7 @@ import JavaProject.CouponSystem2_Spring.Login.LoginManager;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -15,10 +16,12 @@ import org.springframework.stereotype.Component;
 @Order(2)
 @RequiredArgsConstructor
 public class Clr_AdminTester implements CommandLineRunner {
+    @Autowired
     private LogonUtil logonUtil;
+    @Autowired
     private AdminMethods_Services adminMethods_services;
-
-    // private AdminService adminService; - Preparation for Client Side (section 3)
+    @Autowired
+    private AdminService adminService; //  Preparation for Client Side (section 3)
     public boolean isLoggedOn = false;
     @Override
     public void run(String... args) {
@@ -26,8 +29,9 @@ public class Clr_AdminTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
 
         try {
+            //Todo - Remove check logon section and logon details
             // Check logon
-            AdminService adminService = (AdminService) LoginManager.Login(email, password, ClientType.Administrator);
+            //AdminService adminService = (AdminService) LoginManager.Login(email, password, ClientType.Administrator);
 
             // Run all Admin methods - via services
             Admin_RunAllMethods_Services(adminService);

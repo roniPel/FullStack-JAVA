@@ -24,7 +24,7 @@ public class Coupon {
     //@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
 
     @Column(name = "company_id",nullable = false)
-    private Integer company_id;
+    private Integer companyId;
     //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
     //private int companyId;
 

@@ -14,6 +14,7 @@ import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,9 +23,12 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-    protected CouponRepository couponRepo;
-    protected CompanyRepository companyRepo;
-    protected CustomerRepository customerRepo;
+    @Autowired
+    CouponRepository couponRepo;
+    @Autowired
+    CompanyRepository companyRepo;
+    @Autowired
+    CustomerRepository customerRepo;
     private final String email = "admin@admin.com";
     private final String password = "admin";
 
@@ -193,7 +197,7 @@ public class AdminServiceImpl implements AdminService {
             double price = FactoryUtils.round(Math.random()*200,2);
             String image = "Image Company "+category;
             Coupon addCoupon = Coupon.builder()
-                    .company_id(companyId)
+                    .companyId(companyId)
                     .category(category)
                     .title(title)
                     .description(description)
@@ -231,8 +235,8 @@ public class AdminServiceImpl implements AdminService {
     public int AddCustomerWithFullCoupons() {
         // Add Customer to DB
         Customer customer = Customer.builder()
-                .first_name("FirstFullCoupons")
-                .last_name("LastFullCoupons")
+                .firstName("FirstFullCoupons")
+                .lastName("LastFullCoupons")
                 .email("FullCoupons@email.com")
                 .password("Password")
                 .coupons(null)

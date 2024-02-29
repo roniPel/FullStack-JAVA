@@ -10,7 +10,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerEx
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +19,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
+    @Autowired
     protected CouponRepository couponRepo;
+    @Autowired
     protected CustomerRepository customerRepo;
 
     private int customerId;  // Customer ID belonging to the customer that logged in
@@ -77,17 +79,23 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Coupon> GetCustomerCoupons() {
-        return couponRepo.findByCustomer_id(this.customerId);
+        //Todo - uncomment
+        //return couponRepo.findByCustomerId(this.customerId);
+        return null;
     }
 
     @Override
     public List<Coupon> GetCustomerCouponsByCategory(Category category) {
-        return couponRepo.findByCustomer_idAndCategory(this.customerId, category);
+        //Todo - uncomment
+        //return couponRepo.findByCustomerIdAndCategory(this.customerId, category);
+        return null;
     }
 
     @Override
     public List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) {
-        return couponRepo.findByCustomer_idAndPriceLowerThan(this.customerId,maxPrice);
+        //Todo - uncomment
+        //return couponRepo.findByCustomerIdAndPriceLessThanEqual(this.customerId,maxPrice);
+        return null;
     }
 
     @Override

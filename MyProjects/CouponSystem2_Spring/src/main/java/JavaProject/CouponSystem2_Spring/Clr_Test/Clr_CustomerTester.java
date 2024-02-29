@@ -8,18 +8,22 @@ import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Clr_CustomerTester implements CommandLineRunner {
+    @Autowired
     private LogonUtil logonUtil;
+    @Autowired
     private CustomerMethods_Services customerMethods_services;
 
-    // private CustomerService customerService; - Preparation for Client Side (section 3)
+    @Autowired
+    private CustomerService customerService; //- Preparation for Client Side (section 3)
     public boolean isLoggedOn = false;
     @Override
     public void run(String... args) throws Exception {
@@ -27,8 +31,9 @@ public class Clr_CustomerTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("customerPassword");
 
         try {
+            //Todo - Remove check logon section and logon details
             // Check logon
-            CustomerService customerService = (CustomerService) LoginManager.Login(email, password, ClientType.Customer);
+            //CustomerService customerService = (CustomerService) LoginManager.Login(email, password, ClientType.Customer);
 
             // Run all methods
             Customer_RunAllMethods(customerService);

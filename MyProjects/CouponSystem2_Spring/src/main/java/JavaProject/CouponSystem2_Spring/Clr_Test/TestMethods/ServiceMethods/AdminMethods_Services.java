@@ -16,9 +16,8 @@ public class AdminMethods_Services extends TestMethods {
     /**
      * Admin Method - Get all Companies
      * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_GetAllCompanies(AdminService adminService) throws AdminException {
+    public void Method_GetAllCompanies(AdminService adminService) {
         System.out.println("*** Method: Get All Companies ***");
         List<Company> companies = adminService.GetAllCompanies();
         companies.forEach(System.out::println);
@@ -28,9 +27,8 @@ public class AdminMethods_Services extends TestMethods {
     /**
      * Admin Method - Get All Customers
      * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_GetAllCustomers(AdminService adminService) throws AdminException {
+    public void Method_GetAllCustomers(AdminService adminService) {
         System.out.println("*** Method: Get All Customers ***");
         List<Customer> customers = adminService.GetAllCustomers();
         customers.forEach(System.out::println);
@@ -49,14 +47,15 @@ public class AdminMethods_Services extends TestMethods {
         String email = "AdminAddComp"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
         Company addCompany = Company.builder()
+                .id(4)
                 .name(name)
                 .email(email)
                 .password(password)
-                .coupons(null)
+                //.coupons(null)
                 .build();
 
         System.out.println("Company to add: ");
-        System.out.print(addCompany);
+        System.out.println(addCompany);
         System.out.println("Added Company? "+ adminService.AddCompany(addCompany));
         System.out.println();
     }
@@ -75,14 +74,14 @@ public class AdminMethods_Services extends TestMethods {
         String password = "PassAdmin";
         Customer addCustomer = Customer.builder()
                 .id(11)
-                .first_name(firstName)
-                .last_name(lastName)
+                .firstName(firstName)
+                .lastName(lastName)
                 .email(email)
                 .password(password)
-                .coupon(null)
+                //.coupon(null)
                 .build();
         System.out.println("Customer to add: ");
-        System.out.print(addCustomer);
+        System.out.println(addCustomer);
         // Add customer to DB
         System.out.println("Added Customer? "+ adminService.AddCustomer(addCustomer));
         System.out.println();
@@ -102,10 +101,11 @@ public class AdminMethods_Services extends TestMethods {
         // Update fields
         updatedComp.setEmail("AdminUpdateComp"+GetrandInt(100)+"@email.com");
         updatedComp.setPassword("PassUpd");
-        updatedComp.setCoupons(null);
+        //Todo - write method
+        adminService.DeleteCompanyCoupons();
         // Update company in DB
         System.out.println("Company to update: ");
-        System.out.print(updatedComp);
+        System.out.println(updatedComp);
         System.out.println("Updated Company? "+
                 adminService.UpdateCompany(updatedComp));
         System.out.println();
@@ -124,14 +124,14 @@ public class AdminMethods_Services extends TestMethods {
         // Update fields
         Customer updatedCust = Customer.builder()
                 .id(updateCustId)
-                .first_name("UpdatedFirstAdmin")
-                .last_name("UpdatedLastAdmin")
+                .firstName("UpdatedFirstAdmin")
+                .lastName("UpdatedLastAdmin")
                 .email("updatedEmail"+GetrandInt(100)+"@email.com")
                 .password("PassAdmin")
                 .coupons(null)
                 .build();
         System.out.println("Customer to update: ");
-        System.out.print(updatedCust);
+        System.out.println(updatedCust);
         // Update customer in DB
         System.out.println("Updated Customer? "+
                 adminService.UpdateCustomer(updatedCust));
@@ -176,7 +176,7 @@ public class AdminMethods_Services extends TestMethods {
         // Select random ID for deletion
         int delCompId = GetRandIdFromList(companies);
         System.out.println("Company to delete: ");
-        System.out.print(adminService.GetOneCompany(delCompId));
+        System.out.println(adminService.GetOneCompany(delCompId));
         System.out.println("Deleted Company? "+
                 adminService.DeleteCompany(delCompId) );
         System.out.println();
@@ -193,7 +193,7 @@ public class AdminMethods_Services extends TestMethods {
         // Select random Id for deleting
         int delCustId = GetRandIdFromList(customers);
         System.out.println("Customer to delete: ");
-        System.out.print(adminService.GetOneCustomer(delCustId));
+        System.out.println(adminService.GetOneCustomer(delCustId));
         System.out.println("Deleted Customer? "+
                 adminService.DeleteCustomer(delCustId) );
         System.out.println();

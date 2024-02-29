@@ -10,30 +10,14 @@ import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminServiceImpl;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyServiceImpl;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginManager {
     // Todo - finish writing method (singleton, compare to zeev's)
     //Todo - How to define?  Check if correct
-
-    private static LogonUtil logonUtil;
-
-    /*private static LoginManager instance = null;
-    public LoginManager() {
-    }
-
-    public static LoginManager getInstance() {
-        // Get instance with Double Check
-        if (instance == null) {
-            synchronized (LoginManager.class) {
-                if(instance == null) {
-                    instance = new LoginManager();
-                }
-            }
-        }
-        return instance;
-    }*/
+    private static LogonUtil logonUtil = new LogonUtil();
 
     /**
      * @param email The email for login.
@@ -54,7 +38,7 @@ public class LoginManager {
         // Part 2 - Check login details
         if( CheckLogin(email, password, clientService) ) {
             // Print logon message
-            logonUtil.Logon_Message(email,password, clientService);
+            logonUtil.Logon_Message(email,password, clientType);
             return clientService;
         }
         else {  // If login details are incorrect - throw exception based on requested client type

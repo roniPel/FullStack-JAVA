@@ -19,7 +19,7 @@ public class LogonUtil {
     private boolean isLoggedOn = false;
     protected AdminService adminService;
 
-    public LogonUtil() throws AdminException, CompanyException {
+    public LogonUtil() {
         PrepareData_AdminLogon();
     }
 
@@ -49,10 +49,10 @@ public class LogonUtil {
      * @param clientType client type requested for logon
      * @throws AdminException,CustomerException,CompanyException  If we get any exception.  Details are provided
      */
-    void Logon_Message(String email, String password, ClientService clientType) throws AdminException, CustomerException, CompanyException {
+    void Logon_Message(String email, String password, ClientType clientType) throws AdminException, CustomerException, CompanyException {
         isLoggedOn = true;
         System.out.println("======================================");
-        System.out.print(clientType + " is logged on. \n");
+        System.out.print(clientType + " is logged on: \n");
         System.out.println("======================================");
         System.out.println();
     }
