@@ -24,8 +24,6 @@ import java.util.*;
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
-    //Todo - how to write login manager - getInstance?
-
     @Autowired
     private CompanyRepository companyRepo;
     @Autowired

@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Lazy;
 
 @Configuration
 public class MyConfig {
-    @Bean
+    /*@Bean
     @Lazy
     public LoginManager loginManager(){
         //Todo - check if correct config for singleton Login Manager
         return new LoginManager();
-    }
+    }*/
 }

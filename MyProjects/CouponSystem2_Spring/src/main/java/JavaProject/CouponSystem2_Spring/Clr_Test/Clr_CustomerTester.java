@@ -1,6 +1,10 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CustomerMethods_Services;
+import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Login.LoginManager;
@@ -24,7 +28,7 @@ public class Clr_CustomerTester implements CommandLineRunner {
 
     @Autowired
     private CustomerService customerService; //- Preparation for Client Side (section 3)
-    public boolean isLoggedOn = false;
+
     @Override
     public void run(String... args) throws Exception {
         String email = logonUtil.getEmailsPassowrdsMap().get("customerEmail");
@@ -32,12 +36,13 @@ public class Clr_CustomerTester implements CommandLineRunner {
 
         try {
             //Todo - Remove check logon section and logon details
-            // Check logon
             //CustomerService customerService = (CustomerService) LoginManager.Login(email, password, ClientType.Customer);
 
-            // Run all methods
-            Customer_RunAllMethods(customerService);
-
+            // Check logon
+            if(customerMethods_services.CheckLogin(email,password,customerService)) {
+                // Run all methods
+                Customer_RunAllMethods(customerService);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -2,6 +2,7 @@ package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods;
 
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class CustomerMethods_Services extends TestMethods {
@@ -19,15 +22,22 @@ public class CustomerMethods_Services extends TestMethods {
      * @throws CustomerException If we get any exception.  Details are provided
      */
     public void PurchaseCoupon(CustomerService customerService) throws CustomerException {
+        Customer loggedCustomer = customerService.GetCustomerDetails();
         System.out.println("*** Method: Purchase Coupon ***");
-        // Create new coupon
-        List<Coupon> coupons = customerService.GetCustomerCoupons();
-        int couponForPurchaseId = GetRandIdFromList(coupons);
+        // Generate a list of nun-customer coupons
+        List<Coupon> allCoupons = customerService.GetAllCoupons();
+        List<Coupon> nonCustomerCoupons = allCoupons.stream()
+                .filter( (coupon)-> !(coupon.getCustomers().contains(loggedCustomer)) )
+                .toList();
+        // Select random coupon from non-customer coupons list
+        int couponForPurchaseId = GetRandIdFromList(nonCustomerCoupons);
+        Coupon couponForPurchase =  allCoupons.get(couponForPurchaseId);
+
         // Add coupon to DB
         System.out.println("Coupon for purchase: ");
-        System.out.print(coupons.get(couponForPurchaseId));
+        System.out.print(couponForPurchase);
         System.out.println("Purchased Coupon? "+
-                customerService.PurchaseCoupon(coupons.get(couponForPurchaseId)));
+                customerService.PurchaseCoupon(couponForPurchase));
         System.out.println();
     }
 
@@ -79,7 +89,7 @@ public class CustomerMethods_Services extends TestMethods {
      * Customer Method - Get Customer Details
      * @param customerService used to run method
      */
-    public void GetCustomerDetails(CustomerService customerService) {
+    public void GetCustomerDetails(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Details ***");
         System.out.println("The logged on customer details are: ");
         System.out.println(customerService.GetCustomerDetails());

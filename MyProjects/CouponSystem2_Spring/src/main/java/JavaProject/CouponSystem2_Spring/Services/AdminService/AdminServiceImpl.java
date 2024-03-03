@@ -8,6 +8,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
@@ -29,8 +30,8 @@ public class AdminServiceImpl implements AdminService {
     CompanyRepository companyRepo;
     @Autowired
     CustomerRepository customerRepo;
-    private final String email = "admin@admin.com";
-    private final String password = "admin";
+    private String email = "admin@admin.com";
+    private String password = "admin";
 
     //Todo - write all methods
     @Override
@@ -162,25 +163,29 @@ public class AdminServiceImpl implements AdminService {
         return compDetails;
     }
 
+    //Todo - Delete 'AddCompanyDetailsForLogin' and 'AddCustomerDetailsForLogin' from Admin Service Impl?
+    //Todo - Delete 'AddCompanyWithFullCoupons' and 'AddCustomerWithFullCoupons' from Admin Service Impl?
+    //Todo - Delete 'CreateCompanyCouponsForAllCategories'
+
     /**
      * Add coupons from all categories to a new company
      * @return the new company id
      */
-    public int AddCompanyWithFullCoupons() {
+    public int AddCompanyWithFullCoupons() throws AdminException {
         // Add Company to DB
         Company company = Company.builder()
+                .id(100)
                 .name("CompanyFullCoupons")
                 .email("CompCoupons@email.com")
                 .password("Pass")
-                .coupons(null)
                 .build();
         companyRepo.save(company);
         // Get company ID from DB
         int newCompanyId = companyRepo.findByName(company.getName()).getId();
-        List<Coupon> fullCouponsList = CreateCompanyCouponsForAllCategories(newCompanyId);
+        Set<Coupon> fullCouponsSet = CreateCouponsForAllCategories(newCompanyId,ClientType.Company);
 
         // Add coupon List to DB
-        couponRepo.saveAllAndFlush(fullCouponsList);
+        couponRepo.saveAllAndFlush(fullCouponsSet);
         return newCompanyId;
     }
 
@@ -189,20 +194,24 @@ public class AdminServiceImpl implements AdminService {
      * @param companyId company id to insert into the coupons
      * @return a List of coupons for the company
      */
-    private List<Coupon> CreateCompanyCouponsForAllCategories(int companyId) {
-        List<Coupon> couponsList = new ArrayList<>();
+    private Set<Coupon> CreateCouponsForAllCategories(int companyId, ClientType clientType) throws AdminException {
+        if(clientType == ClientType.Administrator) {
+            throw new AdminException(AdminErrors.GENERAL_ADMIN_ERROR);
+        }
+        Set<Coupon> couponsSet = new HashSet<>();
         // Add coupons from all categories to coupon List (to company)
-        for (int i = 0; i < Category.values().length; i++) {
+        int count = 200;
+        for (Category category : Category.values()) {
             // Create coupon locally
-            Category category = Category.GetRandomCategory();
-            String title = "Title Company "+category;
-            String description = "Description Company "+category;
+            String title = "Title "+clientType.name()+" "+category;
+            String description = "Description "+clientType.name()+" "+category;
             LocalDate startDate = DateFactory.getLocalDate(false);
             LocalDate endDate = DateFactory.getLocalDate(true);
             int amount = 10;
             double price = FactoryUtils.round(Math.random()*200,2);
-            String image = "Image Company "+category;
+            String image = "Image "+clientType.name()+" "+category;
             Coupon addCoupon = Coupon.builder()
+                    .id(count++)
                     .companyId(companyId)
                     .category(category)
                     .title(title)
@@ -214,9 +223,9 @@ public class AdminServiceImpl implements AdminService {
                     .image(image)
                     .build();
             // Add coupon to coupon List
-            couponsList.add(addCoupon);
+            couponsSet.add(addCoupon);
         }
-        return couponsList;
+        return couponsSet;
     }
 
     /**
@@ -225,8 +234,8 @@ public class AdminServiceImpl implements AdminService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     @Override
-    public String[] AddCustomerDetailsForLogin() throws AdminException {
-        int customerId = AddCustomerWithFullCoupons();
+    public String[] AddCustomerDetailsForLogin(int companyId) throws AdminException {
+        int customerId = AddCustomerWithFullCoupons(companyId);
         String[] custDetails = new String[2];
         Customer customer = GetOneCustomer(customerId);
         custDetails[0] = customer.getEmail();
@@ -256,34 +265,34 @@ public class AdminServiceImpl implements AdminService {
      * Add customer with coupons from all categories
      * @return the new customer id
      */
-    public int AddCustomerWithFullCoupons() {
+    public int AddCustomerWithFullCoupons(int companyId) throws AdminException {
         // Add Customer to DB
         Customer customer = Customer.builder()
+                .id(50)
                 .firstName("FirstFullCoupons")
                 .lastName("LastFullCoupons")
                 .email("FullCoupons@email.com")
-                .password("Password")
-                .coupons(null)
+                .password("Pass")
                 .build();
         customerRepo.save(customer);
 
         // Get customer ID from DB
         int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();
 
-        // Get random company ID from DB
-        List<Company> companies = companyRepo.findAll();
-        int companyId = (int)(Math.random()*companies.size());
+        // Create coupons from all categories for company (later on, for customer)
+        Set<Coupon> couponsSetForCustomer = CreateCouponsForAllCategories(companyId,ClientType.Customer);
+
+        // Add coupons to company
+        Company companyForCustomer = GetOneCompany(companyId);
+        companyForCustomer.getCoupons().addAll(couponsSetForCustomer);
+        companyRepo.saveAndFlush(companyForCustomer);
 
         // Add coupons from all categories to customer
-        List<Coupon> couponsForCustomer = CreateCompanyCouponsForAllCategories(companyId);
-        customer.setCoupons((Set<Coupon>) couponsForCustomer);
+        customer.setCoupons(couponsSetForCustomer);
 
         // Save coupons in DB
         customerRepo.saveAndFlush(customer);
 
         return newCustomerId;
     }
-
-
-
 }

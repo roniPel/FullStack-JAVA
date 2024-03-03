@@ -4,11 +4,13 @@ import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +20,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Getter
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
-    protected CouponRepository couponRepo;
+    CouponRepository couponRepo;
     @Autowired
-    protected CustomerRepository customerRepo;
+    CustomerRepository customerRepo;
 
+    @Getter
     private int customerId;  // Customer ID belonging to the customer that logged in
     private Customer loggedCustomer;    // Customer that logged in
 
@@ -33,6 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     public CustomerServiceImpl(int customerId) {
         this.customerId = customerId;
+        this.loggedCustomer = customerRepo.findById(customerId).orElseThrow();
     }
 
     //Todo - write all methods
@@ -54,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
         Coupon couponInDb = couponRepo.findById(coupon.getId()).orElseThrow(
                 () -> new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST)
         );
-        // Verify coupon exists for customer
+        // Verify coupon does NOT already exist for customer
         if(customerRepo.existsById(coupon.getId())){
             throw new CustomerException(CustomerErrors.COUPON_EXISTS_FOR_CUSTOMER);
         }
@@ -67,9 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new CustomerException(CustomerErrors.COUPON_DATE_EXPIRED);
         }
         // Add coupon to customer and save to DB
-        loggedCustomer = Customer.builder()
-                .coupon(coupon)
-                .build();
+        loggedCustomer.getCoupons().add(coupon);
         customerRepo.saveAndFlush(loggedCustomer);
         // Update coupon amount (subtract 1)
         couponInDb.setAmount(couponInDb.getAmount()-1);
@@ -79,9 +82,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Coupon> GetCustomerCoupons() {
-        //Todo - uncomment
-        //return couponRepo.findByCustomerId(this.customerId);
-        return null;
+        return couponRepo.findByCustomers_id(this.customerId);
     }
 
     @Override
@@ -99,8 +100,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer GetCustomerDetails() {
-        return this.loggedCustomer;
+    public Customer GetCustomerDetails() throws CustomerException {
+        return customerRepo.findById(this.customerId).orElseThrow(
+                () -> new CustomerException(CustomerErrors.CUSTOMER_DOES_NOT_EXIST) );
     }
+
+    @Override
+    public List<Coupon> GetAllCoupons() {
+        return couponRepo.findAll();
+    }
+
 
 }

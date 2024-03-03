@@ -1,11 +1,15 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CompanyMethods_Services;
+import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Login.LoginManager;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
+import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +26,7 @@ public class Clr_CompanyTester implements CommandLineRunner {
     private CompanyMethods_Services companyMethods_services;
     @Autowired
     private CompanyService companyService; // - Preparation for Client Side (section 3)
-    public boolean isLoggedOn = false;
+
     @Override
     public void run(String... args) throws Exception {
         String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
@@ -30,11 +34,13 @@ public class Clr_CompanyTester implements CommandLineRunner {
 
         try {
             //Todo - Remove check logon section  and logon details
-            // Check logon
             //CompanyService companyService = (CompanyService) LoginManager.Login(email, password, ClientType.Company);
 
-            // Run all methods
-            Company_RunAllMethods(companyService);
+            // Check logon
+            if(companyMethods_services.CheckLogin(email,password,companyService)) {
+                // Run all methods
+                Company_RunAllMethods(companyService);
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -47,7 +53,6 @@ public class Clr_CompanyTester implements CommandLineRunner {
      */
     private void Company_RunAllMethods(CompanyService companyService) throws CompanyException {
         PrintSectionHeader();
-        //Todo - call company methods
         companyMethods_services.GetCompanyDetails(companyService);
         companyMethods_services.AddCoupon(companyService);
         companyMethods_services.UpdateCoupon(companyService);

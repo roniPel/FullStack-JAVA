@@ -9,10 +9,14 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyExce
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
+import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
+import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,9 +24,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
-    protected CouponRepository couponRepo;
+    CouponRepository couponRepo;
     @Autowired
-    protected CompanyRepository companyRepo;
+    CompanyRepository companyRepo;
 
     private int companyId;  // Company ID belonging to the company that logged in
 
@@ -33,8 +37,6 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyServiceImpl(int companyId) {
         this.companyId = companyId;
     }
-
-    //Todo - write all methods
 
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
@@ -107,5 +109,58 @@ public class CompanyServiceImpl implements CompanyService {
     public Company GetCompanyDetails() throws CompanyException {
         return companyRepo.findById(this.companyId).orElseThrow(
                 () -> new CompanyException(CompanyErrors.GENERAL_COMPANY_ERROR) );
+    }
+
+    /**
+     * Add coupons from all categories to a new company
+     * @return the new company id
+     */
+    public int AddCompanyWithFullCoupons() {
+        // Add Company to DB
+        Company company = Company.builder()
+                .id(100)
+                .name("CompanyFullCoupons")
+                .email("CompCoupons@email.com")
+                .password("Pass")
+                .build();
+        companyRepo.save(company);
+        // Get company ID from DB
+        int newCompanyId = companyRepo.findByName(company.getName()).getId();
+        List<Coupon> fullCouponsList = CreateCompanyCouponsForAllCategories(newCompanyId);
+
+        // Add coupon List to DB
+        couponRepo.saveAllAndFlush(fullCouponsList);
+        return newCompanyId;
+    }
+
+    private List<Coupon> CreateCompanyCouponsForAllCategories(int companyId) {
+        List<Coupon> couponsList = new ArrayList<>();
+        // Add coupons from all categories to coupon List (to company)
+        int count = 200;
+        for (Category category : Category.values()) {
+            // Create coupon locally
+            String title = "Title Company "+category;
+            String description = "Description Company "+ category;
+            LocalDate startDate = DateFactory.getLocalDate(false);
+            LocalDate endDate = DateFactory.getLocalDate(true);
+            int amount = 10;
+            double price = FactoryUtils.round(Math.random()*200,2);
+            String image = "Image Company "+category;
+            Coupon addCoupon = Coupon.builder()
+                    .id(count++)
+                    .companyId(companyId)
+                    .category(category)
+                    .title(title)
+                    .description(description)
+                    .start_date(startDate)
+                    .end_date(endDate)
+                    .amount(amount)
+                    .price(price)
+                    .image(image)
+                    .build();
+            // Add coupon to coupon List
+            couponsList.add(addCoupon);
+        }
+        return couponsList;
     }
 }

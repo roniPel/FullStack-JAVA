@@ -25,11 +25,11 @@ public class LogonUtil {
         PrepareData_AdminLogon();
     }
 
-    public void PrepareData_CustomerCompanyLogons() throws AdminException, CompanyException {
-        // Prepare data for company login
+    public void PrepareData_CustomerCompanyLogons(int companyId) throws AdminException, CompanyException {
+        // Prepare data for company login (create a company with all coupons)
         String[] compDetails =adminService.AddCompanyDetailsForLogin();
-        // Prepare data for customer login
-        String[] custDetails =adminService.AddCustomerDetailsForLogin();
+        // Prepare data for customer login (create a customer with all coupons)
+        String[] custDetails =adminService.AddCustomerDetailsForLogin(companyId);
 
         // Add details to map:
         emailsPassowrdsMap.put("companyEmail",compDetails[0]);

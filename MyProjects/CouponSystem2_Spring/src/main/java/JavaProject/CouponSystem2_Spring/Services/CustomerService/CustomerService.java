@@ -50,5 +50,7 @@ public interface CustomerService extends ClientService {
     /**
      * Customer Method - Get Customer Details
      */
-    Customer GetCustomerDetails() ;
+    Customer GetCustomerDetails() throws CustomerException;
+
+    List<Coupon> GetAllCoupons();
 }

@@ -60,5 +60,5 @@ public interface CompanyService extends ClientService {
      */
     Company GetCompanyDetails() throws CompanyException;
 
-
+    int AddCompanyWithFullCoupons();
 }

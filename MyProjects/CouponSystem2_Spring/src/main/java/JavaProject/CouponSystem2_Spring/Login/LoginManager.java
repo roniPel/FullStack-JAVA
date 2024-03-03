@@ -6,9 +6,12 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErro
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminServiceImpl;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
+import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyServiceImpl;
+import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,22 +20,28 @@ import org.springframework.stereotype.Component;
 public class LoginManager {
     // Todo - finish writing method (singleton, compare to zeev's)
     //Todo - How to define?  Check if correct
-    private static LogonUtil logonUtil = new LogonUtil();
+    private static final LogonUtil logonUtil = new LogonUtil();
+    @Autowired
+    private static CompanyService companyService;
+    @Autowired
+    private static CustomerService customerService;
+    @Autowired
+    private static AdminService adminService;
 
     /**
      * @param email The email for login.
      * @param password The password for login.
      * @param clientType The client type - used to select which type of Facade to attempt login with
-     * @return The relevant client facade (based on chosen client type) if succeeded, null if failed
+     * @return The relevant client service (based on chosen client type) if succeeded, null if failed
      * @throws AdminException,CompanyException,CustomerException If we get any exception.  Details are provided
      */
     public static ClientService Login(String email, String password, ClientType clientType) throws AdminException, CompanyException, CustomerException {
         ClientService clientService;
         // Part 1 - Initialize client service based on client type (initial ID used will be updated when running 'CheckLogin' method)
         switch (clientType) {
-            case Company -> clientService = new CompanyServiceImpl(-1);
-            case Customer -> clientService = new CustomerServiceImpl(-1);
-            case Administrator -> clientService = new AdminServiceImpl();
+            case Company -> clientService = companyService;
+            case Customer -> clientService = customerService;
+            case Administrator -> clientService = adminService;
             default -> clientService = null;
         }
         // Part 2 - Check login details
@@ -57,7 +66,8 @@ public class LoginManager {
      * @return True if login succeeded, false if login failed.
      * @throws AdminException,CompanyException,CustomerException If we get any exception.  Details are provided
      */
-    private static boolean CheckLogin(String email, String password, ClientService clientService) throws AdminException,CompanyException,CustomerException {
+    private static boolean CheckLogin(String email, String password, ClientService clientService)
+            throws AdminException,CompanyException,CustomerException {
         return clientService.Login(email, password);
     }
 }

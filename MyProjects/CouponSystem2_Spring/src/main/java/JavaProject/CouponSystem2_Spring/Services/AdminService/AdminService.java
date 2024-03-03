@@ -98,7 +98,7 @@ public interface AdminService extends ClientService {
      * @return String array with email and password that exist in the DB
      * @throws AdminException If we get any exception.  Details are provided
      */
-    String[] AddCustomerDetailsForLogin() throws AdminException;
+    String[] AddCustomerDetailsForLogin(int companyId) throws AdminException;
 
 
     // todo - Delete the method below?

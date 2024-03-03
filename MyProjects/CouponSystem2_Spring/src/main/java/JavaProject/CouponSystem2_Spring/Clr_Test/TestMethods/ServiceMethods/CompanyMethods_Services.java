@@ -4,6 +4,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
@@ -35,7 +36,6 @@ public class CompanyMethods_Services extends TestMethods {
      * @throws CompanyException  If we get any exception.  Details are provided
      */
     public void AddCoupon(CompanyService companyService) throws CompanyException {
-        System.out.println("*** Method: Add Coupon ***");
         int companyId = companyService.GetCompanyDetails().getId();
         System.out.println("*** Method: Add Coupon ***");
         // Create new coupon
@@ -77,13 +77,16 @@ public class CompanyMethods_Services extends TestMethods {
         System.out.println("*** Method: Update Coupon ***");
         // Select a random coupon for update
         int updateCouponId = GetRandIdFromList(companyService.GetCompanyCoupons());
-        Coupon updatedCoupon = companyService.GetCompanyCoupons().get(updateCouponId);
+        Coupon updatedCoupon = companyService.GetCompanyCoupons().stream()
+                .filter( (coupon) -> coupon.getId()==updateCouponId)
+                .findFirst()
+                .orElseThrow();
         // Update fields
-        updatedCoupon.setTitle("CompanyUpdatedTitle"+GetrandInt(100));
-        updatedCoupon.setDescription("CompanyUpdatedDescription");
+        updatedCoupon.setTitle("CompUpdated");
+        updatedCoupon.setDescription("CompUpdated"+GetrandInt(100));
         updatedCoupon.setAmount(GetrandInt(50));
         updatedCoupon.setCategory(Category.GetRandomCategory());
-        updatedCoupon.setImage("CompanyUpdatedImage");
+        updatedCoupon.setImage("CompUpdated");
         updatedCoupon.setStart_date(DateFactory.getLocalDate(false));
         updatedCoupon.setEnd_date(DateFactory.getLocalDate(true));
         // Update coupon in DB
@@ -147,7 +150,10 @@ public class CompanyMethods_Services extends TestMethods {
         System.out.println("*** Method: Delete Coupon ***");
         // Select random coupon ID for delete
         int delCouponId = GetRandIdFromList(companyService.GetCompanyCoupons());
-        Coupon deleteCoupon = companyService.GetCompanyCoupons().get(delCouponId);
+        Coupon deleteCoupon = companyService.GetCompanyCoupons().stream()
+                .filter( (coupon) -> coupon.getId()==delCouponId)
+                .findFirst()
+                .orElseThrow();
         // Delete coupon in DB
         System.out.println("Coupon to delete: ");
         System.out.println(deleteCoupon);

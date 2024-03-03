@@ -1,5 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
+import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
@@ -12,6 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Order(2)
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class Clr_AdminTester implements CommandLineRunner {
     private AdminMethods_Services adminMethods_services;
     @Autowired
     private AdminService adminService; //  Preparation for Client Side (section 3)
-    public boolean isLoggedOn = false;
+
     @Override
     public void run(String... args) {
         String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
@@ -41,7 +44,8 @@ public class Clr_AdminTester implements CommandLineRunner {
             //Admin_RunAllMethods_RestTemplate();
 
             // Prepare data for company and customer logons
-            logonUtil.PrepareData_CustomerCompanyLogons();
+            int randomCompanyId = adminMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
+            logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
