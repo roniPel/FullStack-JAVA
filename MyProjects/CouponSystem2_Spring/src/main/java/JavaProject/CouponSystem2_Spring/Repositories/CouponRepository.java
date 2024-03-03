@@ -57,7 +57,6 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
 
     // Todo - how to solve?  Add query? Add a Repository Adapter? Use "_"?
     List<Coupon> findByCustomers_id(int customerId);
-    //List<Coupon> findByCustomerIdAndCategory(int customerId, Category category);
-    //List<Coupon> findByCustomerIdAndPriceLessThanEqual(int customerId, double price);
-
+    List<Coupon> findByCategoryAndCustomers_id(Category category, int customerId);
+    List<Coupon> findByPriceLessThanEqualAndCustomers_id(double price, int customerId);
 }

@@ -24,14 +24,13 @@ public class CustomerMethods_Services extends TestMethods {
     public void PurchaseCoupon(CustomerService customerService) throws CustomerException {
         Customer loggedCustomer = customerService.GetCustomerDetails();
         System.out.println("*** Method: Purchase Coupon ***");
-        // Generate a list of nun-customer coupons
-        List<Coupon> allCoupons = customerService.GetAllCoupons();
-        List<Coupon> nonCustomerCoupons = allCoupons.stream()
-                .filter( (coupon)-> !(coupon.getCustomers().contains(loggedCustomer)) )
-                .toList();
+
         // Select random coupon from non-customer coupons list
+        List<Coupon> nonCustomerCoupons = customerService.GetAllCoupons();
+        nonCustomerCoupons.removeAll(customerService.GetCustomerCoupons());
+
         int couponForPurchaseId = GetRandIdFromList(nonCustomerCoupons);
-        Coupon couponForPurchase =  allCoupons.get(couponForPurchaseId);
+        Coupon couponForPurchase = customerService.GetCouponById(couponForPurchaseId);
 
         // Add coupon to DB
         System.out.println("Coupon for purchase: ");

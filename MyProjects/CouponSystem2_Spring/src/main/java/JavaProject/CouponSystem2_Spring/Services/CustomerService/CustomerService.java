@@ -53,4 +53,6 @@ public interface CustomerService extends ClientService {
     Customer GetCustomerDetails() throws CustomerException;
 
     List<Coupon> GetAllCoupons();
+
+    Coupon GetCouponById(int couponId) throws CustomerException;
 }

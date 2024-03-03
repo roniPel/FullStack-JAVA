@@ -29,7 +29,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Getter
     private int customerId;  // Customer ID belonging to the customer that logged in
-    private Customer loggedCustomer;    // Customer that logged in
 
     /**
      * Constructor
@@ -37,7 +36,6 @@ public class CustomerServiceImpl implements CustomerService {
      */
     public CustomerServiceImpl(int customerId) {
         this.customerId = customerId;
-        this.loggedCustomer = customerRepo.findById(customerId).orElseThrow();
     }
 
     //Todo - write all methods
@@ -60,7 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
                 () -> new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST)
         );
         // Verify coupon does NOT already exist for customer
-        if(customerRepo.existsById(coupon.getId())){
+        List<Coupon> customerCoupons = GetCustomerCoupons();
+        if(customerCoupons.contains(coupon)){
             throw new CustomerException(CustomerErrors.COUPON_EXISTS_FOR_CUSTOMER);
         }
         // Verify amount is above 0
@@ -72,8 +71,9 @@ public class CustomerServiceImpl implements CustomerService {
             throw new CustomerException(CustomerErrors.COUPON_DATE_EXPIRED);
         }
         // Add coupon to customer and save to DB
-        loggedCustomer.getCoupons().add(coupon);
-        customerRepo.saveAndFlush(loggedCustomer);
+        Customer customer = GetCustomerDetails();
+        customer.getCoupons().add(coupon);
+        customerRepo.saveAndFlush(customer);
         // Update coupon amount (subtract 1)
         couponInDb.setAmount(couponInDb.getAmount()-1);
         couponRepo.save(couponInDb);
@@ -87,16 +87,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Coupon> GetCustomerCouponsByCategory(Category category) {
-        //Todo - uncomment
-        //return couponRepo.findByCustomerIdAndCategory(this.customerId, category);
-        return null;
+        return couponRepo.findByCategoryAndCustomers_id(category, this.customerId);
     }
 
     @Override
     public List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) {
-        //Todo - uncomment
-        //return couponRepo.findByCustomerIdAndPriceLessThanEqual(this.customerId,maxPrice);
-        return null;
+        return couponRepo.findByPriceLessThanEqualAndCustomers_id(maxPrice, this.customerId);
     }
 
     @Override
@@ -110,5 +106,8 @@ public class CustomerServiceImpl implements CustomerService {
         return couponRepo.findAll();
     }
 
-
+    public Coupon GetCouponById(int couponId) throws CustomerException {
+        return couponRepo.findById(couponId).orElseThrow(
+                () ->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));
+    }
 }

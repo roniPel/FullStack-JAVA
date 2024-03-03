@@ -80,7 +80,9 @@ public class CompanyMethods_Services extends TestMethods {
         Coupon updatedCoupon = companyService.GetCompanyCoupons().stream()
                 .filter( (coupon) -> coupon.getId()==updateCouponId)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST)
+                );
         // Update fields
         updatedCoupon.setTitle("CompUpdated");
         updatedCoupon.setDescription("CompUpdated"+GetrandInt(100));
@@ -153,7 +155,9 @@ public class CompanyMethods_Services extends TestMethods {
         Coupon deleteCoupon = companyService.GetCompanyCoupons().stream()
                 .filter( (coupon) -> coupon.getId()==delCouponId)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(
+                        () -> new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST)
+                );
         // Delete coupon in DB
         System.out.println("Coupon to delete: ");
         System.out.println(deleteCoupon);
