@@ -1,15 +1,8 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CustomerMethods_Services;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
-import JavaProject.CouponSystem2_Spring.Login.LoginManager;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
-import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +56,7 @@ public class Clr_CustomerTester implements CommandLineRunner {
     }
 
     private void PrintSectionFooter() {
-        System.out.println();
+        //System.out.println();
         System.out.println("************   End Customer Methods (via Services)   **************");
         System.out.println();
     }

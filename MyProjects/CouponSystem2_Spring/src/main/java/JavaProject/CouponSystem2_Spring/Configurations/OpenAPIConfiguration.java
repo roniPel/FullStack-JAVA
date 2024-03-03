@@ -14,11 +14,11 @@ public class OpenAPIConfiguration {
         Server server = new Server();
         server.setUrl("http://localhost:8080");
         server.setDescription("Coupon System api for development");
-
+        // Configure Contact
         Contact myContact = new Contact();
         myContact.setName("Roni Peled");
         myContact.setEmail("roni.rose@gmail.com");
-
+        // Configure Info
         Info info = new Info()
                 .title("Coupon Management System API")
                 .version("1.0")

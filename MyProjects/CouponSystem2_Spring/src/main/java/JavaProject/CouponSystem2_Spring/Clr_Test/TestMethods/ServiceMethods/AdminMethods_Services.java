@@ -199,6 +199,5 @@ public class AdminMethods_Services extends TestMethods {
         System.out.println("Deleted Customer? "+(
                 adminService.DeleteCustomerCoupons(delCustId) && adminService.DeleteCustomer(delCustId) ) );
         System.out.println();
-        System.out.println();
     }
 }

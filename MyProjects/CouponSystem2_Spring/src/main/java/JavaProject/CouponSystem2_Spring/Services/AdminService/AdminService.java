@@ -101,7 +101,6 @@ public interface AdminService extends ClientService {
     String[] AddCustomerDetailsForLogin(int companyId) throws AdminException;
 
 
-    // todo - Delete the method below?
     /**
      * Deletes company coupons (for a company that will be deleted)
      * @param companyId - company Id - marking coupons to be deleted

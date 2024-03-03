@@ -16,10 +16,9 @@ import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class LoginManager {
-    // Todo - finish writing method (singleton, compare to zeev's)
-    //Todo - How to define?  Check if correct
+    // Todo - Delete LoginManager class? Or finish writing method + implement in code(?)
     private static final LogonUtil logonUtil = new LogonUtil();
     @Autowired
     private static CompanyService companyService;

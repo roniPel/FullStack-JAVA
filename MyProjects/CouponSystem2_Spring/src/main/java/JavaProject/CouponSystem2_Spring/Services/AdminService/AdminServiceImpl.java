@@ -33,7 +33,6 @@ public class AdminServiceImpl implements AdminService {
     private String email = "admin@admin.com";
     private String password = "admin";
 
-    //Todo - write all methods
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
         // Admin user - Check login details locally: (no need to check via DB query)
@@ -163,13 +162,10 @@ public class AdminServiceImpl implements AdminService {
         return compDetails;
     }
 
-    //Todo - Delete 'AddCompanyDetailsForLogin' and 'AddCustomerDetailsForLogin' from Admin Service Impl?
-    //Todo - Delete 'AddCompanyWithFullCoupons' and 'AddCustomerWithFullCoupons' from Admin Service Impl?
-    //Todo - Delete 'CreateCompanyCouponsForAllCategories'
-
     /**
      * Add coupons from all categories to a new company
      * @return the new company id
+     * @throws AdminException If we get any exception.  Details are provided
      */
     public int AddCompanyWithFullCoupons() throws AdminException {
         // Add Company to DB
@@ -192,7 +188,8 @@ public class AdminServiceImpl implements AdminService {
     /**
      * Creates coupons from all categories for the company Id described in params
      * @param companyId company id to insert into the coupons
-     * @return a List of coupons for the company
+     * @return a Set of coupons for the company
+     * @throws AdminException If we get any exception.  Details are provided
      */
     private Set<Coupon> CreateCouponsForAllCategories(int companyId, ClientType clientType) throws AdminException {
         if(clientType == ClientType.Administrator) {
@@ -254,6 +251,11 @@ public class AdminServiceImpl implements AdminService {
         return true;
     }
 
+    /**
+     * Deletes customer coupons (for a customer that will be deleted)
+     * @param customerId - customer Id - marking coupons to be deleted
+     * @return true if succeeded, false if failed.
+     */
     @Override
     public boolean DeleteCustomerCoupons(int customerId) {
         couponRepo.deleteAllInBatch(couponRepo.findByCustomers_id(customerId));
@@ -264,6 +266,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * Add customer with coupons from all categories
      * @return the new customer id
+     * @throws AdminException If we get any exception.  Details are provided
      */
     public int AddCustomerWithFullCoupons(int companyId) throws AdminException {
         // Add Customer to DB

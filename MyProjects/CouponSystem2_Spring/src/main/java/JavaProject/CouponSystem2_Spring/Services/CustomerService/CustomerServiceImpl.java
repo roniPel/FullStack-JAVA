@@ -37,8 +37,6 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerServiceImpl(int customerId) {
         this.customerId = customerId;
     }
-
-    //Todo - write all methods
     @Override
     public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
         Customer customer = customerRepo.findByEmailAndPassword(email,password);

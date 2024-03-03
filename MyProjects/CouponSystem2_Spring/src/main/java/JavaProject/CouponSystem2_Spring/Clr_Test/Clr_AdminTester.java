@@ -1,10 +1,8 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
-import JavaProject.CouponSystem2_Spring.Beans.Company;
+
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
-import JavaProject.CouponSystem2_Spring.Login.LoginManager;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +59,7 @@ public class Clr_AdminTester implements CommandLineRunner {
         PrintSectionFooter_RestTemplate();
     }
     private void PrintSectionFooter_RestTemplate() {
-        System.out.println();
+        //System.out.println();
         System.out.println("***************   End Admin Methods (via Rest)   ***************");
         System.out.println();
     }
