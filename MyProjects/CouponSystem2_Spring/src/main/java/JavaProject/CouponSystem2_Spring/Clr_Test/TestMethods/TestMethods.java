@@ -40,7 +40,9 @@ public class TestMethods {
      * @param password The password for login.
      * @param clientService The selected client service type for the login.
      * @return True if login succeeded, false if login failed.
-     * @throws AdminException,CompanyException,CustomerException If we get any exception.  Details are provided
+     * @throws AdminException If we get any exception.  Details are provided
+     * @throws CompanyException If we get any exception.  Details are provided
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     public boolean CheckLogin(String email, String password, ClientService clientService)
             throws AdminException,CompanyException,CustomerException {

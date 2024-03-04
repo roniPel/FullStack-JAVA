@@ -145,13 +145,6 @@ public class AdminServiceImpl implements AdminService {
     public List<Company> GetAllCompanies(){
         return companyRepo.findAll();
     }
-
-
-    /**
-     * After running all admin methods, add company with full coupons and return details for login
-     * @return String array with email and password that exist in the DB
-     * @throws AdminException If we get any exception.  Details are provided
-     */
     @Override
     public String[] AddCompanyDetailsForLogin() throws AdminException {
         int companyId = AddCompanyWithFullCoupons();
@@ -163,7 +156,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * Add coupons from all categories to a new company
+     * Add company with coupons from all categories
      * @return the new company id
      * @throws AdminException If we get any exception.  Details are provided
      */
@@ -239,33 +232,21 @@ public class AdminServiceImpl implements AdminService {
         custDetails[1] = customer.getPassword();
         return custDetails;
     }
-
-    /**
-     * Deletes company coupons (for a company that will be deleted)
-     * @param companyId - company Id - marking coupons to be deleted
-     * @return true if succeeded, false if failed.
-     */
     @Override
     public boolean DeleteCompanyCoupons(int companyId) {
         couponRepo.deleteAllInBatch(couponRepo.findByCompanyId(companyId));
         return true;
     }
-
-    /**
-     * Deletes customer coupons (for a customer that will be deleted)
-     * @param customerId - customer Id - marking coupons to be deleted
-     * @return true if succeeded, false if failed.
-     */
     @Override
     public boolean DeleteCustomerCoupons(int customerId) {
         couponRepo.deleteAllInBatch(couponRepo.findByCustomers_id(customerId));
         return true;
     }
 
-
     /**
      * Add customer with coupons from all categories
      * @return the new customer id
+     * @param companyId Id belonging to the company to add coupons to (for customer)
      * @throws AdminException If we get any exception.  Details are provided
      */
     public int AddCustomerWithFullCoupons(int companyId) throws AdminException {

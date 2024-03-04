@@ -3,8 +3,6 @@ package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -163,69 +161,69 @@ public class AdminTestMethods_Rest extends TestMethods {
         System.out.println();
     }
 
-
     /**
      * Admin Method - Get One Customer
-     * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_GetOneCustomer(AdminService adminService) throws AdminException {
+    public void Method_GetOneCustomer() {
         System.out.println("*** Method: Get One Customer ***");
         List<Customer> customers = GetListOfAllCustomers();
         // Get random ID
         int getOneCustId = GetRandIdFromList(customers);
         Customer customer = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCompany/"+getOneCustId,Customer.class);
+                ("http://localhost:8080/api/Admin/GetOneCustomer/"+getOneCustId,Customer.class);
         // Print customer
         System.out.println("One Customer: \n"+customer);
         System.out.println();
     }
 
-    // Todo - finish the rest of the methods!
-
     /**
      * Admin Method - Delete Company
-     * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_DeleteCompany(AdminService adminService) throws AdminException {
+    public void Method_DeleteCompany() {
         System.out.println("*** Method: Delete Company ***");
-        List<Company> companies = adminService.GetAllCompanies();
+        List<Company> companies = GetListOfAllCompanies();
         // Select random ID for deletion
         int delCompId = GetRandIdFromList(companies);
-        System.out.println("Company to delete: ");
-        System.out.println(adminService.GetOneCompany(delCompId));
-        // Delete company coupons + delete company
-        System.out.println("Deleted Company? "+ (
-                adminService.DeleteCompanyCoupons(delCompId) && adminService.DeleteCompany(delCompId) ) );
+        Company compToDelete = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetOneCompany/"+delCompId, Company.class);
+        System.out.println("Company to delete: \n"+compToDelete);
+        // Delete company
+        restTemplate.delete("http://localhost:8080/api/Admin/DeleteCompany/"+delCompId);
+        System.out.println("Deleted Company? true");
         System.out.println();
     }
 
     /**
      * Admin Method - Delete Customer
-     * @param adminService used to run method
-     * @throws AdminException  If we get any exception.  Details are provided
      */
-    public void Method_DeleteCustomer(AdminService adminService) throws AdminException {
+    public void Method_DeleteCustomer() {
         System.out.println("*** Method: Delete Customer ***");
-        List<Customer> customers = adminService.GetAllCustomers();
+        List<Customer> customers = GetListOfAllCustomers();
         // Select random Id for deleting
         int delCustId = GetRandIdFromList(customers);
-        System.out.println("Customer to delete: ");
-        Customer customerToDelete = adminService.GetOneCustomer(delCustId);
-        System.out.println(customerToDelete);
-        // Delete company coupons + delete company
-        System.out.println("Deleted Customer? "+(
-                adminService.DeleteCustomerCoupons(delCustId) && adminService.DeleteCustomer(delCustId) ) );
+        Customer custToDelete = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetOneCompany/"+delCustId, Customer.class);
+        System.out.println("Customer to delete: \n"+custToDelete);
+        // Delete customer
+        restTemplate.delete("http://localhost:8080/api/Admin/DeleteCustomer/"+delCustId);
+        System.out.println("Deleted Customer? true");
         System.out.println();
     }
 
+    /**
+     * Creates a list of all companies (convert array to list)
+     * @return List of all companies in DB
+     */
     private List<Company> GetListOfAllCompanies() {
         Company[] companies = restTemplate.getForObject
                 ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
         return Arrays.stream(companies).toList();
     }
 
+    /**
+     * Creates a list of all customers (convert array to list)
+     * @return List of all customers in DB
+     */
     private List<Customer> GetListOfAllCustomers() {
         Customer[] customers = restTemplate.getForObject
                 ("http://localhost:8080/api/Admin/GetAllCustomers", Customer[].class);

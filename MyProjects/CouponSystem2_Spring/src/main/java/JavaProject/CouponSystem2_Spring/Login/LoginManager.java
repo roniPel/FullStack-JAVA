@@ -32,7 +32,9 @@ public class LoginManager {
      * @param password The password for login.
      * @param clientType The client type - used to select which type of Facade to attempt login with
      * @return The relevant client service (based on chosen client type) if succeeded, null if failed
-     * @throws AdminException,CompanyException,CustomerException If we get any exception.  Details are provided
+     * @throws AdminException If we get any exception.  Details are provided
+     * @throws CompanyException If we get any exception.  Details are provided
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     public static ClientService Login(String email, String password, ClientType clientType) throws AdminException, CompanyException, CustomerException {
         ClientService clientService;

@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
+		//Todo - Create JavaDocs and go over all warnings - correct documentation
 		ApplicationContext ctx = SpringApplication.run(CouponSystem2SpringApplication.class, args);
 	}
 }

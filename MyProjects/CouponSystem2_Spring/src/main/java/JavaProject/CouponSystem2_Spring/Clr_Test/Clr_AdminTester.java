@@ -1,6 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.AdminTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
@@ -20,6 +21,8 @@ public class Clr_AdminTester implements CommandLineRunner {
     @Autowired
     private AdminTestMethods_Services adminTestMethods_services;
     @Autowired
+    private AdminTestMethods_Rest adminTestMethods_Rest;
+    @Autowired
     private AdminService adminService; //  Preparation for Client Side (section 3)
 
     @Override
@@ -36,8 +39,7 @@ public class Clr_AdminTester implements CommandLineRunner {
             Admin_RunAllMethods_Services(adminService);
 
             //Todo - Add this section
-            // Run all Admin methods - via RestTemplate
-            //Admin_RunAllMethods_RestTemplate();
+            Admin_RunAllMethods_RestTemplate();
 
             // Prepare data for company and customer logons
             int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
@@ -53,7 +55,16 @@ public class Clr_AdminTester implements CommandLineRunner {
      */
     private void Admin_RunAllMethods_RestTemplate() {
         PrintSectionHeader_RestTemplate();
-        //Todo - insert Rest Methods
+        adminTestMethods_Rest.Method_GetAllCompanies();
+        adminTestMethods_Rest.Method_GetAllCustomers();
+        adminTestMethods_Rest.Method_AddCompany();
+        adminTestMethods_Rest.Method_AddCustomer();
+        adminTestMethods_Rest.Method_UpdateCompany();
+        adminTestMethods_Rest.Method_UpdateCustomer();
+        adminTestMethods_Rest.Method_GetOneCompany();
+        adminTestMethods_Rest.Method_GetOneCustomer();
+        adminTestMethods_Rest.Method_DeleteCompany();
+        adminTestMethods_Rest.Method_DeleteCustomer();
         PrintSectionFooter_RestTemplate();
     }
     private void PrintSectionFooter_RestTemplate() {

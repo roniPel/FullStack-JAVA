@@ -17,48 +17,58 @@ public interface CompanyService extends ClientService {
      * @param email user's email
      * @param password user's password
      * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws CustomerException If we get any exception.  Details are provided
+     * @throws CompanyException If we get any exception.  Details are provided
      */
     boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
     /**
-     * Company Method - Add Coupon
+     * Adds a coupon to the DB - based on the details listed in the param
+     * @param coupon a 'Coupon' class instance containing coupon details
+     * @return true if succeeded, false if failed.
      * @throws CompanyException  If we get any exception.  Details are provided
      */
     boolean AddCoupon(Coupon coupon) throws CompanyException;
 
     /**
-     * Company Method - Update Coupon
+     * Update Coupon in DB - based on the details listed in the param
+     * @param coupon a 'Coupon' object used to update an object in the DB
+     * @return true if succeeded, false if failed.
      * @throws CompanyException  If we get any exception.  Details are provided
      */
     boolean UpdateCoupon(Coupon coupon) throws CompanyException;
 
     /**
-     * Company Method - Delete Coupon
+     * Deletes a Coupon in DB - based on the details listed in the param
+     * @param couponId the ID of the coupon to be deleted in the DB
+     * @return true if succeeded, false if failed.
      * @throws CompanyException If we get any exception.  Details are provided
      */
     boolean DeleteCoupon(int couponId) throws CompanyException;
 
     /**
-     * Company Method - Get company Coupons
+     * Get all the coupons listed in DB for a specific company
+     * @return coupon List if succeeded, null if no coupons were found.
      */
     List<Coupon> GetCompanyCoupons();
 
     /**
-     * Company Method - Get Company Coupons by Category
+     * Get all the coupons listed in DB for the logged on company belonging to a specific category
+     * @param category - category of coupons to add to coupon list
+     * @return coupon List if succeeded, null if no coupons matching category were found.
      */
     List<Coupon> GetCompanyCouponsByCategory(Category category);
 
     /**
-     * Company Method - Get Company Coupons by max price
+     * Get all the coupons listed in DB for the logged on company up to a max price
+     * @param maxPrice - maximum price of coupons to add to coupon list
+     * @return coupon List if succeeded, null if no coupons matching max price were found.
      */
     List<Coupon> GetCompanyCouponsByMaxPrice(Double maxPrice);
 
     /**
-     * Company Method - Get Company Details
+     * Gets a company (according to the company ID belonging to the company logged on)
+     * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
      * @throws CompanyException If we get any exception.  Details are provided
      */
     Company GetCompanyDetails() throws CompanyException;
-
-    int AddCompanyWithFullCoupons();
 }

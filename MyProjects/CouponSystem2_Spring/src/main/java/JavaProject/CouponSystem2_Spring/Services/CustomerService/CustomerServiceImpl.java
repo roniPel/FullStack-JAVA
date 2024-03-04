@@ -104,6 +104,12 @@ public class CustomerServiceImpl implements CustomerService {
         return couponRepo.findAll();
     }
 
+    /**
+     * Provides a coupon object based on the coupon Id provided
+     * @param couponId Id belonging to the coupon
+     * @return Coupon object if succeeded, null if failed.
+     * @throws CustomerException If we get any exception.  Details are provided
+     */
     public Coupon GetCouponById(int couponId) throws CustomerException {
         return couponRepo.findById(couponId).orElseThrow(
                 () ->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));

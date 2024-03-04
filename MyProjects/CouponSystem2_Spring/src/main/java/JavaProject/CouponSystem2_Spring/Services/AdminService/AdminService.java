@@ -77,12 +77,14 @@ public interface AdminService extends ClientService {
 
     /**
      * Admin Method - Add Company
+     * @return true if succeeded, false if failed.
      * @throws AdminException If we get any exception.  Details are provided
      */
     boolean AddCompany(Company company) throws AdminException;
 
     /**
      * Admin Method - Get all Companies
+     * @return A list of all companies in DB
      */
     List<Company> GetAllCompanies() ;
 
@@ -90,16 +92,18 @@ public interface AdminService extends ClientService {
      * After running all admin methods, add company with full coupons and return details for login
      * @return String array with email and password that exist in the DB
      * @throws AdminException If we get any exception.  Details are provided
+     * @throws AdminException If we get any exception.  Details are provided
+     * @throws CompanyException If we get any exception.  Details are provided
      */
     String[] AddCompanyDetailsForLogin() throws AdminException, CompanyException;
 
     /**
      * After running all admin methods, add customer with full coupons and return details for login
      * @return String array with email and password that exist in the DB
+     * @param companyId Id belonging to company that contains full coupons
      * @throws AdminException If we get any exception.  Details are provided
      */
     String[] AddCustomerDetailsForLogin(int companyId) throws AdminException;
-
 
     /**
      * Deletes company coupons (for a company that will be deleted)
@@ -108,5 +112,10 @@ public interface AdminService extends ClientService {
      */
     boolean DeleteCompanyCoupons(int companyId);
 
+    /**
+     * Deletes customer coupons (for a company that will be deleted)
+     * @param customerId - customer Id - marking coupons to be deleted
+     * @return true if succeeded, false if failed.
+     */
     boolean DeleteCustomerCoupons(int customerId);
 }

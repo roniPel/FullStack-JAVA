@@ -37,7 +37,7 @@ public class CustomerController {
         return customerService.GetCustomerCoupons();
     }
 
-    @GetMapping("/GetCustomerCouponsByMaxCategory/{category}")
+    @GetMapping("/GetCustomerCouponsByCategory/{category}")
     @ResponseStatus(HttpStatus.OK)
     public List<Coupon> GetCustomerCouponsByCategory(@PathVariable Category category) throws CustomerException {
         return customerService.GetCustomerCouponsByCategory(category);
