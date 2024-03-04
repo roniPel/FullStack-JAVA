@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/CouponSystem_Admin")
+@RequestMapping("api/Admin")
 public class AdminController {
     @Autowired
     AdminService adminService;
@@ -37,37 +37,37 @@ public class AdminController {
         adminService.AddCustomer(customer);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/UpdateCompany/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void UpdateCompany(@PathVariable int id,@RequestBody Company company) throws AdminException {
         adminService.UpdateCompany(company);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/UpdateCustomer/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void UpdateCustomer(@PathVariable int id,@RequestBody Customer customer) throws AdminException {
         adminService.UpdateCustomer(customer);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/GetOneCompany/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Company GetOneCompany(@PathVariable int id) throws AdminException {
         return adminService.GetOneCompany(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/GetOneCustomer/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Customer GetOneCustomer(@PathVariable int id) throws AdminException {
         return adminService.GetOneCustomer(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/DeleteCompany/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void DeleteCompany(@PathVariable int id) throws AdminException {
         adminService.DeleteCompany(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/DeleteCustomer/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void DeleteCustomer(@PathVariable int id) throws AdminException {
         adminService.DeleteCustomer(id);

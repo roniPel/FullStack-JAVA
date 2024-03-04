@@ -15,46 +15,46 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/CouponSystem_Company")
+@RequestMapping("api/Company")
 public class CompanyController {
     @Autowired
     CompanyService companyService;
 
-    @GetMapping()
+    @GetMapping(value = {"/GetCompanyDetails"})
     @ResponseStatus(HttpStatus.OK)
     public Company GetCompanyDetails() throws CompanyException {
         return companyService.GetCompanyDetails();
     }
 
-    @PostMapping
+    @PostMapping(value = "/AddCoupon")
     @ResponseStatus(HttpStatus.CREATED)
     public void AddCoupon(@Validated @RequestBody Coupon coupon) throws CompanyException{
         companyService.AddCoupon(coupon);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/UpdateCoupon/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void UpdateCoupon(@PathVariable int id,@RequestBody Coupon coupon) throws CompanyException {
         companyService.AddCoupon(coupon);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/DeleteCoupon/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void DeleteCoupon(@PathVariable int id) throws CompanyException {
         companyService.DeleteCoupon(id);
     }
-    @GetMapping
+    @GetMapping(value = {"/GetCompanyCoupons"})
     public List<Coupon> GetCompanyCoupons(){
         return companyService.GetCompanyCoupons();
     }
 
-    @GetMapping("/{category}")
+    @GetMapping("/GetCompanyCouponsByCategory/{category}")
     @ResponseStatus(HttpStatus.OK)
     public List<Coupon> GetCompanyCouponsByCategory(@PathVariable Category category) throws CompanyException {
         return companyService.GetCompanyCouponsByCategory(category);
     }
 
-    @GetMapping("/{maxPrice}")
+    @GetMapping("/GetCompanyCouponsByMaxPrice/{maxPrice}")
     @ResponseStatus(HttpStatus.OK)
     public List<Coupon> GetCompanyCouponsByMaxPrice(@PathVariable double maxPrice) throws CompanyException {
         return companyService.GetCompanyCouponsByMaxPrice(maxPrice);

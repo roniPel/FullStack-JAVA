@@ -15,35 +15,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/CouponSystem_Customer")
+@RequestMapping("api/Customer")
 public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @GetMapping()
+    @GetMapping(value = {"/GetCustomerDetails"})
     @ResponseStatus(HttpStatus.OK)
     public Customer GetCustomerDetails() throws CustomerException {
         return customerService.GetCustomerDetails();
     }
 
-    @PostMapping
+    @PostMapping(value = "/PurchaseCoupon")
     @ResponseStatus(HttpStatus.CREATED)
     public void PurchaseCoupon(@Validated @RequestBody Coupon coupon) throws CustomerException{
         customerService.PurchaseCoupon(coupon);
     }
 
-    @GetMapping
+    @GetMapping(value = {"/GetCustomerCoupons"})
     public List<Coupon> GetCustomerCoupons(){
         return customerService.GetCustomerCoupons();
     }
 
-    @GetMapping("/{category}")
+    @GetMapping("/GetCustomerCouponsByMaxCategory/{category}")
     @ResponseStatus(HttpStatus.OK)
     public List<Coupon> GetCustomerCouponsByCategory(@PathVariable Category category) throws CustomerException {
         return customerService.GetCustomerCouponsByCategory(category);
     }
 
-    @GetMapping("/{maxPrice}")
+    @GetMapping("/GetCustomerCouponsByMaxPrice/{maxPrice}")
     @ResponseStatus(HttpStatus.OK)
     public List<Coupon> GetCustomerCouponsByMaxPrice(@PathVariable double maxPrice) throws CustomerException {
         return customerService.GetCustomerCouponsByMaxPrice(maxPrice);
