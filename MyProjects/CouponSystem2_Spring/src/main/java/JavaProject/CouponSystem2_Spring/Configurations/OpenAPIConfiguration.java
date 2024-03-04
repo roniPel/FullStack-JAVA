@@ -27,5 +27,4 @@ public class OpenAPIConfiguration {
 
         return new OpenAPI().info(info).servers(List.of(server));
     }
-
 }
