@@ -37,7 +37,7 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     List<Coupon> findByPriceLessThanEqualAndCustomers_id(double price, int customerId);
 
     // Expired Coupons Job
-    @Query(value = "SELECT * FROM coupons WHERE endDate <= DATE(NOW())", nativeQuery = true)
+    @Query(value = "SELECT * FROM coupons WHERE end_date <= DATE(NOW())", nativeQuery = true)
     List<Coupon> GetExpiredCoupons();
 
 }

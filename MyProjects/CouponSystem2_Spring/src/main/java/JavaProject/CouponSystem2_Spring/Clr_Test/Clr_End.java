@@ -13,12 +13,14 @@ public class Clr_End implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         PrintSystemEndMessage();
-        //Todo - uncomment before hand in (Ask Zeev)
+        //Todo - uncomment before hand-in? (Ask Zeev)
         //System.exit(0);
     }
 
     private void PrintSystemEndMessage() {
-        System.out.println("" +
+        System.out.println(
+                "                       T-H-E  E-N-D                    \n" +
+                "                                                       \n" +
                 "                             .''.\n" +
                 "       .''.      .        *''*    :_\\/_:     .\n" +
                 "      :_\\/_:   _\\(/_  .:.*_\\/_*   : /\\ :  .'.:.'.\n" +

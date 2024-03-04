@@ -18,7 +18,6 @@ public class ExpiredCouponsDailyJob {
     private CouponRepository couponRepo;
     @Scheduled(cron = "${ExpiredCouponsJob_TIME}")
     public void CheckForExpiredCoupons() {
-        System.out.println("Expired Coupons Job Started");
         // Part 1 - Get Expired coupons from DB
         List<Coupon> expiredCoupons = couponRepo.GetExpiredCoupons();
         // Part 2 - verify 'coupons' array is not empty
@@ -37,7 +36,7 @@ public class ExpiredCouponsDailyJob {
         System.out.println("--------     COUPON JOB STATUS     --------");
         System.out.println("| Coupon Expiration Job ran successfully.  |");
         System.out.println("| The coupons that were deleted due to     |\n" +
-                "| expiration date are:                     |");
+                           "| expiration date are:                     |");
         deletedCoupons.forEach(System.out::println);
         System.out.println("--------    END COUPON JOB STATUS  --------");
         System.out.println();

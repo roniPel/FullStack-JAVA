@@ -24,9 +24,7 @@ public class AdminTestMethods_Rest extends TestMethods {
      */
     public void Method_GetAllCompanies() {
         System.out.println("*** Method: Get All Companies ***");
-        Company[] companies = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
-        List<Company> companyList = Arrays.stream(companies).toList();
+        List<Company> companyList = GetListOfAllCompanies();
         companyList.forEach(System.out::println);
         System.out.println();
     }
@@ -36,9 +34,7 @@ public class AdminTestMethods_Rest extends TestMethods {
      */
     public void Method_GetAllCustomers() {
         System.out.println("*** Method: Get All Customers ***");
-        Customer[] customers = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetAllCustomers", Customer[].class);
-        List<Customer> customerList = Arrays.stream(customers).toList();
+        List<Customer> customerList = GetListOfAllCustomers();
         customerList.forEach(System.out::println);
         System.out.println();
     }
@@ -100,15 +96,11 @@ public class AdminTestMethods_Rest extends TestMethods {
 
     /**
      * Admin Method - Update Company
-     * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_UpdateCompany(AdminService adminService) throws AdminException {
+    public void Method_UpdateCompany() {
         System.out.println("*** Method: Update Company ***");
         // Get all companies from DB
-        Company[] companies = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
-        List<Company> companyList = Arrays.stream(companies).toList();
+        List<Company> companyList = GetListOfAllCompanies();
 
         // Select random ID for updating company
         int updateCompId = GetRandIdFromList(companyList);
@@ -116,7 +108,7 @@ public class AdminTestMethods_Rest extends TestMethods {
                 ("http://localhost:8080/api/Admin/GetOneCompany/"+updateCompId,Company.class);
 
         // Update fields
-        updatedComp.setEmail("AdminUpdateComp"+GetrandInt(100)+"@email.com");
+        updatedComp.setEmail("Rest_AdminUpdate"+GetrandInt(100)+"@email.com");
         updatedComp.setPassword("PassUpd");
 
         // Update company in DB
@@ -130,43 +122,47 @@ public class AdminTestMethods_Rest extends TestMethods {
 
     /**
      * Admin Method - Update Customer
-     * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_UpdateCustomer(AdminService adminService) throws AdminException {
+    public void Method_UpdateCustomer() {
         System.out.println("*** Method: Update Customer ***");
-        List<Customer> customers = adminService.GetAllCustomers();
+
+        // Get all customers from DB
+        List<Customer> customerList = GetListOfAllCustomers();
+
         // Select random ID for updating
-        int updateCustId = GetRandIdFromList(customers);
+        int updateCustId = GetRandIdFromList(customerList);
+        Customer updatedCust = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetOneCustomer/"+updateCustId,Customer.class);
+
         // Update fields
-        Customer updatedCust = Customer.builder()
-                .id(updateCustId)
-                .firstName("UpdatedFirstAdmin")
-                .lastName("UpdatedLastAdmin")
-                .email("updatedEmail"+GetrandInt(100)+"@email.com")
-                .password("PassAdmin")
-                .build();
+        updatedCust.setFirstName("Rest_UpdateFirst");
+        updatedCust.setLastName("Rest_UpdateLast");
+        updatedCust.setEmail("Rest_UpdEmail"+GetrandInt(100)+"@email.com");
+
+        // Update customer in DB
         System.out.println("Customer to update: ");
         System.out.println(updatedCust);
-        // Update customer in DB
-        System.out.println("Updated Customer? "+
-                adminService.UpdateCustomer(updatedCust));
+        restTemplate.put
+                ("http://localhost:8080/api/Admin/UpdateCustomer/"+updatedCust.getId(),updatedCust);
+        System.out.println("Updated Customer? true");
         System.out.println();
     }
 
     /**
      * Admin Method - Get One Company
-     * @param adminService used to run method
-     * @throws AdminException  If we get any exception.  Details are provided
      */
-    public void Method_GetOneCompany(AdminService adminService) throws AdminException {
+    public void Method_GetOneCompany() {
         System.out.println("*** Method: Get One Company ***");
-        List<Company> companies = adminService.GetAllCompanies();
+        List<Company> companies = GetListOfAllCompanies();
+        // Pick random Id from companies
         int getOneCompId = GetRandIdFromList(companies);
-        System.out.println("One Company: "+
-                adminService.GetOneCompany(getOneCompId));
+        Company company = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetOneCompany/"+getOneCompId,Company.class);
+        // Print company
+        System.out.println("One Company: \n"+company);
         System.out.println();
     }
+
 
     /**
      * Admin Method - Get One Customer
@@ -175,13 +171,17 @@ public class AdminTestMethods_Rest extends TestMethods {
      */
     public void Method_GetOneCustomer(AdminService adminService) throws AdminException {
         System.out.println("*** Method: Get One Customer ***");
-        List<Customer> customers = adminService.GetAllCustomers();
+        List<Customer> customers = GetListOfAllCustomers();
         // Get random ID
         int getOneCustId = GetRandIdFromList(customers);
-        System.out.println("One Customer: ");
-        System.out.println(adminService.GetOneCustomer(getOneCustId));
+        Customer customer = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetOneCompany/"+getOneCustId,Customer.class);
+        // Print customer
+        System.out.println("One Customer: \n"+customer);
         System.out.println();
     }
+
+    // Todo - finish the rest of the methods!
 
     /**
      * Admin Method - Delete Company
@@ -220,4 +220,15 @@ public class AdminTestMethods_Rest extends TestMethods {
         System.out.println();
     }
 
+    private List<Company> GetListOfAllCompanies() {
+        Company[] companies = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
+        return Arrays.stream(companies).toList();
+    }
+
+    private List<Customer> GetListOfAllCustomers() {
+        Customer[] customers = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetAllCustomers", Customer[].class);
+        return Arrays.stream(customers).toList();
+    }
 }
