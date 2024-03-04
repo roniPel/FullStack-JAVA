@@ -1,6 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
-import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CustomerMethods_Services;
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CustomerTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
@@ -17,7 +17,7 @@ public class Clr_CustomerTester implements CommandLineRunner {
     @Autowired
     private LogonUtil logonUtil;
     @Autowired
-    private CustomerMethods_Services customerMethods_services;
+    private CustomerTestMethods_Services customerTestMethods_services;
 
     @Autowired
     private CustomerService customerService; //- Preparation for Client Side (section 3)
@@ -32,7 +32,7 @@ public class Clr_CustomerTester implements CommandLineRunner {
             //CustomerService customerService = (CustomerService) LoginManager.Login(email, password, ClientType.Customer);
 
             // Check logon
-            if(customerMethods_services.CheckLogin(email,password,customerService)) {
+            if(customerTestMethods_services.CheckLogin(email,password,customerService)) {
                 // Run all methods
                 Customer_RunAllMethods(customerService);
             }
@@ -47,11 +47,11 @@ public class Clr_CustomerTester implements CommandLineRunner {
      */
     private void Customer_RunAllMethods(CustomerService customerService) throws CustomerException {
         PrintSectionHeader();
-        customerMethods_services.GetCustomerDetails(customerService);
-        customerMethods_services.PurchaseCoupon(customerService);
-        customerMethods_services.GetCustomerCoupons(customerService);
-        customerMethods_services.GetCustomerCouponsByCategory(customerService);
-        customerMethods_services.GetCustomerCouponsByMaxPrice(customerService);
+        customerTestMethods_services.GetCustomerDetails(customerService);
+        customerTestMethods_services.PurchaseCoupon(customerService);
+        customerTestMethods_services.GetCustomerCoupons(customerService);
+        customerTestMethods_services.GetCustomerCouponsByCategory(customerService);
+        customerTestMethods_services.GetCustomerCouponsByMaxPrice(customerService);
         PrintSectionFooter();
     }
 

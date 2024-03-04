@@ -9,13 +9,10 @@ import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
-public class CustomerMethods_Services extends TestMethods {
+public class CustomerTestMethods_Services extends TestMethods {
     /**
      * Customer Method - Purchase Coupon
      * @param customerService used to run method

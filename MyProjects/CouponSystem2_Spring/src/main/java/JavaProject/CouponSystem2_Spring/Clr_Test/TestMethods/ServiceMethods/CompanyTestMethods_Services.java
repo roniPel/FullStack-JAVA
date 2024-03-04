@@ -1,7 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods;
 
 import JavaProject.CouponSystem2_Spring.Beans.Category;
-import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
@@ -12,12 +11,10 @@ import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Component
-public class CompanyMethods_Services extends TestMethods {
+public class CompanyTestMethods_Services extends TestMethods {
     /**
      * Company Method - Get Company Details
      * @param companyService used to run method

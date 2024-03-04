@@ -1,6 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
-import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CompanyMethods_Services;
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CompanyTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
@@ -17,7 +17,7 @@ public class Clr_CompanyTester implements CommandLineRunner {
     @Autowired
     private LogonUtil logonUtil;
     @Autowired
-    private CompanyMethods_Services companyMethods_services;
+    private CompanyTestMethods_Services companyTestMethods_services;
     @Autowired
     private CompanyService companyService; // - Preparation for Client Side (section 3)
 
@@ -31,7 +31,7 @@ public class Clr_CompanyTester implements CommandLineRunner {
             //CompanyService companyService = (CompanyService) LoginManager.Login(email, password, ClientType.Company);
 
             // Check logon
-            if(companyMethods_services.CheckLogin(email,password,companyService)) {
+            if(companyTestMethods_services.CheckLogin(email,password,companyService)) {
                 // Run all methods
                 Company_RunAllMethods(companyService);
             }
@@ -47,13 +47,13 @@ public class Clr_CompanyTester implements CommandLineRunner {
      */
     private void Company_RunAllMethods(CompanyService companyService) throws CompanyException {
         PrintSectionHeader();
-        companyMethods_services.GetCompanyDetails(companyService);
-        companyMethods_services.AddCoupon(companyService);
-        companyMethods_services.UpdateCoupon(companyService);
-        companyMethods_services.DeleteCoupon(companyService);
-        companyMethods_services.GetCompanyCoupons(companyService);
-        companyMethods_services.GetCompanyCouponsByCategory(companyService);
-        companyMethods_services.GetCompanyCouponsByMaxPrice(companyService);
+        companyTestMethods_services.GetCompanyDetails(companyService);
+        companyTestMethods_services.AddCoupon(companyService);
+        companyTestMethods_services.UpdateCoupon(companyService);
+        companyTestMethods_services.DeleteCoupon(companyService);
+        companyTestMethods_services.GetCompanyCoupons(companyService);
+        companyTestMethods_services.GetCompanyCouponsByCategory(companyService);
+        companyTestMethods_services.GetCompanyCouponsByMaxPrice(companyService);
         PrintSectionFooter();
     }
 

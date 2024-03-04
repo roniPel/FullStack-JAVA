@@ -1,79 +1,87 @@
-package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods;
+package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class AdminMethods_Services extends TestMethods {
+public class AdminTestMethods_Rest extends TestMethods {
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * Admin Method - Get all Companies
-     * @param adminService used to run method
      */
-    public void Method_GetAllCompanies(AdminService adminService) {
+    public void Method_GetAllCompanies() {
         System.out.println("*** Method: Get All Companies ***");
-        List<Company> companies = adminService.GetAllCompanies();
-        companies.forEach(System.out::println);
+        Company[] companies = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
+        List<Company> companyList = Arrays.stream(companies).toList();
+        companyList.forEach(System.out::println);
         System.out.println();
     }
 
     /**
      * Admin Method - Get All Customers
-     * @param adminService used to run method
      */
-    public void Method_GetAllCustomers(AdminService adminService) {
+    public void Method_GetAllCustomers() {
         System.out.println("*** Method: Get All Customers ***");
-        List<Customer> customers = adminService.GetAllCustomers();
-        customers.forEach(System.out::println);
+        Customer[] customers = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetAllCustomers", Customer[].class);
+        List<Customer> customerList = Arrays.stream(customers).toList();
+        customerList.forEach(System.out::println);
         System.out.println();
     }
 
     /**
      * Admin Method - Add Company
-     * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_AddCompany(AdminService adminService) throws AdminException {
+    public void Method_AddCompany() {
         System.out.println("*** Method: Add Company ***");
         // Create company
-        String name = "CompanyAddByAdmin";
-        String email = "AdminAddComp"+GetrandInt(100)+"@email.com";
+        String name = "Rest_AddByAdmin";
+        String email = "Rest_AdminAdd"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
         Company addCompany = Company.builder()
-                .id(4)
+                .id(6)
                 .name(name)
                 .email(email)
                 .password(password)
                 //.coupons(null)
                 .build();
-
         System.out.println("Company to add: ");
         System.out.println(addCompany);
-        System.out.println("Added Company? "+ adminService.AddCompany(addCompany));
+
+        // Add company to DB
+        ResponseEntity<String> responsePost = restTemplate.postForEntity
+                ("http://localhost:8080/api/Admin/AddCompany",addCompany,String.class);
+        System.out.print("Added Company? ");
+        System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
     }
 
     /**
      * Admin Method - Add Customer
-     * @param adminService used to run method
-     * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_AddCustomer(AdminService adminService) throws AdminException {
+    public void Method_AddCustomer() {
         System.out.println("*** Method: Add Customer ***");
         // Create customer
-        String firstName = "FirstAdminAdd";
-        String lastName = "LastAdminAdd";
-        String email = "custAdmin"+GetrandInt(100)+"@email.com";
+        String firstName = "Rest_AdminAdd";
+        String lastName = "Rest_AdminAdd";
+        String email = "RestAdmin"+GetrandInt(100)+"@email.com";
         String password = "PassAdmin";
         Customer addCustomer = Customer.builder()
-                .id(11)
+                .id(13)
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
@@ -83,7 +91,10 @@ public class AdminMethods_Services extends TestMethods {
         System.out.println("Customer to add: ");
         System.out.println(addCustomer);
         // Add customer to DB
-        System.out.println("Added Customer? "+ adminService.AddCustomer(addCustomer));
+        ResponseEntity<String> responsePost = restTemplate.postForEntity
+                ("http://localhost:8080/api/Admin/AddCustomer",addCustomer,String.class);
+        System.out.print("Added Company? ");
+        System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
     }
 
@@ -94,18 +105,26 @@ public class AdminMethods_Services extends TestMethods {
      */
     public void Method_UpdateCompany(AdminService adminService) throws AdminException {
         System.out.println("*** Method: Update Company ***");
-        List<Company> companies = adminService.GetAllCompanies();
+        // Get all companies from DB
+        Company[] companies = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
+        List<Company> companyList = Arrays.stream(companies).toList();
+
         // Select random ID for updating company
-        int updateCompId = GetRandIdFromList(companies);
-        Company updatedComp = adminService.GetOneCompany(updateCompId);
+        int updateCompId = GetRandIdFromList(companyList);
+        Company updatedComp = restTemplate.getForObject
+                ("http://localhost:8080/api/Admin/GetOneCompany/"+updateCompId,Company.class);
+
         // Update fields
         updatedComp.setEmail("AdminUpdateComp"+GetrandInt(100)+"@email.com");
         updatedComp.setPassword("PassUpd");
+
         // Update company in DB
         System.out.println("Company to update: ");
         System.out.println(updatedComp);
-        System.out.println("Updated Company? "+
-                adminService.UpdateCompany(updatedComp));
+        restTemplate.put
+                ("http://localhost:8080/api/Admin/UpdateCompany/"+updatedComp.getId(),updatedComp);
+        System.out.println("Updated Company? true");
         System.out.println();
     }
 
@@ -200,4 +219,5 @@ public class AdminMethods_Services extends TestMethods {
                 adminService.DeleteCustomerCoupons(delCustId) && adminService.DeleteCustomer(delCustId) ) );
         System.out.println();
     }
+
 }

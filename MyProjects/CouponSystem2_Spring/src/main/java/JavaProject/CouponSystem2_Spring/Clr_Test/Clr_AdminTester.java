@@ -1,7 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 
-import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminMethods_Services;
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
@@ -11,8 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @Order(2)
 @RequiredArgsConstructor
@@ -20,7 +18,7 @@ public class Clr_AdminTester implements CommandLineRunner {
     @Autowired
     private LogonUtil logonUtil;
     @Autowired
-    private AdminMethods_Services adminMethods_services;
+    private AdminTestMethods_Services adminTestMethods_services;
     @Autowired
     private AdminService adminService; //  Preparation for Client Side (section 3)
 
@@ -42,7 +40,7 @@ public class Clr_AdminTester implements CommandLineRunner {
             //Admin_RunAllMethods_RestTemplate();
 
             // Prepare data for company and customer logons
-            int randomCompanyId = adminMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
+            int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
             logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
 
         } catch (Exception e) {
@@ -77,16 +75,16 @@ public class Clr_AdminTester implements CommandLineRunner {
      */
     private void Admin_RunAllMethods_Services(AdminService adminService) throws AdminException {
         PrintSectionHeader_Services();
-        adminMethods_services.Method_GetAllCompanies(adminService);
-        adminMethods_services.Method_GetAllCustomers(adminService);
-        adminMethods_services.Method_AddCompany(adminService);
-        adminMethods_services.Method_AddCustomer(adminService);
-        adminMethods_services.Method_UpdateCompany(adminService);
-        adminMethods_services.Method_UpdateCustomer(adminService);
-        adminMethods_services.Method_GetOneCompany(adminService);
-        adminMethods_services.Method_GetOneCustomer(adminService);
-        adminMethods_services.Method_DeleteCompany(adminService);
-        adminMethods_services.Method_DeleteCustomer(adminService);
+        adminTestMethods_services.Method_GetAllCompanies(adminService);
+        adminTestMethods_services.Method_GetAllCustomers(adminService);
+        adminTestMethods_services.Method_AddCompany(adminService);
+        adminTestMethods_services.Method_AddCustomer(adminService);
+        adminTestMethods_services.Method_UpdateCompany(adminService);
+        adminTestMethods_services.Method_UpdateCustomer(adminService);
+        adminTestMethods_services.Method_GetOneCompany(adminService);
+        adminTestMethods_services.Method_GetOneCustomer(adminService);
+        adminTestMethods_services.Method_DeleteCompany(adminService);
+        adminTestMethods_services.Method_DeleteCustomer(adminService);
         PrintSectionFooter_Services();
     }
     private void PrintSectionFooter_Services() {
