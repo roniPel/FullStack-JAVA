@@ -41,10 +41,6 @@ public class Clr_AdminTester implements CommandLineRunner {
             //Todo - Add this section
             Admin_RunAllMethods_RestTemplate();
 
-            // Prepare data for company and customer logons
-            int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
-            logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

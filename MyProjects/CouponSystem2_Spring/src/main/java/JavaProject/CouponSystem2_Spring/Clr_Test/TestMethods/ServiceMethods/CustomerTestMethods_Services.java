@@ -31,7 +31,7 @@ public class CustomerTestMethods_Services extends TestMethods {
 
         // Add coupon to DB
         System.out.println("Coupon for purchase: ");
-        System.out.print(couponForPurchase);
+        System.out.println(couponForPurchase);
         System.out.println("Purchased Coupon? "+
                 customerService.PurchaseCoupon(couponForPurchase));
         System.out.println();

@@ -1,9 +1,12 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.AdminTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.CompanyTestMethods_Rest;
+import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CompanyTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
+import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +26,22 @@ public class Clr_CompanyTester implements CommandLineRunner {
     private CompanyTestMethods_Rest companyTestMethods_rest;
     @Autowired
     private CompanyService companyService; // - Preparation for Client Side (section 3)
-
+    @Autowired
+    private AdminTestMethods_Services adminTestMethods_services;
+    @Autowired
+    private AdminService adminService; //  Preparation for Client Side (section 3)
     @Override
     public void run(String... args) throws Exception {
-        String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
-        String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
 
         try {
+
+            // Prepare data for company and customer logons
+            int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
+            logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
+
+            String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
+            String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
+
             //Todo - Remove check logon section  and logon details
             //CompanyService companyService = (CompanyService) LoginManager.Login(email, password, ClientType.Company);
 
