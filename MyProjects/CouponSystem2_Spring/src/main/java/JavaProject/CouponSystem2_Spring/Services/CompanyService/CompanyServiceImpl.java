@@ -9,17 +9,15 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyExce
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
-import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
-import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Company Service Implementation for Coupon System 2
+ */
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {

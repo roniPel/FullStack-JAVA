@@ -1,6 +1,5 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
-import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.AdminTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.CompanyTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CompanyTestMethods_Services;
@@ -14,6 +13,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clr Tester - used to test Company user methods
+ */
 @Component
 @RequiredArgsConstructor
 @Order(3)
@@ -50,7 +52,7 @@ public class Clr_CompanyTester implements CommandLineRunner {
                 // Run all methods - Services
                 Company_RunAllMethods_Services(companyService);
                 // Run all methods - Rest
-                Company_RunAllMethods_Rest();
+                Company_RunAllMethods_RestTemplate();
             }
 
         } catch (Exception e) {
@@ -58,8 +60,11 @@ public class Clr_CompanyTester implements CommandLineRunner {
         }
     }
 
-    private void Company_RunAllMethods_Rest() {
-        PrintSectionHeader_Rest();
+    /**
+     * Runs all Company methods - via Rest Template
+     */
+    private void Company_RunAllMethods_RestTemplate() {
+        PrintSectionHeader_RestTemplate();
         companyTestMethods_rest.GetCompanyDetails();
         companyTestMethods_rest.AddCoupon();
         companyTestMethods_rest.UpdateCoupon();
@@ -67,16 +72,22 @@ public class Clr_CompanyTester implements CommandLineRunner {
         companyTestMethods_rest.GetCompanyCoupons();
         companyTestMethods_rest.GetCompanyCouponsByCategory();
         companyTestMethods_rest.GetCompanyCouponsByMaxPrice();
-        PrintSectionFooter_Rest();
+        PrintSectionFooter_RestTemplate();
     }
 
-    private void PrintSectionFooter_Rest() {
+    /**
+     * Prints Footer for 'RestTemplate' Testing
+     */
+    private void PrintSectionFooter_RestTemplate() {
         //System.out.println();
         System.out.println("*************     End Company Methods (via Rest)     **************");
         System.out.println();
     }
 
-    private void PrintSectionHeader_Rest() {
+    /**
+     * Prints Header for 'RestTemplate' Testing
+     */
+    private void PrintSectionHeader_RestTemplate() {
         System.out.println();
         System.out.println("*******************************************************************");
         System.out.println("**************       Company Methods (via Rest)      **************");
@@ -85,7 +96,7 @@ public class Clr_CompanyTester implements CommandLineRunner {
     }
 
     /**
-     * Runs all Company user methods
+     * Runs all Company user methods - via services
      * @param companyService Service used to run the methods
      */
     private void Company_RunAllMethods_Services(CompanyService companyService) throws CompanyException {
@@ -100,12 +111,18 @@ public class Clr_CompanyTester implements CommandLineRunner {
         PrintSectionFooter_Services();
     }
 
+    /**
+     * Prints Footer for 'Services' Testing
+     */
     private void PrintSectionFooter_Services() {
         //System.out.println();
         System.out.println("*************   End Company Methods (via Services)   **************");
         System.out.println();
     }
 
+    /**
+     * Prints Header for 'Services' Testing
+     */
     private void PrintSectionHeader_Services() {
         System.out.println();
         System.out.println("*******************************************************************");

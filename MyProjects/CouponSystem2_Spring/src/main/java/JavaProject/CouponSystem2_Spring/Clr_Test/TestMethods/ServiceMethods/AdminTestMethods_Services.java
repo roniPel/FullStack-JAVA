@@ -6,9 +6,11 @@ import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
+/**
+ * Admin Test Methods Class - Used for Testing all Admin user functionalities via services
+ */
 @Component
 public class AdminTestMethods_Services extends TestMethods {
 

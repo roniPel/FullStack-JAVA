@@ -7,18 +7,14 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+
+/**
+ * Company Service interface - Lists relevant functionalities for Company users
+ */
 public interface CompanyService extends ClientService {
 
-    /**
-     * Checks whether a user exists in the DB
-     * @param email user's email
-     * @param password user's password
-     * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws CompanyException If we get any exception.  Details are provided
-     */
+    @Override
     boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
     /**

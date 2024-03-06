@@ -1,6 +1,5 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
-
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.AdminTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
@@ -12,6 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clr Tester - used to test Admin user methods
+ */
 @Component
 @Order(2)
 @RequiredArgsConstructor
@@ -31,14 +33,13 @@ public class Clr_AdminTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
 
         try {
-            //Todo - Remove check logon section and logon details
+            //Todo - Remove check logon section and logon details? (Ask Zeev)
             // Check logon
             //AdminService adminService = (AdminService) LoginManager.Login(email, password, ClientType.Administrator);
 
             // Run all Admin methods - via services
             Admin_RunAllMethods_Services(adminService);
 
-            //Todo - Add this section
             Admin_RunAllMethods_RestTemplate();
 
         } catch (Exception e) {
@@ -47,7 +48,7 @@ public class Clr_AdminTester implements CommandLineRunner {
     }
 
     /**
-     * Runs all Admin methods via Rest Template
+     * Runs all Admin methods - via Rest Template
      */
     private void Admin_RunAllMethods_RestTemplate() {
         PrintSectionHeader_RestTemplate();
@@ -63,11 +64,18 @@ public class Clr_AdminTester implements CommandLineRunner {
         adminTestMethods_Rest.Method_DeleteCustomer();
         PrintSectionFooter_RestTemplate();
     }
+
+    /**
+     * Prints Footer for 'RestTemplate' Testing
+     */
     private void PrintSectionFooter_RestTemplate() {
         //System.out.println();
         System.out.println("***************   End Admin Methods (via Rest)   ***************");
         System.out.println();
     }
+    /**
+     * Prints Header for 'RestTemplate' Testing
+     */
     private void PrintSectionHeader_RestTemplate() {
         System.out.println();
         System.out.println("*******************************************************************");
@@ -77,7 +85,7 @@ public class Clr_AdminTester implements CommandLineRunner {
     }
 
     /**
-     * Runs all Admin user methods
+     * Runs all Admin user methods - via services
      * @param adminService Service used to run the methods
      */
     private void Admin_RunAllMethods_Services(AdminService adminService) throws AdminException {
@@ -94,11 +102,17 @@ public class Clr_AdminTester implements CommandLineRunner {
         adminTestMethods_services.Method_DeleteCustomer(adminService);
         PrintSectionFooter_Services();
     }
+    /**
+     * Prints Footer for 'Services' Testing
+     */
     private void PrintSectionFooter_Services() {
         System.out.println();
         System.out.println("***************   End Admin Methods (via Services)   ***************");
         System.out.println();
     }
+    /**
+     * Prints Header for 'Services' Testing
+     */
     private void PrintSectionHeader_Services() {
         System.out.println();
         System.out.println("*******************************************************************");

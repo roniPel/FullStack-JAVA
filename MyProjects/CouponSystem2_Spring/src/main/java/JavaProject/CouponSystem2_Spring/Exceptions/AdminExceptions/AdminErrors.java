@@ -2,6 +2,9 @@ package JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions;
 
 import lombok.Getter;
 
+/**
+ * AdminErrors Class (Enum) - Contains Strings of possible errors for Admin users
+ */
 @Getter
 public enum AdminErrors {
 
@@ -21,7 +24,13 @@ public enum AdminErrors {
     CUSTOMER_EMAIL_ALREADY_EXISTS("\nERROR! The customer email already exists in the system. \n"),
     CANT_UPDATE_CUSTOMER_ID("\nERROR! Update of customer ID is not allowed. \n"),;
 
+
     private String message;
+
+    /**
+     * Constructor which inserts the relevant message into each error.
+     * @param message String message relevant for each error
+     */
     AdminErrors(String message) {
         this.message = message;
     }

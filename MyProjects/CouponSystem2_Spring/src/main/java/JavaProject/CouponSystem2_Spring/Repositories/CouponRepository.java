@@ -10,14 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Coupon Repository - used to connect to the DB and perform actions relevant to coupons
+ */
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon,Integer> {
-    //Todo - Add coupon expiration as SQL query (10%).  Almost all other - CRUD (50%)
-    // Go over methods below and update based on CRUD
-    //Todo - Add REST to Spring section
-    //Todo - each controller will have its own advice
-    //Todo - don't use try/catch, use controller advice messages (see github)
-
     // Company Smart Dialect Queries
     List<Coupon> findByCompanyIdAndCategory(int companyId, Category category);
     List<Coupon> findByCompanyIdAndPriceLessThanEqual(int companyId, double price);

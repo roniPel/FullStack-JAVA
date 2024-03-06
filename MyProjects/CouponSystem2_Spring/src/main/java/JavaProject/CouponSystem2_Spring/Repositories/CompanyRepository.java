@@ -1,11 +1,12 @@
 package JavaProject.CouponSystem2_Spring.Repositories;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Company Repository - used to connect to the DB and perform actions relevant to companies
+ */
 @Repository
 public interface CompanyRepository extends JpaRepository<Company,Integer> {
     Company findByName(String name);

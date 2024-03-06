@@ -17,10 +17,12 @@ import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Admin Service Implementation for Coupon System 2
+ */
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
@@ -166,7 +168,7 @@ public class AdminServiceImpl implements AdminService {
                 .id(100)
                 .name("CompanyFullCoupons")
                 .email("CompCoupons@email.com")
-                .password("Pass")
+                .password("Password")
                 .build();
         companyRepo.save(company);
         // Get company ID from DB
@@ -256,7 +258,7 @@ public class AdminServiceImpl implements AdminService {
                 .firstName("FirstFullCoupons")
                 .lastName("LastFullCoupons")
                 .email("FullCoupons@email.com")
-                .password("Pass")
+                .password("Password")
                 .build();
         customerRepo.save(customer);
 

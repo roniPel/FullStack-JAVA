@@ -5,85 +5,89 @@ import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
-import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
-import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
-import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Admin Service interface - Lists relevant functionalities for Admin users
+ */
 public interface AdminService extends ClientService {
 
-
-    /**
-     * Checks whether a user exists in the DB
-     * @param email user's email
-     * @param password user's password
-     * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws AdminException If we get any exception.  Details are provided
-     */
+    @Override
     boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
     /**
-     * Admin Method - Get One Customer
+     * Get one customer
+     * @param customerId Id belonging to the customer requested
+     * @return A customer object with requested customer details
      * @throws AdminException If we get any exception.  Details are provided
      */
     Customer GetOneCustomer(int customerId) throws AdminException;
 
     /**
-     * Admin Method - Delete Customer
+     * Delete a customer
+     * @param customerId Id belonging to the customer to be deleted
+     * @return true if succeeded, false if failed
      * @throws AdminException  If we get any exception.  Details are provided
      */
     boolean DeleteCustomer(int customerId) throws AdminException;
 
     /**
-     * Admin Method - Update Customer
+     * Update a customer
+     * @param customer customer object with details to be updated
+     * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
     boolean UpdateCustomer(Customer customer) throws AdminException;
 
     /**
-     * Admin Method - Add Customer
+     * Add a customer
+     * @param customer customer object with details to be added
+     * @return true if succeeded, false if failed
      * @throws AdminException  If we get any exception.  Details are provided
      */
     boolean AddCustomer(Customer customer) throws AdminException;
 
     /**
-     * Admin Method - Get All Customers
+     * Get All Customers in DB
+     * @return A list of all customers in DB
      */
     List<Customer> GetAllCustomers();
 
     /**
-     * Admin Method - Get One Company
+     * Get One Company
+     * @param companyId Id belonging to the company requested
+     * @return A company object with requested company details
      * @throws AdminException  If we get any exception.  Details are provided
      */
     Company GetOneCompany(int companyId) throws AdminException;
 
     /**
-     * Admin Method - Delete Company
+     * Delete a Company
+     * @param companyId Id belonging to the company to be deleted
+     * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
     boolean DeleteCompany(int companyId) throws AdminException;
 
     /**
-     * Admin Method - Update Company
+     * Update a Company
+     * @param company company object with details to be updated
+     * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
     boolean UpdateCompany(Company company) throws AdminException;
 
     /**
-     * Admin Method - Add Company
-     * @return true if succeeded, false if failed.
+     * Add a Company
+     * @param company company object with details to be added
+     * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
     boolean AddCompany(Company company) throws AdminException;
 
     /**
-     * Admin Method - Get all Companies
+     * Get all Companies
      * @return A list of all companies in DB
      */
     List<Company> GetAllCompanies() ;
@@ -93,9 +97,8 @@ public interface AdminService extends ClientService {
      * @return String array with email and password that exist in the DB
      * @throws AdminException If we get any exception.  Details are provided
      * @throws AdminException If we get any exception.  Details are provided
-     * @throws CompanyException If we get any exception.  Details are provided
      */
-    String[] AddCompanyDetailsForLogin() throws AdminException, CompanyException;
+    String[] AddCompanyDetailsForLogin() throws AdminException;
 
     /**
      * After running all admin methods, add customer with full coupons and return details for login

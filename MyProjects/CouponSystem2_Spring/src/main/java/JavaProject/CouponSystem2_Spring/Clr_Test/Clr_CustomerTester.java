@@ -11,6 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clr Tester - used to test Customer user methods
+ */
 @Component
 @RequiredArgsConstructor
 @Order(4)

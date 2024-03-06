@@ -1,5 +1,8 @@
 package JavaProject.CouponSystem2_Spring.Beans;
 
+/**
+ * Bean: Category (Enum) - used to define a coupon's category
+ */
 public enum Category {
     Food, Electricity, Restaurant, Vacation, Toys, Automotive, Tires,
     BabyToddler, Computers, CellPhones, Televisions, VideoGamesConsoles;

@@ -1,12 +1,14 @@
 package JavaProject.CouponSystem2_Spring.Beans;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.List;
 import java.util.Set;
 
+/**
+ * Bean: Company - used to define a company listed in the system
+ */
 @Entity
 @Table(name = "companies")
 @Data
@@ -14,9 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class Company {
-    //Todo - add annotations to all beans - Client side, server side
-    // for client side errors (Length, etc.. see coupons2 in github)
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,22 +24,30 @@ public class Company {
     @Column(unique = true,
             nullable = false,
             updatable = false,
-            name = "name")
+            name = "name",
+            length = 20)
+    @NotBlank
+    @Length(max = 20)
     private String name;
 
     @Column(unique = true,
             nullable = false,
-            name = "email")
+            name = "email",
+            length = 30)
+    @Length(max = 30)
+    @NotBlank
     private String email;
 
-    @Column(length=10,name = "password",
+    @Column(length = 15,
+            name = "password",
             nullable = false)
-
-    //@Length(min = 10, max = 40)
+    @Length(min = 5,
+            max = 15)
     private String password;
 
     @Singular
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JoinColumn(name = "company_id")
     private Set<Coupon> coupons;
 }

@@ -9,10 +9,12 @@ import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Company Test Methods Class - Used for Testing all Company user functionalities via services
+ */
 @Component
 public class CompanyTestMethods_Services extends TestMethods {
     /**

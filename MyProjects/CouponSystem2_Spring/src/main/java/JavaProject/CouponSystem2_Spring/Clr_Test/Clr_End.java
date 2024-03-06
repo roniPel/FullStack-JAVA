@@ -5,6 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clr Tester - End and Close System
+ */
 @Component
 @RequiredArgsConstructor
 @Order(5)
@@ -17,6 +20,9 @@ public class Clr_End implements CommandLineRunner {
         //System.exit(0);
     }
 
+    /**
+     * Prints System End Message
+     */
     private void PrintSystemEndMessage() {
         System.out.println(
                 "                       T-H-E  E-N-D                    \n" +

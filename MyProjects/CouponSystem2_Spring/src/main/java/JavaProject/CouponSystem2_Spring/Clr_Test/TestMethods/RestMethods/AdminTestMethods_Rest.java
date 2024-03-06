@@ -12,6 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Admin Test Methods Class - Used for Testing all Admin user functionalities via RestTemplate
+ */
 @Component
 public class AdminTestMethods_Rest extends TestMethods {
     @Autowired
@@ -202,7 +205,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Select random Id for deleting
         int delCustId = GetRandIdFromList(customers);
         Customer custToDelete = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCompany/"+delCustId, Customer.class);
+                ("http://localhost:8080/api/Admin/GetOneCustomer/"+delCustId, Customer.class);
         System.out.println("Customer to delete: \n"+custToDelete);
         // Delete customer
         restTemplate.delete("http://localhost:8080/api/Admin/DeleteCustomer/"+delCustId);

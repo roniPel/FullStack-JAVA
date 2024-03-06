@@ -12,10 +12,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class containing a Job used to delete expired coupons
+ */
 @Component
 public class ExpiredCouponsDailyJob {
     @Autowired
     private CouponRepository couponRepo;
+
+    /**
+     * Job that deletes expired coupons from DB - runs on a cron schedule
+     */
     @Scheduled(cron = "${ExpiredCouponsJob_TIME}")
     public void CheckForExpiredCoupons() {
         // Part 1 - Get Expired coupons from DB

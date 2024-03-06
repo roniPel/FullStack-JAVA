@@ -1,14 +1,18 @@
 package JavaProject.CouponSystem2_Spring.Beans;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.hibernate.validator.constraints.Length;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * Bean: Coupon - used to define a coupon listed in the system
+ */
 @Entity
 @Table(name = "coupons")
 @Data
@@ -16,27 +20,30 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class Coupon {
-    //Todo - add annotations to all beans - Client side, server side
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    //@ManyToOne(fetch = FetchType.LAZY, targetEntity = Company.class)
 
-    @Column(name = "company_id",nullable = false)
+    @Column(name = "company_id",
+            nullable = false)
     private Integer companyId;
     //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
-    //private int companyId;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "category_id",nullable = false)
+    @Column(name = "category_id",
+            nullable = false)
     private Category category;
 
-    @Column(name = "title",unique = true)
+    @Column(name = "title",
+            length = 50,
+            unique = true)
+    @Length(max = 50)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description",
+            length = 70)
+    @Length(max = 70)
     private String description;
 
     @Column(name = "start_date")

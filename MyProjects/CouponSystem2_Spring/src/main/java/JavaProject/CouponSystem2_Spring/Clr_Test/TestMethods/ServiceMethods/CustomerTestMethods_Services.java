@@ -8,9 +8,11 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerEx
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
+/**
+ * Customer Test Methods Class - Used for Testing all Customer user functionalities via services
+ */
 @Component
 public class CustomerTestMethods_Services extends TestMethods {
     /**
@@ -84,6 +86,7 @@ public class CustomerTestMethods_Services extends TestMethods {
     /**
      * Customer Method - Get Customer Details
      * @param customerService used to run method
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     public void GetCustomerDetails(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Details ***");

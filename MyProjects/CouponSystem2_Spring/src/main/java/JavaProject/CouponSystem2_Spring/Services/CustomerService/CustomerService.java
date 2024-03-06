@@ -7,52 +7,61 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+
+/**
+ * Customer Service interface - Lists relevant functionalities for Customer users
+ */
 public interface CustomerService extends ClientService {
-
-    /**
-     * Checks whether a user exists in the DB
-     * @param email user's email
-     * @param password user's password
-     * @return true if user exists, false if user doesn't exist or if the email + password combo are incorrect.
-     * @throws CustomerException If we get any exception.  Details are provided
-     */
     @Override
-    public boolean Login(String email, String password) throws CustomerException,AdminException, CompanyException;
+    boolean Login(String email, String password) throws CustomerException,AdminException, CompanyException;
 
     /**
-     * Customer Method - Purchase Coupon
+     * Adds a coupon purchase in the DB for the logged on customer
+     * @param coupon 'coupon' object to purchase
+     * @return true if succeeded, false if failed.
      * @throws CustomerException If we get any exception.  Details are provided
      */
     boolean PurchaseCoupon(Coupon coupon) throws CustomerException;
 
     /**
-     * Customer Method - Get Customer Coupons
+     * Get all the coupons listed in DB for the customer logged on
+     * @return coupons ArrayList if succeeded, null if failed.
      */
     List<Coupon> GetCustomerCoupons() ;
 
     /**
-     * Customer Method - Get Customer Coupons by Category
+     * Get all the coupons listed in DB for the logged on customer belonging to a specific category
+     * @param category - category of coupons to add to coupon list
+     * @return coupons ArrayList if succeeded, null if no coupons matching category were found.
      */
     List<Coupon> GetCustomerCouponsByCategory(Category category) ;
 
     /**
-     * Customer Method - Get Customer Coupons by max price
+     * Get all the coupons listed in DB for the logged on customer up to a max price
+     * @param maxPrice - maximum price of coupons to add to coupon list
+     * @return coupons ArrayList if succeeded, null if no coupons matching max price were found.
      */
     List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) ;
 
     /**
-     * Customer Method - Get Customer Details
+     * Gets a customer (according to the customer ID belonging to the customer logged on)
+     * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     Customer GetCustomerDetails() throws CustomerException;
 
+    /**
+     * Get all the coupons listed in DB for a specific customer
+     * @return coupon ArrayList if succeeded, null if no coupons were found.
+     */
     List<Coupon> GetAllCoupons();
 
+    /**
+     * Get a coupon based on provided coupon Id
+     * @param couponId id belonging to the coupon requested
+     * @return Coupon object if exists
+     * @throws CustomerException If we get any exception.  Details are provided
+     */
     Coupon GetCouponById(int couponId) throws CustomerException;
 }

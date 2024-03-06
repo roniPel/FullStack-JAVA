@@ -16,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Clr Tester - Used to Fill the DB with mock data for testing purposes
+ */
 @Component
 @Order(1)
 @RequiredArgsConstructor
@@ -57,9 +59,9 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     }
 
     /**
-     * Adding an expired coupon to the DB - for testing expired coupons job
+     * Adds an expired coupon to the DB - for testing expired coupons job
      */
-    private boolean AddExpiredCoupon() {
+    private void AddExpiredCoupon() {
         // Get companies currently in DB
         List<Company> companies = companyRepo.findAll();
 
@@ -85,15 +87,13 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                 .build();
         // Add Coupon to DB
         couponRepo.save(coupon);
-        return true;
     }
 
     /**
      * Fills in customer Vs coupons table (links customers to coupons)
-     * @return true if succeeded, false if failed.
      * @throws CustomerException If we get any exception.  Details are provided
      */
-    private boolean FillInCustomerVsCouponsTable() throws CustomerException {
+    private void FillInCustomerVsCouponsTable() throws CustomerException {
         // Part 1 - check if DB contains customers
         int numberOfCustomers = (int)customerRepo.count();
         if(numberOfCustomers > 0) {
@@ -115,20 +115,19 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                 }
                 // Update customers in DB
                 customerRepo.saveAll(customers);
-                return true;
             } else {    //DB doesn't contain coupons
-                return false;
+                throw new CustomerException(CustomerErrors.EMPTY_OR_NULL);
             }
-        }   // DB doesn't contain customers
-        return false;
+        } else { // DB doesn't contain customers
+            throw new CustomerException(CustomerErrors.EMPTY_OR_NULL);
+        }
     }
 
     /**
      * Fills in customer table with the number of customers the user wants to enter
      * @param numberOfCustomers number of customers to insert into DB
-     * @return true if succeeded, false if failed.
      */
-    private boolean FillInCustomerTable(int numberOfCustomers) {
+    private void FillInCustomerTable(int numberOfCustomers) {
         for (int i = 1; i <= numberOfCustomers; i++) {
             String firstname = "FirstName"+i;
             String lastName = "LastName"+i;
@@ -143,17 +142,15 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .build();
             customerRepo.save(customer);
         }
-        return true;
     }
 
     /**
      * Creates coupons for all companies based on params
      * @param numberOfCouponsPerCompany Number of coupons to create for each company
-     * @param amountCouponsPerType Amount of coupons of each type
-     * @param maxPrice Maximum price of each coupon
-     * @return true if succeeded, false if failed.
+     * @param amountCouponsPerType      Amount of coupons of each type
+     * @param maxPrice                  Maximum price of each coupon
      */
-    private boolean CreateCouponsForAllCompanies(int numberOfCouponsPerCompany, int amountCouponsPerType, double maxPrice) {
+    private void CreateCouponsForAllCompanies(int numberOfCouponsPerCompany, int amountCouponsPerType, double maxPrice) {
         // Part 1 - check if DB contains companies
         int numOfCompanies = (int)companyRepo.count();
         if(numOfCompanies > 0) {
@@ -171,9 +168,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
             couponRepo.saveAll(couponsForCompanies);
         }
         else {  // If DB doesn't contain companies
-            return false;
         }
-        return true;
     }
 
     /**
@@ -215,7 +210,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     }
 
     /**
-     * Prepares variables for mockData to insert into DB. Prepares login details for admin user
+     * Prepares variables for mockData to insert into DB
      */
     private void PrepareSystemData() {
         mockDataMap = new HashMap<>();
@@ -230,9 +225,8 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     /**
      * Fills in company table with the number of companies the user wants to enter
      * @param numberOfCompanies number of companies to insert into DB
-     * @return true if succeeded, false if failed.
      */
-    public boolean FillInCompanyTable(int numberOfCompanies) {
+    public void FillInCompanyTable(int numberOfCompanies) {
         for (int i = 1; i <= numberOfCompanies; i++) {
             String name = "Company"+i;
             String email = "Company"+i+"@email.com";
@@ -245,7 +239,6 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .build();
             companyRepo.save(company);
         }
-        return true;
     }
 
     /**

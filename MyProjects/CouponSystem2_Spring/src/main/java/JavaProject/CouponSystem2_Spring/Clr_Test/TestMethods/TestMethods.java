@@ -10,13 +10,27 @@ import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
+/**
+ * Test Methods Class - Contains basic methods used for Testing all user functionalities
+ */
 @Component
 public class TestMethods {
     public double maxPrice = 200;
+
+    /**
+     * Provides a random integer based on provided param
+     * @param range range used to provide random integer
+     * @return random integer
+     */
     public int GetrandInt(int range) {
         return (int)(Math.random()*(range));
     }
 
+    /**
+     * Provides a random Id from a provided list of objects
+     * @param myList List of objects to choose from
+     * @return a random ID belonging to one of the objects in the provided list
+     */
     public int GetRandIdFromList(List<?> myList) {
         int randIdx = (int)(Math.random()*(myList.size()));
         if(myList.size() == 1){
@@ -36,6 +50,7 @@ public class TestMethods {
     }
 
     /**
+     * Checks weather user login is correct
      * @param email The email for login.
      * @param password The password for login.
      * @param clientService The selected client service type for the login.

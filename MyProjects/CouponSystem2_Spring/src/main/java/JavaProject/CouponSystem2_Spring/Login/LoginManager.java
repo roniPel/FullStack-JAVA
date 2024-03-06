@@ -7,15 +7,14 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyExce
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
-import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminServiceImpl;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
-import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyServiceImpl;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
-import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+/**
+ * LoginManager Class - used to manage and check user logins into the system
+ */
 //@Component
 public class LoginManager {
     // Todo - Delete LoginManager class? Or finish writing method + implement in code(?)
