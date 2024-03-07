@@ -21,7 +21,6 @@ public class CustomerTestMethods_Services extends TestMethods {
      * @throws CustomerException If we get any exception.  Details are provided
      */
     public void PurchaseCoupon(CustomerService customerService) throws CustomerException {
-        Customer loggedCustomer = customerService.GetCustomerDetails();
         System.out.println("*** Method: Purchase Coupon ***");
 
         // Select random coupon from non-customer coupons list

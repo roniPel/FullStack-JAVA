@@ -108,4 +108,11 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepo.findById(this.companyId).orElseThrow(
                 () -> new CompanyException(CompanyErrors.GENERAL_COMPANY_ERROR) );
     }
+
+    @Override
+    public Coupon GetOneCoupon(int id) throws CompanyException {
+        return couponRepo.findById(id).orElseThrow( ()->
+                new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST));
+    }
+
 }

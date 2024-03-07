@@ -3,6 +3,7 @@ package JavaProject.CouponSystem2_Spring.Controllers;
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
@@ -96,5 +97,17 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.OK)
     public List<Coupon> GetCompanyCouponsByMaxPrice(@PathVariable double maxPrice) {
         return companyService.GetCompanyCouponsByMaxPrice(maxPrice);
+    }
+
+    /**
+     * Get one coupon
+     * @param id id belonging to the coupon requested
+     * @return coupon object with the requested coupon details
+     * @throws CompanyException If we get any exception.  Details are provided
+     */
+    @GetMapping("/GetOneCoupon/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Coupon GetOneCoupon(@PathVariable int id) throws CompanyException{
+        return companyService.GetOneCoupon(id);
     }
 }

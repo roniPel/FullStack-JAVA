@@ -75,4 +75,25 @@ public class CustomerController {
     public List<Coupon> GetCustomerCouponsByMaxPrice(@PathVariable double maxPrice) {
         return customerService.GetCustomerCouponsByMaxPrice(maxPrice);
     }
+
+    /**
+     * Get one coupon
+     * @param id id belonging to the coupon requested
+     * @return coupon object with the requested coupon details
+     * @throws CustomerException If we get any exception.  Details are provided
+     */
+    @GetMapping("/GetOneCoupon/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Coupon GetOneCoupon(@PathVariable int id) throws CustomerException {
+        return customerService.GetCouponById(id);
+    }
+
+    /**
+     * Gets all coupons in DB
+     * @return A list of all coupons in the DB
+     */
+    @GetMapping(value = {"/GetAllCoupons"})
+    public List<Coupon> GetAllCoupons(){
+        return customerService.GetAllCoupons();
+    }
 }

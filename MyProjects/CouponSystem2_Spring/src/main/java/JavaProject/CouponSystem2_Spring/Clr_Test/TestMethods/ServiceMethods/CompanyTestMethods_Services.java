@@ -83,8 +83,8 @@ public class CompanyTestMethods_Services extends TestMethods {
                         () -> new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST)
                 );
         // Update fields
-        updatedCoupon.setTitle("CompUpdated");
-        updatedCoupon.setDescription("CompUpdated"+GetrandInt(100));
+        updatedCoupon.setTitle("Services_CompUpdated");
+        updatedCoupon.setDescription("Services_CompUpdated"+GetrandInt(100));
         updatedCoupon.setAmount(GetrandInt(50));
         updatedCoupon.setCategory(Category.GetRandomCategory());
         updatedCoupon.setImage("CompUpdated");
