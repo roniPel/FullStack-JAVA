@@ -75,4 +75,12 @@ public interface CompanyService extends ClientService {
      * @throws CompanyException If we get any exception.  Details are provided
      */
     Coupon GetOneCoupon(int id) throws CompanyException;
+
+    /**
+     * Get one company
+     * @param id id belonging to the company requested
+     * @return company object with the requested company details
+     * @throws CompanyException If we get any exception.  Details are provided
+     */
+    Company GetOneCompany(int id) throws CompanyException;
 }

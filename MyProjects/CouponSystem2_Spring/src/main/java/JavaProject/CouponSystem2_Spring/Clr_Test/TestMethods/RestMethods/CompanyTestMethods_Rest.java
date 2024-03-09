@@ -23,6 +23,7 @@ import java.util.List;
 public class CompanyTestMethods_Rest extends TestMethods {
     @Autowired
     private RestTemplate restTemplate;
+    private int companyId;
 
     /**
      * Company Method - Get Company Details
@@ -42,7 +43,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
     public void AddCoupon() {
         System.out.println("*** Method: Add Coupon ***");
         Company company = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetCompanyDetails/",Company.class);
+                ("http://localhost:8080/api/Company/GetCompanyDetails/"+companyId,Company.class);
         int companyId = company.getId();
         // Create new coupon
         Category category = Category.GetRandomCategory();

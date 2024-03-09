@@ -11,6 +11,7 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -110,4 +111,6 @@ public class CustomerServiceImpl implements CustomerService {
         return couponRepo.findById(couponId).orElseThrow(
                 () ->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));
     }
+
+
 }

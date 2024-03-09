@@ -23,6 +23,8 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    //Todo - How to pass on customerId to controller?
+
     /**
      * Gets a customer (according to the customer ID belonging to the customer logged on)
      * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.

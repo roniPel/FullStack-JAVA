@@ -61,7 +61,7 @@ public class CompanyTestMethods_Services extends TestMethods {
                 .build();
         // Add coupon to DB
         System.out.println("Coupon to add: ");
-        System.out.print(coupon);
+        System.out.println(coupon);
         System.out.println("Added Coupon? "+
                 companyService.AddCoupon(coupon));
         System.out.println();
@@ -92,7 +92,7 @@ public class CompanyTestMethods_Services extends TestMethods {
         updatedCoupon.setEnd_date(DateFactory.getLocalDate(true));
         // Update coupon in DB
         System.out.println("Coupon to update: ");
-        System.out.print(updatedCoupon);
+        System.out.println(updatedCoupon);
         System.out.println("Updated Coupon? "+
                 companyService.UpdateCoupon(updatedCoupon));
         System.out.println();

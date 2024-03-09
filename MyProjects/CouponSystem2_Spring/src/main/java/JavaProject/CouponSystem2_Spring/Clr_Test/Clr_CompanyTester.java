@@ -52,7 +52,9 @@ public class Clr_CompanyTester implements CommandLineRunner {
                 // Run all methods - Services
                 Company_RunAllMethods_Services(companyService);
                 // Run all methods - Rest
-                Company_RunAllMethods_RestTemplate();
+                //Todo - how to send companyId to controller for testing?
+                // Uncomment section below
+                //Company_RunAllMethods_RestTemplate();
             }
 
         } catch (Exception e) {

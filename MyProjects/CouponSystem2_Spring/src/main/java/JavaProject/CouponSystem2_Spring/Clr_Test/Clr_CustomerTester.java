@@ -40,8 +40,10 @@ public class Clr_CustomerTester implements CommandLineRunner {
             if(customerTestMethods_services.CheckLogin(email,password,customerService)) {
                 // Run all methods - services
                 Customer_RunAllMethods_Services(customerService);
-                // Run all methods - Rest
-                Customer_RunAllMethods_Rest();
+                //Run all methods - Rest
+                //Todo - how to send customerId to controller for testing?
+                // Uncomment section below
+                //Customer_RunAllMethods_Rest();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
