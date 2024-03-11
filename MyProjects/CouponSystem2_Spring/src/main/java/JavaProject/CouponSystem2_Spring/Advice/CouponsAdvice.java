@@ -1,6 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Advice;
 
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -8,23 +8,24 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Company Advice Class - used to advise user regarding system errors
+ * Guest Advice Class - used to advise user regarding system errors
  */
 @RestControllerAdvice
-public class CompanyAdvice {
+public class CouponsAdvice {
     /**
-     * Method used to handle errors arriving from Company Exceptions
+     * Method used to handle errors arriving from Guest Exceptions
      * @param exception exception received
      * @return Error details object containing Type of error and error message
      */
-    @ExceptionHandler(value = {CompanyException.class})
+    @ExceptionHandler(value = {CustomerException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDetails HandleError(Exception exception) {
-        return new ErrorDetails("Company Error",exception.getMessage());
+        return new ErrorDetails("Guest Error",exception.getMessage());
     }
 
     /**
@@ -42,7 +43,7 @@ public class CompanyAdvice {
             errors.put(fieldName,errorMessage);
         });
         //Todo - Delete 'sout' section below?
-        System.out.println("Company Advice: ");
+        System.out.println("Guest Advice: ");
         System.out.println(exception.getConstraintViolations());
         return errors;
     }
@@ -62,8 +63,9 @@ public class CompanyAdvice {
             errors.put(fieldName,errorMessage);
         });
         //Todo - Delete 'sout' section below?
-        System.out.println("Company Advice: ");
+        System.out.println("Guest Advice: ");
         System.out.println(exception.getBindingResult().getAllErrors());
         return errors;
     }
+
 }

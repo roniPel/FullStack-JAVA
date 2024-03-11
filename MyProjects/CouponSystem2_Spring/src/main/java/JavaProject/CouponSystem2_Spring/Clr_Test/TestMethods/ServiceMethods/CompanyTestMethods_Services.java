@@ -39,8 +39,8 @@ public class CompanyTestMethods_Services extends TestMethods {
         System.out.println("*** Method: Add Coupon ***");
         // Create new coupon
         Category category = Category.GetRandomCategory();
-        String title = "CompanyAddCouponTitle"+GetrandInt(100);
-        String description = "CompanyAddCouponDescription";
+        String title = "Services_CompAddCoupTitle"+GetrandInt(100);
+        String description = "Services_CompAddCoupDescription";
         LocalDate startDate = DateFactory.getLocalDate(false);
         LocalDate endDate = DateFactory.getLocalDate(true);
         double price = FactoryUtils.round(Math.random()*(maxPrice),2);

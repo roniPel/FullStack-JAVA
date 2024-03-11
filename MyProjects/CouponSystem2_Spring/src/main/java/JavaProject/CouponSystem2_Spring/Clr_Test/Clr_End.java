@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-@Order(5)
+@Order(6)
 public class Clr_End implements CommandLineRunner {
 
     @Override

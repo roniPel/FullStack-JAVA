@@ -43,7 +43,7 @@ public class CustomerAdvice {
             errors.put(fieldName,errorMessage);
         });
         //Todo - Delete 'sout' section below?
-        System.out.println("Admin Advice: ");
+        System.out.println("Customer Advice: ");
         System.out.println(exception.getConstraintViolations());
         return errors;
     }
