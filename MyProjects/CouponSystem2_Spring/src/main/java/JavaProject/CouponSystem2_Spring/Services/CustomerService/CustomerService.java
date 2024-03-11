@@ -28,21 +28,21 @@ public interface CustomerService extends ClientService {
      * Get all the coupons listed in DB for the customer logged on
      * @return coupons ArrayList if succeeded, null if failed.
      */
-    List<Coupon> GetCustomerCoupons() ;
+    List<Coupon> GetCustomerCoupons() throws CustomerException;
 
     /**
      * Get all the coupons listed in DB for the logged on customer belonging to a specific category
      * @param category - category of coupons to add to coupon list
      * @return coupons ArrayList if succeeded, null if no coupons matching category were found.
      */
-    List<Coupon> GetCustomerCouponsByCategory(Category category) ;
+    List<Coupon> GetCustomerCouponsByCategory(Category category) throws CustomerException;
 
     /**
      * Get all the coupons listed in DB for the logged on customer up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
      * @return coupons ArrayList if succeeded, null if no coupons matching max price were found.
      */
-    List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) ;
+    List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) throws CustomerException;
 
     /**
      * Gets a customer (according to the customer ID belonging to the customer logged on)

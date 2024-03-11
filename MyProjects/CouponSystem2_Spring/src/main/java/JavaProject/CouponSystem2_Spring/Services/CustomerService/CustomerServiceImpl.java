@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Customer Service Implementation for Coupon System 2
@@ -81,18 +82,24 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Coupon> GetCustomerCoupons() {
-        return couponRepo.findByCustomers_id(this.customerId);
+    public List<Coupon> GetCustomerCoupons() throws CustomerException {
+        return customerRepo.findById(customerId).get().getCoupons();
     }
 
     @Override
-    public List<Coupon> GetCustomerCouponsByCategory(Category category) {
-        return couponRepo.findByCategoryAndCustomers_id(category, this.customerId);
+    public List<Coupon> GetCustomerCouponsByCategory(Category category) throws CustomerException {
+        List<Coupon> coupons = GetCustomerCoupons();
+        return coupons.stream()
+                .filter((coupon)-> coupon.getCategory().equals(category) )
+                .toList();
     }
 
     @Override
-    public List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) {
-        return couponRepo.findByPriceLessThanEqualAndCustomers_id(maxPrice, this.customerId);
+    public List<Coupon> GetCustomerCouponsByMaxPrice(double maxPrice) throws CustomerException {
+        List<Coupon> coupons = GetCustomerCoupons();
+        return coupons.stream()
+                .filter((coupon)-> coupon.getPrice()<maxPrice )
+                .toList();
     }
 
     @Override
@@ -111,6 +118,4 @@ public class CustomerServiceImpl implements CustomerService {
         return couponRepo.findById(couponId).orElseThrow(
                 () ->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));
     }
-
-
 }

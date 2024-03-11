@@ -24,17 +24,7 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     @Transactional
     void deleteByCompanyId(int companyId);
 
-    // Todo - Ask Zeev if my solution is correct:
-    //      convert coupons List to 'set'(in 'company' class)
-    //      and create 'coupons' set inside 'customer class - ?
-
-    // Customer Smart Dialect Queries
-    List<Coupon> findByCustomers_id(int customerId);
-    List<Coupon> findByCategoryAndCustomers_id(Category category, int customerId);
-    List<Coupon> findByPriceLessThanEqualAndCustomers_id(double price, int customerId);
-
     // Expired Coupons Job
     @Query(value = "SELECT * FROM coupons WHERE end_date <= DATE(NOW())", nativeQuery = true)
     List<Coupon> GetExpiredCoupons();
-
 }

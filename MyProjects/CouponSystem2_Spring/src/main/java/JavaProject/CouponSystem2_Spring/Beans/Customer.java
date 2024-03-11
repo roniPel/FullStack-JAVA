@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -52,5 +54,5 @@ public class Customer {
             cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn(name = "coupon_id")
     @JoinTable(name = "customers_vs_coupons")
-    private Set<Coupon> coupons;
+    private List<Coupon> coupons;
 }

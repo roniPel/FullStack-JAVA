@@ -113,7 +113,7 @@ public interface AdminService extends ClientService {
      * @param companyId - company Id - marking coupons to be deleted
      * @return true if succeeded, false if failed.
      */
-    boolean DeleteCompanyCoupons(int companyId);
+    boolean DeleteCompanyCoupons(int companyId) throws AdminException;
 
     /**
      * Deletes customer coupons (for a company that will be deleted)

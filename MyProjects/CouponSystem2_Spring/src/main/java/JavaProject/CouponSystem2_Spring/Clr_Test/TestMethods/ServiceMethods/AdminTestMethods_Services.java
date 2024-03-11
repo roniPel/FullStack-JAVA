@@ -197,8 +197,9 @@ public class AdminTestMethods_Services extends TestMethods {
         Customer customerToDelete = adminService.GetOneCustomer(delCustId);
         System.out.println(customerToDelete);
         // Delete company coupons + delete company
-        System.out.println("Deleted Customer? "+(
-                adminService.DeleteCustomerCoupons(delCustId) && adminService.DeleteCustomer(delCustId) ) );
+        //Todo - uncomment section?
+        //adminService.DeleteCustomerCoupons(delCustId) &&
+        System.out.println("Deleted Customer? "+(adminService.DeleteCustomer(delCustId) ) );
         System.out.println();
     }
 }

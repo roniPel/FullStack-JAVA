@@ -52,7 +52,7 @@ public class CustomerController {
      * @return coupons ArrayList if succeeded, null if failed.
      */
     @GetMapping(value = {"/GetCustomerCoupons"})
-    public List<Coupon> GetCustomerCoupons(){
+    public List<Coupon> GetCustomerCoupons() throws CustomerException {
         return customerService.GetCustomerCoupons();
     }
 
@@ -63,7 +63,7 @@ public class CustomerController {
      */
     @GetMapping("/GetCustomerCouponsByCategory/{category}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Coupon> GetCustomerCouponsByCategory(@PathVariable Category category) {
+    public List<Coupon> GetCustomerCouponsByCategory(@PathVariable Category category) throws CustomerException {
         return customerService.GetCustomerCouponsByCategory(category);
     }
 
@@ -74,7 +74,7 @@ public class CustomerController {
      */
     @GetMapping("/GetCustomerCouponsByMaxPrice/{maxPrice}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Coupon> GetCustomerCouponsByMaxPrice(@PathVariable double maxPrice) {
+    public List<Coupon> GetCustomerCouponsByMaxPrice(@PathVariable double maxPrice) throws CustomerException {
         return customerService.GetCustomerCouponsByMaxPrice(maxPrice);
     }
 

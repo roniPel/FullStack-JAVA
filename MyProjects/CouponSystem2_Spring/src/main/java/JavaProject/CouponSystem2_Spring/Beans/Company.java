@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,5 +51,5 @@ public class Company {
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JoinColumn(name = "company_id")
-    private Set<Coupon> coupons;
+    private List<Coupon> coupons;
 }

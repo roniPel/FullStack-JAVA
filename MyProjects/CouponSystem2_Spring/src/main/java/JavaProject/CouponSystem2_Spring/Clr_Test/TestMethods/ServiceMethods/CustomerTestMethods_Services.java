@@ -42,7 +42,7 @@ public class CustomerTestMethods_Services extends TestMethods {
      * Customer Method - Get Customer Coupons
      * @param customerService used to run method
      */
-    public void GetCustomerCoupons(CustomerService customerService)  {
+    public void GetCustomerCoupons(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Coupons ***");
         // Get all company coupons
         List<Coupon> coupons = customerService.GetCustomerCoupons();
@@ -56,7 +56,7 @@ public class CustomerTestMethods_Services extends TestMethods {
      * Customer Method - Get Customer Coupons by Category
      * @param customerService used to run method
      */
-    public void GetCustomerCouponsByCategory(CustomerService customerService) {
+    public void GetCustomerCouponsByCategory(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Coupons by Category ***");
         Category category = Category.GetRandomCategory();
         // Get customer coupons by category
@@ -71,7 +71,7 @@ public class CustomerTestMethods_Services extends TestMethods {
      * Customer Method - Get Customer Coupons by max price
      * @param customerService used to run method
      */
-    public void GetCustomerCouponsByMaxPrice(CustomerService customerService) {
+    public void GetCustomerCouponsByMaxPrice(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Coupons by Max Price ***");
         double price = Math.random()*maxPrice;
         // Get company coupons by max price

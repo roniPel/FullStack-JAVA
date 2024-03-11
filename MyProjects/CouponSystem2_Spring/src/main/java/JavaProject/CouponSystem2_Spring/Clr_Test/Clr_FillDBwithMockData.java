@@ -110,7 +110,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     }
                     else {
                         Coupon coupon = couponRepo.findById(couponID).orElseThrow( ()->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));
-                        customer.setCoupons(Set.of(coupon));
+                        customer.setCoupons(List.of(coupon));
                     }
                 }
                 // Update customers in DB

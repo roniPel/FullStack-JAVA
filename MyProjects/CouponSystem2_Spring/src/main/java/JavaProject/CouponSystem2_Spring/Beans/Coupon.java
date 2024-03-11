@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -62,6 +63,6 @@ public class Coupon {
     @Column(name = "image")
     private String image;
 
-    @ManyToMany(mappedBy = "coupons")
-    private Set<Customer> customers;
+//    @ManyToMany(mappedBy = "coupons")
+//    private List<Customer> customers;
 }
