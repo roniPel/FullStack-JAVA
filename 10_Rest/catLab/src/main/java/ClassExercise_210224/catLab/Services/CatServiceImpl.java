@@ -56,4 +56,29 @@ public class CatServiceImpl implements CatService{
         }
         return catRepo.findByNameAndWeight(name,weight);
     }
+
+    @Override
+    public List<Cat> GetCatsByNameOrWeight(String name, float weight) throws CatsException {
+        if(weight<0){
+            throw new CatsException(Errors.WEIGHT_ERROR);
+        }
+        return catRepo.findByNameOrWeight(name,weight);
+    }
+
+    @Override
+    public List<Cat> GetAllCatsOrderByWeightAsc() {
+        return catRepo.findAllByOrderByWeightAsc();
+    }
+
+    @Override
+    public List<Cat> GetAllCatsOrderByWeightDesc() {
+        return catRepo.findAllByOrderByWeightDesc();
+    }
+
+    @Override
+    public List<Cat> GetCatsByNameStartingWith(String name) {
+        return catRepo.findByNameStartingWith(name);
+    }
+
+
 }

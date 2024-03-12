@@ -2,7 +2,9 @@ package ClassExercise_210224.catLab.Clr;
 
 import ClassExercise_210224.catLab.Beans.Cat;
 import ClassExercise_210224.catLab.Beans.Toy;
+import ClassExercise_210224.catLab.Utils.CatUtilities;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -17,17 +19,29 @@ import java.util.List;
 @Order(4)
 @RequiredArgsConstructor
 public class Section7_RestTest implements CommandLineRunner {
-    private final RestTemplate restTemplate;
-
+    @Autowired
+    RestTemplate restTemplate;
+    @Autowired
+    CatUtilities catUtils;
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         PrintSectionHeader();
-        Rest_AddCat();
-        Rest_GetAllCats();
-        Rest_GetOneCat();
-        Rest_GetCatsByNameWeight();
-        Rest_DeleteCat();
-        Rest_UpdateCat();
+
+        try {
+            Rest_AddCat();
+            Rest_GetAllCats();
+            Rest_GetOneCat();
+            Rest_DeleteCat();
+            Rest_UpdateCat();
+            FindByWeight_Asc();
+            FindByWeight_Desc();
+            FindByNameWeight_AND();
+            FindByNameWeight_OR();
+            FindAllStartWith();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         PrintSectionFooter();
     }
 
@@ -39,9 +53,10 @@ public class Section7_RestTest implements CommandLineRunner {
 
     private void Rest_UpdateCat() {
         System.out.println("*** Method: Update Cat ***");
-        int id = 11;
+        int id = catUtils.GetRandomIdFromList(GetAllCats());
         // Part 1 - Get
-        Cat updateCat = restTemplate.getForObject("http://localhost:8080/api/catLab/"+id,Cat.class);
+        Cat updateCat = restTemplate.getForObject(
+                "http://localhost:8080/api/catLab/GetSingleCat/"+id,Cat.class);
 
         // Part 2 - Update
         updateCat.setName("Updated by Rest "+updateCat.getName());
@@ -49,52 +64,32 @@ public class Section7_RestTest implements CommandLineRunner {
 
         // Part 3 - Put
         restTemplate.put
-                ("http://localhost:8080/api/catLab/"+updateCat.getId(),updateCat);
+                ("http://localhost:8080/api/catLab/UpdateCat/"+updateCat.getId(),updateCat);
         System.out.println("Cat "+updateCat.getId()+" was updated");
-        System.out.println();
-    }
-
-    private void Rest_GetCatsByNameWeight() {
-        System.out.println("*** Method: Get Cats by Name and Weight ***");
-        String name = "Johnny";
-        float weight = 3.0f;
-        try {
-            Cat[] cats = restTemplate.getForObject
-                    ("http://localhost:8080/api/catLab/"+name+"/"+weight, Cat[].class);
-            List<Cat> catsList = Arrays.stream(cats).toList();
-            catsList.forEach(System.out::println);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         System.out.println();
     }
 
     private void Rest_DeleteCat() {
         System.out.println("*** Method: Delete Cat ***");
-        int id = 27;
-        try{
-            restTemplate.delete("http://localhost:8080/api/catLab/"+id);
-            System.out.println("Cat with id "+id+" was deleted.");
-        } catch(Exception err){
-            System.out.println(err.getMessage());
-        }
+        int id = catUtils.GetRandomIdFromList(GetAllCats());
+        restTemplate.delete(
+                "http://localhost:8080/api/catLab/DeleteCat/"+id);
+        System.out.println("Cat with id "+id+" was deleted.");
         System.out.println();
     }
 
     private void Rest_GetOneCat() {
         System.out.println("*** Method: Get One Cat ***");
-        int id = 10;
-        try{
-            Cat response = restTemplate.getForObject("http://localhost:8080/api/catLab/"+id,Cat.class);
-            System.out.println(response);
-        } catch (Exception err){
-            System.out.println(err.getMessage());
-        }
+        int id = catUtils.GetRandomIdFromList(GetAllCats());
+        Cat response = restTemplate.getForObject(
+                "http://localhost:8080/api/catLab/GetSingleCat/"+id,Cat.class);
+        System.out.println(response);
         System.out.println();
     }
 
     private void Rest_AddCat() {
         System.out.println("*** Method: Add Cat ***");
+        // Create Cats
         Cat cat1 = Cat.builder()
                 .name("Rest Cat3 Add")
                 .weight(5.0f)
@@ -107,30 +102,22 @@ public class Section7_RestTest implements CommandLineRunner {
                 .toy(new Toy("Ball"))
                 .build();
 
-        try{
-            ResponseEntity<String> responsePost = restTemplate.postForEntity
-                    ("http://localhost:8080/api/catLab",cat1,String.class);
-            System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?
-                    "Cat was created":"Cat was NOT created");
-            ResponseEntity<String> responsePost2 = restTemplate.postForEntity
-                    ("http://localhost:8080/api/catLab",cat2,String.class);
-            System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?
-                    "Cat was created":"Cat was NOT created");
-        }catch (Exception err){
-            System.out.println(err.getMessage());
-        }
+        // Save cats in DB (via Rest)
+        ResponseEntity<String> responsePost = restTemplate.postForEntity
+                ("http://localhost:8080/api/catLab/AddCat",cat1,String.class);
+        System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?
+                "Cat was created":"Cat was NOT created");
+        ResponseEntity<String> responsePost2 = restTemplate.postForEntity
+                ("http://localhost:8080/api/catLab/AddCat",cat2,String.class);
+        System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?
+                "Cat was created":"Cat was NOT created");
         System.out.println();
     }
 
     private void Rest_GetAllCats() {
         System.out.println("*** Method: Get All Cats ***");
-        try {
-            Cat[] cats = restTemplate.getForObject("http://localhost:8080/api/catLab", Cat[].class);
-            List<Cat> catsList = Arrays.stream(cats).toList();
-            catsList.forEach(System.out::println);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
+        List<Cat> catsList = GetAllCats();
+        catsList.forEach(System.out::println);
         System.out.println();
     }
 
@@ -140,5 +127,61 @@ public class Section7_RestTest implements CommandLineRunner {
         System.out.println("***************          Section: REST API          ***************");
         System.out.println("*******************************************************************");
         System.out.println();
+    }
+
+    private void FindAllStartWith() {
+        System.out.println("*** Method: Get Cats Who's Name Starts With - ***");
+        String name = "Jo";
+        Cat[] cats = restTemplate.getForObject
+                ("http://localhost:8080/api/catLab/GetCatsByNameStartingWith/"+name, Cat[].class);
+        List<Cat> catsList = Arrays.stream(cats).toList();
+        catsList.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private void FindByWeight_Desc() {
+        System.out.println("*** Method: Get All Cats, Order By Weight - Desc ***");
+        Cat[] cats = restTemplate.getForObject(
+                "http://localhost:8080/api/catLab/GetAllCatsOrderByWeightDesc", Cat[].class);
+        List<Cat> catsList = Arrays.stream(cats).toList();
+        catsList.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private void FindByWeight_Asc() {
+        System.out.println("*** Method: Get All Cats, Order By Weight - Asc ***");
+        Cat[] cats = restTemplate.getForObject(
+                "http://localhost:8080/api/catLab/GetAllCatsOrderByWeightAsc", Cat[].class);
+        List<Cat> catsList = Arrays.stream(cats).toList();
+        catsList.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private void FindByNameWeight_OR() {
+        System.out.println("*** Method: Get Cats by Name or Weight ***");
+        String name = "Johnny";
+        float weight = 3.0f;
+        Cat[] cats = restTemplate.getForObject
+                ("http://localhost:8080/api/catLab/GetCatByNameOrWeight/"+name+"/"+weight, Cat[].class);
+        List<Cat> catsList = Arrays.stream(cats).toList();
+        catsList.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private void FindByNameWeight_AND() {
+        System.out.println("*** Method: Get Cats by Name and Weight ***");
+        String name = "Johnny";
+        float weight = 3.0f;
+        Cat[] cats = restTemplate.getForObject
+                ("http://localhost:8080/api/catLab/GetCatByNameAndWeight/"+name+"/"+weight, Cat[].class);
+        List<Cat> catsList = Arrays.stream(cats).toList();
+        catsList.forEach(System.out::println);
+        System.out.println();
+    }
+
+    private List<Cat> GetAllCats() {
+        Cat[] cats = restTemplate.getForObject(
+                "http://localhost:8080/api/catLab/GetAllCats", Cat[].class);
+        return Arrays.stream(cats).toList();
     }
 }

@@ -3,7 +3,9 @@ package ClassExercise_210224.catLab.Clr;
 import ClassExercise_210224.catLab.Beans.Cat;
 import ClassExercise_210224.catLab.Beans.Toy;
 import ClassExercise_210224.catLab.Exceptions.CatsException;
+import ClassExercise_210224.catLab.Services.CatService;
 import ClassExercise_210224.catLab.Services.CatServiceImpl;
+import ClassExercise_210224.catLab.Utils.CatUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -11,21 +13,26 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-//@Component
+@Component
 @Order(3)
 public class Section6_TestServices implements CommandLineRunner {
-
     @Autowired
-    private CatServiceImpl catService;
+    CatUtilities catUtils;
+    @Autowired
+    CatService catService;
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         PrintSectionHeader();
-        Service_AddCat();
-        Service_UpdateCat();
-        Service_GetAllCats();
-        Service_GetOneCat();
-        Service_GetCatsByNameWeight();
-        Service_DeleteCat();
+        try {
+            Service_AddCat();
+            Service_UpdateCat();
+            Service_GetAllCats();
+            Service_GetOneCat();
+            Service_GetCatsByNameWeight();
+            Service_DeleteCat();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void PrintSectionHeader() {
@@ -36,28 +43,20 @@ public class Section6_TestServices implements CommandLineRunner {
         System.out.println();
     }
 
-    private void Service_GetCatsByNameWeight()  {
+    private void Service_GetCatsByNameWeight() throws CatsException {
         System.out.println("*** Method: Get Cats By Name and Weight ***");
         String name = "Mitzi";
         Float weight = 5.0f;
-        try {
         List<Cat> catsNameWeight = catService.GetCatsByNameAndWeight(name,weight);
         catsNameWeight.forEach(System.out::println);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         System.out.println();
     }
 
-    private void Service_GetOneCat() {
+    private void Service_GetOneCat() throws CatsException {
         System.out.println("*** Method: Get One Cat ***");
-        int id = 5;
-        try {
+        int id = catUtils.GetRandomIdFromList(catService.GetAllCats());
         Cat getOneCatById = catService.GetOneCatById(id);
         System.out.println(getOneCatById);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         System.out.println();
     }
 
@@ -68,34 +67,27 @@ public class Section6_TestServices implements CommandLineRunner {
         System.out.println();
     }
 
-    private void Service_DeleteCat() {
+    private void Service_DeleteCat() throws CatsException {
         System.out.println("*** Method: Delete Cat ***");
-        int id = 7;
-        try {
-            catService.DeleteCatById(id);
-            System.out.println("Cat " + id + " was deleted");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        int id = catUtils.GetRandomIdFromList(catService.GetAllCats());;
+        catService.DeleteCatById(id);
+        System.out.println("Cat " + id + " was deleted");
+
         System.out.println();
     }
 
-    private void Service_UpdateCat() {
+    private void Service_UpdateCat() throws CatsException {
         System.out.println("*** Method: Update Cat ***");
-        int id = 1;
-        try {
-            Cat updateCat = catService.GetOneCatById(id);
-            updateCat.setName("Updated " + updateCat.getName());
-            updateCat.setWeight(8.8f);
-            catService.UpdateCat(updateCat);
-            System.out.println("Cat " + id + " was updated");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        int id = catUtils.GetRandomIdFromList(catService.GetAllCats());;
+        Cat updateCat = catService.GetOneCatById(id);
+        updateCat.setName("Updated " + updateCat.getName());
+        updateCat.setWeight(8.8f);
+        catService.UpdateCat(updateCat);
+        System.out.println("Cat " + id + " was updated");
         System.out.println();
     }
 
-    private void Service_AddCat() {
+    private void Service_AddCat() throws CatsException {
         System.out.println("*** Method: Add Cat ***");
         Cat cat1 = Cat.builder()
                 .name("Service Cat1 Add")
@@ -109,17 +101,11 @@ public class Section6_TestServices implements CommandLineRunner {
                 .toy(new Toy("Ball"))
                 .build();
 
-        try {
-            catService.AddCat(cat1);
-            System.out.println("Cat was added!");
-
-            catService.AddCat(cat2);
-            System.out.println("Cat was added!");
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        // Add Cats
+        catService.AddCat(cat1);
+        System.out.println("Cat was added!");
+        catService.AddCat(cat2);
+        System.out.println("Cat was added!");
         System.out.println();
     }
 }

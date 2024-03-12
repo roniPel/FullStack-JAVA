@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface CatService {
     void AddCat(Cat cat) throws CatsException;
-
     void UpdateCat(Cat cat) throws CatsException;
-
     void DeleteCatById(int id) throws CatsException;
     List<Cat> GetAllCats();
     Cat GetOneCatById(int id) throws CatsException;
     List<Cat> GetCatsByNameAndWeight(String name, Float weight) throws CatsException;
+    List<Cat> GetCatsByNameOrWeight(String name, float weight) throws CatsException;
+    List<Cat> GetAllCatsOrderByWeightAsc();
+    List<Cat> GetAllCatsOrderByWeightDesc();
+    List<Cat> GetCatsByNameStartingWith(String name);
 }

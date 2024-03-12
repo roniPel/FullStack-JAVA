@@ -3,6 +3,7 @@ package ClassExercise_210224.catLab.Clr;
 import ClassExercise_210224.catLab.Beans.Cat;
 import ClassExercise_210224.catLab.Beans.Toy;
 import ClassExercise_210224.catLab.Repositories.CatRepository;
+import ClassExercise_210224.catLab.Utils.CatUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -12,20 +13,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-//@Component
+@Component
 @Order(1)
 public class Section3_CRUD implements CommandLineRunner {
 
     @Autowired
+    CatUtilities catUtils;
+    @Autowired
     private CatRepository catRepo;
     @Override
-    public void run(String... args) throws Exception {
-        PrintSectionHeader();
-        CreateCats();
-        UpdateCat();
-        DeleteCatById();
-        GetOneCatById();
-        GetAllCats();
+    public void run(String... args)  {
+        try {
+            PrintSectionHeader();
+            CreateCats();
+            UpdateCat();
+            DeleteCatById();
+            GetOneCatById();
+            GetAllCats();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void PrintSectionHeader() {
@@ -40,28 +47,32 @@ public class Section3_CRUD implements CommandLineRunner {
         List<Cat> allCats = catRepo.findAll();
         System.out.println("All cats: ");
         allCats.forEach(System.out::println);
+        System.out.println();
     }
 
     private void GetOneCatById() {
-        int id = 3;
+        int id = catUtils.GetRandomIdFromList(catRepo.findAll());
         Optional<Cat> getCat = catRepo.findById(id);
         System.out.println("Get one cat: ");
         getCat.ifPresent(System.out::println);
+        System.out.println();
     }
 
     private void DeleteCatById() {
-        int id = 3;
+        int id = catUtils.GetRandomIdFromList(catRepo.findAll());;
         Optional<Cat> deleteCat = catRepo.findById(id);
         deleteCat.ifPresent((cat)->{
             // Delete cat, but keep the toys
             cat.setToys(null);
             catRepo.deleteById(id);
         });
+        System.out.println();
     }
 
     private void UpdateCat() {
+        int id = catUtils.GetRandomIdFromList(catRepo.findAll());
         // Part 1 - get cat by ID
-        Optional<Cat> updateCat = catRepo.findById(2);
+        Optional<Cat> updateCat = catRepo.findById(id);
         // Part 2 - print cat
         System.out.println("Cat before update: ");
         updateCat.ifPresent(System.out::println);
@@ -72,6 +83,7 @@ public class Section3_CRUD implements CommandLineRunner {
             // Part 4 - save changes now
             catRepo.saveAndFlush(cat);
         });
+        System.out.println();
     }
 
     public void CreateCats(){
@@ -95,6 +107,7 @@ public class Section3_CRUD implements CommandLineRunner {
 
         catRepo.saveAll(Arrays.asList(cat1,cat2,cat3));
         System.out.println("Cats were created. ");
+        System.out.println();
     }
 
 }
