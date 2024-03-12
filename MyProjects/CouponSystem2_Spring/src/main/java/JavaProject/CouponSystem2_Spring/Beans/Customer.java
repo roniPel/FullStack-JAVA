@@ -50,8 +50,7 @@ public class Customer {
     private String password;
 
     @Singular
-    @ManyToMany(targetEntity = Coupon.class,
-            cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Coupon.class)
     @PrimaryKeyJoinColumn(name = "coupon_id")
     @JoinTable(name = "customers_vs_coupons")
     private List<Coupon> coupons;
