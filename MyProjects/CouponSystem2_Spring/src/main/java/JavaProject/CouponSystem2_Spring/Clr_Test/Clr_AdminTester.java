@@ -33,10 +33,6 @@ public class Clr_AdminTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
 
         try {
-            //Todo - Remove check logon section and logon details? (Ask Zeev)
-            // Check logon
-            //AdminService adminService = (AdminService) LoginManager.Login(email, password, ClientType.Administrator);
-
             // Run all Admin methods - via services
             Admin_RunAllMethods_Services(adminService);
 

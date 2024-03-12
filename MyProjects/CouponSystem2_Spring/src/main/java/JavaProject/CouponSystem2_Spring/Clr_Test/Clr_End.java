@@ -16,8 +16,6 @@ public class Clr_End implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         PrintSystemEndMessage();
-        //Todo - uncomment before hand-in? (Ask Zeev)
-        //System.exit(0);
     }
 
     /**

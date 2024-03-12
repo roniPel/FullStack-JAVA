@@ -42,9 +42,6 @@ public class CouponsAdvice {
             String errorMessage = ((FieldError) error).getDefaultMessage();
             errors.put(fieldName,errorMessage);
         });
-        //Todo - Delete 'sout' section below?
-        System.out.println("Guest Advice: ");
-        System.out.println(exception.getConstraintViolations());
         return errors;
     }
 
@@ -62,9 +59,6 @@ public class CouponsAdvice {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName,errorMessage);
         });
-        //Todo - Delete 'sout' section below?
-        System.out.println("Guest Advice: ");
-        System.out.println(exception.getBindingResult().getAllErrors());
         return errors;
     }
 

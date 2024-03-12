@@ -42,9 +42,6 @@ public class CustomerAdvice {
             String errorMessage = ((FieldError) error).getDefaultMessage();
             errors.put(fieldName,errorMessage);
         });
-        //Todo - Delete 'sout' section below?
-        System.out.println("Customer Advice: ");
-        System.out.println(exception.getConstraintViolations());
         return errors;
     }
 
@@ -62,9 +59,6 @@ public class CustomerAdvice {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName,errorMessage);
         });
-        //Todo - Delete 'sout' section below?
-        System.out.println("Customer Advice: ");
-        System.out.println(exception.getBindingResult().getAllErrors());
         return errors;
     }
 }

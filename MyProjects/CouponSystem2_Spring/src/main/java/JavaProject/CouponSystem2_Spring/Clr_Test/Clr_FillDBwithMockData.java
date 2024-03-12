@@ -36,7 +36,6 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        // Todo - Delete method? FillInCategoryTable();
         PrepareSystemData();
 
         // Data to insert into DB
@@ -239,24 +238,5 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .build();
             companyRepo.save(company);
         }
-    }
-
-    /**
-     * Fills in category table with all categories in 'Category' Enum
-     * @return true if succeeded, false if failed.
-     */
-    //Todo - delete method?
-    public boolean FillInCategoryTable() {
-        String category;
-
-        // Prepare params Map with Category values
-        Map<Integer,Object> params = new HashMap<>();
-        int counter = 1;
-        for (int i = 0; i < Category.values().length; i++) {
-            category = String.valueOf(Category.values()[i]);
-            params.put(counter,category);
-            counter++;
-        }
-        return false;
     }
 }

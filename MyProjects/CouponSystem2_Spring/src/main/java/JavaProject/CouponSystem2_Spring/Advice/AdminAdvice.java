@@ -27,8 +27,6 @@ public class AdminAdvice {
         return new ErrorDetails("Admin Error",exception.getMessage());
     }
 
-    //Todo - Ask Zeev if format is correct
-
     /**
      * Method used to handle errors arriving from a Constraint Violation Exception
      * @param exception exception received
@@ -43,9 +41,6 @@ public class AdminAdvice {
             String errorMessage = ((FieldError) error).getDefaultMessage();
             errors.put(fieldName,errorMessage);
         });
-        //Todo - Delete 'sout' section below?
-        System.out.println("Admin Advice: ");
-        System.out.println(exception.getConstraintViolations());
         return errors;
     }
 
@@ -63,9 +58,6 @@ public class AdminAdvice {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName,errorMessage);
         });
-        //Todo - Delete 'sout' section below?
-        System.out.println("Admin Advice: ");
-        System.out.println(exception.getBindingResult().getAllErrors());
         return errors;
     }
 

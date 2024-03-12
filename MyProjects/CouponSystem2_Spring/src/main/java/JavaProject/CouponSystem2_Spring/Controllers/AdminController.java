@@ -127,7 +127,6 @@ public class AdminController {
     @DeleteMapping("/DeleteCustomer/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void DeleteCustomer(@PathVariable int id) throws AdminException {
-        adminService.DeleteCustomerCoupons(id);
         adminService.DeleteCustomer(id);
     }
 }

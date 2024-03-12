@@ -33,9 +33,6 @@ public class Clr_CustomerTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("customerPassword");
 
         try {
-            //Todo - Remove check logon section and logon details
-            //CustomerService customerService = (CustomerService) LoginManager.Login(email, password, ClientType.Customer);
-
             // Check logon
             if(customerTestMethods_services.CheckLogin(email,password,customerService)) {
                 // Run all methods - services

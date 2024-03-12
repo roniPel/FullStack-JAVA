@@ -44,9 +44,6 @@ public class Clr_CompanyTester implements CommandLineRunner {
             String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
             String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
 
-            //Todo - Remove check logon section  and logon details
-            //CompanyService companyService = (CompanyService) LoginManager.Login(email, password, ClientType.Company);
-
             // Check logon
             if(companyTestMethods_services.CheckLogin(email,password,companyService)) {
                 // Run all methods - Services

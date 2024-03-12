@@ -114,11 +114,4 @@ public interface AdminService extends ClientService {
      * @return true if succeeded, false if failed.
      */
     boolean DeleteCompanyCoupons(int companyId) throws AdminException;
-
-    /**
-     * Deletes customer coupons (for a company that will be deleted)
-     * @param customerId - customer Id - marking coupons to be deleted
-     * @return true if succeeded, false if failed.
-     */
-    boolean DeleteCustomerCoupons(int customerId);
 }

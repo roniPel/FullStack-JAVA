@@ -255,13 +255,6 @@ public class AdminServiceImpl implements AdminService {
         return true;
     }
 
-    //Todo - delete method?
-    @Override
-    public boolean DeleteCustomerCoupons(int customerId) {
-        couponRepo.deleteAllInBatch(customerRepo.findById(customerId).get().getCoupons());
-        return true;
-    }
-
     /**
      * Add customer with coupons from all categories
      * @return the new customer id
