@@ -1,0 +1,15 @@
+package com.JohnBryce.Exam130324.Repositories;
+
+import com.JohnBryce.Exam130324.Beans.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+    List<Student> findByName(String name);
+
+    //Todo - check correct query in SQL
+    @Query(value = "SELECT avg(score) FROM grades g JOIN students_grades svg WHERE svg.student_id = ?", nativeQuery = true)
+    Double findAverageStudentGrade(Long studentId);
+}
