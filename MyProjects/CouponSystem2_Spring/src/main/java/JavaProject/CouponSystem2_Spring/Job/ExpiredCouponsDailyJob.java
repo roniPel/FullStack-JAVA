@@ -40,6 +40,7 @@ public class ExpiredCouponsDailyJob {
      * @param deletedCoupons - Array of expired coupons that were deleted from DB
      */
     private void PrintCouponJobStatus(List<Coupon> deletedCoupons) {
+        System.out.println();
         System.out.println("--------     COUPON JOB STATUS     --------");
         System.out.println("| Coupon Expiration Job ran successfully.  |");
         System.out.println("| The coupons that were deleted due to     |\n" +

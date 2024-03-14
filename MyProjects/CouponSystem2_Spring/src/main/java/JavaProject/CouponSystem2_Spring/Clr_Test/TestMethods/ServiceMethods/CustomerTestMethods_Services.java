@@ -41,6 +41,7 @@ public class CustomerTestMethods_Services extends TestMethods {
     /**
      * Customer Method - Get Customer Coupons
      * @param customerService used to run method
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     public void GetCustomerCoupons(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Coupons ***");
@@ -55,6 +56,7 @@ public class CustomerTestMethods_Services extends TestMethods {
     /**
      * Customer Method - Get Customer Coupons by Category
      * @param customerService used to run method
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     public void GetCustomerCouponsByCategory(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Coupons by Category ***");
@@ -70,6 +72,7 @@ public class CustomerTestMethods_Services extends TestMethods {
     /**
      * Customer Method - Get Customer Coupons by max price
      * @param customerService used to run method
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     public void GetCustomerCouponsByMaxPrice(CustomerService customerService) throws CustomerException {
         System.out.println("*** Method: Get Customer Coupons by Max Price ***");

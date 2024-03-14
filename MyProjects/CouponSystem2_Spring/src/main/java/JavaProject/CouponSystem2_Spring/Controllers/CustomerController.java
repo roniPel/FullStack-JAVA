@@ -50,6 +50,7 @@ public class CustomerController {
     /**
      * Get all the coupons listed in DB for the customer logged on
      * @return coupons ArrayList if succeeded, null if failed.
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     @GetMapping(value = {"/GetCustomerCoupons"})
     public List<Coupon> GetCustomerCoupons() throws CustomerException {
@@ -60,6 +61,7 @@ public class CustomerController {
      * Get all the coupons listed in DB for the logged on customer belonging to a specific category
      * @param category - category of coupons to add to coupon list
      * @return coupons ArrayList if succeeded, null if no coupons matching category were found.
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     @GetMapping("/GetCustomerCouponsByCategory/{category}")
     @ResponseStatus(HttpStatus.OK)
@@ -71,6 +73,7 @@ public class CustomerController {
      * Get all the coupons listed in DB for the logged on customer up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
      * @return coupons ArrayList if succeeded, null if no coupons matching max price were found.
+     * @throws CustomerException If we get any exception.  Details are provided
      */
     @GetMapping("/GetCustomerCouponsByMaxPrice/{maxPrice}")
     @ResponseStatus(HttpStatus.OK)
@@ -82,6 +85,7 @@ public class CustomerController {
      * Get one coupon
      * @param id id belonging to the coupon requested
      * @return coupon object with the requested coupon details
+     * @throws CustomerException If we get any exception.  Details are provided
      * @throws CustomerException If we get any exception.  Details are provided
      */
     @GetMapping("/GetOneCoupon/{id}")

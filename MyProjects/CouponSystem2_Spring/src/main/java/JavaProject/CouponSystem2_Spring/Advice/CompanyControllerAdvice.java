@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Company Advice Class - used to advise user regarding system errors
+ * Company Controller Advice Class - used to advise user regarding system errors
  */
 @RestControllerAdvice
-public class CompanyAdvice {
+public class CompanyControllerAdvice {
     /**
      * Method used to handle errors arriving from Company Exceptions
      * @param exception exception received
@@ -32,7 +32,7 @@ public class CompanyAdvice {
      * @param exception exception received
      * @return A map of errors containing field name, and error details
      */
-    @ExceptionHandler(value = ConstraintViolationException.class)
+    @ExceptionHandler(value = {ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> HandleConstraintViolationExceptions(ConstraintViolationException exception) {
         Map<String,String> errors = new HashMap<>();
@@ -49,7 +49,7 @@ public class CompanyAdvice {
      * @param exception exception received
      * @return A map of errors containing field name, and error details
      */
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> HandleValidationExceptions(MethodArgumentNotValidException exception) {
         Map<String,String> errors = new HashMap<>();
