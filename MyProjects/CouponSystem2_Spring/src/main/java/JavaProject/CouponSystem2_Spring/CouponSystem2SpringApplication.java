@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
 		//Todo - Test All Exceptions/ behavior
+		//Todo = Add 'Guest' user - controller, exceptions, services, advice, etc.. (see 'todo's)
 		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
 		ApplicationContext ctx = SpringApplication.run(CouponSystem2SpringApplication.class, args);
 	}
