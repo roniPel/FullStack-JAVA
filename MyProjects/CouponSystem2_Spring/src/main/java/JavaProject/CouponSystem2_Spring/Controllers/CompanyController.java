@@ -20,24 +20,15 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("api/Company")
-public class CompanyController {
+public class CompanyController extends ClientController{
     @Autowired
     CompanyService companyService;
 
-//    /**
-//     * Gets a company (according to the company ID belonging to the company logged on)
-//     * @param id company Id of the company requested
-//     * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
-//     * @throws CompanyException If we get any exception.  Details are provided
-//     */
-//    @GetMapping(value = {"/GetCompanyDetails/{id}"})
-//    @ResponseStatus(HttpStatus.OK)
-//    public Company GetCompanyDetails(@PathVariable int id) throws CompanyException {
-//        return companyService.GetOneCompany(id);
-//    }
-
-    //Todo - How to pass on companyId to controller?
-
+    //Todo - write 'login' method - part 3
+    @Override
+    boolean login(String email, String password) {
+        return false;
+    }
     /**
      * Gets a company (according to the company ID belonging to the company logged on)
      * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
@@ -113,6 +104,8 @@ public class CompanyController {
         return companyService.GetCompanyCouponsByMaxPrice(maxPrice);
     }
 
+    //Todo - Consider deleting 'GetOneCoupon' below - if not needed
+
     /**
      * Get one coupon
      * @param id id belonging to the coupon requested
@@ -124,4 +117,6 @@ public class CompanyController {
     public Coupon GetOneCoupon(@PathVariable int id) throws CompanyException{
         return companyService.GetOneCoupon(id);
     }
+
+
 }

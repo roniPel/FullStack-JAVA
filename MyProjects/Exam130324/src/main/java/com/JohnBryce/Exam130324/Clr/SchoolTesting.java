@@ -56,7 +56,6 @@ public class SchoolTesting implements CommandLineRunner {
         System.out.println("Deleted Student? true");
         System.out.println();
     }
-
     private void Method_GetStudentAverage() {
         System.out.println("*** Method: Get Student Average ***");
         List<Student> students = GetListOfAllStudents();

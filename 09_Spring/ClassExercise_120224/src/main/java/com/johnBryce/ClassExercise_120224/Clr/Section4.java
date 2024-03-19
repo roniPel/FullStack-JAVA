@@ -21,24 +21,24 @@ public class Section4 implements CommandLineRunner {
     ToyRepository toyRepo;
     @Override
     public void run(String... args) throws Exception {
-        // Part 1 - Get all cats by weight and name
+        // Part 6 - Get all cats by weight and name
         System.out.println("All cats by weight and name: ");
         List<Cat> allCats = catRepo.findByNameAndWeight("Geula2", 4.8F);
         allCats.forEach(System.out::println);
         System.out.println();
 
-        // Part 2 - Get all cats by weight or name
+        // Part 7 - Get all cats by weight or name
         System.out.println("All cats by weight or name: ");
         List<Cat> allCats2 = catRepo.findByNameOrWeight("Geula2", 4.8F);
         allCats2.forEach(System.out::println);
         System.out.println();
 
-        // Part 3 - Get all cats by weight Desc
+        // Part 8 - Get all cats by weight Desc
         String sortBy = "weight";
         String sortDir = "desc";
         Sort sort = setSort(sortBy,sortDir);
 
-        System.out.println("All cats sorted by weight, Desc: ");
+        /*System.out.println("All cats sorted by weight, Desc: ");
         List<Cat> allCats3 = catRepo.findAll(sort);
         allCats3.forEach(System.out::println);
         System.out.println();
@@ -49,7 +49,25 @@ public class Section4 implements CommandLineRunner {
         sort = setSort(sortBy,sortDir);
         List<Cat> allCats4 = catRepo.findAll(sort);
         allCats4.forEach(System.out::println);
+        System.out.println();*/
+
+        // Part 8 - Weight Asc
+        System.out.println("All cats by weight asc: ");
+        List<Cat> catsAsc = catRepo.findAllByOrderByWeightAsc();
+        catsAsc.forEach(System.out::println);
         System.out.println();
+
+        // Part 9 - Weight Dsc
+        System.out.println("All cats by weight desc: ");
+        List<Cat> catsDsc = catRepo.findAllByOrderByWeightDesc();
+        catsAsc.forEach(System.out::println);
+        System.out.println();
+
+        // Part 10
+        String letter = "B";
+        List<Cat> catsByLetter = catRepo.findByNameStartingWith(letter);
+        System.out.println("All cats by letter starting with: "+letter);
+        catsByLetter.forEach(System.out::println);
     }
     public Sort setSort(String sortBy, String sortDir){
         return sortDir.equalsIgnoreCase(Sort.Direction.ASC.name() )?

@@ -6,6 +6,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErro
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
@@ -18,7 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //@Component
 public class LoginManager {
     // Todo - Delete LoginManager class? Or finish writing method + implement in code(?)
-    private static final LogonUtil logonUtil = new LogonUtil();
+    @Autowired
+    private static LogonUtil logonUtil;
     @Autowired
     private static CompanyService companyService;
     @Autowired
@@ -34,8 +36,9 @@ public class LoginManager {
      * @throws AdminException If we get any exception.  Details are provided
      * @throws CompanyException If we get any exception.  Details are provided
      * @throws CustomerException If we get any exception.  Details are provided
+     * @throws GuestException If we get any exception.  Details are provided
      */
-    public static ClientService Login(String email, String password, ClientType clientType) throws AdminException, CompanyException, CustomerException {
+    public static ClientService Login(String email, String password, ClientType clientType) throws AdminException, CompanyException, CustomerException, GuestException {
         ClientService clientService;
         // Part 1 - Initialize client service based on client type (initial ID used will be updated when running 'CheckLogin' method)
         switch (clientType) {
@@ -67,7 +70,7 @@ public class LoginManager {
      * @throws AdminException,CompanyException,CustomerException If we get any exception.  Details are provided
      */
     private static boolean CheckLogin(String email, String password, ClientService clientService)
-            throws AdminException,CompanyException,CustomerException {
+            throws AdminException, CompanyException, CustomerException, GuestException {
         return clientService.Login(email, password);
     }
 }

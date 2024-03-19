@@ -1,8 +1,8 @@
 package com.johnBryce.ClassExercise_120224.Service;
 
 import com.johnBryce.ClassExercise_120224.Beans.Cat;
-import com.johnBryce.ClassExercise_120224.ErrorManagement.CatsException;
-import com.johnBryce.ClassExercise_120224.ErrorManagement.Errors;
+import com.johnBryce.ClassExercise_120224.Exceptions.CatsException;
+import com.johnBryce.ClassExercise_120224.Exceptions.Errors;
 import com.johnBryce.ClassExercise_120224.Repositories.CatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class CatServiceImpl implements CatService{
     }
 
     @Override
-    public List<Cat> FindAllCats() throws CatsException {
+    public List<Cat> FindAllCats(){
         return catRepo.findAll();
     }
 

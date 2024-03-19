@@ -17,9 +17,15 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("api/Admin")
-public class AdminController {
+public class AdminController extends ClientController {
     @Autowired
     AdminService adminService;
+
+    //Todo - write 'login' method - part 3
+    @Override
+    boolean login(String email, String password) {
+        return false;
+    }
 
     /**
      * Get all Companies

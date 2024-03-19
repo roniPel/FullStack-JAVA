@@ -1,7 +1,10 @@
 package JavaProject.CouponSystem2_Spring.Login;
 
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
+import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
+import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,15 +37,26 @@ public class LogonUtil {
      */
     public void PrepareData_CustomerCompanyLogons(int companyId) throws AdminException{
         // Prepare data for company login (create a company with all coupons)
-        String[] compDetails =adminService.AddCompanyDetailsForLogin();
+        String[] compDetails = adminService.AddCompanyDetailsForLogin();
         // Prepare data for customer login (create a customer with all coupons)
-        String[] custDetails =adminService.AddCustomerDetailsForLogin(companyId);
+        String[] custDetails = adminService.AddCustomerDetailsForLogin(companyId);
+        // Prepare data for guest login
+        String guestEmail = "guest@email.com";
+        String guestPassword = "guestPass";
+        adminService.AddCustomer(Customer.builder()
+                        .firstName("GuestFirst")
+                        .lastName("GuestLast")
+                        .email(guestEmail)
+                        .password(guestPassword)
+                .build());
 
         // Add details to map:
         emailsPassowrdsMap.put("companyEmail",compDetails[0]);
         emailsPassowrdsMap.put("companyPassword",compDetails[1]);
         emailsPassowrdsMap.put("customerEmail",custDetails[0]);
         emailsPassowrdsMap.put("customerPassword",custDetails[1]);
+        emailsPassowrdsMap.put("guestEmail",guestEmail);
+        emailsPassowrdsMap.put("guestPassword",guestPassword);
     }
     private void PrepareData_AdminLogon() {
         emailsPassowrdsMap = new HashMap<>();

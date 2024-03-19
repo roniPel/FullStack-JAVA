@@ -12,4 +12,9 @@ public interface CatRepository extends JpaRepository<Cat, Integer> {
     List<Cat> findByNameAndWeight(String name, float weight);
     List<Cat> findByNameOrWeight(String name, float weight);
 
+    List<Cat> findAllByOrderByWeightAsc();
+    List<Cat> findAllByOrderByWeightDesc();
+
+    List<Cat> findByNameStartingWith(String name);
+
 }

@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByName(String name);
-
-    //Todo - check correct query in SQL
     @Query(value = "SELECT avg(score) FROM grades g JOIN students_grades svg ON svg.grades_id = g.id WHERE svg.student_id = ?",
             nativeQuery = true)
     Double findAverageStudentGrade(Long studentId);

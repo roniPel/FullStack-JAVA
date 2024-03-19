@@ -38,8 +38,8 @@ public class Clr_CustomerTester implements CommandLineRunner {
                 // Run all methods - services
                 Customer_RunAllMethods_Services(customerService);
                 //Run all methods - Rest
-                //Todo - how to send customerId to controller for testing?
-                // Uncomment section below
+
+                // Todo - Uncomment section below (part 3)
                 //Customer_RunAllMethods_Rest();
             }
         } catch (Exception e) {

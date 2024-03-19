@@ -6,6 +6,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -58,9 +59,10 @@ public class TestMethods {
      * @throws AdminException If we get any exception.  Details are provided
      * @throws CompanyException If we get any exception.  Details are provided
      * @throws CustomerException If we get any exception.  Details are provided
+     * @throws GuestException If we get any exception.  Details are provided
      */
     public boolean CheckLogin(String email, String password, ClientService clientService)
-            throws AdminException,CompanyException,CustomerException {
+            throws AdminException, CompanyException, CustomerException, GuestException {
         return clientService.Login(email, password);
     }
 }

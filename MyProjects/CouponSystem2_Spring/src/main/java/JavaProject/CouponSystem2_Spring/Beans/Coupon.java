@@ -29,7 +29,6 @@ public class Coupon {
     @Column(name = "company_id",
             nullable = false)
     private Integer companyId;
-    //Todo - Ask Zeev: Ok to not have 'Category' table in DB?
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "category_id",

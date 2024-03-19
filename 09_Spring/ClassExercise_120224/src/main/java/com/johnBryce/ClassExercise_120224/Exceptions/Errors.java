@@ -1,4 +1,4 @@
-package com.johnBryce.ClassExercise_120224.ErrorManagement;
+package com.johnBryce.ClassExercise_120224.Exceptions;
 
 import lombok.Getter;
 

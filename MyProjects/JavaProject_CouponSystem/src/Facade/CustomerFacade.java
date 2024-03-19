@@ -50,7 +50,6 @@ public class CustomerFacade extends ClientFacade{
         return false;
     }
 
-
     /**
      * Adds a coupon purchase in the DB for the logged on customer
      * @param coupon 'coupon' object to purchase
@@ -114,7 +113,6 @@ public class CustomerFacade extends ClientFacade{
 
     }
 
-
     /**
      * Get all the coupons listed in DB for the logged on customer belonging to a specific category
      * @param category - category of coupons to add to coupon list
@@ -153,9 +151,7 @@ public class CustomerFacade extends ClientFacade{
     public Customer GetCustomerDetails() throws CouponSystemException {
         return customersDAO.GetOneCustomer(this.customerID);
     }
-
     public ArrayList<Coupon> GetAllCoupons() throws CouponSystemException {
         return couponsDAO.GetAllCoupons();
     }
-
 }

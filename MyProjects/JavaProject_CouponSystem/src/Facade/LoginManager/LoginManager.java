@@ -43,7 +43,7 @@ public class LoginManager {
             case Customer -> clientFacade = new CustomerFacade(-1);
             case Administrator -> clientFacade = new AdminFacade();
             default -> clientFacade = null;
-        };
+        }
         // Part 2 - Check login details
         if( CheckLogin(email,password, clientFacade) ) {
             return clientFacade;
@@ -51,7 +51,6 @@ public class LoginManager {
         else {
             throw new CouponSystemException(Errors.INCORRECT_LOGIN_DETAILS);
         }
-
     }
 
 

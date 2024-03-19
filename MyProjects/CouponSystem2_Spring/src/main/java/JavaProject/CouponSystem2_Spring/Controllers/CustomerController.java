@@ -19,11 +19,15 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("api/Customer")
-public class CustomerController {
+public class CustomerController extends ClientController {
     @Autowired
     CustomerService customerService;
 
-    //Todo - How to pass on customerId to controller?
+    //Todo - write 'login' method - part 3
+    @Override
+    boolean login(String email, String password) {
+        return false;
+    }
 
     /**
      * Gets a customer (according to the customer ID belonging to the customer logged on)
@@ -81,6 +85,8 @@ public class CustomerController {
         return customerService.GetCustomerCouponsByMaxPrice(maxPrice);
     }
 
+    //Todo - Consider deleting 'GetOneCoupon' and 'GetAllCoupons' methods below - if not needed
+
     /**
      * Get one coupon
      * @param id id belonging to the coupon requested
@@ -102,4 +108,6 @@ public class CustomerController {
     public List<Coupon> GetAllCoupons(){
         return customerService.GetAllCoupons();
     }
+
+
 }

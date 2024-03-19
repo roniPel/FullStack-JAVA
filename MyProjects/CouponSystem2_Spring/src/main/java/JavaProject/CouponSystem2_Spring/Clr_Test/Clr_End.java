@@ -49,7 +49,7 @@ public class Clr_End implements CommandLineRunner {
         System.out.println();
         System.out.println();
         System.out.println("###############################################################");
-        System.out.println("####### (-:  So long, and thanks for all the fish!  :-) #######");
+        System.out.println("#     (-:    So long, and thanks for all the fish!    :-)     #");
         System.out.println("###############################################################");
         System.out.println();
         System.out.println();

@@ -78,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean AddCustomer(Customer customer) throws AdminException {
-        int id = customer.getId();
+        Integer id = customer.getId();
         if(customerRepo.existsById(id)){
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
         }
