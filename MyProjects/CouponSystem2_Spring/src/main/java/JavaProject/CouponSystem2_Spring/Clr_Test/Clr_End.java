@@ -23,7 +23,10 @@ public class Clr_End implements CommandLineRunner {
      */
     private void PrintSystemEndMessage() {
         System.out.println(
-                "                       T-H-E  E-N-D                    \n" +
+                "                                                       \n" +
+                "                   ┌┬┐┬ ┬┌─┐  ┌─┐┌┐┌┌┬┐                \n" +
+                "                    │ ├─┤├┤   ├┤ │││ ││                \n" +
+                "                    ┴ ┴ ┴└─┘  └─┘┘└┘─┴┘                \n"+
                 "                                                       \n" +
                 "                             .''.\n" +
                 "       .''.      .        *''*    :_\\/_:     .\n" +
