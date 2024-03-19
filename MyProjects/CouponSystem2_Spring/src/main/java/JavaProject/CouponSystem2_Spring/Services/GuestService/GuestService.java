@@ -46,5 +46,4 @@ public interface GuestService extends ClientService {
      */
     Customer GetCustomerDetails() throws GuestException;
 
-    //Todo - write guest user service methods + service Impl
 }

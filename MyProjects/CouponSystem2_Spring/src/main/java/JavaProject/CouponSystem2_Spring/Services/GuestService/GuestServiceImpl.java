@@ -32,8 +32,7 @@ public class GuestServiceImpl implements GuestService{
     CustomerRepository customerRepo;
 
     @Getter
-    private int guestId;  // Guest ID belonging to the customer that logged in
-    //Todo - finish writing guest service Impl methods
+    private int guestId;  // Guest ID belonging to the guest user
     @Override
     public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
         Customer customer = customerRepo.findByEmailAndPassword(email,password);
