@@ -13,6 +13,7 @@ public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
 		//Todo - Test All Exceptions/ behavior
 		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
+		//Todo - convert all "Autowired" things to final + @RequiredArgsConstructor on top of class
 		ApplicationContext ctx = SpringApplication.run(CouponSystem2SpringApplication.class, args);
 	}
 }
