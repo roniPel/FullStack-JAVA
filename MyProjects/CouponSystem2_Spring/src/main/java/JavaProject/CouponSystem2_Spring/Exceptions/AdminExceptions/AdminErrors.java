@@ -22,7 +22,7 @@ public enum AdminErrors {
     // Actions on Customer
     CUSTOMER_DOES_NOT_EXIST("\nERROR! Customer doesn't exist in the system. \n"),
     CUSTOMER_EMAIL_ALREADY_EXISTS("\nERROR! The customer email already exists in the system. \n"),
-    CANT_UPDATE_CUSTOMER_ID("\nERROR! Update of customer ID is not allowed. \n"),;
+    CANT_UPDATE_CUSTOMER_ID("\nERROR! Update of customer ID is not allowed. \n");
 
 
     private String message;

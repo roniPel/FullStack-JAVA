@@ -58,6 +58,10 @@ public class LogonUtil {
         emailsPassowrdsMap.put("guestEmail",guestEmail);
         emailsPassowrdsMap.put("guestPassword",guestPassword);
     }
+
+    /**
+     * Prepare Admin Logon details
+     */
     private void PrepareData_AdminLogon() {
         emailsPassowrdsMap = new HashMap<>();
         emailsPassowrdsMap.put("adminEmail","admin@admin.com");

@@ -15,7 +15,6 @@ import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
@@ -183,7 +182,7 @@ public class AdminServiceImpl implements AdminService {
         companyRepo.save(company);
         // Get company ID from DB
         int newCompanyId = companyRepo.findByName(company.getName()).getId();
-        List<Coupon> fullCouponsList = CreateCouponsForAllCategories(newCompanyId,ClientType.Company);
+        List<Coupon> fullCouponsList = CreateCouponsForAllCategories(newCompanyId,ClientType.COMPANY);
 
         // Add coupon List to DB
         couponRepo.saveAllAndFlush(fullCouponsList);
@@ -197,7 +196,7 @@ public class AdminServiceImpl implements AdminService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     private List<Coupon> CreateCouponsForAllCategories(int companyId, ClientType clientType) throws AdminException {
-        if(clientType == ClientType.Administrator) {
+        if(clientType == ClientType.ADMINISTRATOR) {
             throw new AdminException(AdminErrors.GENERAL_ADMIN_ERROR);
         }
         List<Coupon> coupons = new ArrayList<>();
@@ -273,7 +272,7 @@ public class AdminServiceImpl implements AdminService {
         int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();
 
         // Create coupons from all categories for company (later on, for customer)
-        List<Coupon> couponsListForCustomer = CreateCouponsForAllCategories(companyId,ClientType.Customer);
+        List<Coupon> couponsListForCustomer = CreateCouponsForAllCategories(companyId,ClientType.CUSTOMER);
 
         // Add coupons to company
         Company companyForCustomer = GetOneCompany(companyId);

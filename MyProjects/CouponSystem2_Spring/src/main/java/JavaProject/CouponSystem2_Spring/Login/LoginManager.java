@@ -12,7 +12,6 @@ import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * LoginManager Class - used to manage and check user logins into the system
@@ -40,9 +39,9 @@ public class LoginManager {
         ClientService clientService;
         // Part 1 - Initialize client service based on client type (initial ID used will be updated when running 'CheckLogin' method)
         switch (clientType) {
-            case Company -> clientService = companyService;
-            case Customer -> clientService = customerService;
-            case Administrator -> clientService = adminService;
+            case COMPANY -> clientService = companyService;
+            case CUSTOMER -> clientService = customerService;
+            case ADMINISTRATOR -> clientService = adminService;
             default -> clientService = null;
         }
         // Part 2 - Check login details
@@ -53,8 +52,8 @@ public class LoginManager {
         }
         else {  // If login details are incorrect - throw exception based on requested client type
             switch (clientType) {
-                case Company -> throw new CompanyException(CompanyErrors.INCORRECT_LOGIN_DETAILS);
-                case Customer -> throw new CustomerException(CustomerErrors.INCORRECT_LOGIN_DETAILS);
+                case COMPANY -> throw new CompanyException(CompanyErrors.INCORRECT_LOGIN_DETAILS);
+                case CUSTOMER -> throw new CustomerException(CustomerErrors.INCORRECT_LOGIN_DETAILS);
                 default -> throw new AdminException(AdminErrors.INCORRECT_LOGIN_DETAILS);
             }
         }
