@@ -40,5 +40,15 @@ public class GuestTestMethods_Services extends TestMethods {
         System.out.println();
     }
 
-
+    /**
+     * Guest Method - Get All Coupons
+     * @param guestService used to run method
+     */
+    public void GetAllCoupons(GuestService guestService) {
+        System.out.println("*** Method: Get All Coupons ***");
+        List<Coupon> allCoupons = guestService.GetAllCoupons();
+        System.out.println("All coupons: ");
+        allCoupons.forEach(System.out::println);
+        System.out.println();
+    }
 }

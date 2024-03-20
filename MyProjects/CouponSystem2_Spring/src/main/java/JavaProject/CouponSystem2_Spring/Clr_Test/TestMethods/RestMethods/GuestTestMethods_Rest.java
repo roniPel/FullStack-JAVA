@@ -50,4 +50,12 @@ public class GuestTestMethods_Rest extends TestMethods {
                 ("http://localhost:8080/api/Guest/GetAllCoupons", Coupon[].class);
         return Arrays.stream(coupons).toList();
     }
+
+    public void GetAllCoupons() {
+        System.out.println("*** Method: Get All Coupons ***");
+        List<Coupon> allCoupons = GetListOfAllCoupons();
+        System.out.println("All coupons: ");
+        allCoupons.forEach(System.out::println);
+        System.out.println();
+    }
 }
