@@ -25,11 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public class GuestServiceImpl implements GuestService{
-
-    @Autowired
-    CouponRepository couponRepo;
-    @Autowired
-    CustomerRepository customerRepo;
+    private final CouponRepository couponRepo;
+    private final CustomerRepository customerRepo;
 
     @Getter
     private int guestId;  // Guest ID belonging to the guest user

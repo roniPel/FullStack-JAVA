@@ -4,6 +4,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -17,9 +18,9 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("api/Admin")
+@RequiredArgsConstructor
 public class AdminController extends ClientController {
-    @Autowired
-    AdminService adminService;
+    private final AdminService adminService;
 
     //Todo - write 'login' method - part 3
     @Override

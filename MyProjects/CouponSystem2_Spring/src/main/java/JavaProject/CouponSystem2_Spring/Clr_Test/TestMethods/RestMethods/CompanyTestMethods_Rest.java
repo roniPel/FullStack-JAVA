@@ -6,6 +6,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,9 @@ import java.util.List;
  * Company Test Methods Class - Used for Testing all Company user functionalities via RestTemplate
  */
 @Component
+@RequiredArgsConstructor
 public class CompanyTestMethods_Rest extends TestMethods {
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
     private int companyId;
 
     /**

@@ -7,6 +7,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -19,9 +20,9 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("api/Customer")
+@RequiredArgsConstructor
 public class CustomerController extends ClientController {
-    @Autowired
-    CustomerService customerService;
+    private final CustomerService customerService;
 
     //Todo - write 'login' method - part 3
     @Override

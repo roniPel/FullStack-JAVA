@@ -13,7 +13,9 @@ public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
 		//Todo - Test All Exceptions/ behavior
 		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
-		//Todo - convert all "Autowired" things to final + @RequiredArgsConstructor on top of class
+
+		//Todo - in Guest user, change services, clr, etc.. to allow to view coupons only. If guest wants to purchase, he needs to create a user.
+		//Todo - Instead of LoginManager, create Login Service + Login controller (see CatBackend - 20.03)
 		ApplicationContext ctx = SpringApplication.run(CouponSystem2SpringApplication.class, args);
 	}
 }

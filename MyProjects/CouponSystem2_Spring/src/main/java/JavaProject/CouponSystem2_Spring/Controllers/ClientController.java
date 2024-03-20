@@ -1,8 +1,5 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 
 /**
  * Controller for All User types

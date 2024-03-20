@@ -26,14 +26,11 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-    @Autowired
-    CouponRepository couponRepo;
-    @Autowired
-    CompanyRepository companyRepo;
-    @Autowired
-    CustomerRepository customerRepo;
-    private String email = "admin@admin.com";
-    private String password = "admin";
+    private final CouponRepository couponRepo;
+    private final CompanyRepository companyRepo;
+    private final CustomerRepository customerRepo;
+    private final String email = "admin@admin.com";
+    private final String password = "admin";
 
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {

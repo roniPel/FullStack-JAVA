@@ -3,6 +3,7 @@ package JavaProject.CouponSystem2_Spring.Job;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,9 +17,9 @@ import java.util.List;
  * Class containing a Job used to delete expired coupons
  */
 @Component
+@RequiredArgsConstructor
 public class ExpiredCouponsDailyJob {
-    @Autowired
-    private CouponRepository couponRepo;
+    private final CouponRepository couponRepo;
 
     /**
      * Job that deletes expired coupons from DB - runs on a cron schedule

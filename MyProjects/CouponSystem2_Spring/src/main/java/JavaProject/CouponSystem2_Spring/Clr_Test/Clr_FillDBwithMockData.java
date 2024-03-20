@@ -26,14 +26,10 @@ import java.util.*;
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
-    @Autowired
-    private CompanyRepository companyRepo;
-    @Autowired
-    private CustomerRepository customerRepo;
-    @Autowired
-    private CouponRepository couponRepo;
+    private final CompanyRepository companyRepo;
+    private final CustomerRepository customerRepo;
+    private final CouponRepository couponRepo;
     private Map<String, Object> mockDataMap;
-
     @Override
     public void run(String... args){
         PrepareSystemData();

@@ -11,12 +11,9 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Customer Service Implementation for Coupon System 2
@@ -25,21 +22,11 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter
 public class CustomerServiceImpl implements CustomerService {
-    @Autowired
-    CouponRepository couponRepo;
-    @Autowired
-    CustomerRepository customerRepo;
+    private final CouponRepository couponRepo;
+    private final CustomerRepository customerRepo;
 
     @Getter
     private int customerId;  // Customer ID belonging to the customer that logged in
-
-    /**
-     * Constructor
-     * @param customerId customer ID belonging to customer logged on
-     */
-    public CustomerServiceImpl(int customerId) {
-        this.customerId = customerId;
-    }
     @Override
     public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
         Customer customer = customerRepo.findByEmailAndPassword(email,password);

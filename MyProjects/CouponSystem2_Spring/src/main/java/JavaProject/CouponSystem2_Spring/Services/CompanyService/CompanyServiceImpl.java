@@ -21,20 +21,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
-    @Autowired
-    CouponRepository couponRepo;
-    @Autowired
-    CompanyRepository companyRepo;
-
+    private final CouponRepository couponRepo;
+    private final CompanyRepository companyRepo;
     private int companyId;  // Company ID belonging to the company that logged in
-
-    /**
-     * Constructor
-     * @param companyId company ID belonging to company logged on
-     */
-    public CompanyServiceImpl(int companyId) {
-        this.companyId = companyId;
-    }
 
     @Override
     public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {

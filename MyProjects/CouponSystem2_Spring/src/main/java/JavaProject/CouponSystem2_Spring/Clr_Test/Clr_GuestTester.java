@@ -19,14 +19,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Order(5)
 public class Clr_GuestTester implements CommandLineRunner {
-    @Autowired
-    private LogonUtil logonUtil;
-    @Autowired
-    private GuestTestMethods_Services guestTestMethods_services;
-    @Autowired
-    private GuestTestMethods_Rest guestTestMethods_rest;
-    @Autowired
-    private GuestService guestService; //- Preparation for Client Side (section 3)
+    private final LogonUtil logonUtil;
+    private final GuestTestMethods_Services guestTestMethods_services;
+    private final GuestTestMethods_Rest guestTestMethods_rest;
+    private final GuestService guestService; //- Preparation for Client Side (section 3)
     @Override
     public void run(String... args) throws Exception {
 

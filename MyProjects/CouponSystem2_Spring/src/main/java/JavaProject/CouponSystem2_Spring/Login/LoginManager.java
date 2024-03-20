@@ -11,21 +11,19 @@ import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * LoginManager Class - used to manage and check user logins into the system
  */
 //@Component
+@RequiredArgsConstructor
 public class LoginManager {
     // Todo - Delete LoginManager class? Or finish writing method + implement in code(?)
-    @Autowired
     private static LogonUtil logonUtil;
-    @Autowired
     private static CompanyService companyService;
-    @Autowired
     private static CustomerService customerService;
-    @Autowired
     private static AdminService adminService;
 
     /**

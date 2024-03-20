@@ -3,6 +3,7 @@ package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,9 @@ import java.util.List;
  * Admin Test Methods Class - Used for Testing all Admin user functionalities via RestTemplate
  */
 @Component
+@RequiredArgsConstructor
 public class AdminTestMethods_Rest extends TestMethods {
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     /**
      * Admin Method - Get all Companies

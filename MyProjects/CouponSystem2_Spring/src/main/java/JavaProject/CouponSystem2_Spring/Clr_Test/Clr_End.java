@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Order(6)
 public class Clr_End implements CommandLineRunner {
-
     @Override
     public void run(String... args) throws Exception {
         PrintSystemEndMessage();
