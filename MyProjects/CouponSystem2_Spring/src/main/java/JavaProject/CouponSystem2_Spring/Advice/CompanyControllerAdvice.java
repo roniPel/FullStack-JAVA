@@ -32,30 +32,37 @@ public class CompanyControllerAdvice {
     }
 
     /**
-     * Method used to handle errors arriving from a Constraint Violation Exception or Method Argument Not Valid Exception
-     * @param exception exception received
+     * Method used to handle errors arriving from a Constraint Violation Exception
+     * @param e e received
      * @return A map of errors containing field name, and error details
      */
-    @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler(value = {ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> HandleConstraintViolationExceptions(Exception exception) {
+    public Map<String, String> HandleConstraintViolationExceptions(ConstraintViolationException e) {
         Map<String,String> errors = new HashMap<>();
-        if (exception instanceof ConstraintViolationException) {
-            Set<ConstraintViolation<?>> errList = ((ConstraintViolationException) exception).getConstraintViolations();
-            errList.forEach((error)->{
-                String fieldName = ((FieldError)error).getField();
-                String errorMessage = ((FieldError) error).getDefaultMessage();
-                errors.put(fieldName,errorMessage);
-            });
-        }
-        else if (exception instanceof MethodArgumentNotValidException) {
-            List<ObjectError> errList = ((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors();
-            errList.forEach((error)->{
-                String fieldName = ((FieldError)error).getField();
-                String errorMessage = error.getDefaultMessage();
-                errors.put(fieldName,errorMessage);
-            });
-        }
+        Set<ConstraintViolation<?>> errList = ((ConstraintViolationException) e).getConstraintViolations();
+        errList.forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = ((FieldError) error).getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
+
+    /**
+     * Method used to handle errors arriving from a Method Argument Not Valid Exception
+     * @param e exception received
+     * @return A map of errors containing field name, and error details
+     */
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String,String> handleValidationExceptions(MethodArgumentNotValidException e){
+        Map<String,String> errors = new HashMap<>();
+        e.getBindingResult().getAllErrors().forEach((error)-> {
+            String fieldName = ((FieldError)error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName,errorMessage);
+        });
         return errors;
     }
 }
