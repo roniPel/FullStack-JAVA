@@ -204,13 +204,13 @@ public class AdminServiceImpl implements AdminService {
         int count = 200;
         for (Category category : Category.values()) {
             // Create coupon locally
-            String title = "Title "+clientType.name()+" "+category;
-            String description = "Description "+clientType.name()+" "+category;
+            String title = "Title "+clientType.getName()+" "+category;
+            String description = "Description "+clientType.getName()+" "+category;
             LocalDate startDate = DateFactory.getLocalDate(false);
             LocalDate endDate = DateFactory.getLocalDate(true);
             int amount = 10;
             double price = FactoryUtils.round(Math.random()*200,2);
-            String image = "Image "+clientType.name()+" "+category;
+            String image = "Image "+clientType.getName()+" "+category;
             Coupon addCoupon = Coupon.builder()
                     .id(count++)
                     .companyId(companyId)

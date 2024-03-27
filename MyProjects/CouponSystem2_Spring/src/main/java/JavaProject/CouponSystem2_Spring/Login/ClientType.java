@@ -1,21 +1,24 @@
 package JavaProject.CouponSystem2_Spring.Login;
 
+import lombok.Getter;
+
 /**
  * ClientType Class (Enum) - lists user (client) types available in the system
  */
+@Getter
 public enum ClientType {
     ADMINISTRATOR("Administrator"),
     COMPANY("Company"),
     CUSTOMER("Customer"),
     GUEST("Guest");
 
-    private String message;
+    private String name;
 
     /**
      * Constructor which inserts the relevant message into each Client type.
-     * @param message String message relevant for each error
+     * @param name String message relevant for each error
      */
-    ClientType(String message) {
-        this.message = message;
+    ClientType(String name) {
+        this.name = name;
     }
 }

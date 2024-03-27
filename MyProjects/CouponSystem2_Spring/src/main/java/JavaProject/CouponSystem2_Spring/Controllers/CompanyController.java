@@ -4,6 +4,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Controllers.ClientController;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
@@ -22,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/Company")
 @RequiredArgsConstructor
-public class CompanyController extends ClientController{
+public class CompanyController extends ClientController {
     private final CompanyService companyService;
 
     //Todo - write 'login' method - part 3
