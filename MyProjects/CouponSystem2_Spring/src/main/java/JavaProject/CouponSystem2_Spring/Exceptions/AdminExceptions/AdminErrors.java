@@ -11,6 +11,7 @@ public enum AdminErrors {
     GENERAL_ADMIN_ERROR("\nERROR! There was an error when trying to perform the admin method. \n"),
     INCORRECT_LOGIN_DETAILS("\nERROR! Incorrect admin username and/or password. \n"),
     DUPLICATE_ENTRY("\nERROR! The value inserted (id/ name/ email/ user) already exists in the system. \n"),
+    NO_PERMISSIONS("\nERROR! User has insufficient permissions for the requested action. \n"),
 
     // Actions on Company
     COMPANY_DOES_NOT_EXIST("\nERROR! Company doesn't exist in the system. \n"),

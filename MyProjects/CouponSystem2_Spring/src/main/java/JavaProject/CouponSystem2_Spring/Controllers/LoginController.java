@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 //Todo - which annotations to use? @RestController?
 //Todo - change Class description?
 @RequiredArgsConstructor
-public class SpringController {
+public class LoginController {
 
 }

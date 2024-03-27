@@ -12,6 +12,7 @@ public enum CustomerErrors {
     CUSTOMER_DOES_NOT_EXIST("\nERROR! Customer doesn't exist in the system. \n"),
     DUPLICATE_ENTRY("\nERROR! The value inserted (name/ id/ email/ user) already exists in the system. \n"),
     EMPTY_OR_NULL("\nERROR! The relevant table/field is empty or null. \n"),
+    NO_PERMISSIONS("\nERROR! User has insufficient permissions for the requested action. \n"),
 
     // Coupon related actions
     COUPON_EXISTS_FOR_CUSTOMER("\nERROR! The coupon already exists for this customer. \n"),

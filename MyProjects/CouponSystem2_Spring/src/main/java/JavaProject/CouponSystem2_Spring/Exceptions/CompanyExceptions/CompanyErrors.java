@@ -10,6 +10,7 @@ public enum CompanyErrors {
     GENERAL_COMPANY_ERROR("\nERROR! There was an error when trying to perform the company method. \n"),
     INCORRECT_LOGIN_DETAILS("\nERROR! Incorrect company username and/or password. \n"),
     DUPLICATE_ENTRY("\nERROR! The value inserted (id/ name/ email/ user) already exists in the system. \n"),
+    NO_PERMISSIONS("\nERROR! User has insufficient permissions for the requested action. \n"),
 
     // Coupon related actions
     COUPON_EXISTS_FOR_COMPANY("\nERROR! The coupon already exists for this company. \n"),

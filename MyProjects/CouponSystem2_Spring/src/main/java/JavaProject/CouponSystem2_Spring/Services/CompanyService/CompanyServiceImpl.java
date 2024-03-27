@@ -62,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
         );
         // Verify company Id in new coupon matches company id listed in existing coupon
         if(!Objects.equals(coupon.getCompanyId(), currentCoupon.getCompanyId())) {
-            throw new CompanyException(CompanyErrors.COUPON_COMPANY_ID_INCORRECT);
+            throw new CompanyException(CompanyErrors.NO_PERMISSIONS);
         }
         couponRepo.saveAndFlush(coupon);
         return true;
@@ -70,8 +70,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public boolean DeleteCoupon(int couponId) throws CompanyException {
-        if(!couponRepo.existsById(couponId)){
-            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST);
+        Coupon coupon = couponRepo.findById(couponId).orElseThrow( ()->
+                new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST));
+        if (coupon.getCompanyId()!= this.companyId) {
+            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
         couponRepo.deleteById(couponId);
         return true;
@@ -100,15 +102,21 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Coupon GetOneCoupon(int id) throws CompanyException {
-        return couponRepo.findById(id).orElseThrow( ()->
+        Coupon coupon = couponRepo.findById(id).orElseThrow( ()->
                 new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST));
+        if (coupon.getCompanyId()!= this.companyId) {
+            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
+        }
+        return coupon;
     }
 
     @Override
     public Company GetOneCompany(int id) throws CompanyException {
+        if(id != this.companyId){
+            throw new CompanyException(CompanyErrors.NO_PERMISSIONS);
+        }
         return companyRepo.findById(id).orElseThrow( ()->
                 new CompanyException(CompanyErrors.GENERAL_COMPANY_ERROR));
     }
-
 
 }

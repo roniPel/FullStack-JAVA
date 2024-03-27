@@ -9,7 +9,8 @@ public enum GuestErrors {
     COUPON_DOES_NOT_EXIST("\nERROR! Coupon doesn't exist in the system. \n"),
     EMPTY_OR_NULL("\nERROR! The relevant table/field is empty or null. \n"),
     COUPON_AMOUNT_IS_ZERO("\nERROR! There are not enough coupons in the system in order to perform this purchase. \n"),
-    COUPON_DATE_EXPIRED("\nERROR! The coupon date has expired. \n");
+    COUPON_DATE_EXPIRED("\nERROR! The coupon date has expired. \n"),
+    NO_PERMISSIONS("\nERROR! User has insufficient permissions for the requested action. \n");
 
     private String message;
     /**
