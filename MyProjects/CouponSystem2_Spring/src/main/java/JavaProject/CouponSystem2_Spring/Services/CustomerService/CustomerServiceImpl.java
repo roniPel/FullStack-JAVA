@@ -28,15 +28,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Getter
     private int customerId;  // Customer ID belonging to the customer that logged in
     @Override
-    public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
-        Customer customer = customerRepo.findByEmailAndPassword(email,password);
-        if(customer == null) {
-            throw new CustomerException(CustomerErrors.INCORRECT_LOGIN_DETAILS);
-        }
-        else {
-            this.customerId = customer.getId();
-            return true;
-        }
+    public String Login(String email, String password) throws CustomerException, AdminException, CompanyException {
+        return null;
     }
 
     @Override

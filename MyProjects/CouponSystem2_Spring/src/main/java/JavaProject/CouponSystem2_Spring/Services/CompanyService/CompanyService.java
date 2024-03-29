@@ -15,7 +15,7 @@ import java.util.List;
 public interface CompanyService extends ClientService {
 
     @Override
-    boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
+    String Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
     /**
      * Adds a coupon to the DB - based on the details listed in the param

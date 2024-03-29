@@ -14,7 +14,7 @@ import java.util.List;
 public interface AdminService extends ClientService {
 
     @Override
-    boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException;
+    String Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
     /**
      * Get one customer

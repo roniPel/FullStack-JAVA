@@ -10,7 +10,6 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerEx
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
@@ -26,15 +25,8 @@ public class CompanyServiceImpl implements CompanyService {
     private int companyId;  // Company ID belonging to the company that logged in
 
     @Override
-    public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        Company company = companyRepo.findByEmailAndPassword(email,password);
-        if(company == null) {
-            throw new CompanyException(CompanyErrors.INCORRECT_LOGIN_DETAILS);
-        }
-        else {
-            this.companyId = company.getId();
-            return true;
-        }
+    public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
+        return null;
     }
 
     @Override

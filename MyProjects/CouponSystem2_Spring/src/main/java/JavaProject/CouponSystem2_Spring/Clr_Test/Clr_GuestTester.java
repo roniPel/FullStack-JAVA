@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Guest user methods
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(5)
 public class Clr_GuestTester implements CommandLineRunner {
@@ -30,7 +30,7 @@ public class Clr_GuestTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("guestPassword");
 
         try {
-            // Check logon
+            // Todo - Check logon
             if(guestTestMethods_services.CheckLogin(email,password,guestService)) {
                 // Run all methods - services
                 Guest_RunAllMethods_Services(guestService);

@@ -2,7 +2,6 @@ package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
-import JavaProject.CouponSystem2_Spring.Controllers.ClientController;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +23,8 @@ public class AdminController extends ClientController {
 
     //Todo - write 'login' method - part 3
     @Override
-    boolean login(String email, String password) {
-        return false;
+    String Login(String email, String password) {
+        return null;
     }
 
     /**

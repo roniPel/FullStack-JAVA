@@ -12,7 +12,6 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,15 +30,8 @@ public class GuestServiceImpl implements GuestService{
     @Getter
     private int guestId;  // Guest ID belonging to the guest user
     @Override
-    public boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException {
-        Customer customer = customerRepo.findByEmailAndPassword(email,password);
-        if(customer == null) {
-            throw new CustomerException(CustomerErrors.INCORRECT_LOGIN_DETAILS);
-        }
-        else {
-            this.guestId = customer.getId();
-            return true;
-        }
+    public String Login(String email, String password) throws CustomerException, AdminException, CompanyException {
+        return null;
     }
 
     @Override

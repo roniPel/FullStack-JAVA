@@ -3,14 +3,9 @@ package JavaProject.CouponSystem2_Spring.Controllers;
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
-import JavaProject.CouponSystem2_Spring.Controllers.ClientController;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +23,8 @@ public class CompanyController extends ClientController {
 
     //Todo - write 'login' method - part 3
     @Override
-    boolean login(String email, String password) {
-        return false;
+    String Login(String email, String password) {
+        return null;
     }
     /**
      * Gets a company (according to the company ID belonging to the company logged on)

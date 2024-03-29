@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface GuestService extends ClientService {
     @Override
-    boolean Login(String email, String password) throws CustomerException, AdminException, CompanyException;
+    String Login(String email, String password) throws CustomerException, AdminException, CompanyException;
     /**
      * Get all the coupons listed in DB for a specific customer
      * @return coupon ArrayList if succeeded, null if no coupons were found.

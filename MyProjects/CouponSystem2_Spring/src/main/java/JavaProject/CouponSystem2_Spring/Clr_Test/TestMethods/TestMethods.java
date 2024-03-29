@@ -9,6 +9,8 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerEx
 import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import org.springframework.stereotype.Component;
+
+import javax.security.auth.login.LoginException;
 import java.util.List;
 
 /**
@@ -62,7 +64,9 @@ public class TestMethods {
      * @throws GuestException If we get any exception.  Details are provided
      */
     public boolean CheckLogin(String email, String password, ClientService clientService)
-            throws AdminException, CompanyException, CustomerException, GuestException {
-        return clientService.Login(email, password);
+    //Todo - change method (or user Login Service/controller)
+            throws AdminException, CompanyException, CustomerException, GuestException, LoginException {
+        String token = clientService.Login(email, password);
+        return true;
     }
 }

@@ -32,12 +32,8 @@ public class AdminServiceImpl implements AdminService {
     private final String password = "admin";
 
     @Override
-    public boolean Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        // Admin user - Check login details locally: (no need to check via DB query)
-        if((Objects.equals(email, this.email)) && (Objects.equals(password, this.password))) {
-            return true;
-        }
-        throw new AdminException(AdminErrors.INCORRECT_LOGIN_DETAILS);
+    public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
+        return null;
     }
 
     @Override
@@ -182,7 +178,7 @@ public class AdminServiceImpl implements AdminService {
         companyRepo.save(company);
         // Get company ID from DB
         int newCompanyId = companyRepo.findByName(company.getName()).getId();
-        List<Coupon> fullCouponsList = CreateCouponsForAllCategories(newCompanyId,ClientType.COMPANY);
+        List<Coupon> fullCouponsList = CreateCouponsForAllCategories(newCompanyId,ClientType.Company);
 
         // Add coupon List to DB
         couponRepo.saveAllAndFlush(fullCouponsList);
@@ -196,7 +192,7 @@ public class AdminServiceImpl implements AdminService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     private List<Coupon> CreateCouponsForAllCategories(int companyId, ClientType clientType) throws AdminException {
-        if(clientType == ClientType.ADMINISTRATOR) {
+        if(clientType == ClientType.Administrator) {
             throw new AdminException(AdminErrors.GENERAL_ADMIN_ERROR);
         }
         List<Coupon> coupons = new ArrayList<>();
@@ -204,13 +200,13 @@ public class AdminServiceImpl implements AdminService {
         int count = 200;
         for (Category category : Category.values()) {
             // Create coupon locally
-            String title = "Title "+clientType.getName()+" "+category;
-            String description = "Description "+clientType.getName()+" "+category;
+            String title = "Title "+clientType.name()+" "+category;
+            String description = "Description "+clientType.name()+" "+category;
             LocalDate startDate = DateFactory.getLocalDate(false);
             LocalDate endDate = DateFactory.getLocalDate(true);
             int amount = 10;
             double price = FactoryUtils.round(Math.random()*200,2);
-            String image = "Image "+clientType.getName()+" "+category;
+            String image = "Image "+clientType.name()+" "+category;
             Coupon addCoupon = Coupon.builder()
                     .id(count++)
                     .companyId(companyId)
@@ -272,7 +268,7 @@ public class AdminServiceImpl implements AdminService {
         int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();
 
         // Create coupons from all categories for company (later on, for customer)
-        List<Coupon> couponsListForCustomer = CreateCouponsForAllCategories(companyId,ClientType.CUSTOMER);
+        List<Coupon> couponsListForCustomer = CreateCouponsForAllCategories(companyId,ClientType.Customer);
 
         // Add coupons to company
         Company companyForCustomer = GetOneCompany(companyId);
