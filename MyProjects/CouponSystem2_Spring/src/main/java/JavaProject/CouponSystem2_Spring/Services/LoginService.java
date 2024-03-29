@@ -15,8 +15,15 @@ public class LoginService implements ClientService{
 
     private final JWT jwt;
     //Repository to check user name in DB
+    @Override
     public String Login(String userName, String userPass) throws LoginException {
-        Credentials credentials = new Credentials(1,userName,userPass,"ronir@email.com", ClientType.Administrator);
+        Credentials credentials = Credentials.builder()
+                .id(1)
+                .userName(userName)
+                .userPass(userPass)
+                .userEmail("ronir@email.com")
+                .clientType(ClientType.Administrator)
+                .build();
         if(userName.equals("admin") && userPass.equals("12345678")){
             return jwt.generateToken(credentials);
         }

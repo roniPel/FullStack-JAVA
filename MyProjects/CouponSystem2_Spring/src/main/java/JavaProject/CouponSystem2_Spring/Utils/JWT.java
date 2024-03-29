@@ -34,7 +34,7 @@ public class JWT {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userEmail", credentials.getUserEmail());
         claims.put("id", credentials.getId());
-        claims.put("userType", credentials.getClientType());
+        claims.put("userType", credentials.getClientType().name());
         return "Bearer "+createToken(claims,credentials.getUserName());
     }
 
