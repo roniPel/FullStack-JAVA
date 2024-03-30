@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class JWT {
     //Todo - copy from catbackend
     //Type of encryption

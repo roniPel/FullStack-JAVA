@@ -11,6 +11,7 @@ import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,7 +27,13 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepo;
 
     @Getter
+    @Setter
     private int customerId;  // Customer ID belonging to the customer that logged in
+
+    public void SetCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
     @Override
     public String Login(String email, String password) throws CustomerException, AdminException, CompanyException {
         return null;

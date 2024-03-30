@@ -2,6 +2,8 @@ package JavaProject.CouponSystem2_Spring.Login;
 
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
@@ -19,7 +21,6 @@ import java.util.Map;
 public class LogonUtil {
 
     private Map<String, String> emailsPassowrdsMap;
-    private boolean isLoggedOn = false;
     @Autowired
     protected AdminService adminService;
 
@@ -75,10 +76,15 @@ public class LogonUtil {
      * @param clientType client type requested for logon
      */
     void Logon_Message(String email, String password, ClientType clientType) {
-        isLoggedOn = true;
         System.out.println("======================================");
         System.out.print(clientType + " is logged on: \n");
         System.out.println("======================================");
         System.out.println();
+    }
+
+    //Todo - get rid of below method, use JWT for logon for company and customer
+    public int FindCustomerIdByEmailPass(String email, String password) throws AdminException, CustomerException, CompanyException {
+        String id = adminService.Login(email,password);
+        return Integer.parseInt(id);
     }
 }

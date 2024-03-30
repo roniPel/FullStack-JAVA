@@ -13,10 +13,10 @@ import java.util.List;
  * Company Service interface - Lists relevant functionalities for Company users
  */
 public interface CompanyService extends ClientService {
-
     @Override
     String Login(String email, String password) throws AdminException, CompanyException, CustomerException;
 
+    void SetCompanyId(int companyId);
     /**
      * Adds a coupon to the DB - based on the details listed in the param
      * @param coupon a 'Coupon' class instance containing coupon details

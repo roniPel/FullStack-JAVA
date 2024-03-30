@@ -14,30 +14,35 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Customer user methods
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Clr_CustomerTester implements CommandLineRunner {
     private final LogonUtil logonUtil;
     private final CustomerTestMethods_Services customerTestMethods_services;
     private final CustomerTestMethods_Rest customerTestMethods_rest;
-    private final CustomerService customerService; //- Preparation for Client Side (section 3)
+    @Autowired
+    private CustomerService customerService; //- Preparation for Client Side (section 3)
 
     @Override
     public void run(String... args) throws Exception {
         String email = logonUtil.getEmailsPassowrdsMap().get("customerEmail");
         String password = logonUtil.getEmailsPassowrdsMap().get("customerPassword");
 
+        //Todo - change logon format, remove 'SetCompanyId' method from Service (interface + impl class) + remove @Autowired and change to final -  'CustomerService' (local variable)
+        customerService.SetCustomerId(logonUtil.FindCustomerIdByEmailPass(email,password));
+
         try {
             // Check logon
-            if(customerTestMethods_services.CheckLogin(email,password,customerService)) {
-                // Run all methods - services
-                Customer_RunAllMethods_Services(customerService);
-                //Run all methods - Rest
+            //Todo - Add Login Check with JWT
 
-                // Todo - Uncomment section below (part 3)
-                //Customer_RunAllMethods_Rest();
-            }
+            // Run all methods - services
+            Customer_RunAllMethods_Services(customerService);
+            //Run all methods - Rest
+
+            // Todo - Uncomment section below (part 3)
+            //Customer_RunAllMethods_Rest();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

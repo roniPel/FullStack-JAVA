@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 /**
  * ClientType Class (Enum) - lists user (client) types available in the system
  */
-@Component
+
+//@Component
 @Getter
 public enum ClientType {
     Administrator,

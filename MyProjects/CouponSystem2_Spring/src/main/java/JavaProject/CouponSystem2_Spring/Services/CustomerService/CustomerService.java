@@ -16,6 +16,8 @@ public interface CustomerService extends ClientService {
     @Override
     String Login(String email, String password) throws CustomerException,AdminException, CompanyException;
 
+    void SetCustomerId(int customerId);
+
     /**
      * Adds a coupon purchase in the DB for the logged on customer
      * @param coupon 'coupon' object to purchase

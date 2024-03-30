@@ -7,6 +7,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyExce
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
+import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Company user methods
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Clr_CompanyTester implements CommandLineRunner {
@@ -25,7 +26,8 @@ public class Clr_CompanyTester implements CommandLineRunner {
     private final CompanyTestMethods_Rest companyTestMethods_rest;
     private final AdminTestMethods_Services adminTestMethods_services;
     private final AdminService adminService; //  Preparation for Client Side (section 3)
-    private final CompanyService companyService; // - Preparation for Client Side (section 3)
+    @Autowired
+    private CompanyService companyService; // - Preparation for Client Side (section 3)
     @Override
     public void run(String... args) throws Exception {
 
@@ -34,19 +36,22 @@ public class Clr_CompanyTester implements CommandLineRunner {
             // Prepare data for company and customer logons
             int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
             logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
+            //Todo - change logon format, remove 'SetCompanyId' method from Service (interface + impl class) + remove @Autowired and change to final -  'CompanyService' (local variable)
+            companyService.SetCompanyId(randomCompanyId);
 
             String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
             String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
 
             // Check logon
-            if(companyTestMethods_services.CheckLogin(email,password,companyService)) {
-                // Run all methods - Services
-                Company_RunAllMethods_Services(companyService);
-                // Run all methods - Rest
+            //Todo - Add Login Check with JWT
 
-                //Todo - Uncomment section below (Part 3)
-                //Company_RunAllMethods_RestTemplate();
-            }
+            // Run all methods - Services
+            Company_RunAllMethods_Services(companyService);
+            // Run all methods - Rest
+
+            //Todo - Uncomment section below (Part 3)
+            //Company_RunAllMethods_RestTemplate();
+
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -33,7 +33,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        return null;
+        Customer customer = customerRepo.findByEmailAndPassword(email,password);
+        return String.valueOf(customer.getId());
     }
 
     @Override

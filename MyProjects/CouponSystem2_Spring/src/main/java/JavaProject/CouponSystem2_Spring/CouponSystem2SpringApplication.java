@@ -11,8 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
+		//Todo - need to check why company/customer delete/update sometimes fail
+
 		//Todo - Test All Exceptions/ behavior
-		//Todo - Check constraintViolationException on AdminControllerAdvice & copy to all advices if it works
 
 		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
 
