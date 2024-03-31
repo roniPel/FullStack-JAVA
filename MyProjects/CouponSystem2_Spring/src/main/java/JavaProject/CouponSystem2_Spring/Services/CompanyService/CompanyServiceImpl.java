@@ -82,7 +82,7 @@ public class CompanyServiceImpl implements CompanyService {
         }
         //Disconnect coupon from customer
         Customer customer = customerRepo.findByCoupons(coupon);
-        customer.setCoupons(null);
+        customer.getCoupons().remove(coupon);
         customerRepo.saveAndFlush(customer);
         //Delete coupon
         couponRepo.deleteById(couponId);
