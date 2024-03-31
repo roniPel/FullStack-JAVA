@@ -31,8 +31,6 @@ public class Credentials {
     @Length(max = 40)
     private String userEmail;
 
-    @Column(length = 40)
-    @Length(max = 40)
     @Enumerated(EnumType.STRING)
     private ClientType clientType;
 }

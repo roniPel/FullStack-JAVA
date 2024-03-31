@@ -120,14 +120,13 @@ public class AdminTestMethods_Services extends TestMethods {
         List<Customer> customers = adminService.GetAllCustomers();
         // Select random ID for updating
         int updateCustId = GetRandIdFromList(customers);
+        Customer updatedCust = adminService.GetOneCustomer(updateCustId);
         // Update fields
-        Customer updatedCust = Customer.builder()
-                .id(updateCustId)
-                .firstName("UpdatedFirstAdmin")
-                .lastName("UpdatedLastAdmin")
-                .email("updatedEmail"+GetrandInt(100)+"@email.com")
-                .password("PassAdmin")
-                .build();
+        updatedCust.setFirstName("UpdatedFirstAdmin");
+        updatedCust.setLastName("UpdatedLastAdmin");
+        updatedCust.setEmail("updatedEmail"+GetrandInt(100)+"@email.com");
+        updatedCust.setPassword("PassAdmin");
+        // Update customer in DB
         System.out.println("Customer to update: ");
         System.out.println(updatedCust);
         // Update customer in DB

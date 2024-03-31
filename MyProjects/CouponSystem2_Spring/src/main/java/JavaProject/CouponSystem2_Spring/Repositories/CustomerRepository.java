@@ -1,5 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Repositories;
 
+import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,5 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
             "WHERE coup.company_id = ?",
             nativeQuery = true)
     List<Integer> findCustomerIdByCompanyId(int companyId);
+    Customer findByCoupons(Coupon coupon);
 }

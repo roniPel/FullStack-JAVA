@@ -33,7 +33,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         System.out.println("*** Method: Get Company Details ***");
         System.out.println("The logged on company details are: ");
         Company company = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetCompanyDetails/",Company.class);
+                ("http://localhost:8080/Company/GetCompanyDetails/",Company.class);
         System.out.println(company);
         System.out.println();
     }
@@ -44,7 +44,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
     public void AddCoupon() {
         System.out.println("*** Method: Add Coupon ***");
         Company company = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetCompanyDetails/"+companyId,Company.class);
+                ("http://localhost:8080/Company/GetCompanyDetails/"+companyId,Company.class);
         int companyId = company.getId();
         // Create new coupon
         Category category = Category.GetRandomCategory();
@@ -57,7 +57,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         String image = "Image"+GetrandInt(10);
 
         Coupon coupon = Coupon.builder()
-                .id(50)
+                .id(51)
                 .companyId(companyId)
                 .category(category)
                 .title(title)
@@ -73,7 +73,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         System.out.println("Coupon to add: ");
         System.out.print(coupon);
         ResponseEntity<String> responsePost = restTemplate.postForEntity
-                ("http://localhost:8080/api/Company/AddCoupon",coupon,String.class);
+                ("http://localhost:8080/Company/AddCoupon",coupon,String.class);
         System.out.print("Added Coupon? ");
         System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
@@ -91,7 +91,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         // Select random ID for updating company
         int updateCouponId = GetRandIdFromList(couponList);
         Coupon updatedCoup = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetOneCoupon"+updateCouponId,Coupon.class);
+                ("http://localhost:8080/Company/GetOneCoupon"+updateCouponId,Coupon.class);
 
         // Update fields
         updatedCoup.setTitle("Rest_CompUpdated");
@@ -106,7 +106,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         System.out.println("Coupon to update: ");
         System.out.println(updatedCoup);
         restTemplate.put
-                ("http://localhost:8080/api/Company/UpdateCoupon/"+updatedCoup.getId(),updatedCoup);
+                ("http://localhost:8080/Company/UpdateCoupon/"+updatedCoup.getId(),updatedCoup);
         System.out.println("Updated Coupon? true");
         System.out.println();
     }
@@ -121,10 +121,10 @@ public class CompanyTestMethods_Rest extends TestMethods {
         // Select random ID for updating company
         int deleteCouponId = GetRandIdFromList(couponList);
         Coupon coupToDelete = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetOneCoupon/"+deleteCouponId, Coupon.class);
+                ("http://localhost:8080/Company/GetOneCoupon/"+deleteCouponId, Coupon.class);
         System.out.println("Coupon to delete: \n"+coupToDelete);
         // Delete company
-        restTemplate.delete("http://localhost:8080/api/Company/DeleteCoupon/"+deleteCouponId);
+        restTemplate.delete("http://localhost:8080/Company/DeleteCoupon/"+deleteCouponId);
         System.out.println("Deleted Coupon? true");
         System.out.println();
     }
@@ -150,7 +150,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         Category category = Category.GetRandomCategory();
         // Get company coupons by category
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetCompanyCouponsByCategory/"+category, Coupon[].class);
+                ("http://localhost:8080/Company/GetCompanyCouponsByCategory/"+category, Coupon[].class);
         List<Coupon> couponsByCategory = Arrays.stream(coupons).toList();
         // Display coupons
         System.out.println("Company's Coupons by Category '"+category+"': ");
@@ -166,7 +166,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         double price = Math.random()*maxPrice;
         // Get company coupons by max price
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetCompanyCouponsByMaxPrice/"+price, Coupon[].class);
+                ("http://localhost:8080/Company/GetCompanyCouponsByMaxPrice/"+price, Coupon[].class);
         List<Coupon> couponsByPrice = Arrays.stream(coupons).toList();
         // Display coupons
         System.out.println("Company's Coupons by Max Price "+ FactoryUtils.beautifyPrice(price) +": ");
@@ -180,7 +180,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
      */
     private List<Coupon> GetListOfCompanyCoupons() {
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Company/GetCompanyCoupons", Coupon[].class);
+                ("http://localhost:8080/Company/GetCompanyCoupons", Coupon[].class);
         return Arrays.stream(coupons).toList();
     }
 }

@@ -3,16 +3,20 @@ package JavaProject.CouponSystem2_Spring.Services.CompanyService;
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
+import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +28,7 @@ import java.util.Objects;
 public class CompanyServiceImpl implements CompanyService {
     private final CouponRepository couponRepo;
     private final CompanyRepository companyRepo;
+    private final CustomerRepository customerRepo;
 
     @Setter
     @Getter
@@ -75,6 +80,11 @@ public class CompanyServiceImpl implements CompanyService {
         if (coupon.getCompanyId()!= this.companyId) {
             throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
+        //Disconnect coupon from customer
+        Customer customer = customerRepo.findByCoupons(coupon);
+        customer.setCoupons(null);
+        customerRepo.saveAndFlush(customer);
+        //Delete coupon
         couponRepo.deleteById(couponId);
         return true;
     }

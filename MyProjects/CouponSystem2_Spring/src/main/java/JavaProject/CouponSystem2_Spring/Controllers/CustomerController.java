@@ -2,6 +2,7 @@ package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
@@ -16,14 +17,14 @@ import java.util.List;
  */
 @Validated
 @RestController
-@RequestMapping("api/Customer")
+@RequestMapping("/Customer")
 @RequiredArgsConstructor
 public class CustomerController extends ClientController {
     private final CustomerService customerService;
 
     //Todo - write 'login' method - part 3
     @Override
-    String Login(String email, String password) {
+    String Login(Credentials userCredentials) {
         return null;
     }
 

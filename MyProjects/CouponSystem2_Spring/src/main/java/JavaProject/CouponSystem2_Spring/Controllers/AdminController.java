@@ -1,11 +1,15 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
+import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
+import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +20,15 @@ import java.util.List;
  */
 @Validated
 @RestController
-@RequestMapping("api/Admin")
+@RequestMapping("/Admin")
 @RequiredArgsConstructor
 public class AdminController extends ClientController {
     private final AdminService adminService;
+    private final JWT jwt;
 
     //Todo - write 'login' method - part 3
     @Override
-    String Login(String email, String password) {
+    String Login(Credentials userCredentials) {
         return null;
     }
 
@@ -35,6 +40,22 @@ public class AdminController extends ClientController {
     public List<Company> GetAllCompanies(){
         return adminService.GetAllCompanies();
     }
+
+    /*
+
+    //Todo - Replace 'GetAllCompanies' - uncomment section below after sorting 'authorization' issue in swagger
+    public ResponseEntity<?> GetAllCompanies(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        // Check token
+
+        // Generate a new token
+        String newToken = jwt.checkUser(token);
+
+        return ResponseEntity.ok()
+                .header("Authorization",newToken)
+                .body(adminService.GetAllCompanies());
+    }
+
+     */
 
     /**
      * Get All Customers in DB

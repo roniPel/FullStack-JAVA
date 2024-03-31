@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +56,7 @@ public class CustomerControllerAdvice {
      * @param e exception received
      * @return A map of errors containing field name, and error details
      */
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class, LoginException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> handleValidationExceptions(MethodArgumentNotValidException e){
         Map<String,String> errors = new HashMap<>();

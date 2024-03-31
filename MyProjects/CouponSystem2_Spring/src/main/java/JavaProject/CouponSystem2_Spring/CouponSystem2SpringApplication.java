@@ -12,12 +12,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
 		//Todo - need to check why company/customer delete/update sometimes fail
-
 		//Todo - Test All Exceptions/ behavior
 
-		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
+		//Todo - Instead of LoginManager, create Login Service + Login controller (Ask Zeev for help)
 
-		//Todo - Instead of LoginManager, create Login Service + Login controller (see CatBackend - 20.03)
+		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
 		ApplicationContext ctx = SpringApplication.run(CouponSystem2SpringApplication.class, args);
 	}
 }

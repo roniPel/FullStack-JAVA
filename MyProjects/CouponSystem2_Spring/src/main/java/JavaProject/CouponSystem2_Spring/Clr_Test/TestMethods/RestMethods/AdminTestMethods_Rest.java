@@ -62,7 +62,7 @@ public class AdminTestMethods_Rest extends TestMethods {
 
         // Add company to DB
         ResponseEntity<String> responsePost = restTemplate.postForEntity
-                ("http://localhost:8080/api/Admin/AddCompany",addCompany,String.class);
+                ("http://localhost:8080/Admin/AddCompany",addCompany,String.class);
         System.out.print("Added Company? ");
         System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
@@ -90,7 +90,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         System.out.println(addCustomer);
         // Add customer to DB
         ResponseEntity<String> responsePost = restTemplate.postForEntity
-                ("http://localhost:8080/api/Admin/AddCustomer",addCustomer,String.class);
+                ("http://localhost:8080/Admin/AddCustomer",addCustomer,String.class);
         System.out.print("Added Company? ");
         System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
@@ -107,7 +107,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Select random ID for updating company
         int updateCompId = GetRandIdFromList(companyList);
         Company updatedComp = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCompany/"+updateCompId,Company.class);
+                ("http://localhost:8080/Admin/GetOneCompany/"+updateCompId,Company.class);
 
         // Update fields
         updatedComp.setEmail("Rest_AdminUpdate"+GetrandInt(100)+"@email.com");
@@ -117,7 +117,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         System.out.println("Company to update: ");
         System.out.println(updatedComp);
         restTemplate.put
-                ("http://localhost:8080/api/Admin/UpdateCompany/"+updatedComp.getId(),updatedComp);
+                ("http://localhost:8080/Admin/UpdateCompany/"+updatedComp.getId(),updatedComp);
         System.out.println("Updated Company? true");
         System.out.println();
     }
@@ -134,7 +134,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Select random ID for updating
         int updateCustId = GetRandIdFromList(customerList);
         Customer updatedCust = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCustomer/"+updateCustId,Customer.class);
+                ("http://localhost:8080/Admin/GetOneCustomer/"+updateCustId,Customer.class);
 
         // Update fields
         updatedCust.setFirstName("Rest_UpdateFirst");
@@ -145,7 +145,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         System.out.println("Customer to update: ");
         System.out.println(updatedCust);
         restTemplate.put
-                ("http://localhost:8080/api/Admin/UpdateCustomer/"+updatedCust.getId(),updatedCust);
+                ("http://localhost:8080/Admin/UpdateCustomer/"+updatedCust.getId(),updatedCust);
         System.out.println("Updated Customer? true");
         System.out.println();
     }
@@ -159,7 +159,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Pick random Id from companies
         int getOneCompId = GetRandIdFromList(companies);
         Company company = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCompany/"+getOneCompId,Company.class);
+                ("http://localhost:8080/Admin/GetOneCompany/"+getOneCompId,Company.class);
         // Print company
         System.out.println("One Company: \n"+company);
         System.out.println();
@@ -174,7 +174,7 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Get random ID
         int getOneCustId = GetRandIdFromList(customers);
         Customer customer = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCustomer/"+getOneCustId,Customer.class);
+                ("http://localhost:8080/Admin/GetOneCustomer/"+getOneCustId,Customer.class);
         // Print customer
         System.out.println("One Customer: \n"+customer);
         System.out.println();
@@ -189,10 +189,10 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Select random ID for deletion
         int delCompId = GetRandIdFromList(companies);
         Company compToDelete = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCompany/"+delCompId, Company.class);
+                ("http://localhost:8080/Admin/GetOneCompany/"+delCompId, Company.class);
         System.out.println("Company to delete: \n"+compToDelete);
         // Delete company
-        restTemplate.delete("http://localhost:8080/api/Admin/DeleteCompany/"+delCompId);
+        restTemplate.delete("http://localhost:8080/Admin/DeleteCompany/"+delCompId);
         System.out.println("Deleted Company? true");
         System.out.println();
     }
@@ -206,10 +206,10 @@ public class AdminTestMethods_Rest extends TestMethods {
         // Select random Id for deleting
         int delCustId = GetRandIdFromList(customers);
         Customer custToDelete = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetOneCustomer/"+delCustId, Customer.class);
+                ("http://localhost:8080/Admin/GetOneCustomer/"+delCustId, Customer.class);
         System.out.println("Customer to delete: \n"+custToDelete);
         // Delete customer
-        restTemplate.delete("http://localhost:8080/api/Admin/DeleteCustomer/"+delCustId);
+        restTemplate.delete("http://localhost:8080/Admin/DeleteCustomer/"+delCustId);
         System.out.println("Deleted Customer? true");
         System.out.println();
     }
@@ -220,7 +220,7 @@ public class AdminTestMethods_Rest extends TestMethods {
      */
     private List<Company> GetListOfAllCompanies() {
         Company[] companies = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetAllCompanies", Company[].class);
+                ("http://localhost:8080/Admin/GetAllCompanies", Company[].class);
         return Arrays.stream(companies).toList();
     }
 
@@ -230,7 +230,7 @@ public class AdminTestMethods_Rest extends TestMethods {
      */
     private List<Customer> GetListOfAllCustomers() {
         Customer[] customers = restTemplate.getForObject
-                ("http://localhost:8080/api/Admin/GetAllCustomers", Customer[].class);
+                ("http://localhost:8080/Admin/GetAllCustomers", Customer[].class);
         return Arrays.stream(customers).toList();
     }
 }

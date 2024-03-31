@@ -1,6 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Services.GuestService.GuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -13,14 +14,14 @@ import java.util.List;
  */
 @Validated
 @RestController
-@RequestMapping("api/Guest")
+@RequestMapping("/Guest")
 @RequiredArgsConstructor
 public class GuestController extends ClientController {
     private final GuestService guestService;
 
     //Todo - write 'login' method - part 3
     @Override
-    String Login(String email, String password) {
+    String Login(Credentials userCredentials) {
         return null;
     }
 

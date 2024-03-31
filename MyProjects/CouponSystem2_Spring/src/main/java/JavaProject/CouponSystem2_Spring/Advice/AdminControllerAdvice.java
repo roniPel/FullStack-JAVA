@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +27,7 @@ public class AdminControllerAdvice {
      * @param exception exception received
      * @return Error details object containing Type of error and error message
      */
-    @ExceptionHandler(value = {AdminException.class})
+    @ExceptionHandler(value = {AdminException.class, LoginException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDetails HandleError(Exception exception) {
         return new ErrorDetails("Admin Error",exception.getMessage());

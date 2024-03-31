@@ -5,6 +5,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
+import JavaProject.CouponSystem2_Spring.Services.LoginService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class LogonUtil {
     private Map<String, String> emailsPassowrdsMap;
     @Autowired
     protected AdminService adminService;
+    @Autowired
+    private LoginService loginService;
 
     /**
      * Constructor that prepares data for Admin Logon
@@ -86,5 +89,9 @@ public class LogonUtil {
     public int FindCustomerIdByEmailPass(String email, String password) throws AdminException, CustomerException, CompanyException {
         String id = adminService.Login(email,password);
         return Integer.parseInt(id);
+    }
+
+    public void AddCredentialsToDB(String user, String password, ClientType clientType, String email) {
+        loginService.AddCredentials(user, password, clientType, email);
     }
 }

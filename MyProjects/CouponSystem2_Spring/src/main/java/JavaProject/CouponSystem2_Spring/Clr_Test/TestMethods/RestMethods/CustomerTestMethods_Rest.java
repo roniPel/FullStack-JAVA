@@ -37,13 +37,13 @@ public class CustomerTestMethods_Rest extends TestMethods {
         nonCustomerCoupons.removeAll(GetListCustomerCoupons());
         int couponForPurchaseId = GetRandIdFromList(nonCustomerCoupons);
         Coupon couponForPurchase = restTemplate.getForObject
-                ("http://localhost:8080/api/Customer/GetOneCoupon/"+couponForPurchaseId, Coupon.class);;
+                ("http://localhost:8080/Customer/GetOneCoupon/"+couponForPurchaseId, Coupon.class);;
 
         // Add coupon to DB
         System.out.println("Coupon for purchase: ");
         System.out.println(couponForPurchase);
         ResponseEntity<String> responsePost = restTemplate.postForEntity
-                ("http://localhost:8080/api/Customer/PurchaseCoupon",couponForPurchase,String.class);
+                ("http://localhost:8080/Customer/PurchaseCoupon",couponForPurchase,String.class);
         System.out.print("Purchased Coupon? ");
         System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
@@ -70,7 +70,7 @@ public class CustomerTestMethods_Rest extends TestMethods {
         Category category = Category.GetRandomCategory();
         // Get customer coupons by category
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Customer/GetCustomerCouponsByCategory/"+category, Coupon[].class);
+                ("http://localhost:8080/Customer/GetCustomerCouponsByCategory/"+category, Coupon[].class);
         List<Coupon> couponsByCat = Arrays.stream(coupons).toList();
         // Display coupons
         System.out.println("Customer's Coupons by Category "+category+": ");
@@ -86,7 +86,7 @@ public class CustomerTestMethods_Rest extends TestMethods {
         double price = Math.random()*maxPrice;
         // Get company coupons by max price
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Customer/GetCustomerCouponsByMaxPrice/"+price, Coupon[].class);
+                ("http://localhost:8080/Customer/GetCustomerCouponsByMaxPrice/"+price, Coupon[].class);
         List<Coupon> couponsByPrice = Arrays.stream(coupons).toList();
         // Display coupons
         System.out.println("Customer's Coupons by Max Price "+ FactoryUtils.beautifyPrice(price) +": ");
@@ -100,7 +100,7 @@ public class CustomerTestMethods_Rest extends TestMethods {
      */
     private List<Coupon> GetListOfAllCoupons() {
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Customer/GetAllCoupons", Coupon[].class);
+                ("http://localhost:8080/Customer/GetAllCoupons", Coupon[].class);
         return Arrays.stream(coupons).toList();
     }
 
@@ -110,7 +110,7 @@ public class CustomerTestMethods_Rest extends TestMethods {
      */
     private List<Coupon> GetListCustomerCoupons() {
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Customer/GetCustomerCoupons", Coupon[].class);
+                ("http://localhost:8080/Customer/GetCustomerCoupons", Coupon[].class);
         return Arrays.stream(coupons).toList();
     }
 

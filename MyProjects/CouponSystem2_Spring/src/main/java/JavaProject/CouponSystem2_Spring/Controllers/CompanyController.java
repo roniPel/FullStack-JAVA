@@ -3,6 +3,7 @@ package JavaProject.CouponSystem2_Spring.Controllers;
 import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,14 @@ import java.util.List;
  */
 @Validated
 @RestController
-@RequestMapping("api/Company")
+@RequestMapping("/Company")
 @RequiredArgsConstructor
 public class CompanyController extends ClientController {
     private final CompanyService companyService;
 
     //Todo - write 'login' method - part 3
     @Override
-    String Login(String email, String password) {
+    String Login(Credentials userCredentials) {
         return null;
     }
     /**

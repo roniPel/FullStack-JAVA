@@ -29,13 +29,13 @@ public class GuestTestMethods_Rest extends TestMethods {
         List<Coupon> nonCustomerCoupons = GetListOfAllCoupons();
         int couponForPurchaseId = GetRandIdFromList(nonCustomerCoupons);
         Coupon couponForPurchase = restTemplate.getForObject
-                ("http://localhost:8080/api/Guest/GetOneCoupon/"+couponForPurchaseId, Coupon.class);;
+                ("http://localhost:8080/Guest/GetOneCoupon/"+couponForPurchaseId, Coupon.class);;
 
         // Add coupon to DB
         System.out.println("Coupon for purchase: ");
         System.out.println(couponForPurchase);
         ResponseEntity<String> responsePost = restTemplate.postForEntity
-                ("http://localhost:8080/api/Guest/PurchaseCoupon",couponForPurchase,String.class);
+                ("http://localhost:8080/Guest/PurchaseCoupon",couponForPurchase,String.class);
         System.out.print("Purchased Coupon? ");
         System.out.println(responsePost.getStatusCode().value()== HttpStatus.CREATED.value()?"true":"false");
         System.out.println();
@@ -47,7 +47,7 @@ public class GuestTestMethods_Rest extends TestMethods {
      */
     private List<Coupon> GetListOfAllCoupons() {
         Coupon[] coupons = restTemplate.getForObject
-                ("http://localhost:8080/api/Guest/GetAllCoupons", Coupon[].class);
+                ("http://localhost:8080/Guest/GetAllCoupons", Coupon[].class);
         return Arrays.stream(coupons).toList();
     }
 
