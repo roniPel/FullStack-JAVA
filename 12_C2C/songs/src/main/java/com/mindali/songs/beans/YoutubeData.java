@@ -1,17 +1,19 @@
 package com.mindali.songs.beans;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
+@Entity
 @Data
+@Table(name = "songs")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class YoutubeData {
+    @Id
     private String id;
     private String name;
     private String description;

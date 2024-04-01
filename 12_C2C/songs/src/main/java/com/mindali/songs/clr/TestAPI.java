@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class TestAPI implements CommandLineRunner {
     private final RestTemplate restTemplate;
