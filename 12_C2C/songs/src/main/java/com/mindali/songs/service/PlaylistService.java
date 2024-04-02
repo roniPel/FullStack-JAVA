@@ -19,20 +19,20 @@ public class PlaylistService {
     private final YouTubeRepository youTubeRepo;
     private final PlaylistRepository playlistRepo;
     private final SongService songService;
-    public boolean CreatePlaylist(String name) {
+    public boolean CreatePlaylist(String playlist_name) {
         //Check if playlist exists
-        if(playlistRepo.existsByPlaylistName(name)) {
+        if(playlistRepo.existsByPlaylistName(playlist_name)) {
             return false;
         }
         PlayList playList = PlayList.builder()
-                .playlistName(name)
+                .playlistName(playlist_name)
                 .songList(null)
                 .build();
-        playlistRepo.save(playList);
+        playlistRepo.saveAndFlush(playList);
         return true;
     }
 
-    public boolean UpdatePlaylist(PlayList playlist) throws SongException {
+    public boolean UpdatePlaylist(PlayList playlist) {
         if(playlistRepo.existsById(playlist.getId())) {
             playlistRepo.save(playlist);
             return true;
@@ -44,13 +44,13 @@ public class PlaylistService {
         if(playlistRepo.existsById(id)) {
             PlayList playlist = playlistRepo.findById(id).get();
             playlist.setSongList(null);
-            playlistRepo.save(playlist);
+            playlistRepo.saveAndFlush(playlist);
             return true;
         }
         return false;
     }
 
-    public boolean AddSong(int playListId, String songId) throws JsonProcessingException {
+    public boolean AddSong(Integer playListId, String songId) throws JsonProcessingException, SongException {
         if (playlistRepo.existsById(playListId)){
             PlayList playList = playlistRepo.findById(playListId).get();
             List<YoutubeData> myList = playList.getSongList();
@@ -61,11 +61,11 @@ public class PlaylistService {
         return false;
     }
 
-    public boolean RemoveSong(int playlistId, String songId)  {
+    public boolean RemoveSong(Integer playlistId, String songId) throws SongException {
         if (playlistRepo.existsById(playlistId)){
             PlayList playList = playlistRepo.findById(playlistId).get();
             playList.getSongList().remove(youTubeRepo.findById(songId).orElse(null));
-            playlistRepo.save(playList);
+            playlistRepo.saveAndFlush(playList);
             return true;
         }
         return false;

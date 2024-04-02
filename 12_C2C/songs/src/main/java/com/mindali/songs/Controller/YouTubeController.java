@@ -2,6 +2,7 @@ package com.mindali.songs.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mindali.songs.beans.YoutubeData;
+import com.mindali.songs.exceptions.SongException;
 import com.mindali.songs.service.SongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class YouTubeController {
     private final SongService service;
     @GetMapping("GetSongData/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public YoutubeData GetSongData(@PathVariable String id) throws JsonProcessingException {
+    public YoutubeData GetSongData(@PathVariable String id) throws JsonProcessingException, SongException {
         return service.getSongData(id);
     }
 

@@ -3,6 +3,8 @@ package com.mindali.songs.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mindali.songs.beans.YoutubeData;
+import com.mindali.songs.exceptions.SongErrors;
+import com.mindali.songs.exceptions.SongException;
 import com.mindali.songs.repository.YouTubeRepository;
 import jakarta.persistence.Cacheable;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,8 @@ public class SongService {
     private final YouTubeRepository youtubeRepo;
     private String URL = "https://www.googleapis.com/youtube/v3/videos?part=snippet&key=AIzaSyB_rfFikBTjch9lqoaaLuqX_ETqsGGTvN8&id=";
 
-    public YoutubeData getSongData(String id) throws JsonProcessingException {
+    public YoutubeData getSongData(String id) throws JsonProcessingException, SongException {
         //check if we have the data already
-        //return youtubeRepo.findById(id).orElse(getYouTubeData(id));
         if (youtubeRepo.existsById(id)){
             return youtubeRepo.findById(id).get();
         } else {
