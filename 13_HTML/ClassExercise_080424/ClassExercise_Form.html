@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarForm</title>
+</head>
+<body>
+    <h1>My Car Form</h1><hr/>
+    <form>
+        License Plate Number
+        <input type="number" placeholder="License Plate Number..." required/> <br/><br/>
+        Car Type
+        <input type="text" placeholder="Car Type.." required/> <br/><br/>
+        Engine Type
+        <input type="radio" name="engine" checked/>Gas
+        <input type="radio" name="engine"/>Diesel
+        <input type="radio" name="engine"/>Hybrid
+        <input type="radio" name="engine"/>Electric
+        <br/><br/>
+        Ownership Type: 
+        <input type="radio" name="ownership" checked/>Private
+        <input type="radio" name="ownership"/>Company
+        <input type="radio" name="ownership"/>Cab
+        <input type="radio" name="ownership"/>Rent
+        <br/><br/>
+        Hand:
+        <select>
+            <option value="First Hand">First Hand</option>
+            <option value="Second Hand">Second Hand</option>
+            <option value="Unknown">Unknown</option>
+        </select><br/><br/>
+        Kilometers:
+        <input type="text" placeholder="Kilometers.." required/> <br/><br/>
+        Asking Price: 
+        <input type="number" placeholder="Asking Price (NIS).." required/> <br/><br/>
+        Picture 1 <input type="file" accept=".jpg"/><br/><br/>
+        Picture 2 <input type="file" accept=".jpg"/><br/><br/>
+        Picture 3 <input type="file" accept=".jpg"/><br/><br/>
+        Picture 4 <input type="file" accept=".jpg"/><br/><br/>
+        Picture 5 <input type="file" accept=".jpg"/><br/><br/>
+       <input type="submit" value="Submit"/>
+       <input type="reset" value="Reset"/>
+    </form>
+</body>
+</html>
