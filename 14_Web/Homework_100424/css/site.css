@@ -1,0 +1,17 @@
+.Box{
+    box-shadow: 5px 5px 10px 5px gray;
+    width: 500px;
+    height: 200px;
+    margin:auto;
+    border: 16px double rgba(199,26,243,0.51);
+}
+#myClock{
+    font-size: 100px;
+    color: #000000;
+    background: #FFFFFF;
+    text-shadow: 2px 2px 0 #bcbcbc, 4px 4px 0 #9c9c9c;
+    color: #000000;
+    background: #FFFFFF;
+    text-align: center;
+    padding: 3vw;
+}
