@@ -30,9 +30,6 @@ public class Clr_GuestTester implements CommandLineRunner {
         String password = logonUtil.getEmailsPassowrdsMap().get("guestPassword");
 
         try {
-            // Check logon
-            //Todo - Add Login Check with JWT (How to add for guest?)
-
             // Run all methods - services
             Guest_RunAllMethods_Services(guestService);
             //Run all methods - Rest

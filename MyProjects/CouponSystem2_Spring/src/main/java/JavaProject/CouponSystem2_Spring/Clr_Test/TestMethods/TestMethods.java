@@ -64,7 +64,7 @@ public class TestMethods {
      * @throws GuestException If we get any exception.  Details are provided
      */
     public boolean CheckLogin(String email, String password, ClientService clientService)
-    //Todo - change method (or user Login Service/controller)
+    //Todo - change user Login Service+controller - add JWT)
             throws AdminException, CompanyException, CustomerException, GuestException, LoginException {
         String token = clientService.Login(email, password);
         return true;

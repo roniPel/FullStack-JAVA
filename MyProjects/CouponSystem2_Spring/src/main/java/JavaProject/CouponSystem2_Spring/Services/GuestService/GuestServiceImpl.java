@@ -27,37 +27,6 @@ public class GuestServiceImpl implements GuestService{
     private final CouponRepository couponRepo;
     private final CustomerRepository customerRepo;
 
-    @Getter
-    private int guestId;  // Guest ID belonging to the guest user
-    @Override
-    public String Login(String email, String password) throws CustomerException, AdminException, CompanyException {
-        return null;
-    }
-
-    @Override
-    public boolean PurchaseCoupon(Coupon coupon) throws GuestException {
-        // Verify coupon exists in DB
-        Coupon couponInDb = couponRepo.findById(coupon.getId()).orElseThrow(
-                () -> new GuestException(GuestErrors.COUPON_DOES_NOT_EXIST)
-        );
-        // Verify amount is above 0
-        if(couponInDb.getAmount() <= 0){
-            throw new GuestException(GuestErrors.COUPON_AMOUNT_IS_ZERO);
-        }
-        // Verify coupon is not expired
-        if(couponInDb.getEnd_date().isBefore(LocalDate.now())) {
-            throw new GuestException(GuestErrors.COUPON_DATE_EXPIRED);
-        }
-        // Add coupon to customer and save to DB
-        Customer customer = GetCustomerDetails();
-        customer.getCoupons().add(coupon);
-        customerRepo.saveAndFlush(customer);
-        // Update coupon amount (subtract 1)
-        couponInDb.setAmount(couponInDb.getAmount()-1);
-        couponRepo.save(couponInDb);
-        return true;
-    }
-
     @Override
     public List<Coupon> GetAllCoupons() {
         return couponRepo.findAll();
@@ -67,12 +36,6 @@ public class GuestServiceImpl implements GuestService{
     public Coupon GetCouponById(int couponId) throws GuestException {
         return couponRepo.findById(couponId).orElseThrow(
                 () ->new GuestException(GuestErrors.COUPON_DOES_NOT_EXIST));
-    }
-
-    @Override
-    public Customer GetCustomerDetails() throws GuestException {
-        return customerRepo.findById(this.guestId).orElseThrow(
-                () -> new GuestException(GuestErrors.GENERAL_CUSTOMER_ERROR) );
     }
 
 }

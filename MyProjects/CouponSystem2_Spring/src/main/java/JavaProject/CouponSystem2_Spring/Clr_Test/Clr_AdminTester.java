@@ -28,12 +28,13 @@ public class Clr_AdminTester implements CommandLineRunner {
         String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
         String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
 
-        //Todo - Add Login Check with JWT
+        //Todo - Add Login Check with JWT (section 3)
         try {
             // Run all Admin methods - via services
             Admin_RunAllMethods_Services(adminService);
 
-            Admin_RunAllMethods_RestTemplate();
+            //Todo - Uncomment section below (Part 3)
+            //Admin_RunAllMethods_RestTemplate();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -92,6 +93,7 @@ public class Clr_AdminTester implements CommandLineRunner {
         adminTestMethods_services.Method_GetOneCompany(adminService);
         adminTestMethods_services.Method_GetOneCustomer(adminService);
         adminTestMethods_services.Method_DeleteCompany(adminService);
+//        adminTestMethods_services.DeleteCompanyUsingCascade(adminService);
         adminTestMethods_services.Method_DeleteCustomer(adminService);
         PrintSectionFooter_Services();
     }

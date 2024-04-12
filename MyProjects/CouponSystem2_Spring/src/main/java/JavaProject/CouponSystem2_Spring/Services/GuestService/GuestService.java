@@ -13,9 +13,7 @@ import java.util.List;
 /**
  * Guest Service interface - Lists relevant functionalities for Guest users
  */
-public interface GuestService extends ClientService {
-    @Override
-    String Login(String email, String password) throws CustomerException, AdminException, CompanyException;
+public interface GuestService {
     /**
      * Get all the coupons listed in DB for a specific customer
      * @return coupon ArrayList if succeeded, null if no coupons were found.
@@ -29,21 +27,5 @@ public interface GuestService extends ClientService {
      * @throws GuestException If we get any exception.  Details are provided
      */
     Coupon GetCouponById(int couponId) throws GuestException;
-
-    /**
-     * Adds a coupon purchase in the DB for the logged on customer
-     *
-     * @param coupon 'coupon' object to purchase
-     * @return true if succeeded, false if failed.
-     * @throws GuestException If we get any exception.  Details are provided
-     */
-    boolean PurchaseCoupon(Coupon coupon) throws GuestException;
-
-    /**
-     * Gets a customer (according to the customer ID belonging to the customer logged on)
-     * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.
-     * @throws GuestException If we get any exception.  Details are provided
-     */
-    Customer GetCustomerDetails() throws GuestException;
 
 }

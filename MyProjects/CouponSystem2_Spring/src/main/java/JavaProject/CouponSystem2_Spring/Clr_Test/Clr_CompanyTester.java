@@ -25,25 +25,26 @@ public class Clr_CompanyTester implements CommandLineRunner {
     private final CompanyTestMethods_Services companyTestMethods_services;
     private final CompanyTestMethods_Rest companyTestMethods_rest;
     private final AdminTestMethods_Services adminTestMethods_services;
-    private final AdminService adminService; //  Preparation for Client Side (section 3)
+    private final AdminService adminService;
     @Autowired
-    private CompanyService companyService; // - Preparation for Client Side (section 3)
+    private CompanyService companyService;
     @Override
     public void run(String... args) throws Exception {
 
         try {
 
-            // Prepare data for company and customer logons
+            // Prepare data for company and customer testing and logons
             int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
             logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
-            //Todo - change logon format, remove 'SetCompanyId' method from Service (interface + impl class) + remove @Autowired and change to final -  'CompanyService' (local variable)
+            //Todo - change logon format: remove 'SetCompanyId' method from Service (interface + impl class)
+            // + remove @Autowired and change to final -  'CompanyService' (local variable) - Part 3
             companyService.SetCompanyId(randomCompanyId);
 
             String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
             String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
 
             // Check logon
-            //Todo - Add Login Check with JWT
+            //Todo - Add Login Check with JWT (part 3)
 
             // Run all methods - Services
             Company_RunAllMethods_Services(companyService);

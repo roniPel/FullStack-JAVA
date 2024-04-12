@@ -84,8 +84,6 @@ public class CustomerController extends ClientController {
         return customerService.GetCustomerCouponsByMaxPrice(maxPrice);
     }
 
-    //Todo - Consider deleting 'GetOneCoupon' and 'GetAllCoupons' methods below - if not needed
-
     /**
      * Get one coupon
      * @param id id belonging to the coupon requested

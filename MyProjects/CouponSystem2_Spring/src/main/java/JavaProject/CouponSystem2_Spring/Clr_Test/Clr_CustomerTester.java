@@ -22,14 +22,15 @@ public class Clr_CustomerTester implements CommandLineRunner {
     private final CustomerTestMethods_Services customerTestMethods_services;
     private final CustomerTestMethods_Rest customerTestMethods_rest;
     @Autowired
-    private CustomerService customerService; //- Preparation for Client Side (section 3)
+    private CustomerService customerService;
 
     @Override
     public void run(String... args) throws Exception {
         String email = logonUtil.getEmailsPassowrdsMap().get("customerEmail");
         String password = logonUtil.getEmailsPassowrdsMap().get("customerPassword");
 
-        //Todo - change logon format, remove 'SetCompanyId' method from Service (interface + impl class) + remove @Autowired and change to final -  'CustomerService' (local variable)
+        //Todo - change logon format, remove 'SetCustomerId' method from Service (interface + impl class)
+        // + remove @Autowired and change to final -  'CustomerService' (local variable)
         customerService.SetCustomerId(logonUtil.FindCustomerIdByEmailPass(email,password));
 
         try {

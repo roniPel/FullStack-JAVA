@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-
 import java.util.List;
-import java.util.Set;
 
 /**
  * Bean: Company - used to define a company listed in the system
@@ -47,8 +45,10 @@ public class Company {
             max = 15)
     private String password;
 
+
     @Singular
     @OneToMany(cascade = CascadeType.ALL,
+//    @OneToMany(cascade = CascadeType.REMOVE,
             orphanRemoval = true)
     @JoinColumn(name = "company_id")
     private List<Coupon> coupons;

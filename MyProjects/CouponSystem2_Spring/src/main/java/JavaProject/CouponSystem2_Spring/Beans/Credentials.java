@@ -14,7 +14,6 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @Builder
 public class Credentials {
-    //Todo - copy from catbackend
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

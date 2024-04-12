@@ -16,30 +16,6 @@ import java.util.List;
 @Component
 public class GuestTestMethods_Services extends TestMethods {
 
-    //Todo - write more methods for guest?
-
-    /**
-     * Guest Method - Purchase Coupon
-     * @param guestService used to run method
-     * @throws GuestException If we get any exception.  Details are provided
-     */
-    public void PurchaseCoupon(GuestService guestService) throws GuestException {
-        System.out.println("*** Method: Purchase Coupon ***");
-
-        // Select random coupon from non-customer coupons list
-        List<Coupon> allCoupons = guestService.GetAllCoupons();
-
-        int couponForPurchaseId = GetRandIdFromList(allCoupons);
-        Coupon couponForPurchase = guestService.GetCouponById(couponForPurchaseId);
-
-        // Add coupon to DB
-        System.out.println("Coupon for purchase: ");
-        System.out.println(couponForPurchase);
-        System.out.println("Purchased Coupon? "+
-                guestService.PurchaseCoupon(couponForPurchase));
-        System.out.println();
-    }
-
     /**
      * Guest Method - Get All Coupons
      * @param guestService used to run method

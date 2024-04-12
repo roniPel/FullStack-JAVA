@@ -81,9 +81,11 @@ public class CompanyServiceImpl implements CompanyService {
             throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
         //Disconnect coupon from customer
-        Customer customer = customerRepo.findByCoupons(coupon);
-        customer.getCoupons().remove(coupon);
-        customerRepo.saveAndFlush(customer);
+        if(customerRepo.findByCoupons(coupon) != null) {
+            Customer customer = customerRepo.findByCoupons(coupon);
+            customer.getCoupons().remove(coupon);
+            customerRepo.saveAndFlush(customer);
+        }
         //Delete coupon
         couponRepo.deleteById(couponId);
         return true;

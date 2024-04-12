@@ -171,7 +171,6 @@ public class AdminServiceImpl implements AdminService {
     public int AddCompanyWithFullCoupons() throws AdminException {
         // Add Company to DB
         Company company = Company.builder()
-                .id(100)
                 .name("CompanyFullCoupons")
                 .email("CompCoupons@email.com")
                 .password("Password")
@@ -198,7 +197,6 @@ public class AdminServiceImpl implements AdminService {
         }
         List<Coupon> coupons = new ArrayList<>();
         // Add coupons from all categories to coupon List (to company)
-        int count = 200;
         for (Category category : Category.values()) {
             // Create coupon locally
             String title = "Title "+clientType.name()+" "+category;
@@ -209,7 +207,6 @@ public class AdminServiceImpl implements AdminService {
             double price = FactoryUtils.round(Math.random()*200,2);
             String image = "Image "+clientType.name()+" "+category;
             Coupon addCoupon = Coupon.builder()
-                    .id(count++)
                     .companyId(companyId)
                     .category(category)
                     .title(title)
@@ -257,7 +254,6 @@ public class AdminServiceImpl implements AdminService {
     public int AddCustomerWithFullCoupons(int companyId) throws AdminException {
         // Add Customer to DB
         Customer customer = Customer.builder()
-                .id(50)
                 .firstName("FirstFullCoupons")
                 .lastName("LastFullCoupons")
                 .email("FullCoupons@email.com")

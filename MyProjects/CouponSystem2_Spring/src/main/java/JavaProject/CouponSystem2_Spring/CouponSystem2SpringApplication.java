@@ -11,12 +11,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class CouponSystem2SpringApplication {
 	public static void main(String[] args) {
+		//Todo - in 'company' bean - change cascade to CascadeType.REMOVE
+		// + delete 'findCustomerIdByCompanyId' in Customer Repo + Change method in Admin service
+
 		//Todo - need to check why company/customer delete/update sometimes fail
 		//Todo - Test All Exceptions/ behavior
 
 		//Todo - Instead of LoginManager, create Login Service + Login controller (Ask Zeev for help)
 
-		//Todo - switch cron TIME to "00 02 * * * ?" in application.properties
 		ApplicationContext ctx = SpringApplication.run(CouponSystem2SpringApplication.class, args);
 	}
 }

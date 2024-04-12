@@ -102,8 +102,6 @@ public class CompanyController extends ClientController {
         return companyService.GetCompanyCouponsByMaxPrice(maxPrice);
     }
 
-    //Todo - Consider deleting 'GetOneCoupon' below - if not needed
-
     /**
      * Get one coupon
      * @param id id belonging to the coupon requested

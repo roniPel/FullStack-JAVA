@@ -62,6 +62,4 @@ public class Coupon {
     @Column(name = "image")
     private String image;
 
-//    @ManyToMany(mappedBy = "coupons")
-//    private List<Customer> customers;
 }

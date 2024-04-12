@@ -85,7 +85,7 @@ public class LogonUtil {
         System.out.println();
     }
 
-    //Todo - get rid of below method, use JWT for logon for company and customer
+    //Todo - get rid of below method, use JWT for logon for company and customer - Part 3
     public int FindCustomerIdByEmailPass(String email, String password) throws AdminException, CustomerException, CompanyException {
         String id = adminService.Login(email,password);
         return Integer.parseInt(id);

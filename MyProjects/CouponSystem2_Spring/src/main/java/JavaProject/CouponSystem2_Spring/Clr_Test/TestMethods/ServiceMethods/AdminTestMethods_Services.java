@@ -199,4 +199,16 @@ public class AdminTestMethods_Services extends TestMethods {
         System.out.println("Deleted Customer? "+(adminService.DeleteCustomer(delCustId) ) );
         System.out.println();
     }
+
+    public void DeleteCompanyUsingCascade(AdminService adminService) throws AdminException {
+        System.out.println("*** Method: Delete Company (using cascade - REMOVE) ***");
+        List<Company> companies = adminService.GetAllCompanies();
+        // Select random ID for deletion
+        int delCompId = GetRandIdFromList(companies);
+        System.out.println("Company to delete: ");
+        System.out.println(adminService.GetOneCompany(delCompId));
+        // Delete company coupons + delete company
+        System.out.println("Deleted Company? "+ (adminService.DeleteCompany(delCompId) ) );
+        System.out.println();
+    }
 }

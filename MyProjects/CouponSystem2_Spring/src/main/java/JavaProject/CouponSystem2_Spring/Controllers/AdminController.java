@@ -43,7 +43,7 @@ public class AdminController extends ClientController {
 
     /*
 
-    //Todo - Replace 'GetAllCompanies' - uncomment section below after sorting 'authorization' issue in swagger
+    //Todo - Replace 'GetAllCompanies' - uncomment section below after sorting 'authorization' issue in swagger (section 3)
     public ResponseEntity<?> GetAllCompanies(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         // Check token
 
