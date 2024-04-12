@@ -1,0 +1,19 @@
+body{
+    text-align: center;
+}
+
+.Box{
+    box-shadow: 5px 5px 10px 5px gray;
+    width: 300px;
+    margin:auto;
+}
+table{
+    margin-left:auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 30%;
+}
+table,tr,td {
+    border: 1px solid black;
+}
