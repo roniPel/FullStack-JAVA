@@ -37,7 +37,7 @@ public class CustomerTestMethods_Rest extends TestMethods {
         nonCustomerCoupons.removeAll(GetListCustomerCoupons());
         int couponForPurchaseId = GetRandIdFromList(nonCustomerCoupons);
         Coupon couponForPurchase = restTemplate.getForObject
-                ("http://localhost:8080/Customer/GetOneCoupon/"+couponForPurchaseId, Coupon.class);;
+                ("http://localhost:8080/Customer/GetOneCoupon/"+couponForPurchaseId, Coupon.class);
 
         // Add coupon to DB
         System.out.println("Coupon for purchase: ");

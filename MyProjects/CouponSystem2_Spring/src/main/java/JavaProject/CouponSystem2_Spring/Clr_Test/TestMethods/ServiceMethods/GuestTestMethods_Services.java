@@ -27,4 +27,13 @@ public class GuestTestMethods_Services extends TestMethods {
         allCoupons.forEach(System.out::println);
         System.out.println();
     }
+
+    public void GetOneCoupon(GuestService guestService) throws GuestException {
+        System.out.println("*** Method: Get One Coupon ***");
+        int couponId = GetRandIdFromList(guestService.GetAllCoupons());
+        Coupon coupon = guestService.GetCouponById(couponId);
+        System.out.println("One Coupon: ");
+        System.out.println(coupon);
+        System.out.println();
+    }
 }

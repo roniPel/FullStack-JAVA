@@ -58,12 +58,14 @@ public class Clr_GuestTester implements CommandLineRunner {
     private void Guest_RunAllMethods_Rest() {
         PrintSectionHeader_Rest();
         guestTestMethods_rest.GetAllCoupons();
+        guestTestMethods_rest.GetOneCoupon();
         PrintSectionFooter_Rest();
     }
 
     private void Guest_RunAllMethods_Services(GuestService guestService) throws GuestException {
         PrintSectionHeader_Services();
         guestTestMethods_services.GetAllCoupons(guestService);
+        guestTestMethods_services.GetOneCoupon(guestService);
         PrintSectionFooter_Services();
     }
     private void PrintSectionFooter_Services() {

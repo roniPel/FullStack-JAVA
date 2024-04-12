@@ -2,6 +2,8 @@ package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods;
 
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
+import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
+import JavaProject.CouponSystem2_Spring.Services.GuestService.GuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +58,16 @@ public class GuestTestMethods_Rest extends TestMethods {
         List<Coupon> allCoupons = GetListOfAllCoupons();
         System.out.println("All coupons: ");
         allCoupons.forEach(System.out::println);
+        System.out.println();
+    }
+
+    public void GetOneCoupon() {
+        System.out.println("*** Method: Get One Coupon ***");
+        int couponId = GetRandIdFromList(GetListOfAllCoupons());
+        Coupon coupon = restTemplate.getForObject
+                ("http://localhost:8080/Guest/GetOneCoupon/"+couponId, Coupon.class);
+        System.out.println("One Coupon: ");
+        System.out.println(coupon);
         System.out.println();
     }
 }
