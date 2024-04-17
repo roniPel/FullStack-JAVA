@@ -28,8 +28,6 @@ public class AdminServiceImpl implements AdminService {
     private final CouponRepository couponRepo;
     private final CompanyRepository companyRepo;
     private final CustomerRepository customerRepo;
-    private final String email = "admin@admin.com";
-    private final String password = "admin";
 
     @Override
     public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
@@ -105,6 +103,11 @@ public class AdminServiceImpl implements AdminService {
         return true;
     }
 
+    /**
+     * Disconnects the link between the customers and coupons belonging to a company (prior to deleting company)
+     * @param companyId company ID - used to find the list of coupons and from there get the list of customers to disconnect link
+     * @throws AdminException If we get any exception.  Details are provided
+     */
     private void DisconnectCouponsFromCustomers(int companyId) throws AdminException {
         List<Integer> customersToDisconnect = customerRepo.findCustomerIdByCompanyId(companyId);
         for (Integer customerId : customersToDisconnect) {
@@ -259,7 +262,7 @@ public class AdminServiceImpl implements AdminService {
                 .email("FullCoupons@email.com")
                 .password("Password")
                 .build();
-        customerRepo.save(customer);
+        customerRepo.saveAndFlush(customer);
 
         // Get customer ID from DB
         int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();

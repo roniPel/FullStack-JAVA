@@ -93,7 +93,6 @@ public class Clr_AdminTester implements CommandLineRunner {
         adminTestMethods_services.Method_GetOneCompany(adminService);
         adminTestMethods_services.Method_GetOneCustomer(adminService);
         adminTestMethods_services.Method_DeleteCompany(adminService);
-//        adminTestMethods_services.DeleteCompanyUsingCascade(adminService);
         adminTestMethods_services.Method_DeleteCustomer(adminService);
         PrintSectionFooter_Services();
     }

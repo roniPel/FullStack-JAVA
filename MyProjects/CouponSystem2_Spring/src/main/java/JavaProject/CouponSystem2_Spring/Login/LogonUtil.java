@@ -10,6 +10,7 @@ import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,12 +21,16 @@ import java.util.Map;
 @Component
 @Getter
 public class LogonUtil {
-
     private Map<String, String> emailsPassowrdsMap;
     @Autowired
     protected AdminService adminService;
     @Autowired
     private LoginService loginService;
+    //Todo - Add Placeholders 'adminUser'+'adminPass' to method PrepareData_AdminLogon
+//    @Value("${adminUser}")
+//    private String user;
+//    @Value("${adminPass}")
+//    private String pass;
 
     /**
      * Constructor that prepares data for Admin Logon
