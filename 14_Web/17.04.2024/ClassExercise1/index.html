@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassExercise1_17.04.24</title>
+    <link href="css/site.css" rel="stylesheet"/>
+    <script src="js/site.js"></script>
+</head>
+<body>
+    <div class="Box">
+        <!-- our action will be a java script function-->
+        <form action="javascript:addTask()" id="myForm">
+            <input type="text" placeholder="Task name" id="tName" required/><br/><br/>
+            <input type="text" placeholder="Person Responsible" id="tResponsibility" required/><br/><br/>
+            <select id="tUrgency">
+                <option>normal</option>
+                <option>urgent</option>
+                <option>life and death</option>
+            </select><br/><br/>
+            <input type="submit" value="add task"/>
+            <input type="reset" value="clear"/>
+        </form>
+    </div>
+    <table id="tableList">
+</body>
+</html>
