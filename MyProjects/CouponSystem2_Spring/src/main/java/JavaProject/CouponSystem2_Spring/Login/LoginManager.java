@@ -21,7 +21,7 @@ import javax.security.auth.login.LoginException;
 //@Component
 @RequiredArgsConstructor
 public class LoginManager {
-    // Todo - Delete LoginManager class? Or finish writing method + implement in code(?)
+    // Todo - Delete LoginManager class? Or finish writing method + implement in code(?) - Part 3
     private static LogonUtil logonUtil;
     private static CompanyService companyService;
     private static CustomerService customerService;

@@ -27,7 +27,7 @@ public class JWT {
     private String signatureAlgorithm = SignatureAlgorithm.HS256.getJcaName();
 
     //Secret Key
-    //Todo - user environment variable for secretKey variable (Part 3)
+    //Todo - use environment variable for secretKey variable (Part 3)
 //    @Autowired
 //    @Value("${jwt.secretKey}")
     private String secretKey = "aint+no+mountain+high+enough+aint+no+valley+low+enough";

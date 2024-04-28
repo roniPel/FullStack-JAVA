@@ -35,7 +35,7 @@ public class Clr_CustomerTester implements CommandLineRunner {
 
         try {
             // Check logon
-            //Todo - Add Login Check with JWT
+            //Todo - Add Login Check with JWT (part 3)
 
             // Run all methods - services
             Customer_RunAllMethods_Services(customerService);
