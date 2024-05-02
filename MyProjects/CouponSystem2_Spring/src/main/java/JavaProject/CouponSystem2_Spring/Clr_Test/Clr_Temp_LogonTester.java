@@ -9,8 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.security.SignatureException;
+
 //Todo - DELETE CLR
-//@Component
+@Component
 @Order(6)
 @RequiredArgsConstructor
 public class Clr_Temp_LogonTester implements CommandLineRunner {
@@ -18,28 +21,30 @@ public class Clr_Temp_LogonTester implements CommandLineRunner {
     private final LogonUtil logonUtil;
     @Override
     public void run(String... args) throws Exception {
-        //Add Credentials to DB
-        String user = "admin";
-        String password = "admin@admin.com";
-        String email = password;
-        logonUtil.AddCredentialsToDB(user,password, ClientType.Administrator,email);
+        try {
+            //Add Credentials to DB
+            String password = "admin";
+            String email = "admin@admin.com";
+            loginService.AddCredentials(email, password, ClientType.Administrator, email);
 
-        String token = loginService.Login(user,password);
-        System.out.println("Logon Tester\n ================================\n");
-        System.out.println(token);
+            String token = loginService.Login(email, password);
+            System.out.println("Logon Tester\n ================================\n");
+            System.out.println(token);
 
-        // Test JWT login
-        Credentials credentials = new Credentials();
-        credentials.setUserEmail("credentials@example.com");
-        credentials.setUserName("JwtTest");
-        credentials.setId(123);
-        credentials.setClientType(ClientType.Company);
-        logonUtil.AddCredentialsToDB(credentials.getUserName(),credentials.getUserPass()
-                ,credentials.getClientType(),credentials.getUserEmail());
+            // Test JWT login
+            Credentials credentials = new Credentials();
+            credentials.setUserEmail("credentials@example.com");
+            credentials.setUserName("JwtTest");
+            credentials.setClientType(ClientType.Company);
+            logonUtil.AddCredentialsToDB(credentials.getUserName(), credentials.getUserPass()
+                    , credentials.getClientType(), credentials.getUserEmail());
 
-        String jwtToken = GenerateTokenForUser(credentials);
-        System.out.println("Generated token: \n"+jwtToken);
-        ValidateTokenForRequest(jwtToken);
+            String jwtToken = GenerateTokenForUser(credentials);
+            System.out.println("Generated token: \n" + jwtToken);
+            ValidateTokenForRequest(jwtToken);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 }
 
     private String GenerateTokenForUser(Credentials credentials) {
@@ -47,9 +52,9 @@ public class Clr_Temp_LogonTester implements CommandLineRunner {
         return jwtUtil.generateToken(credentials);
     }
 
-    public void ValidateTokenForRequest(String tokenFromRequest) {
+    public void ValidateTokenForRequest(String tokenFromRequest) throws SignatureException {
         JWT jwtUtil = new JWT();
-        String userName= jwtUtil.extractSubject(tokenFromRequest);
-        System.out.println("Data in Subject: \n"+userName);
+        String userEmail= jwtUtil.extractSubject(tokenFromRequest);
+        System.out.println("Data in Subject: \n"+userEmail);
     }
 }

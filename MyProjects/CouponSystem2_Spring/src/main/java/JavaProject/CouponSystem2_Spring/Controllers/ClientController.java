@@ -8,6 +8,5 @@ import javax.security.auth.login.LoginException;
  */
 //Todo - which annotations to use? @RestController? (part 3)
 public abstract class ClientController {
-    //Todo - write 'login' method - part 3
     abstract String Login(Credentials userCredentials) throws LoginException;
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Admin user methods
  */
-@Component
+//@Component
 @Order(2)
 @RequiredArgsConstructor
 public class Clr_AdminTester implements CommandLineRunner {

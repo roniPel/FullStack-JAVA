@@ -1,9 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Services.AdminService;
 
-import JavaProject.CouponSystem2_Spring.Beans.Category;
-import JavaProject.CouponSystem2_Spring.Beans.Company;
-import JavaProject.CouponSystem2_Spring.Beans.Coupon;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Beans.*;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
@@ -12,9 +9,13 @@ import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
+import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
+import JavaProject.CouponSystem2_Spring.Services.LoginService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
@@ -23,16 +24,16 @@ import java.util.*;
  * Admin Service Implementation for Coupon System 2
  */
 @Service
-@RequiredArgsConstructor
+@SuperBuilder
 public class AdminServiceImpl implements AdminService {
     private final CouponRepository couponRepo;
     private final CompanyRepository companyRepo;
     private final CustomerRepository customerRepo;
+    private final UsersRepo usersRepo;
 
     @Override
     public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        Customer customer = customerRepo.findByEmailAndPassword(email,password);
-        return String.valueOf(customer.getId());
+        return null;
     }
 
     @Override
@@ -52,6 +53,8 @@ public class AdminServiceImpl implements AdminService {
         customerRepo.saveAndFlush(customer);
         // Delete customer
         customerRepo.deleteById(customerId);
+        // Delete credentials
+        usersRepo.deleteByUserEmailAndUserPassword(customer.getEmail(),customer.getPassword());
         return true;
     }
 
@@ -96,10 +99,13 @@ public class AdminServiceImpl implements AdminService {
         if(!companyRepo.existsById(companyId)){
             throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
         }
+        Company company = companyRepo.findById(companyId).get();
         // Delete company coupons
         couponRepo.deleteByCompanyId(companyId);
         // Delete company
         companyRepo.deleteById(companyId);
+        // Delete credentials
+        usersRepo.deleteByUserEmailAndUserPassword(company.getEmail(),company.getPassword());
         return true;
     }
 
@@ -172,13 +178,24 @@ public class AdminServiceImpl implements AdminService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     public int AddCompanyWithFullCoupons() throws AdminException {
+        String name = "CompanyFullCoupons";
+        String email = "CompCoupons@email.com";
+        String password = "Password";
         // Add Company to DB
         Company company = Company.builder()
-                .name("CompanyFullCoupons")
-                .email("CompCoupons@email.com")
-                .password("Password")
+                .name(name)
+                .email(email)
+                .password(password)
                 .build();
         companyRepo.save(company);
+        //Add user credentials to DB
+        Credentials credentials = Credentials.builder()
+                .userName(name)
+                .userEmail(email)
+                .userPass(password)
+                .clientType(ClientType.Company)
+                .build();
+        usersRepo.save(credentials);
         // Get company ID from DB
         int newCompanyId = companyRepo.findByName(company.getName()).getId();
         List<Coupon> fullCouponsList = CreateCouponsForAllCategories(newCompanyId,ClientType.Company);
@@ -255,14 +272,26 @@ public class AdminServiceImpl implements AdminService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     public int AddCustomerWithFullCoupons(int companyId) throws AdminException {
+        String firstName = "FirstFullCoupons";
+        String lastName = "LastFullCoupons";
+        String email = "FullCoupons@email.com";
+        String password = "Password";
         // Add Customer to DB
         Customer customer = Customer.builder()
-                .firstName("FirstFullCoupons")
-                .lastName("LastFullCoupons")
-                .email("FullCoupons@email.com")
-                .password("Password")
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .password(password)
                 .build();
         customerRepo.saveAndFlush(customer);
+        //Add user credentials to DB
+        Credentials credentials = Credentials.builder()
+                .userName(email)
+                .userEmail(email)
+                .userPass(password)
+                .clientType(ClientType.Company)
+                .build();
+        usersRepo.save(credentials);
 
         // Get customer ID from DB
         int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();

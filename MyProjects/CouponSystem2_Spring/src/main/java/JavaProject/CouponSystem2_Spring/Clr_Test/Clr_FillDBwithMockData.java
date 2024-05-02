@@ -1,14 +1,13 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test;
 
-import JavaProject.CouponSystem2_Spring.Beans.Category;
-import JavaProject.CouponSystem2_Spring.Beans.Company;
-import JavaProject.CouponSystem2_Spring.Beans.Coupon;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Beans.*;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
+import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +20,14 @@ import java.util.*;
 /**
  * Clr Tester - Used to Fill the DB with mock data for testing purposes
  */
-@Component
+//@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
     private final CompanyRepository companyRepo;
     private final CustomerRepository customerRepo;
     private final CouponRepository couponRepo;
+    private final UsersRepo usersRepo;
     private Map<String, Object> mockDataMap;
     @Override
     public void run(String... args){
@@ -135,6 +135,14 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .password(password)
                     .build();
             customerRepo.save(customer);
+            //Add user credentials to DB
+            Credentials credentials = Credentials.builder()
+                    .userName(email)
+                    .userEmail(email)
+                    .userPass(password)
+                    .clientType(ClientType.Customer)
+                    .build();
+            usersRepo.save(credentials);
         }
     }
 
@@ -232,6 +240,14 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .password(password)
                     .build();
             companyRepo.save(company);
+            //Add user credentials to DB
+            Credentials credentials = Credentials.builder()
+                    .userName(name)
+                    .userEmail(email)
+                    .userPass(password)
+                    .clientType(ClientType.Company)
+                    .build();
+            usersRepo.save(credentials);
         }
     }
 }

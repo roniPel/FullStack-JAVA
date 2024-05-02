@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Builder
 public class Credentials {
@@ -29,7 +29,19 @@ public class Credentials {
     @Column(length = 40)
     @Length(max = 40)
     private String userEmail;
-
-    @Enumerated(EnumType.STRING)
+    
     private ClientType clientType;
+
+    public Credentials(int id, String email, String password, ClientType clientType) {
+        this.id = id;
+        this.userEmail = email;
+        this.userPass = password;
+        this.clientType = clientType;
+    }
+
+    public Credentials(String email, String password, ClientType clientType){
+        this.userEmail = email;
+        this.userPass = password;
+        this.clientType = clientType;
+    }
 }
