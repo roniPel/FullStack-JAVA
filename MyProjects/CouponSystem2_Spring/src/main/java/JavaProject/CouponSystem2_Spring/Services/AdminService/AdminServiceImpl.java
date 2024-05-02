@@ -5,6 +5,8 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginErrors;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
@@ -13,10 +15,12 @@ import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
 import JavaProject.CouponSystem2_Spring.Services.LoginService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -24,12 +28,14 @@ import java.util.*;
  * Admin Service Implementation for Coupon System 2
  */
 @Service
-@SuperBuilder
+@Transactional
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final CouponRepository couponRepo;
     private final CompanyRepository companyRepo;
     private final CustomerRepository customerRepo;
     private final UsersRepo usersRepo;
+    private final LoginService loginService;
 
     @Override
     public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
@@ -59,14 +65,26 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean UpdateCustomer(Customer customer) throws AdminException {
+    public boolean UpdateCustomer(Customer customer) throws AdminException, LoginException {
+        // Verifications for customer in DB
         if(!customerRepo.existsById(customer.getId())){
             throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
         }
         if(customerRepo.findByEmail(customer.getEmail()) != null){
             throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
+        Customer oldCustomer = customerRepo.findById(customer.getId()).get();
+        // Verifications for user in DB
+        Credentials user = usersRepo.findByUserEmailAndUserPassword(oldCustomer.getEmail(), oldCustomer.getPassword());
+        if(user == null){
+            throw new LoginException(LoginErrors.USER_DOES_NOT_EXIST);
+        }
+        user.setUserName(customer.getEmail());
+        user.setUserEmail(customer.getEmail());
+        user.setUserPassword(customer.getPassword());
+        // Save changes in DB
         customerRepo.saveAndFlush(customer);
+        usersRepo.saveAndFlush(user);
         return true;
     }
 
@@ -80,6 +98,7 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
         customerRepo.save(customer);
+        loginService.AddCredentials(customer.getEmail(), customer.getPassword(), ClientType.Customer, customer.getEmail());
         return true;
     }
 
@@ -126,8 +145,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean UpdateCompany(Company company) throws AdminException {
+    public boolean UpdateCompany(Company company) throws AdminException, LoginException {
         int id = company.getId();
+        // Verification for company in DB
         if(!companyRepo.existsById(id)) {
             throw new AdminException(AdminErrors.COMPANY_DOES_NOT_EXIST);
         }
@@ -138,7 +158,17 @@ public class AdminServiceImpl implements AdminService {
         if(companyRepo.existsCompanyByEmail( company.getEmail() )){
             throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
+        Company oldCompany = companyRepo.findById(company.getId()).get();
+        // Verifications for user in DB
+        Credentials user = usersRepo.findByUserEmailAndUserPassword(oldCompany.getEmail(), oldCompany.getPassword());
+        if(user == null){
+            throw new LoginException(LoginErrors.USER_DOES_NOT_EXIST);
+        }
+        user.setUserEmail(company.getEmail());
+        user.setUserPassword(company.getPassword());
+        // Save changes in DB
         companyRepo.saveAndFlush(company);
+        usersRepo.saveAndFlush(user);
         return true;
     }
 
@@ -155,6 +185,7 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
         companyRepo.save(company);
+        loginService.AddCredentials(company.getName(), company.getPassword(), ClientType.Company, company.getEmail());
         return true;
     }
 
@@ -189,13 +220,7 @@ public class AdminServiceImpl implements AdminService {
                 .build();
         companyRepo.save(company);
         //Add user credentials to DB
-        Credentials credentials = Credentials.builder()
-                .userName(name)
-                .userEmail(email)
-                .userPass(password)
-                .clientType(ClientType.Company)
-                .build();
-        usersRepo.save(credentials);
+        loginService.AddCredentials(name,password,ClientType.Company,email);
         // Get company ID from DB
         int newCompanyId = companyRepo.findByName(company.getName()).getId();
         List<Coupon> fullCouponsList = CreateCouponsForAllCategories(newCompanyId,ClientType.Company);
@@ -265,6 +290,12 @@ public class AdminServiceImpl implements AdminService {
         return true;
     }
 
+    //Todo - delete after organizing login via JWT
+    @Override
+    public int FindCustomerIdByEmailPass(String email, String password) {
+        return customerRepo.findByEmailAndPassword(email, password).getId();
+    }
+
     /**
      * Add customer with coupons from all categories
      * @return the new customer id
@@ -285,13 +316,7 @@ public class AdminServiceImpl implements AdminService {
                 .build();
         customerRepo.saveAndFlush(customer);
         //Add user credentials to DB
-        Credentials credentials = Credentials.builder()
-                .userName(email)
-                .userEmail(email)
-                .userPass(password)
-                .clientType(ClientType.Company)
-                .build();
-        usersRepo.save(credentials);
+        loginService.AddCredentials(email,password,ClientType.Customer,email);
 
         // Get customer ID from DB
         int newCustomerId = customerRepo.findByEmail(customer.getEmail()).getId();

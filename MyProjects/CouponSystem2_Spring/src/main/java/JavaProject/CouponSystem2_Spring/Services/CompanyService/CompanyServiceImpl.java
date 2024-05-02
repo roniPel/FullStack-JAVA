@@ -82,9 +82,13 @@ public class CompanyServiceImpl implements CompanyService {
         }
         //Disconnect coupon from customer
         if(customerRepo.findByCoupons(coupon) != null) {
-            Customer customer = customerRepo.findByCoupons(coupon);
-            customer.getCoupons().remove(coupon);
-            customerRepo.saveAndFlush(customer);
+            List<Customer> customers = customerRepo.findByCoupons(coupon);
+            customers.forEach(
+              customer -> {
+                  customer.getCoupons().remove(coupon);
+              }
+            );
+            customerRepo.saveAllAndFlush(customers);
         }
         //Delete coupon
         couponRepo.deleteById(couponId);

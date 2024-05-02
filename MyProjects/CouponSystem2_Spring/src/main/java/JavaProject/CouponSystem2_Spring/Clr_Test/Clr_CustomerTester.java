@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Customer user methods
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Clr_CustomerTester implements CommandLineRunner {

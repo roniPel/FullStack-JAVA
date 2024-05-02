@@ -4,6 +4,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -93,7 +94,7 @@ public class AdminTestMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_UpdateCompany(AdminService adminService) throws AdminException {
+    public void Method_UpdateCompany(AdminService adminService) throws AdminException, LoginException {
         System.out.println("*** Method: Update Company ***");
         List<Company> companies = adminService.GetAllCompanies();
         // Select random ID for updating company
@@ -115,7 +116,7 @@ public class AdminTestMethods_Services extends TestMethods {
      * @param adminService used to run method
      * @throws AdminException If we get any exception.  Details are provided
      */
-    public void Method_UpdateCustomer(AdminService adminService) throws AdminException {
+    public void Method_UpdateCustomer(AdminService adminService) throws AdminException, LoginException {
         System.out.println("*** Method: Update Customer ***");
         List<Customer> customers = adminService.GetAllCustomers();
         // Select random ID for updating

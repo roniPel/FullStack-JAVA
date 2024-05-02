@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - End and Close System
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(7)
 public class Clr_End implements CommandLineRunner {

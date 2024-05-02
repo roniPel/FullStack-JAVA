@@ -24,7 +24,7 @@ public class Credentials {
 
     @Column(length = 40)
     @Length(max = 40)
-    private String userPass;
+    private String userPassword;
 
     @Column(length = 40)
     @Length(max = 40)
@@ -35,13 +35,13 @@ public class Credentials {
     public Credentials(int id, String email, String password, ClientType clientType) {
         this.id = id;
         this.userEmail = email;
-        this.userPass = password;
+        this.userPassword = password;
         this.clientType = clientType;
     }
 
     public Credentials(String email, String password, ClientType clientType){
         this.userEmail = email;
-        this.userPass = password;
+        this.userPassword = password;
         this.clientType = clientType;
     }
 }

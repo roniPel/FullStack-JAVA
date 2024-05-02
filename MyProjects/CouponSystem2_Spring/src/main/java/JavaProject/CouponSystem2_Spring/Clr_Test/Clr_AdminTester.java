@@ -3,6 +3,8 @@ package JavaProject.CouponSystem2_Spring.Clr_Test;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.AdminTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
+import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Admin user methods
  */
-//@Component
+@Component
 @Order(2)
 @RequiredArgsConstructor
 public class Clr_AdminTester implements CommandLineRunner {
@@ -27,6 +29,7 @@ public class Clr_AdminTester implements CommandLineRunner {
     public void run(String... args) {
         String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
         String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
+        logonUtil.AddCredentialsToDB(email,password, ClientType.Administrator,email);
 
         //Todo - Add Login Check with JWT (part 3)
         try {
@@ -82,7 +85,7 @@ public class Clr_AdminTester implements CommandLineRunner {
      * Runs all Admin user methods - via services
      * @param adminService Service used to run the methods
      */
-    private void Admin_RunAllMethods_Services(AdminService adminService) throws AdminException {
+    private void Admin_RunAllMethods_Services(AdminService adminService) throws AdminException, LoginException {
         PrintSectionHeader_Services();
         adminTestMethods_services.Method_GetAllCompanies(adminService);
         adminTestMethods_services.Method_GetAllCustomers(adminService);

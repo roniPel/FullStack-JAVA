@@ -4,10 +4,12 @@ import JavaProject.CouponSystem2_Spring.Beans.*;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
+import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
+import JavaProject.CouponSystem2_Spring.Services.LoginService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ import java.util.*;
 /**
  * Clr Tester - Used to Fill the DB with mock data for testing purposes
  */
-//@Component
+@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
@@ -29,6 +31,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     private final CouponRepository couponRepo;
     private final UsersRepo usersRepo;
     private Map<String, Object> mockDataMap;
+    private final LogonUtil logonUtil;
     @Override
     public void run(String... args){
         PrepareSystemData();
@@ -42,6 +45,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
 
         try {
             // Fill DB with mock data
+            AddAdminUserCredentials();
             FillInCompanyTable(numberOfCompanies);
             CreateCouponsForAllCompanies(numberOfCouponsPerCompany, amountCouponsPerType, maxPrice);
             FillInCustomerTable(numberOfCustomers);
@@ -50,6 +54,12 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void AddAdminUserCredentials() {
+        String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
+        String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
+        AddCredentials("Administrator",email,password,ClientType.Administrator);
     }
 
     /**
@@ -136,13 +146,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .build();
             customerRepo.save(customer);
             //Add user credentials to DB
-            Credentials credentials = Credentials.builder()
-                    .userName(email)
-                    .userEmail(email)
-                    .userPass(password)
-                    .clientType(ClientType.Customer)
-                    .build();
-            usersRepo.save(credentials);
+            AddCredentials(email,email,password,ClientType.Customer);
         }
     }
 
@@ -228,7 +232,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
      * Fills in company table with the number of companies the user wants to enter
      * @param numberOfCompanies number of companies to insert into DB
      */
-    public void FillInCompanyTable(int numberOfCompanies) {
+    private void FillInCompanyTable(int numberOfCompanies) {
         for (int i = 1; i <= numberOfCompanies; i++) {
             String name = "Company"+i;
             String email = "Company"+i+"@email.com";
@@ -240,14 +244,25 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
                     .password(password)
                     .build();
             companyRepo.save(company);
-            //Add user credentials to DB
-            Credentials credentials = Credentials.builder()
-                    .userName(name)
-                    .userEmail(email)
-                    .userPass(password)
-                    .clientType(ClientType.Company)
-                    .build();
-            usersRepo.save(credentials);
+            //Add user credentials to DBf
+            AddCredentials(name,email,password,ClientType.Company);
         }
+    }
+
+    /**
+     * Adds new user's credentials to the DB
+     * @param user User's username
+     * @param email User's email
+     * @param password User's password
+     * @param clientType User's client Type
+     */
+    private void AddCredentials(String user, String email, String password, ClientType clientType){
+        Credentials credentials = Credentials.builder()
+                .userName(user)
+                .userEmail(email)
+                .userPassword(password)
+                .clientType(clientType)
+                .build();
+        usersRepo.save(credentials);
     }
 }

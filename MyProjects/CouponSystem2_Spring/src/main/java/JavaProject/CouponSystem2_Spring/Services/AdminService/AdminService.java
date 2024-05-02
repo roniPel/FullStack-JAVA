@@ -5,6 +5,7 @@ import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
 import JavaProject.CouponSystem2_Spring.Services.ClientService;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface AdminService extends ClientService {
      * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
-    boolean UpdateCustomer(Customer customer) throws AdminException;
+    boolean UpdateCustomer(Customer customer) throws AdminException, LoginException;
 
     /**
      * Add a customer
@@ -76,7 +77,7 @@ public interface AdminService extends ClientService {
      * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
-    boolean UpdateCompany(Company company) throws AdminException;
+    boolean UpdateCompany(Company company) throws AdminException, LoginException;
 
     /**
      * Add a Company
@@ -115,4 +116,6 @@ public interface AdminService extends ClientService {
      * @throws AdminException If we get any exception.  Details are provided
      */
     boolean DeleteCompanyCoupons(int companyId) throws AdminException;
+
+    int FindCustomerIdByEmailPass(String email, String password);
 }

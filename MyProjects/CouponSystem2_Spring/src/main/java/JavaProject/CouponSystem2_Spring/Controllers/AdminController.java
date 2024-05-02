@@ -4,6 +4,9 @@ import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginErrors;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
+import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SignatureException;
 import java.util.List;
 
 /**
@@ -24,7 +28,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController extends ClientController {
     private final AdminService adminService;
-    private final JWT jwt;
 
     //Todo - write 'login' method - part 3
     @Override
@@ -41,21 +44,24 @@ public class AdminController extends ClientController {
         return adminService.GetAllCompanies();
     }
 
-    /*
 
-    //Todo - Replace 'GetAllCompanies' - uncomment section below after sorting 'authorization' issue in swagger (section 3)
-    public ResponseEntity<?> GetAllCompanies(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    //Todo - Sort 'authorization' issue in swagger (section 3) + Ask Zeev - how to send 'user not logged in' message/exception?
+    @GetMapping(value = {"/GetAllCompanies_Authorization"})
+    public ResponseEntity<?> GetAllCompanies_Authorization(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws SignatureException, javax.security.auth.login.LoginException, LoginException {
         // Check token
+        if(jwt.checkUser(token, ClientType.Administrator)) {
+            // Generate a new token
+            String newToken = jwt.checkUser(token);
 
-        // Generate a new token
-        String newToken = jwt.checkUser(token);
-
-        return ResponseEntity.ok()
-                .header("Authorization",newToken)
-                .body(adminService.GetAllCompanies());
+            return ResponseEntity.ok()
+                    .header("Authorization",newToken)
+                    .body(adminService.GetAllCompanies());
+        }
+        else {
+            throw new LoginException(LoginErrors.USER_IS_NOT_LOGGED_IN);
+        }
     }
 
-     */
 
     /**
      * Get All Customers in DB
@@ -95,7 +101,7 @@ public class AdminController extends ClientController {
      */
     @PutMapping("/UpdateCompany/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void UpdateCompany(@RequestBody Company company) throws AdminException {
+    public void UpdateCompany(@RequestBody Company company) throws AdminException, LoginException {
         adminService.UpdateCompany(company);
     }
 
@@ -106,7 +112,7 @@ public class AdminController extends ClientController {
      */
     @PutMapping("/UpdateCustomer/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void UpdateCustomer(@RequestBody Customer customer) throws AdminException {
+    public void UpdateCustomer(@RequestBody Customer customer) throws AdminException, LoginException {
         adminService.UpdateCustomer(customer);
     }
 

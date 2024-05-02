@@ -21,5 +21,5 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
             "WHERE coup.company_id = ?",
             nativeQuery = true)
     List<Integer> findCustomerIdByCompanyId(int companyId);
-    Customer findByCoupons(Coupon coupon);
+    List<Customer> findByCoupons(Coupon coupon);
 }

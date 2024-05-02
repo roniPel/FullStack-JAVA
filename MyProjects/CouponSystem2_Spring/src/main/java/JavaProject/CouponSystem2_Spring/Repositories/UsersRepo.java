@@ -4,6 +4,6 @@ import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsersRepo extends JpaRepository<Credentials,Integer> {
-    Credentials findByUserEmailAndUserPass(String userEmail, String userPass);
-    void deleteByUserEmailAndUserPassword(String email, String password);
+    Credentials findByUserEmailAndUserPassword(String userEmail, String userPassword);
+    void deleteByUserEmailAndUserPassword(String userEmail, String userPassword);
 }

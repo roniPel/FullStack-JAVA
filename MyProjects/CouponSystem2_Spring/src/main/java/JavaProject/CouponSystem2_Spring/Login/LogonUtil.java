@@ -71,6 +71,7 @@ public class LogonUtil {
     /**
      * Prepare Admin Logon details
      */
+    //Todo - change so that values are global variables / placeholders
     private void PrepareData_AdminLogon() {
         emailsPassowrdsMap = new HashMap<>();
         emailsPassowrdsMap.put("adminEmail","admin@admin.com");
@@ -92,8 +93,7 @@ public class LogonUtil {
 
     //Todo - get rid of below method, use JWT for logon for company and customer - Part 3
     public int FindCustomerIdByEmailPass(String email, String password) throws AdminException, CustomerException, CompanyException {
-        String id = adminService.Login(email,password);
-        return Integer.parseInt(id);
+        return adminService.FindCustomerIdByEmailPass(email,password);
     }
 
     public void AddCredentialsToDB(String user, String password, ClientType clientType, String email) {
