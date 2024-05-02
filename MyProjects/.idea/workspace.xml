@@ -3,25 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="90c7f8ab-eba9-4f82-92b6-bb3926ec6944" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../01_Test/Test" beforeDir="false" afterPath="$PROJECT_DIR$/../01_Test/Test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_070224/src/main/java/com/example/ClassExercise_070224/AOP/LoggerAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_070224/src/main/java/com/example/ClassExercise_070224/AOP/LoggerAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_070224/src/main/java/com/example/ClassExercise_070224/Beans/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_070224/src/main/java/com/example/ClassExercise_070224/Beans/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_070224/src/main/java/com/example/ClassExercise_070224/clr/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_070224/src/main/java/com/example/ClassExercise_070224/clr/Tester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Advice/CatControllerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Advice/CatControllerAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Advice/ErrDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Advice/ErrDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Clr/Section4.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Clr/Section4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Controllers/CatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Controllers/CatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Exceptions/CatsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Exceptions/CatsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Exceptions/Errors.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Exceptions/Errors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Repositories/CatRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Repositories/CatRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Service/CatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Service/CatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Service/CatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/java/com/johnBryce/ClassExercise_120224/Service/CatServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/ClassExercise_120224/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/HW_Ex1/src/main/java/SpringPractice/HW_Ex1/Beans/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/HW_Ex1/src/main/java/SpringPractice/HW_Ex1/Beans/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/HW_Ex1/src/main/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/HW_Ex1/src/main/resources/banner.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/HW_Ex2/src/main/java/SpringPractice/HW_Ex2/clr/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/HW_Ex2/src/main/java/SpringPractice/HW_Ex2/clr/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../09_Spring/HW_Ex2/src/main/java/SpringPractice/HW_Ex2/repositories/LecturerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../09_Spring/HW_Ex2/src/main/java/SpringPractice/HW_Ex2/repositories/LecturerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../10_Rest/catLab/src/main/java/ClassExercise_210224/catLab/Configurations/OpenAPIConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../10_Rest/catLab/src/main/java/ClassExercise_210224/catLab/Configurations/OpenAPIConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../10_Rest/catLab/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../10_Rest/catLab/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../11_MicroServices/MicroServices/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../11_MicroServices/MicroServices/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../11_MicroServices/MicroServices/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../11_MicroServices/MicroServices/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../12_C2C/songs/src/main/java/com/mindali/songs/service/PlaylistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../12_C2C/songs/src/main/java/com/mindali/songs/service/PlaylistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../13_HTML/ClassExercise3_080424/css/mycss.css" beforeDir="false" afterPath="$PROJECT_DIR$/../13_HTML/ClassExercise3_080424/css/mycss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../13_HTML/ClassExercise_080424/ClassExercise_Form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../13_HTML/ClassExercise_080424/ClassExercise_Form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../14_Web/17.04.2024/ClassExercise1/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../14_Web/17.04.2024/ClassExercise1/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../14_Web/17.04.2024/ClassExercise1/js/site.js" beforeDir="false" afterPath="$PROJECT_DIR$/../14_Web/17.04.2024/ClassExercise1/js/site.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +20,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2cjqNCZhFBWyH55HM2Z7MbA4hKX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,9 +37,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ronir/IdeaProjects/MyProjects"
+    "last_opened_file_path": "C:/Users/ronir/IdeaProjects/MyProjects/CouponSystem3_Spring"
   }
 }]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-e1d2075fd9a7-f66d43ae" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
