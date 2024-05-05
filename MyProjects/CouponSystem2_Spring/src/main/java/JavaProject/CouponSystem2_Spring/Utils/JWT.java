@@ -1,9 +1,12 @@
 package JavaProject.CouponSystem2_Spring.Utils;
 
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
+import JavaProject.CouponSystem2_Spring.Configurations.GlobalVariables;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.login.LoginException;
@@ -24,14 +27,16 @@ import java.util.Map;
 public class JWT {
     //Type of encryption
     private String signatureAlgorithm = SignatureAlgorithm.HS256.getJcaName();
-
-    //Secret Key
-    //Todo - use environment variable for secretKey variable (Part 3)
+    //Todo - either delete 'GlobalVariables' config class or understand how to work
+    // with global variables in spring (with application properties) or with @Value annotation
 //    @Autowired
-//    @Value("${jwt.secretKey}")
-    private String encodedSecretKey = "aint+no+mountain+high+enough+aint+no+valley+low+enough";
+//    private GlobalVariables globalVariables;
+    //@Value("${jwtTokenValidity}")
+    private Integer getJwtTokenValidity = 30;  //Minutes
+    //@Value("${jwtTokenEncodedKey}")
+    private String getJwtTokenEncodedKey = "aint+no+mountain+high+enough+aint+no+valley+low+enough";
     private Key decodedSecretKey = new SecretKeySpec(
-            Base64.getDecoder().decode(encodedSecretKey), this.signatureAlgorithm
+            Base64.getDecoder().decode(getJwtTokenEncodedKey), this.signatureAlgorithm
     );
 
     /**
@@ -41,29 +46,29 @@ public class JWT {
      */
     public String generateToken(Credentials credentials) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("clientType", credentials.getClientType().name());
-        return createToken(claims, credentials.getUserEmail());
+        claims.put("clientType", credentials.getClientType().toString());
+        return createToken(claims, credentials.getId());
     }
     public String generateToken(String token) throws SignatureException {
         Map<String, Object> claims = new HashMap<>();
         Claims ourClaims = extractAllClaims(token);
         claims.put("clientType", ourClaims.get("clientType"));
-        return createToken(claims, ourClaims.getSubject());
+        return createToken(claims, Integer.parseInt(ourClaims.getSubject()));
     }
 
     /**
      * Creates a JWT type token using the provided params
      * @param claims claims to insert into token body
-     * @param email user email to insert into token subject section
+     * @param id user id to insert into token subject section
      * @return a token (in String format) signed with our secret key
      */
-    private String createToken(Map<String, Object> claims, String email) {
+    private String createToken(Map<String, Object> claims, int id) {
         Instant now = Instant.now();
         return Jwts.builder()
                 .setClaims(claims) //get claims
-                .setSubject(email) //get subject
+                .setSubject(String.valueOf(id)) //get subject
                 .setIssuedAt(Date.from(now)) //get current time
-                .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))  //expiration date
+                .setExpiration(Date.from(now.plus(this.getJwtTokenValidity, ChronoUnit.MINUTES)))  //expiration date
                 .signWith(this.decodedSecretKey)
                 .compact();
     }
@@ -133,10 +138,10 @@ public class JWT {
     public String checkUser(String token) throws SignatureException {
         Claims claims = extractAllClaims(token.replace("Bearer ",""));
         Credentials credentials = new Credentials();
-        credentials.setUserName(claims.getSubject());
-        credentials.setClientType((ClientType) claims.get("clientType"));
+        credentials.setUserName((String)claims.get("userEmail"));
+        credentials.setClientType(ClientType.valueOf((String)claims.get("clientType") ) );
         credentials.setUserEmail((String)claims.get("userEmail"));
-        credentials.setId((int)claims.get("id"));
+        credentials.setId(Integer.parseInt(claims.getSubject()));
         return generateToken(credentials);
     }
 
@@ -149,10 +154,19 @@ public class JWT {
         }
         return true;
     }
-    public static void main(String[] args) {
-        Credentials zeev = new Credentials("admin@admin.com","admin", ClientType.Administrator);
-        JWT jwt = new JWT();
-        String token = jwt.generateToken(zeev);
-        System.out.println("TOKEN: "+token);
-    }
+//    public static void main(String[] args) {
+//        String email = "admin@admin.com";
+//        String password = "admin";
+//        ClientType type = ClientType.Administrator;
+//        Credentials admin = new Credentials(email,password, type);
+//        JWT jwt = new JWT();
+//        String token = jwt.generateToken(admin);
+//        System.out.println("TOKEN: "+token);
+//        System.out.println("Check user: ");
+//        try {
+//            System.out.println(jwt.checkUser(token,type));
+//        } catch (Exception e) {
+//            System.out.println("ERROR! Exception: \n"+ e);
+//        }
+//    }
 }

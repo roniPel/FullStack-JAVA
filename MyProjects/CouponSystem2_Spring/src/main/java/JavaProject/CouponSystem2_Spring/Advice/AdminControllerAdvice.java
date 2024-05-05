@@ -1,19 +1,19 @@
 package JavaProject.CouponSystem2_Spring.Advice;
 
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
+import io.jsonwebtoken.JwtException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.security.auth.login.LoginException;
+import java.security.SignatureException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,12 +22,63 @@ import java.util.Set;
  */
 @RestControllerAdvice
 public class AdminControllerAdvice {
+
+    //Todo - Decide if to add 'security' maven dependency & how to do it? + Uncomment method below
+    /**
+     * Method used to handle errors arriving from a security exception
+     * @param exception exception received
+     * @return Error details object containing Type of error and error message
+     */
+    /*
+    @ExceptionHandler(value = {SecurityException.class})
+    public ProblemDetail handleSecurityException(Exception exception) {
+        ProblemDetail errorDetail = null;
+
+        // TODO send this stack trace to an observability tool
+        exception.printStackTrace();
+
+        if (exception instanceof BadCredentialsException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
+            errorDetail.setProperty("description", "The username or password is incorrect");
+
+            return errorDetail;
+        }
+
+        if (exception instanceof AccountStatusException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "The account is locked");
+        }
+
+        if (exception instanceof AccessDeniedException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "You are not authorized to access this resource");
+        }
+
+        if (exception instanceof SignatureException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "The JWT signature is invalid");
+        }
+
+        if (exception instanceof ExpiredJwtException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "The JWT token has expired");
+        }
+
+        if (errorDetail == null) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
+            errorDetail.setProperty("description", "Unknown internal server error.");
+        }
+
+        return errorDetail;
+    }
+    */
+
     /**
      * Method used to handle errors arriving from Admin Exceptions
      * @param exception exception received
      * @return Error details object containing Type of error and error message
      */
-    @ExceptionHandler(value = {AdminException.class, LoginException.class})
+    @ExceptionHandler(value = {AdminException.class, LoginException.class, SignatureException.class, JwtException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDetails HandleError(Exception exception) {
         return new ErrorDetails("Admin Error",exception.getMessage());
@@ -35,7 +86,7 @@ public class AdminControllerAdvice {
 
     /**
      * Method used to handle errors arriving from a Constraint Violation Exception
-     * @param e e received
+     * @param e exception received
      * @return A map of errors containing field name, and error details
      */
     @ExceptionHandler(value = {ConstraintViolationException.class})

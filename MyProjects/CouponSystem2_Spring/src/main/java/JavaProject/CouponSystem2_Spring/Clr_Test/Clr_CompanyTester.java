@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Company user methods
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Clr_CompanyTester implements CommandLineRunner {
@@ -46,10 +46,10 @@ public class Clr_CompanyTester implements CommandLineRunner {
             // Check logon
             //Todo - Add Login Check with JWT (part 3)
 
-            // Run all methods - Services
-            Company_RunAllMethods_Services(companyService);
-            // Run all methods - Rest
+            // Run all methods - Services (part 2)
+            // Company_RunAllMethods_Services(companyService);
 
+            // Run all methods - Rest
             //Todo - Uncomment section below (Part 3)
             //Company_RunAllMethods_RestTemplate();
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Guest user methods
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(5)
 public class Clr_GuestTester implements CommandLineRunner {
@@ -31,7 +31,7 @@ public class Clr_GuestTester implements CommandLineRunner {
 
         try {
             // Run all methods - services
-            Guest_RunAllMethods_Services(guestService);
+            // Guest_RunAllMethods_Services(guestService);
             //Run all methods - Rest
 
             // Todo - Uncomment section below (part 3)

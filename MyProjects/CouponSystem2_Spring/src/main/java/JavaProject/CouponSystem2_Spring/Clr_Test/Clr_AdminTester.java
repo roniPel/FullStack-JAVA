@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Admin user methods
  */
-@Component
+//@Component
 @Order(2)
 @RequiredArgsConstructor
 public class Clr_AdminTester implements CommandLineRunner {
@@ -33,11 +33,10 @@ public class Clr_AdminTester implements CommandLineRunner {
 
         //Todo - Add Login Check with JWT (part 3)
         try {
-            // Run all Admin methods - via services
-            Admin_RunAllMethods_Services(adminService);
+            // Run all Admin methods - via services (part 2)
+            // Admin_RunAllMethods_Services(adminService);
 
-            //Todo - Uncomment section below (part 3)
-            //Admin_RunAllMethods_RestTemplate();
+            Admin_RunAllMethods_RestTemplate();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
