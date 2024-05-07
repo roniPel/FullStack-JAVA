@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Customer user methods
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Clr_CustomerTester implements CommandLineRunner {
@@ -26,12 +26,13 @@ public class Clr_CustomerTester implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String email = logonUtil.getEmailsPassowrdsMap().get("customerEmail");
-        String password = logonUtil.getEmailsPassowrdsMap().get("customerPassword");
-
-        //Todo - change logon format, remove 'SetCustomerId' method from Service (interface + impl class)
-        // + remove @Autowired and change to final -  'CustomerService' (local variable)
-        customerService.SetCustomerId(logonUtil.FindCustomerIdByEmailPass(email,password));
+//
+//        String email = logonUtil.getEmailsPassowrdsMap().get("customerEmail");
+//        String password = logonUtil.getEmailsPassowrdsMap().get("customerPassword");
+//
+//        //Todo - change logon format, remove 'SetCustomerId' method from Service (interface + impl class)
+//        // + remove @Autowired and change to final -  'CustomerService' (local variable)
+//        customerService.SetCustomerId(logonUtil.FindCustomerIdByEmailPass(email,password));
 
         try {
             // Check logon
@@ -42,7 +43,7 @@ public class Clr_CustomerTester implements CommandLineRunner {
 
             //Run all methods - Rest
             // Todo - Uncomment section below (part 3)
-            //Customer_RunAllMethods_Rest();
+            Customer_RunAllMethods_Rest();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

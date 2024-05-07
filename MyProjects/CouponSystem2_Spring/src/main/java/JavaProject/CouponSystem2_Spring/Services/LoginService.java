@@ -16,6 +16,7 @@ public class LoginService implements ClientService{
     private final UsersRepo usersRepo;
     @Override
     public String Login(String userEmail, String userPass) throws LoginException {
+        // Check user credentials
         Credentials credentials = usersRepo.findByUserEmailAndUserPassword(userEmail,userPass);
         if(credentials == null) {
             throw new LoginException("ERROR! User not found!\n");

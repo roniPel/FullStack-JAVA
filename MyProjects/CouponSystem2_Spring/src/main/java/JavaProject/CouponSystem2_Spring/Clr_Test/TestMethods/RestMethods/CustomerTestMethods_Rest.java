@@ -1,7 +1,9 @@
 package JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods;
 
 import JavaProject.CouponSystem2_Spring.Beans.Category;
+import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.TestMethods;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,12 @@ public class CustomerTestMethods_Rest extends TestMethods {
      * Customer Method - Get Customer Details
      */
     public void GetCustomerDetails() {
+        System.out.println("*** Method: Get Customer Details ***");
+        System.out.println("The logged on customer details are: ");
+        Customer customer = restTemplate.getForObject
+                ("http://localhost:8080/Customer/GetCustomerDetails",Customer.class);
+        System.out.println(customer);
+        System.out.println();
     }
 
     /**
@@ -33,8 +41,12 @@ public class CustomerTestMethods_Rest extends TestMethods {
     public void PurchaseCoupon() {
         System.out.println("*** Method: Purchase Coupon ***");
         // Select random coupon from non-customer coupons list
-        List<Coupon> nonCustomerCoupons = GetListOfAllCoupons();
-        nonCustomerCoupons.removeAll(GetListCustomerCoupons());
+        List<Coupon> allCoupons = GetListOfAllCoupons();
+        List<Coupon> customerCoupons = GetListCustomerCoupons();
+        List<Coupon> nonCustomerCoupons = allCoupons
+                .stream()
+                .filter(coupon -> !customerCoupons.contains(coupon))
+                .toList();
         int couponForPurchaseId = GetRandIdFromList(nonCustomerCoupons);
         Coupon couponForPurchase = restTemplate.getForObject
                 ("http://localhost:8080/Customer/GetOneCoupon/"+couponForPurchaseId, Coupon.class);

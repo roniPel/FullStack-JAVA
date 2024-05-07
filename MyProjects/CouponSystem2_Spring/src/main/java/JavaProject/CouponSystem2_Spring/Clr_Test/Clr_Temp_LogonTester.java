@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 //Todo - DELETE CLR
-@Component
+//@Component
 @Order(6)
 @RequiredArgsConstructor
 public class Clr_Temp_LogonTester implements CommandLineRunner {

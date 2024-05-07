@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * Clr Tester - used to test Company user methods
  */
-//@Component
+@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Clr_CompanyTester implements CommandLineRunner {
@@ -32,16 +32,16 @@ public class Clr_CompanyTester implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         try {
-
-            // Prepare data for company and customer testing and logons
-            int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
-            logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
-            //Todo - change logon format: remove 'SetCompanyId' method from Service (interface + impl class)
-            // + remove @Autowired and change to final -  'CompanyService' (local variable) - Part 3
-            companyService.SetCompanyId(randomCompanyId);
-
-            String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
-            String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
+//
+//            // Prepare data for company and customer testing and logons
+//            int randomCompanyId = adminTestMethods_services.GetRandIdFromList(adminService.GetAllCompanies());
+//            logonUtil.PrepareData_CustomerCompanyLogons(randomCompanyId);
+//            //Todo - change logon format: remove 'SetCompanyId' method from Service (interface + impl class)
+//            // + remove @Autowired and change to final -  'CompanyService' (local variable) - Part 3
+//            companyService.SetCompanyId(randomCompanyId);
+//
+//            String email = logonUtil.getEmailsPassowrdsMap().get("companyEmail");
+//            String password = logonUtil.getEmailsPassowrdsMap().get("companyPassword");
 
             // Check logon
             //Todo - Add Login Check with JWT (part 3)
@@ -51,7 +51,7 @@ public class Clr_CompanyTester implements CommandLineRunner {
 
             // Run all methods - Rest
             //Todo - Uncomment section below (Part 3)
-            //Company_RunAllMethods_RestTemplate();
+            Company_RunAllMethods_RestTemplate();
 
 
         } catch (Exception e) {

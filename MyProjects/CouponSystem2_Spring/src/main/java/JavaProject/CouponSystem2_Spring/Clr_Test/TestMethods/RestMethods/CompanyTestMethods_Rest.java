@@ -33,7 +33,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         System.out.println("*** Method: Get Company Details ***");
         System.out.println("The logged on company details are: ");
         Company company = restTemplate.getForObject
-                ("http://localhost:8080/Company/GetCompanyDetails/",Company.class);
+                ("http://localhost:8080/Company/GetCompanyDetails",Company.class);
         System.out.println(company);
         System.out.println();
     }
@@ -44,7 +44,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
     public void AddCoupon() {
         System.out.println("*** Method: Add Coupon ***");
         Company company = restTemplate.getForObject
-                ("http://localhost:8080/Company/GetCompanyDetails/"+companyId,Company.class);
+                ("http://localhost:8080/Company/GetCompanyDetails",Company.class);
         int companyId = company.getId();
         // Create new coupon
         Category category = Category.GetRandomCategory();
@@ -57,7 +57,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
         String image = "Image"+GetrandInt(10);
 
         Coupon coupon = Coupon.builder()
-                .id(51)
+                .id(251)
                 .companyId(companyId)
                 .category(category)
                 .title(title)
@@ -71,7 +71,7 @@ public class CompanyTestMethods_Rest extends TestMethods {
 
         // Add coupon to DB
         System.out.println("Coupon to add: ");
-        System.out.print(coupon);
+        System.out.println(coupon);
         ResponseEntity<String> responsePost = restTemplate.postForEntity
                 ("http://localhost:8080/Company/AddCoupon",coupon,String.class);
         System.out.print("Added Coupon? ");
@@ -91,10 +91,10 @@ public class CompanyTestMethods_Rest extends TestMethods {
         // Select random ID for updating company
         int updateCouponId = GetRandIdFromList(couponList);
         Coupon updatedCoup = restTemplate.getForObject
-                ("http://localhost:8080/Company/GetOneCoupon"+updateCouponId,Coupon.class);
+                ("http://localhost:8080/Company/GetOneCoupon/"+updateCouponId,Coupon.class);
 
         // Update fields
-        updatedCoup.setTitle("Rest_CompUpdated");
+        updatedCoup.setTitle("Rest_CompUpdated"+GetrandInt(50));
         updatedCoup.setDescription("Rest_CompUpdated"+GetrandInt(100));
         updatedCoup.setAmount(GetrandInt(50));
         updatedCoup.setCategory(Category.GetRandomCategory());
