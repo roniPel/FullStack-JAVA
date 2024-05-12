@@ -90,4 +90,7 @@ public class PlayListService {
         return (playListRepo.findByPlayListName(name).getId());
     }
 
+    public PlayList getPlaylistByName(String name){
+        return(playListRepo.findByPlayListName(name));
+    }
 }

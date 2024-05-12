@@ -2,6 +2,7 @@ package com.mindali.songs.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mindali.songs.beans.YoutubeData;
+import com.mindali.songs.service.PlayListService;
 import com.mindali.songs.service.SongService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,23 +15,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin()
 public class YouTubeController {
-    private final SongService service;
+    private final SongService songService;
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public YoutubeData getSongData(@PathVariable String id) throws JsonProcessingException {
-        return service.getSongData(id);
+        return songService.getSongData(id);
     }
-
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<YoutubeData> getAllSongs() {
-        return service.getAllSongs();
+        return songService.getAllSongs();
     }
-
-    @GetMapping("/add/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addSong(@PathVariable String id) throws JsonProcessingException{
-        //call the service
-
+    @DeleteMapping("/removeSong/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeSong(@PathVariable String id) throws JsonProcessingException {
+        //Todo - change so that playListId is provided by controller (via login/ JWT token/ etc..)
+        songService.removeYouTubeData(id);
     }
 }

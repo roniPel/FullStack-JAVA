@@ -59,4 +59,13 @@ public class SongService {
     public List<YoutubeData> getAllSongs(){
         return youtubeRepo.findAll();
     }
+
+    public boolean removeYouTubeData(String songId) throws JsonProcessingException {
+        if (youtubeRepo.existsById(songId)){
+            youtubeRepo.deleteById(songId);
+            youtubeRepo.flush();
+            return true;
+        }
+        return false;
+    }
 }
