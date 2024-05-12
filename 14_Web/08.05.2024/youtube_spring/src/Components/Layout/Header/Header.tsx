@@ -1,12 +1,13 @@
 import "./Header.css";
-import uriImage from "./../../../Assets/uri.png"
-import { NavLink } from "react-router-dom";
+import logo from "../../../Assets/Cards.png"
+import { useNavigate } from "react-router-dom";
 
 export function Header(): JSX.Element {
+    const navigate = useNavigate();
     return (
         <div className="Header">
             <div>
-            <img src={uriImage}/>
+                <img src={logo} width={100}/>
             </div>
             <div>
 			<h1>Class 169</h1>
@@ -16,8 +17,10 @@ export function Header(): JSX.Element {
                 <input type="text" placeholder="user name"/>
                 <input type="password" placeholder="user pass"/>
                 <input type="submit" value="login"/>
-                <input type="button" value="register"/>
-                <NavLink to="/register">New User</NavLink><br/>
+                <input type="button" value="register" onClick={()=>{
+                        //navigate to song list
+                        navigate("/register");                   
+                    }}/>
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ export function Menu(): JSX.Element {
 			<h1>Menu</h1><hr/>
             <NavLink to="/">Song List</NavLink><br/>
             <NavLink to="/addSong">Add Song</NavLink><br/>
-            <NavLink to="/remove">Remove Song</NavLink><br/>
+            <NavLink to="/removeSong">Remove Song</NavLink><br/>
             <hr/>
             <NavLink to="/user">Song by User</NavLink>
         </div>

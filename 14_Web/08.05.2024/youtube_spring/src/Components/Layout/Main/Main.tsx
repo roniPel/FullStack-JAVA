@@ -7,4 +7,6 @@ export function Main(): JSX.Element {
             <h2>We no need no, education....</h2>
         </div>
     );
+    
 }
+

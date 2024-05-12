@@ -6,6 +6,8 @@ import { SongPlayer } from "../../pages/SongPlayer/SongPlayer";
 import { SongByUser } from "../../pages/SongByUser/SongByUser";
 import { Page404 } from "../../pages/Page404/Page404";
 import { RemoveSong } from "../../pages/RemoveSong/RemoveSong";
+import { Register } from "../../pages/Register/Register";
+import ConfirmationModal from "../../ModalComponents/ConfirmationModal/ConfirmationModal";
 
 export function MainRoute(): JSX.Element {
     //to use react routes => npm install react-router-dom
@@ -16,7 +18,9 @@ export function MainRoute(): JSX.Element {
                 <Route path="/addSong" element={<AddSong/>}/>
                 <Route path="/player/:songID" element={<SongPlayer/>}/>
                 <Route path="/user/:userName" element={<SongByUser/>}/>
-                <Route path="/remove" element={<RemoveSong/>}/>
+                <Route path="/removeSong" element={<RemoveSong/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/ConfirmationModal" element={<ConfirmationModal/>}/>
                 <Route path="*" element={<Page404/>}/>
             </Routes>
         </div>

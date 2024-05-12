@@ -15,7 +15,6 @@ export function AddSong(): JSX.Element {
                 <input type="button" value="search" onClick={()=>{
                     //send command to backend, to get the song info
                     axios.get(`http://localhost:8080/${songID}`).then((result)=>{
-                        console.log(result.data);
                         let songData:SongData = new SongData(
                             result.data.id,
                             result.data.name,
