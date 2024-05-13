@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -18,6 +20,7 @@ public class UserDetails {
     private String email;
     private String password;
     private UserType userType;
+    private List<PlayList> playLists;
 
     public UserDetails(int id, String email, String password, UserType userType) {
         this.id = id;

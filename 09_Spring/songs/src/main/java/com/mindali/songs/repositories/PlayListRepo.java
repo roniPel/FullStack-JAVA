@@ -7,4 +7,5 @@ public interface PlayListRepo extends JpaRepository<PlayList, Integer> {
     public boolean existsByPlayListName(String playListName);
     public PlayList findByPlayListName(String playListName);
     //public boolean existById(boolean id);
+    public int findPlayListIdByName(String playListName);
 }
