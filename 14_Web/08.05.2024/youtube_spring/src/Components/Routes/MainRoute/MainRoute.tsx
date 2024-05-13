@@ -17,7 +17,7 @@ export function MainRoute(): JSX.Element {
                 <Route path="/" element={<SongList/>}/>
                 <Route path="/addSong" element={<AddSong/>}/>
                 <Route path="/player/:songID" element={<SongPlayer/>}/>
-                <Route path="/user/:userName" element={<SongByUser/>}/>
+                <Route path="/user/:userEmail" element={<SongByUser/>}/>
                 <Route path="/removeSong" element={<RemoveSong/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/ConfirmationModal" element={<ConfirmationModal/>}/>

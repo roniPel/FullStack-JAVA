@@ -7,7 +7,7 @@ export function SongByUser(): JSX.Element {
     const userName = params.userName;
     return (
         <div className="SongByUser">
-			<h1>Song by user ${params.userName}</h1>
+			<h1>Song by user: {params.userEmail}</h1>
             <div className="Box">
             </div>
         </div>
