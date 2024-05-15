@@ -33,4 +33,11 @@ const createTable = () => {
         `;
     }
     tableList.innerHTML = result;
+
+    //Save in storage
+    localStorage.setItem("localSavedList",JSON.stringify(taskList));
+
+    //Download from storage
+    var myList = JSON.parse(localStorage.getItem("localSavedList"));
+    console.log(myList);
 }
