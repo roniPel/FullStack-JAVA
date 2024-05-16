@@ -1,0 +1,48 @@
+General Pages:
+* Home
+* Login
+* Register
+* Page 404
+
+Guest Pages:
+* Home (guest)
+* Menu (guest)
+* Get All Coupons
+* Get One Coupon
+
+Admin Pages:
+* Home (admin)
+* Menu (admin)
+* Add Company
+* Add Customer
+* Delete Company
+* Delete Customer
+* Get All Companies
+* Get All Customers
+* Get One Company
+* Get One Customer
+* Update Company
+* Update Customer
+
+Company
+* Home (company)
+* Menu (company)
+* Add Coupon
+* Delete Coupon
+* Get Company Coupons
+* Get Company Coupons by Category
+* Get Company Coupons by Max Price
+* Get Company Details
+* Get One Coupon
+* Update Coupon
+
+Customer
+* Home (customer)
+* Menu (customer)
+* Get All Coupons
+* Get Cusomter Coupons
+* Get Cusomter Coupons by Category
+* Get Cusomter Coupons by Max Price
+* Get Customer Details
+* Get One Coupon
+* Purchase Coupon
