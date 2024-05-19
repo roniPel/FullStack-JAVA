@@ -9,7 +9,7 @@ export function Header(): JSX.Element {
     return (
         <div className="Header">
             <div>
-                <img src={logo} width={180}/>
+                <img src={logo} width={150}/>
             </div>
             <div>
                 <Typography variant="h2" className="MainHeadLine">Coupons System</Typography>
