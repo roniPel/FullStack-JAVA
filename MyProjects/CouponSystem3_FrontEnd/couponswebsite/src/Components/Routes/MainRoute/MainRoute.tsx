@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./MainRoute.css";
 import { Page404 } from "../../Pages/Page404/Page404";
 import { Register } from "../../Pages/Register/Register";
-import { Home, Login } from "@mui/icons-material";
 import { Welcome } from "../../Pages/Welcome/Welcome";
 import { AboutUs } from "../../Pages/AboutUs/AboutUs";
 import { Logon } from "../../Pages/Logon/Logon";
