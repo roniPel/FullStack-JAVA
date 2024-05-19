@@ -1,15 +1,15 @@
-import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
+import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Credentials } from "../../../Models/Credentials";
+import { ClientType } from "../../../Models/ClientType";
 
 export function Register(): JSX.Element {
     const navigate = useNavigate();
 
     //declare our needed methods from react-hook-form
     const { register, handleSubmit, formState: { errors } } = useForm<Credentials>();
-
     const onSubmit: SubmitHandler<Credentials> = (data) => {
         console.log(data)
         //check that the passwords are the same , if not, do not countinue
@@ -21,14 +21,14 @@ export function Register(): JSX.Element {
         <div className="Register">
             <div className="Box" style={{ width: "40%" }}>
                 <Typography variant="h4" className="HeadLine">User Register</Typography>
-                <hr />
+                <hr /><br/>
                 {/* <input type="text" placeholder="user name..." onChange={(args)=>setEmail(args.target.value)}/><br/><br/> */}
-                <form  onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="user name" variant="outlined" {...register("userName", { required: true })} fullWidth />
                     <br /><br />
                     <TextField label="user email" variant="outlined" {
                         ...register("userEmail", { required: true })} fullWidth />
-                    <br />{errors.userEmail && <span style={{ color: "red" }}>Email is required</span>}
+                    {errors.userEmail && <span style={{ color: "red" }}>Email is required</span>}
                     <br /><br />
                     <TextField label="user password" type="password" variant="outlined" {
                         ...register("userPassword", { required: true, minLength: 5, maxLength: 10 })} fullWidth />
@@ -38,9 +38,25 @@ export function Register(): JSX.Element {
                     <br /><br />
                     <TextField label="password check" variant="outlined" type="password" fullWidth />
                     <br /><br />
-                    <TextField label="user type" variant="outlined" {...register("clientType")} fullWidth />
-                    <br /><br />
+                    <Select
+                        size="medium"
+                        {...register("clientType")} 
+                        defaultValue={ClientType.Customer}
+                        fullWidth
+                        labelId="user type"
+                        id="user type"
+                        label="user type"
+                        variant="outlined"
+                        autoWidth
+                        >
+                        <MenuItem value=""><em>User Type</em></MenuItem>
+                        <MenuItem value={ClientType.Administrator}>Administrator</MenuItem>
+                        <MenuItem value={ClientType.Company}>Company</MenuItem>
+                        <MenuItem value={ClientType.Customer}>Customer</MenuItem>
+                    </Select>
+                    <br/><br/>
                     <hr />
+                    <br/>
                     <ButtonGroup variant="contained" fullWidth>
                         <Button type="submit" color="primary" >register</Button>
                         <Button color="error" onClick={() => { navigate("/") }}>cancel</Button>

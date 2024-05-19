@@ -6,14 +6,14 @@ export class Coupon{
     public category:Category;
     public title:string;
     public description:string;
-    public start_date:Date;
-    public end_date:Date;
+    public start_date:string;
+    public end_date:string;
     public amount:number;
     public price:number;
     public image:string;
 
     constructor(id:number,companyId:number,category:Category,title:string,description:string,
-        start_date:Date,end_date:Date,amount:number,price:number,image:string){
+        start_date:string,end_date:string,amount:number,price:number,image:string){
             this.id=id;
             this.companyId=companyId;
             this.category=category;
