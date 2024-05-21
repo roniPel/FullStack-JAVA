@@ -19,7 +19,6 @@ export function Menu(): JSX.Element {
                 <hr/>
                 <NavLink to="/">Home</NavLink><br/>
                 <NavLink to="/aboutus">About Us</NavLink><br/>
-                <hr/>
             </>
         )
     }
