@@ -1,0 +1,9 @@
+.Header {
+	display: grid;
+    grid-template-columns: 10% 80% 10%;
+    padding: 10px;
+}
+.login{
+    margin-top: auto;
+    margin-bottom: auto;
+}
