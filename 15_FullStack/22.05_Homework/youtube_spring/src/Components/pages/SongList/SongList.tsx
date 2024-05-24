@@ -17,9 +17,9 @@ export function SongList(): JSX.Element {
     useEffect(() => {
         let recivedList: SongData[] = [];
         //check if we have any song on our list, 0 length indicates that we don't have any song
-        // if (youtube.getState().auth.token.length<10){
-        //     navigate("/login");
-        // }
+        if (youtube.getState().auth.token.length<10){
+            navigate("/login");
+        }
         checkData();
         if (youtube.getState().songs.allSongs.length == 0) {
             axiosJWT.get("http://localhost:8080/all")

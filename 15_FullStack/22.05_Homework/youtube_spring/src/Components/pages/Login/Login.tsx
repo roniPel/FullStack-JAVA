@@ -32,7 +32,7 @@ export function Login(): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = useForm<userLoginData>();
 
     const makeLogin: SubmitHandler<userLoginData> = (data) => {
-        console.log(data);
+        //console.log(data);
         let userDetails = {
             "email":data.userEmail,
             "password":data.userPass,
@@ -47,12 +47,13 @@ export function Login(): JSX.Element {
             //     sessionStorage.setItem("token","here goes the jwt token");
             //     localStorage.removeItem("token");
             // }
-            const JWT = res.headers["authorization"].split(" ")[1];
+            const JWT = res.headers["authorization"];
+            const cleanToken = JWT.split(" ")[1];
             //console.log("from server:",JWT); //email,name,userType
             
             //decode to the token.
             //npm i jwt-decode
-            const decoded_jwt = jwtDecode<jwtData>(JWT);
+            const decoded_jwt = jwtDecode<jwtData>(cleanToken);
             console.log(decoded_jwt);
             let myAuth = {
                 name: decoded_jwt.userName,
@@ -63,6 +64,9 @@ export function Login(): JSX.Element {
             };
 
             youtube.dispatch(loginAction(myAuth))
+            if(data.userRemember===true){
+                localStorage.setItem("token",myAuth.token);
+            }
             
             notify.success("Welcome back");
             navigate("/");

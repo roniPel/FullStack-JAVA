@@ -39,6 +39,7 @@ export function Header(): JSX.Element {
                             if (isLogged) {
                                 sessionStorage.removeItem("jwt");               
                                 youtube.dispatch(logoutAction());
+                                localStorage.removeItem("token");
                                 navigate("/login");
                             } else {                                                 
                                 navigate("/login");

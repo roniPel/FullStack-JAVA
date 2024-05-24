@@ -52,7 +52,7 @@ export function RemoveSong(): JSX.Element {
                     <input type="button" value="remove song from my list" onClick={()=>{
                         //Todo - Confirm user request (Are you sure?)
                         // remove song
-                        axios.delete(`http://localhost:8080/removeSong/${songID}`)
+                        axiosJWT.delete(`http://localhost:8080/removeSong/${songID}`)
                         .then((result)=>{
                             // remove song from redux
                         youtube.dispatch(deleteSongAction(songID!))
