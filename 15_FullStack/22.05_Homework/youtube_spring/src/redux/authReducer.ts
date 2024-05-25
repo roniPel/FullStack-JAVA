@@ -45,7 +45,7 @@ export function AuthReducer(currentState: authState = new authState(), action: A
             break;
         case AuthActionType.logout:
             newState = new authState();
-            sessionStorage.removeItem("jwt");
+            localStorage.removeItem("jwt");
             break;
         case AuthActionType.updateToken:
             newState.token = action.payload;

@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { UserDetails } from "../../../model/UserDetails";
 import { useNavigate } from "react-router-dom";
 import { TextField, Typography, Button, ButtonGroup } from "@mui/material";
+import axios from "axios";
+import notify from "../../../util/notify";
 
 //for using form in efficent way, we will install => npm install react-hook-form
 //for using Material UI (MUI) =>
@@ -20,8 +22,17 @@ export function Register(): JSX.Element {
     const onSubmit: SubmitHandler<UserDetails> = (data) => {
         console.log(data)
         //check that the passwords are the same , if not, do not countinue
+        data.id = 0;
 
         //todo, move to axios :)
+        axios.post("http://localhost:8080/user/register",data)
+        .then((res)=>{
+            navigate("/login");
+        })
+        .catch(err=>{
+            console.log(err);
+            notify.error("There was a problem saving the user");
+        });
         
     }
 
@@ -44,11 +55,15 @@ export function Register(): JSX.Element {
                     {errors.password?.type == "minLength" && <><br /><span style={{ color: "red" }}>password is too short</span></>}
                     {errors.password?.type == "maxLength" && <><br /><span style={{ color: "red" }}>password is too long</span></>}
                     <br /><br />
-                    <TextField label="password check" variant="outlined" type="password" fullWidth />
+                    <TextField label="password check" variant="outlined" type="password"  fullWidth />
                     <br /><br />
                     <TextField label="user type" variant="outlined" {...register("userType")} fullWidth />
                     <br /><br />
                     <TextField label="user genre" variant="outlined" {...register("genre")} fullWidth />
+                    <br />  <br />
+                    <TextField label="user tel" variant="outlined" {...register("tel")} fullWidth />
+                    <br />  <br />
+                    <TextField label="user location" variant="outlined" {...register("location")} fullWidth />
                     <br />  <br />
                     <hr />
                     <ButtonGroup variant="contained" fullWidth>

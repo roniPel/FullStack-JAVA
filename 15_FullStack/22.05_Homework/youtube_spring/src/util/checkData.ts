@@ -15,20 +15,18 @@ export const checkData = () => {
     if (youtube.getState().auth.token.length < 10) {
         //try to load it from the session storage
         try {
-            if(youtube.getState().auth.rememberMe===true) {
-                const JWT = sessionStorage.getItem("jwt")!.split(" ")[1];
-                const decoded_jwt = jwtDecode<jwtData>(JWT);
-                console.log(decoded_jwt);
-                let myAuth = {
-                    name: decoded_jwt.userName,
-                    email: decoded_jwt.sub,
-                    token: JWT,
-                    userType: decoded_jwt.userType,
-                    isLogged: true,
-                    rememberMe: sessionStorage.getItem("jwt")?true:false,
-                };
-                youtube.dispatch(loginAction(myAuth))
-            }
+            const JWT = localStorage.getItem("jwt")!.split(" ")[1];
+            const decoded_jwt = jwtDecode<jwtData>(JWT);
+            console.log(decoded_jwt);
+            let myAuth = {
+                name: decoded_jwt.userName,
+                email: decoded_jwt.sub,
+                token: localStorage.getItem("jwt")!,
+                userType: decoded_jwt.userType,
+                isLogged: true,
+                rememberMe: true,
+            };
+            youtube.dispatch(loginAction(myAuth))
         } catch {
             return;
         }
