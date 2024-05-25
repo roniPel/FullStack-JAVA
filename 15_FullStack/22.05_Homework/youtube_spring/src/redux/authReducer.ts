@@ -6,6 +6,7 @@ export class authState {
     token: string = "";
     userType: string = "";
     isLogged:boolean = false;
+    rememberMe:boolean=false;
 }
 
 //login, logout, updateToken
@@ -38,9 +39,13 @@ export function AuthReducer(currentState: authState = new authState(), action: A
     switch (action.type) {
         case AuthActionType.login:
             newState = action.payload;
+            if(action.payload.rememberMe===true){
+                localStorage.setItem("jwt",action.payload.token);
+            }
             break;
         case AuthActionType.logout:
             newState = new authState();
+            sessionStorage.removeItem("jwt");
             break;
         case AuthActionType.updateToken:
             newState.token = action.payload;

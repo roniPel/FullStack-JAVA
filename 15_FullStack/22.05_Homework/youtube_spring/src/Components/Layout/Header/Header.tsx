@@ -36,8 +36,7 @@ export function Header(): JSX.Element {
                 <ButtonGroup variant="contained" fullWidth>
                     <Button type="submit" color={isLogged ? "error" : "primary"}
                         onClick={() => {
-                            if (isLogged) {
-                                sessionStorage.removeItem("jwt");               
+                            if (isLogged) {               
                                 youtube.dispatch(logoutAction());
                                 localStorage.removeItem("token");
                                 navigate("/login");

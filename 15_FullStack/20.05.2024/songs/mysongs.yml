@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: songs
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345678
+    ports:
+      - "3316:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8200:80"
+    links:
+      - mysql
+
+  springboot-app:
+    image: mindalizeev/my_play_list:latest
+    container_name: spring_songs
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3316/songs
+      SPRING_DATASOURCE_NAME: user
+      SPRING_DATASOURCE_PASSWORD: 12345678
+    ports:
+      - "8100:8080"
+    links:
+      - mysql
+
+volumes:
+  db-data:

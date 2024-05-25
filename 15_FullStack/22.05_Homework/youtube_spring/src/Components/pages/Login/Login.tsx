@@ -60,13 +60,11 @@ export function Login(): JSX.Element {
                 email: decoded_jwt.sub,
                 token : JWT,
                 userType: decoded_jwt.userType,
-                isLogged:true    
+                isLogged: true,
+                rememberMe: data.userRemember,    
             };
 
-            youtube.dispatch(loginAction(myAuth))
-            if(data.userRemember===true){
-                localStorage.setItem("token",myAuth.token);
-            }
+            youtube.dispatch(loginAction(myAuth));
             
             notify.success("Welcome back");
             navigate("/");
