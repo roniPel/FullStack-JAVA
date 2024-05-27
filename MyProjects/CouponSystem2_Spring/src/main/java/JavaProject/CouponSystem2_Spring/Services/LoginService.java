@@ -39,4 +39,13 @@ public class LoginService implements ClientService{
             usersRepo.save(credentials);
         }
     }
+
+    public boolean registerUser(Credentials userCredentials) throws Exception {
+        if (usersRepo.existsById(userCredentials.getId())){
+            throw new Exception("UserExists");
+        }
+        usersRepo.save(userCredentials);
+        return true;
+    }
+
 }

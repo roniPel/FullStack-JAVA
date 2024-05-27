@@ -15,12 +15,21 @@ import java.security.SignatureException;
  * Controller for All User types - to help manage logins - ?
  */
 @RequiredArgsConstructor
+@CrossOrigin()
 @Validated
 @RestController
 @RequestMapping("/Users")
 public class LoginController extends ClientController{
     private final JWT jwt;
     private final LoginService loginService;
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public boolean registerUser(@RequestBody Credentials userCredentials) throws Exception {
+        loginService.registerUser(userCredentials);
+        return true;
+    }
+
     @PostMapping("/Login")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Override

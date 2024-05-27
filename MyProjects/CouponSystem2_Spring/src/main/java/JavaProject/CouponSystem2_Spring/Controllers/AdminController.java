@@ -23,6 +23,7 @@ import java.util.List;
  * Controller for Admin User
  */
 @Validated
+@CrossOrigin()
 @RestController
 @RequestMapping("/Admin")
 @RequiredArgsConstructor

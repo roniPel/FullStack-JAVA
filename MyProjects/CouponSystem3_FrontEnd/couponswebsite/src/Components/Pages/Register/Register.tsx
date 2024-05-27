@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Credentials } from "../../../Models/Credentials";
 import { ClientType } from "../../../Models/ClientType";
+import axios from "axios";
+import notify from "../../../Utilities/notify";
 
 export function Register(): JSX.Element {
     const navigate = useNavigate();
@@ -15,6 +17,14 @@ export function Register(): JSX.Element {
         //check that the passwords are the same , if not, do not countinue
 
         //todo, move to axios :)
+        axios.post("http://localhost:8080/Users/register",data)
+        .then((res)=>{
+            navigate("/login");
+        })
+        .catch(err=>{
+            console.log(err);
+            notify.error("There was a problem saving the user");
+        });
     }
 
     return (

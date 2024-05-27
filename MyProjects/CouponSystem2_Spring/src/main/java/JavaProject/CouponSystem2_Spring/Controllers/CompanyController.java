@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Validated
 @RestController
+@CrossOrigin()
 @RequestMapping("/Company")
 @RequiredArgsConstructor
 public class CompanyController extends ClientController {

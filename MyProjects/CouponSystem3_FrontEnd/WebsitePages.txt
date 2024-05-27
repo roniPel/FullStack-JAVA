@@ -2,6 +2,7 @@ General Pages:
 * Home
 * Login
 * Register
+* About Us
 * Page 404
 
 Guest Pages:
