@@ -45,6 +45,7 @@ public class JWT {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("clientType", userDetails.getClientType().toString());
+        claims.put("userName", userDetails.getName());
         return createToken(claims, userDetails.getId());
     }
     public String generateToken(String token) throws SignatureException {
@@ -104,9 +105,7 @@ public class JWT {
         JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(decodedSecretKey).build();
         return extractAllClaims(token.replace("Bearer ","")).getSubject();
     }
-    public String extractEmail(String token) throws SignatureException {
-        return extractAllClaims(token).getSubject();
-    }
+
     public java.util.Date extractExpirationDate(String token) throws SignatureException {
         return extractAllClaims(token).getExpiration();
     }
@@ -136,7 +135,7 @@ public class JWT {
     public String checkUser(String token) throws SignatureException {
         Claims claims = extractAllClaims(token.replace("Bearer ",""));
         UserDetails userDetails = new UserDetails();
-        userDetails.setName((String)claims.get("userEmail"));
+        userDetails.setName((String)claims.get("userName"));
         userDetails.setClientType(ClientType.valueOf((String)claims.get("clientType") ) );
         userDetails.setEmail((String)claims.get("userEmail"));
         userDetails.setId(Integer.parseInt(claims.getSubject()));

@@ -20,8 +20,6 @@ public class LoginServiceImpl implements LoginService {
         // Find user details based on credentials
         UserDetails userDetails =
                 usersRepo.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword());
-//        System.out.println("backend data");
-//        System.out.println(userDetails);
         return userDetails;
     }
 
