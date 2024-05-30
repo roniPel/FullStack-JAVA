@@ -3,22 +3,21 @@ package JavaProject.CouponSystem2_Spring.Clr_Test;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.CustomerTestMethods_Rest;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CustomerTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
-import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
+import JavaProject.CouponSystem2_Spring.Utils.FillDbUtil;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 /**
  * Clr Tester - used to test Customer user methods
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(4)
 public class Clr_CustomerTester implements CommandLineRunner {
-    private final LogonUtil logonUtil;
+    private final FillDbUtil fillDbUtil;
     private final CustomerTestMethods_Services customerTestMethods_services;
     private final CustomerTestMethods_Rest customerTestMethods_rest;
     @Autowired

@@ -1,9 +1,10 @@
 package JavaProject.CouponSystem2_Spring.Utils;
 
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
 import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.login.LoginException;
@@ -135,9 +136,9 @@ public class JWT {
     public String checkUser(String token) throws SignatureException {
         Claims claims = extractAllClaims(token.replace("Bearer ",""));
         UserDetails userDetails = new UserDetails();
-        userDetails.setUserName((String)claims.get("userEmail"));
+        userDetails.setName((String)claims.get("userEmail"));
         userDetails.setClientType(ClientType.valueOf((String)claims.get("clientType") ) );
-        userDetails.setUserEmail((String)claims.get("userEmail"));
+        userDetails.setEmail((String)claims.get("userEmail"));
         userDetails.setId(Integer.parseInt(claims.getSubject()));
         return generateToken(userDetails);
     }
@@ -151,7 +152,23 @@ public class JWT {
         }
         return true;
     }
-//    public static void main(String[] args) {
+
+    /**
+     * Get Headers for JWT Authentication message - in Controllers
+     * @param jwt - JWT token authentication
+     * @return HTTPHeaders object with JWT response token
+     * @throws SignatureException in case of exception
+     */
+    public HttpHeaders getHeaders(String jwt) throws SignatureException {
+        HttpHeaders headers = new HttpHeaders();
+        String userJWT = jwt.split(" ")[1];
+        if (validateToken(userJWT)){
+            headers.set("Authorization", "Bearer "+generateToken(userJWT));
+        }
+        return headers;
+    }
+
+    //    public static void main(String[] args) {
 //        String email = "admin@admin.com";
 //        String password = "admin";
 //        ClientType type = ClientType.Administrator;

@@ -5,7 +5,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
@@ -51,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
         // Delete customer
         customerRepo.deleteById(customerId);
         // Delete credentials
-        usersRepo.deleteByUserEmailAndUserPassword(customer.getEmail(),customer.getPassword());
+        usersRepo.deleteByEmailAndPassword(customer.getEmail(),customer.getPassword());
         return true;
     }
 
@@ -66,13 +66,13 @@ public class AdminServiceImpl implements AdminService {
         }
         Customer oldCustomer = customerRepo.findById(customer.getId()).get();
         // Verifications for user in DB
-        UserDetails user = usersRepo.findByUserEmailAndUserPassword(oldCustomer.getEmail(), oldCustomer.getPassword());
+        UserDetails user = usersRepo.findByEmailAndPassword(oldCustomer.getEmail(), oldCustomer.getPassword());
         if(user == null){
             throw new LoginException(LoginErrors.USER_DOES_NOT_EXIST);
         }
-        user.setUserName(customer.getEmail());
-        user.setUserEmail(customer.getEmail());
-        user.setUserPassword(customer.getPassword());
+        user.setName(customer.getEmail());
+        user.setEmail(customer.getEmail());
+        user.setPassword(customer.getPassword());
         // Save changes in DB
         customerRepo.saveAndFlush(customer);
         usersRepo.saveAndFlush(user);
@@ -115,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
         // Delete company
         companyRepo.deleteById(companyId);
         // Delete credentials
-        usersRepo.deleteByUserEmailAndUserPassword(company.getEmail(),company.getPassword());
+        usersRepo.deleteByEmailAndPassword(company.getEmail(),company.getPassword());
         return true;
     }
 
@@ -151,12 +151,12 @@ public class AdminServiceImpl implements AdminService {
         }
         Company oldCompany = companyRepo.findById(company.getId()).get();
         // Verifications for user in DB
-        UserDetails user = usersRepo.findByUserEmailAndUserPassword(oldCompany.getEmail(), oldCompany.getPassword());
+        UserDetails user = usersRepo.findByEmailAndPassword(oldCompany.getEmail(), oldCompany.getPassword());
         if(user == null){
             throw new LoginException(LoginErrors.USER_DOES_NOT_EXIST);
         }
-        user.setUserEmail(company.getEmail());
-        user.setUserPassword(company.getPassword());
+        user.setEmail(company.getEmail());
+        user.setPassword(company.getPassword());
         // Save changes in DB
         companyRepo.saveAndFlush(company);
         usersRepo.saveAndFlush(user);

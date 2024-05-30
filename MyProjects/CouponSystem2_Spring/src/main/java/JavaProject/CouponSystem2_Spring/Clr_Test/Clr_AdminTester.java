@@ -4,14 +4,12 @@ import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.AdminTe
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
-import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
+import JavaProject.CouponSystem2_Spring.Utils.FillDbUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 /**
  * Clr Tester - used to test Admin user methods
@@ -20,16 +18,16 @@ import org.springframework.stereotype.Component;
 @Order(2)
 @RequiredArgsConstructor
 public class Clr_AdminTester implements CommandLineRunner {
-    private final LogonUtil logonUtil;
+    private final FillDbUtil fillDbUtil;
     private final AdminTestMethods_Services adminTestMethods_services;
     private final AdminTestMethods_Rest adminTestMethods_Rest;
     private final AdminService adminService; //  Preparation for Client Side (section 3)
 
     @Override
     public void run(String... args) {
-        String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
-        String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
-        logonUtil.AddCredentialsToDB(email,password, ClientType.Administrator,email);
+        String email = fillDbUtil.getEmailsPassowrdsMap().get("adminEmail");
+        String password = fillDbUtil.getEmailsPassowrdsMap().get("adminPassword");
+        fillDbUtil.AddCredentialsToDB(email,password, ClientType.Administrator,email);
 
         //Todo - Add Login Check with JWT (part 3)
         try {

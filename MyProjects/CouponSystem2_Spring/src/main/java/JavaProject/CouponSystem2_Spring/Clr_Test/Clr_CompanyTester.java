@@ -4,24 +4,22 @@ import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.RestMethods.Company
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.AdminTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Clr_Test.TestMethods.ServiceMethods.CompanyTestMethods_Services;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
+import JavaProject.CouponSystem2_Spring.Utils.FillDbUtil;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
-import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 /**
  * Clr Tester - used to test Company user methods
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 @Order(3)
 public class Clr_CompanyTester implements CommandLineRunner {
-    private final LogonUtil logonUtil;
+    private final FillDbUtil fillDbUtil;
     private final CompanyTestMethods_Services companyTestMethods_services;
     private final CompanyTestMethods_Rest companyTestMethods_rest;
     private final AdminTestMethods_Services adminTestMethods_services;

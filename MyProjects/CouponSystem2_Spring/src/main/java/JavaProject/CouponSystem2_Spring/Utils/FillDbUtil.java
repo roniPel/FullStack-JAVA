@@ -1,4 +1,4 @@
-package JavaProject.CouponSystem2_Spring.Login;
+package JavaProject.CouponSystem2_Spring.Utils;
 
 import JavaProject.CouponSystem2_Spring.Beans.ClientType;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Component
 @Getter
-public class LogonUtil {
+public class FillDbUtil {
     private Map<String, String> emailsPassowrdsMap;
     @Autowired
     protected AdminService adminService;
@@ -33,7 +33,7 @@ public class LogonUtil {
     /**
      * Constructor that prepares data for Admin Logon
      */
-    public LogonUtil() {
+    public FillDbUtil() {
         PrepareData_AdminLogon();
     }
 

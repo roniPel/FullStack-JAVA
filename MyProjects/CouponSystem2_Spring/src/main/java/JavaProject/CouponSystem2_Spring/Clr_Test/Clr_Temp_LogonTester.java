@@ -3,8 +3,8 @@ package JavaProject.CouponSystem2_Spring.Clr_Test;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
-import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
+import JavaProject.CouponSystem2_Spring.Utils.FillDbUtil;
 import JavaProject.CouponSystem2_Spring.Services.LoginService.LoginServiceImpl;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Clr_Temp_LogonTester implements CommandLineRunner {
     private final LoginServiceImpl loginServiceImpl;
-    private final LogonUtil logonUtil;
+    private final FillDbUtil fillDbUtil;
     private final RestTemplate restTemplate;
     @Override
     public void run(String... args) throws Exception {
         try {
             //Add Credentials to DB
-            String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
-            String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
+            String email = fillDbUtil.getEmailsPassowrdsMap().get("adminEmail");
+            String password = fillDbUtil.getEmailsPassowrdsMap().get("adminPassword");
             ClientType clientType = ClientType.Administrator;
 
             Credentials credentials = new Credentials(email,password,clientType);
@@ -78,11 +78,11 @@ public class Clr_Temp_LogonTester implements CommandLineRunner {
 
     private void TestJWTlogin() throws SignatureException {
         UserDetails userDetails = new UserDetails();
-        userDetails.setUserEmail("credentials@example.com");
-        userDetails.setUserName("JwtTest");
+        userDetails.setEmail("credentials@example.com");
+        userDetails.setName("JwtTest");
         userDetails.setClientType(ClientType.Company);
-        logonUtil.AddCredentialsToDB(userDetails.getUserName(), userDetails.getUserPassword()
-                , userDetails.getClientType(), userDetails.getUserEmail());
+        fillDbUtil.AddCredentialsToDB(userDetails.getName(), userDetails.getPassword()
+                , userDetails.getClientType(), userDetails.getEmail());
 
         String jwtToken = GenerateTokenForUser(userDetails);
         System.out.println("Generated token: \n" + jwtToken);

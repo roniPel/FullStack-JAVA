@@ -1,4 +1,4 @@
-package JavaProject.CouponSystem2_Spring.Login;
+package JavaProject.CouponSystem2_Spring.Beans;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;

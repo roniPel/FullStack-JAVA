@@ -3,8 +3,8 @@ package JavaProject.CouponSystem2_Spring.Clr_Test;
 import JavaProject.CouponSystem2_Spring.Beans.*;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
-import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
+import JavaProject.CouponSystem2_Spring.Utils.FillDbUtil;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
@@ -14,6 +14,7 @@ import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -21,7 +22,7 @@ import java.util.*;
 /**
  * Clr Tester - Used to Fill the DB with mock data for testing purposes
  */
-//@Component
+@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
@@ -30,7 +31,7 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     private final CouponRepository couponRepo;
     private final UsersRepo usersRepo;
     private Map<String, Object> mockDataMap;
-    private final LogonUtil logonUtil;
+    private final FillDbUtil fillDbUtil;
     @Override
     public void run(String... args){
         PrepareSystemData();
@@ -56,8 +57,8 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
     }
 
     private void AddAdminUserCredentials() {
-        String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
-        String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
+        String email = fillDbUtil.getEmailsPassowrdsMap().get("adminEmail");
+        String password = fillDbUtil.getEmailsPassowrdsMap().get("adminPassword");
         AddCredentials("Administrator",email,password,ClientType.Administrator);
     }
 
@@ -257,9 +258,9 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
      */
     private void AddCredentials(String user, String email, String password, ClientType clientType){
         UserDetails userDetails = UserDetails.builder()
-                .userName(user)
-                .userEmail(email)
-                .userPassword(password)
+                .name(user)
+                .email(email)
+                .password(password)
                 .clientType(clientType)
                 .build();
         usersRepo.save(userDetails);

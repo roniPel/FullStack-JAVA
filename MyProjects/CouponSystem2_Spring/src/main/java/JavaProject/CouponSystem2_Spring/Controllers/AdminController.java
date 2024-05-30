@@ -1,17 +1,12 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
-import JavaProject.CouponSystem2_Spring.Beans.Credentials;
-import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,8 +23,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/Admin")
 @RequiredArgsConstructor
-public class AdminController extends ClientController{
+public class AdminController{
     private final AdminService adminService;
+    private final JWT jwtUtil;
 
     //Todo - insert JWT authentication check - part 3
 
@@ -44,19 +40,11 @@ public class AdminController extends ClientController{
 
 
     @GetMapping(value = {"/GetAllCompanies_Authorization"})
-    public ResponseEntity<?> GetAllCompanies_Authorization(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws SignatureException, javax.security.auth.login.LoginException, LoginException {
-        // Check token
-        if(jwt.checkUser(token, ClientType.Administrator)) {
-            // Generate a new token
-            String newToken = jwt.checkUser(token);
-
-            return ResponseEntity.ok()
-                    .header("Authorization",newToken)
-                    .body(adminService.GetAllCompanies());
-        }
-        else {
-            throw new LoginException(LoginErrors.USER_IS_NOT_LOGGED_IN);
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> GetAllCompanies_Authorization
+            (@RequestHeader("Authorization") String jwt)
+            throws SignatureException {
+        return new ResponseEntity<>(adminService.GetAllCompanies(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
     }
 
 

@@ -1,6 +1,5 @@
 package JavaProject.CouponSystem2_Spring.Beans;
 
-import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,28 +19,28 @@ public class UserDetails {
 
     @Column(length = 40)
     @Length(max = 40)
-    private String userName;
+    private String name;
 
     @Column(length = 40)
     @Length(max = 40)
-    private String userPassword;
+    private String password;
 
     @Column(length = 40)
     @Length(max = 40)
-    private String userEmail;
+    private String email;
     
     private ClientType clientType;
 
     public UserDetails(int id, String email, String password, ClientType clientType) {
         this.id = id;
-        this.userEmail = email;
-        this.userPassword = password;
+        this.email = email;
+        this.password = password;
         this.clientType = clientType;
     }
 
     public UserDetails(String email, String password, ClientType clientType){
-        this.userEmail = email;
-        this.userPassword = password;
+        this.email = email;
+        this.password = password;
         this.clientType = clientType;
     }
 }
