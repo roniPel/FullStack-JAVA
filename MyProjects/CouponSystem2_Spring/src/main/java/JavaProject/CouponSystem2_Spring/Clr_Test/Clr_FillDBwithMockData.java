@@ -9,13 +9,12 @@ import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
-import JavaProject.CouponSystem2_Spring.Services.LoginService;
 import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
 import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -257,12 +256,12 @@ public class Clr_FillDBwithMockData implements CommandLineRunner {
      * @param clientType User's client Type
      */
     private void AddCredentials(String user, String email, String password, ClientType clientType){
-        Credentials credentials = Credentials.builder()
+        UserDetails userDetails = UserDetails.builder()
                 .userName(user)
                 .userEmail(email)
                 .userPassword(password)
                 .clientType(clientType)
                 .build();
-        usersRepo.save(credentials);
+        usersRepo.save(userDetails);
     }
 }

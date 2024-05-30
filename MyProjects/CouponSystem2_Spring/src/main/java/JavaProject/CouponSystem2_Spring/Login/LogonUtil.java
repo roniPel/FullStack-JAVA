@@ -5,12 +5,9 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
-import JavaProject.CouponSystem2_Spring.Services.LoginService;
-import JavaProject.CouponSystem2_Spring.Utils.DateFactory;
-import JavaProject.CouponSystem2_Spring.Utils.FactoryUtils;
+import JavaProject.CouponSystem2_Spring.Services.LoginService.LoginServiceImpl;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +22,7 @@ public class LogonUtil {
     @Autowired
     protected AdminService adminService;
     @Autowired
-    private LoginService loginService;
+    private LoginServiceImpl loginServiceImpl;
     //Todo - Add Placeholders 'adminUser'+'adminPass' to method PrepareData_AdminLogon
 //    @Value("${adminUser}")
 //    private String user;
@@ -97,6 +94,6 @@ public class LogonUtil {
     }
 
     public void AddCredentialsToDB(String user, String password, ClientType clientType, String email) {
-        loginService.AddCredentials(user, password, clientType, email);
+        loginServiceImpl.AddCredentials(user, password, clientType, email);
     }
 }

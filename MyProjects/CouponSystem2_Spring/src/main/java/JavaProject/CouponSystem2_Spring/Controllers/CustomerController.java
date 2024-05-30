@@ -1,14 +1,12 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
-import JavaProject.CouponSystem2_Spring.Beans.Category;
-import JavaProject.CouponSystem2_Spring.Beans.Coupon;
-import JavaProject.CouponSystem2_Spring.Beans.Credentials;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Beans.*;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
+import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/Customer")
 @RequiredArgsConstructor
-public class CustomerController extends ClientController {
+public class CustomerController {
     private final CustomerService customerService;
+    private final JWT jwt;
 
-    //Todo - write 'login' method - part 3
-    @Override
-    String Login(Credentials userCredentials) {
-        return null;
-    }
-
+    //Todo - insert JWT authentication check - part 3
     /**
      * Gets a customer (according to the customer ID belonging to the customer logged on)
      * @return a 'Customer' class item if succeeded, 'null' if failed or if no customer matches the requirements.

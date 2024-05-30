@@ -1,6 +1,7 @@
-package JavaProject.CouponSystem2_Spring.Services;
+package JavaProject.CouponSystem2_Spring.Services.LoginService;
 
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
+import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
@@ -11,24 +12,24 @@ import javax.security.auth.login.LoginException;
 
 @Service
 @RequiredArgsConstructor
-public class LoginService implements ClientService{
+public class LoginServiceImpl implements LoginService {
     private final JWT jwt;
     private final UsersRepo usersRepo;
     @Override
-    public String Login(String userEmail, String userPass) throws LoginException {
-        // Check user credentials
-        Credentials credentials = usersRepo.findByUserEmailAndUserPassword(userEmail,userPass);
-        if(credentials == null) {
-            throw new LoginException("ERROR! User not found!\n");
-        }
-        return jwt.generateToken(credentials);
+    public UserDetails Login(Credentials credentials) throws LoginException {
+        // Find user details based on credentials
+        UserDetails userDetails =
+                usersRepo.findByUserEmailAndUserPassword(credentials.getEmail(),credentials.getPassword());
+//        System.out.println("backend data");
+//        System.out.println(userDetails);
+        return userDetails;
     }
 
     public void AddCredentials(String user, String password, ClientType clientType, String email) {
         int id = usersRepo.findAll().size()+1;
         if(usersRepo.findByUserEmailAndUserPassword(email,password) == null)
         {
-            Credentials credentials = Credentials.builder()
+            UserDetails userDetails = UserDetails.builder()
 //                .id(id)
                     .userName(user)
                     .userPassword(password)
@@ -36,15 +37,15 @@ public class LoginService implements ClientService{
                     .clientType(clientType)
                     .build();
 
-            usersRepo.save(credentials);
+            usersRepo.save(userDetails);
         }
     }
 
-    public boolean registerUser(Credentials userCredentials) throws Exception {
-        if (usersRepo.existsById(userCredentials.getId())){
+    public boolean registerUser(UserDetails userDetails) throws Exception {
+        if (usersRepo.existsById(userDetails.getId())){
             throw new Exception("UserExists");
         }
-        usersRepo.save(userCredentials);
+        usersRepo.save(userDetails);
         return true;
     }
 

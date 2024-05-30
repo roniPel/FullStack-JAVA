@@ -7,7 +7,7 @@ import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminExceptio
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
-import JavaProject.CouponSystem2_Spring.Services.ClientService;
+import JavaProject.CouponSystem2_Spring.Services.LoginService.LoginService;
 import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.LoginException;
@@ -56,17 +56,16 @@ public class TestMethods {
      * Checks weather user login is correct
      * @param email The email for login.
      * @param password The password for login.
-     * @param clientService The selected client service type for the login.
+     * @param loginService The selected client service type for the login.
      * @return True if login succeeded, false if login failed.
      * @throws AdminException If we get any exception.  Details are provided
      * @throws CompanyException If we get any exception.  Details are provided
      * @throws CustomerException If we get any exception.  Details are provided
      * @throws GuestException If we get any exception.  Details are provided
      */
-    public boolean CheckLogin(String email, String password, ClientService clientService)
+    public boolean CheckLogin(String email, String password, LoginService loginService)
     //Todo - change user Login Service + controller (Part 3 - add JWT)
             throws AdminException, CompanyException, CustomerException, GuestException, LoginException {
-        String token = clientService.Login(email, password);
         return true;
     }
 }

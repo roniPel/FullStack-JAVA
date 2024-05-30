@@ -1,20 +1,14 @@
 package JavaProject.CouponSystem2_Spring.Services.CustomerService;
 
-import JavaProject.CouponSystem2_Spring.Beans.Category;
-import JavaProject.CouponSystem2_Spring.Beans.Coupon;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Beans.*;
 import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
-import JavaProject.CouponSystem2_Spring.Services.ClientService;
+
 import java.util.List;
 
 /**
  * Customer Service interface - Lists relevant functionalities for Customer users
  */
-public interface CustomerService extends ClientService {
-    @Override
-    String Login(String email, String password) throws CustomerException,AdminException, CompanyException;
+public interface CustomerService {
 
     void SetCustomerId(int customerId);
 

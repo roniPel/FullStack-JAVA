@@ -2,6 +2,7 @@ package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
+import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginErrors;
@@ -27,14 +28,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/Admin")
 @RequiredArgsConstructor
-public class AdminController extends ClientController {
+public class AdminController extends ClientController{
     private final AdminService adminService;
 
-    //Todo - write 'login' method - part 3
-    @Override
-    String Login(Credentials userCredentials) {
-        return null;
-    }
+    //Todo - insert JWT authentication check - part 3
 
     /**
      * Get all Companies
@@ -46,7 +43,6 @@ public class AdminController extends ClientController {
     }
 
 
-    //Todo - Sort 'authorization' issue in swagger (section 3) + Ask Zeev - how to send 'user not logged in' message/exception?
     @GetMapping(value = {"/GetAllCompanies_Authorization"})
     public ResponseEntity<?> GetAllCompanies_Authorization(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws SignatureException, javax.security.auth.login.LoginException, LoginException {
         // Check token
@@ -163,4 +159,6 @@ public class AdminController extends ClientController {
     public void DeleteCustomer(@PathVariable int id) throws AdminException {
         adminService.DeleteCustomer(id);
     }
+
+
 }

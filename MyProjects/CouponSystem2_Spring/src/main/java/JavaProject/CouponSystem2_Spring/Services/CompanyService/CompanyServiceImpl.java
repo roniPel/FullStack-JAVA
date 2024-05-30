@@ -37,10 +37,6 @@ public class CompanyServiceImpl implements CompanyService {
     public void SetCompanyId(int companyId){
         this.companyId = companyId;
     }
-    @Override
-    public String Login(String email, String password) throws AdminException, CompanyException, CustomerException {
-        return null;
-    }
 
     @Override
     public boolean AddCoupon(Coupon coupon) throws CompanyException {

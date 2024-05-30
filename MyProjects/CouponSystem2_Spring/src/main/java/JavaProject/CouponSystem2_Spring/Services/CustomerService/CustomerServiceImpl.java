@@ -35,11 +35,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String Login(String email, String password) throws CustomerException, AdminException, CompanyException {
-        return null;
-    }
-
-    @Override
     public boolean PurchaseCoupon(Coupon coupon) throws CustomerException {
         // Verify coupon exists in DB
         Coupon couponInDb = couponRepo.findById(coupon.getId()).orElseThrow(

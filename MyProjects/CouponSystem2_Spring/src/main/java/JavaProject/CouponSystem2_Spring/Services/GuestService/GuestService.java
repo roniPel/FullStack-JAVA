@@ -1,12 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Services.GuestService;
 
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
-import JavaProject.CouponSystem2_Spring.Beans.Customer;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
-import JavaProject.CouponSystem2_Spring.Services.ClientService;
 
 import java.util.List;
 

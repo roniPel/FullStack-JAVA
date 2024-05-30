@@ -1,12 +1,9 @@
 package JavaProject.CouponSystem2_Spring.Utils;
 
-import JavaProject.CouponSystem2_Spring.Beans.Credentials;
-import JavaProject.CouponSystem2_Spring.Configurations.GlobalVariables;
+import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.login.LoginException;
@@ -41,13 +38,13 @@ public class JWT {
 
     /**
      * Generates a token based on user credentials
-     * @param credentials with user details in order to generate token
+     * @param userDetails with user details in order to generate token
      * @return A token in String format
      */
-    public String generateToken(Credentials credentials) {
+    public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("clientType", credentials.getClientType().toString());
-        return createToken(claims, credentials.getId());
+        claims.put("clientType", userDetails.getClientType().toString());
+        return createToken(claims, userDetails.getId());
     }
     public String generateToken(String token) throws SignatureException {
         Map<String, Object> claims = new HashMap<>();
@@ -137,12 +134,12 @@ public class JWT {
      */
     public String checkUser(String token) throws SignatureException {
         Claims claims = extractAllClaims(token.replace("Bearer ",""));
-        Credentials credentials = new Credentials();
-        credentials.setUserName((String)claims.get("userEmail"));
-        credentials.setClientType(ClientType.valueOf((String)claims.get("clientType") ) );
-        credentials.setUserEmail((String)claims.get("userEmail"));
-        credentials.setId(Integer.parseInt(claims.getSubject()));
-        return generateToken(credentials);
+        UserDetails userDetails = new UserDetails();
+        userDetails.setUserName((String)claims.get("userEmail"));
+        userDetails.setClientType(ClientType.valueOf((String)claims.get("clientType") ) );
+        userDetails.setUserEmail((String)claims.get("userEmail"));
+        userDetails.setId(Integer.parseInt(claims.getSubject()));
+        return generateToken(userDetails);
     }
 
     public boolean checkUser(String token, ClientType clientType) throws LoginException, SignatureException {

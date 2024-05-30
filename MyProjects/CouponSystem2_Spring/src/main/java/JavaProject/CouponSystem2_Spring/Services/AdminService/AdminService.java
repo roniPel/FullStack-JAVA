@@ -3,19 +3,14 @@ package JavaProject.CouponSystem2_Spring.Services.AdminService;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
-import JavaProject.CouponSystem2_Spring.Services.ClientService;
+
 import java.util.List;
 
 /**
  * Admin Service interface - Lists relevant functionalities for Admin users
  */
-public interface AdminService extends ClientService {
-
-    @Override
-    String Login(String email, String password) throws AdminException, CompanyException, CustomerException;
+public interface AdminService {
 
     /**
      * Get one customer

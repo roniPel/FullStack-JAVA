@@ -2,14 +2,14 @@ package JavaProject.CouponSystem2_Spring.Clr_Test;
 
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
+import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Login.ClientType;
 import JavaProject.CouponSystem2_Spring.Login.LogonUtil;
-import JavaProject.CouponSystem2_Spring.Services.LoginService;
+import JavaProject.CouponSystem2_Spring.Services.LoginService.LoginServiceImpl;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.SignatureException;
@@ -21,7 +21,7 @@ import java.util.List;
 @Order(6)
 @RequiredArgsConstructor
 public class Clr_Temp_LogonTester implements CommandLineRunner {
-    private final LoginService loginService;
+    private final LoginServiceImpl loginServiceImpl;
     private final LogonUtil logonUtil;
     private final RestTemplate restTemplate;
     @Override
@@ -30,20 +30,19 @@ public class Clr_Temp_LogonTester implements CommandLineRunner {
             //Add Credentials to DB
             String email = logonUtil.getEmailsPassowrdsMap().get("adminEmail");
             String password = logonUtil.getEmailsPassowrdsMap().get("adminPassword");
+            ClientType clientType = ClientType.Administrator;
+
+            Credentials credentials = new Credentials(email,password,clientType);
 
             PrintSectionHeader();
             System.out.println();
-//            TestJWTlogin();
 
             // Creating a token - via JWT
             System.out.println("Email for login: "+email);
-            System.out.println("Token: ");
-            String token = loginService.Login(email, password);
-            System.out.println(token);
-            // Get a list of companies with Authorization in Swagger
-            GetListOfAllCompanies();
-
-            PrintSectionFooter();
+            System.out.println("User Details: ");
+            UserDetails userDetails = loginServiceImpl.Login(credentials);
+            System.out.println(userDetails);
+            // Todo - Continue Test with RestController (get JWT token)
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -78,21 +77,21 @@ public class Clr_Temp_LogonTester implements CommandLineRunner {
     }
 
     private void TestJWTlogin() throws SignatureException {
-        Credentials credentials = new Credentials();
-        credentials.setUserEmail("credentials@example.com");
-        credentials.setUserName("JwtTest");
-        credentials.setClientType(ClientType.Company);
-        logonUtil.AddCredentialsToDB(credentials.getUserName(), credentials.getUserPassword()
-                , credentials.getClientType(), credentials.getUserEmail());
+        UserDetails userDetails = new UserDetails();
+        userDetails.setUserEmail("credentials@example.com");
+        userDetails.setUserName("JwtTest");
+        userDetails.setClientType(ClientType.Company);
+        logonUtil.AddCredentialsToDB(userDetails.getUserName(), userDetails.getUserPassword()
+                , userDetails.getClientType(), userDetails.getUserEmail());
 
-        String jwtToken = GenerateTokenForUser(credentials);
+        String jwtToken = GenerateTokenForUser(userDetails);
         System.out.println("Generated token: \n" + jwtToken);
         ValidateTokenForRequest(jwtToken);
     }
 
-    private String GenerateTokenForUser(Credentials credentials) {
+    private String GenerateTokenForUser(UserDetails userDetails) {
         JWT jwtUtil = new JWT();
-        return jwtUtil.generateToken(credentials);
+        return jwtUtil.generateToken(userDetails);
     }
 
     private void ValidateTokenForRequest(String tokenFromRequest) throws SignatureException {
