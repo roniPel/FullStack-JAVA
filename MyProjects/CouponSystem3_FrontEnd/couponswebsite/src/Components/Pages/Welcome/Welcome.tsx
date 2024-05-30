@@ -7,6 +7,7 @@ import axios from "axios";
 import { SingleCoupon } from "../SingleCoupon/SingleCoupon";
 import { checkData } from "../../../Utilities/checkData";
 import { couponStore } from "../../../Redux/store";
+import { getAllCouponsAction } from "../../../Redux/guestReducer";
 
 export function Welcome(): JSX.Element {
     
@@ -23,9 +24,7 @@ export function Welcome(): JSX.Element {
             navigate("/login");
         }
         checkData();
-
-        //if(couponStore.getState().coupons.allCoupons.length == 0)
-        if (true) {
+        if (couponStore.getState().guest.allCoupons.length == 0) {
             axios.get("http://localhost:8080/Guest/GetAllCoupons")
             .then(result=>{
             for (let index=0;index<result.data.length;index++){
@@ -43,14 +42,14 @@ export function Welcome(): JSX.Element {
                 ));
             };
             setList(recivedList);                   
-                // couponStore.dispatch(getAllCouponsAction(recivedList));
-                // setList(couponStore.getState().coupons.allCoupons);
+                couponStore.dispatch(getAllCouponsAction(recivedList));
+                setList(couponStore.getState().guest.allCoupons);
                 })
                 .catch(err=>{
                     navigate("/login")
                 });
         } else {
-            //setList(couponStore.getState().coupons.allCouponss);
+            setList(couponStore.getState().guest.allCoupons);
         }
         
     },[]);
