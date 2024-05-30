@@ -2,18 +2,19 @@ import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typograph
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Credentials } from "../../../Models/Credentials";
 import { ClientType } from "../../../Models/ClientType";
 import axios from "axios";
 import notify from "../../../Utilities/notify";
+import { UserDetails } from "../../../Models/UserDetails";
 
 export function Register(): JSX.Element {
     const navigate = useNavigate();
 
     //declare our needed methods from react-hook-form
-    const { register, handleSubmit, formState: { errors } } = useForm<Credentials>();
-    const onSubmit: SubmitHandler<Credentials> = (data) => {
-        console.log(data)
+    const { register, handleSubmit, formState: { errors } } = useForm<UserDetails>();
+    const onSubmit: SubmitHandler<UserDetails> = (data) => {
+        data.clientType = ClientType.Customer;
+        console.log(data);
         //check that the passwords are the same , if not, do not countinue
 
         //todo, move to axios :)
@@ -48,6 +49,8 @@ export function Register(): JSX.Element {
                     <br /><br />
                     <TextField label="password check" variant="outlined" type="password" fullWidth />
                     <br /><br />
+                    
+                    {/* Section below only relevant for Admin registration of new Company
                     <Select
                         size="medium"
                         {...register("clientType")} 
@@ -63,7 +66,8 @@ export function Register(): JSX.Element {
                         <MenuItem value={ClientType.Administrator}>Administrator</MenuItem>
                         <MenuItem value={ClientType.Company}>Company</MenuItem>
                         <MenuItem value={ClientType.Customer}>Customer</MenuItem>
-                    </Select>
+                    </Select> */}
+
                     <br/><br/>
                     <hr />
                     <br/>

@@ -1,6 +1,6 @@
 import { ClientType } from "./ClientType";
 
-export class Credentials{
+export class UserDetails{
     public id:number;
     public userName:string;
     public userPassword:string;

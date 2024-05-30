@@ -1,5 +1,5 @@
 export class authState {
-    email: string = "";
+    id: string = "";
     name: string = "guest";
     token: string = "";
     userType: string = "";

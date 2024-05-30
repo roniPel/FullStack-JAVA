@@ -32,9 +32,10 @@ export function Header(): JSX.Element {
                     <Button type="submit" color={isLogged ? "error" : "primary"}
                         onClick={() => {
                             if (isLogged) {
+                                sessionStorage.removeItem("jwt");               
                                 couponStore.dispatch(logoutAction());
                                 navigate("/");
-                            } else {
+                            } else {                                                 
                                 navigate("/login");
                             }
                         }}>{isLogged ? "Logout" : "Login"}</Button>
