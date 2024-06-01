@@ -1,5 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Utils;
 
+import JavaProject.CouponSystem2_Spring.Beans.Company;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Beans.ClientType;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
@@ -53,16 +55,26 @@ public class JWT {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("clientType", userDetails.getClientType().toString());
-        claims.put("userName", userDetails.getName());
         int id = -1;
-        switch (userDetails.getClientType()){
-            case Administrator ->
-                    id = 0;
-            case Company ->
-                    id = companyRepo.findByEmail(userDetails.getEmail()).getId();
-            case Customer ->
-                    id = customerRepo.findByEmail(userDetails.getEmail()).getId();
+        String name = "";
+        switch (userDetails.getClientType()) {
+            case Administrator -> {
+                id = 0;
+                name = "Administrator";
+            }
+            case Company -> {
+                Company company = companyRepo.findByEmail(userDetails.getEmail());
+                id = company.getId();
+                name = company.getName();
+            }
+            case Customer -> {
+                Customer customer = customerRepo.findByEmail(userDetails.getEmail());
+                id = customer.getId();
+                name = customer.getFirstName()+" "+customer.getLastName();
+            }
+
         }
+        claims.put("userName", name);
         //userDetails.getId()
         return createToken(claims, id);
     }
