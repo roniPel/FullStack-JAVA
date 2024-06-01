@@ -11,7 +11,9 @@ export function Menu(): JSX.Element {
     const [isCustomer,setCustomer] = useState(false);
 
     couponStore.subscribe(()=>{
-        setAdmin(couponStore.getState().auth.userType==="ADMIN");
+        setAdmin(couponStore.getState().auth.userType==="Administrator");
+        setCompany(couponStore.getState().auth.userType==="Company");
+        setCustomer(couponStore.getState().auth.userType==="Customer");
     });
     
     const simpleMenu = ()=>{
@@ -83,16 +85,8 @@ export function Menu(): JSX.Element {
 			{simpleMenu()}
             <hr/>
             {isAdmin && adminMenu()}
-        </div>
-    );
-
-
-    return (
-        <div className="Menu">
-            <br/><Typography variant="h4" className="HeadLine">Menu</Typography><br/><hr/>
-            <NavLink to="/">Home</NavLink><br/>
-            <NavLink to="/aboutus">About Us</NavLink><br/>
-            <hr/>
+            {isCompany && companyMenu()}
+            {isCustomer && customerMenu()}
         </div>
     );
 }

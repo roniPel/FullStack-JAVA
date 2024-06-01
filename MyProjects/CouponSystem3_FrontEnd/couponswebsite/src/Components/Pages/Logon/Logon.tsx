@@ -12,7 +12,7 @@ import notify from "../../../Utilities/notify";
 type userLoginData = {
     userEmail: string;
     userPass: string;
-    clientType: ClientType;
+    clientType: string;
     userRemember: boolean;
 }
 
@@ -57,7 +57,6 @@ export function Logon(): JSX.Element {
             };
             // Update Redux with user details
             couponStore.dispatch(loginAction(myAuth))
-            
             notify.success("Welcome back");
             navigate("/");
         })
