@@ -2,8 +2,12 @@ package JavaProject.CouponSystem2_Spring.Utils;
 
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Beans.ClientType;
+import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
+import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
+import JavaProject.CouponSystem2_Spring.Services.AdminService.AdminService;
 import io.jsonwebtoken.*;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
@@ -23,7 +27,7 @@ import java.util.Map;
 @Component
 @NoArgsConstructor
 public class JWT {
-    //Type of encryption
+    //Type of encryption - JWT
     private String signatureAlgorithm = SignatureAlgorithm.HS256.getJcaName();
     //Todo - either delete 'GlobalVariables' config class or understand how to work
     // with global variables in spring (with application properties) or with @Value annotation
@@ -36,6 +40,10 @@ public class JWT {
     private Key decodedSecretKey = new SecretKeySpec(
             Base64.getDecoder().decode(getJwtTokenEncodedKey), this.signatureAlgorithm
     );
+    @Autowired
+    private CompanyRepository companyRepo;
+    @Autowired
+    private CustomerRepository customerRepo;
 
     /**
      * Generates a token based on user credentials
@@ -46,7 +54,17 @@ public class JWT {
         Map<String, Object> claims = new HashMap<>();
         claims.put("clientType", userDetails.getClientType().toString());
         claims.put("userName", userDetails.getName());
-        return createToken(claims, userDetails.getId());
+        int id = -1;
+        switch (userDetails.getClientType()){
+            case Administrator ->
+                    id = 0;
+            case Company ->
+                    id = companyRepo.findByEmail(userDetails.getEmail()).getId();
+            case Customer ->
+                    id = customerRepo.findByEmail(userDetails.getEmail()).getId();
+        }
+        //userDetails.getId()
+        return createToken(claims, id);
     }
     public String generateToken(String token) throws SignatureException {
         Map<String, Object> claims = new HashMap<>();
