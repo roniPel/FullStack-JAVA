@@ -9,7 +9,7 @@ export function AllTasks(): JSX.Element {
 
     useEffect(()=>{
         axios.get("http://localhost:8080/Tasks/allTasks").then(res=>{
-            console.log(res.data);           
+            //console.log(res.data);           
             let returnTask = [];
             for (let index=0;index<res.data.length;index++){
                 returnTask.push(res.data[index]);
@@ -22,7 +22,7 @@ export function AllTasks(): JSX.Element {
         <div className="AllTasks">
 			{tasks.map(item=><SingleTask key={item.id} id={item.id} name={item.name} 
             responsible={item.responsible} dateScheduled={item.dateScheduled} 
-            dateCompleted={item.dateCompleted} isCompleted={false}/>)};
+            dateCompleted={item.dateCompleted} isCompleted={item.isCompleted}/>)}
         </div>
     );
 }
