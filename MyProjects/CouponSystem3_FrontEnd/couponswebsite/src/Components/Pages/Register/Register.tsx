@@ -14,6 +14,7 @@ export function Register(): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = useForm<UserDetails>();
     const onSubmit: SubmitHandler<UserDetails> = (data) => {
         data.clientType = ClientType.Customer;
+        data.id = 0;
         console.log(data);
         //check that the passwords are the same , if not, do not countinue
 
@@ -35,17 +36,17 @@ export function Register(): JSX.Element {
                 <hr /><br/>
                 {/* <input type="text" placeholder="user name..." onChange={(args)=>setEmail(args.target.value)}/><br/><br/> */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField label="user name" variant="outlined" {...register("userName", { required: true })} fullWidth />
+                    <TextField label="user name" variant="outlined" {...register("name", { required: true })} fullWidth />
                     <br /><br />
                     <TextField label="user email" variant="outlined" {
-                        ...register("userEmail", { required: true })} fullWidth />
-                    {errors.userEmail && <span style={{ color: "red" }}>Email is required</span>}
+                        ...register("email", { required: true })} fullWidth />
+                    {errors.email && <span style={{ color: "red" }}>Email is required</span>}
                     <br /><br />
                     <TextField label="user password" type="password" variant="outlined" {
-                        ...register("userPassword", { required: true, minLength: 5, maxLength: 10 })} fullWidth />
-                    {errors.userPassword?.type == "required" && <><br /><span style={{ color: "red" }}>password is required</span></>}
-                    {errors.userPassword?.type == "minLength" && <><br /><span style={{ color: "red" }}>password is too short</span></>}
-                    {errors.userPassword?.type == "maxLength" && <><br /><span style={{ color: "red" }}>password is too long</span></>}
+                        ...register("password", { required: true, minLength: 5, maxLength: 10 })} fullWidth />
+                    {errors.password?.type == "required" && <><br /><span style={{ color: "red" }}>password is required</span></>}
+                    {errors.password?.type == "minLength" && <><br /><span style={{ color: "red" }}>password is too short</span></>}
+                    {errors.password?.type == "maxLength" && <><br /><span style={{ color: "red" }}>password is too long</span></>}
                     <br /><br />
                     <TextField label="password check" variant="outlined" type="password" fullWidth />
                     <br /><br />
