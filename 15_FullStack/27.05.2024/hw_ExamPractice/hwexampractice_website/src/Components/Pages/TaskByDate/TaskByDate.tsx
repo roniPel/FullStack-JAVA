@@ -5,18 +5,19 @@ import axios from "axios";
 import { SingleTask } from "../SingleTask/SingleTask";
 
 export function TaskByDate(): JSX.Element {
-    const [date,setDate] = useState("");
+    const [date,setDate] = useState("1950-01-01");
     const [tasks,setTasks] = useState<Task[]>([]);
 
     const getData = ()=>{
         //axios
         axios.get(`http://localhost:8080/Tasks/taskCompletedBefore/${date}`).then(res=>{
-            console.log(res.data);
+            //console.log(res);
             let returnTask = [];
             for (let index=0;index<res.data.length;index++){
                 returnTask.push(res.data[index]);
             }
             setTasks(returnTask);
+            //console.log(returnTask);
         })
     }
 

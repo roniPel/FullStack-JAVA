@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.time.LocalDate;
 
-@Component
+//@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Tester implements CommandLineRunner {

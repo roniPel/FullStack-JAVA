@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -46,7 +45,10 @@ public class TaskController {
     }
 
     @GetMapping("/taskCompletedBefore/{date}")
-    public List<Task> taskCompletedBefore(@RequestBody LocalDate date){
-        return taskService.TasksCompletedBefore(date);
+    public List<Task> taskCompletedBefore(@PathVariable String date){
+//        System.out.println("String Date: "+date);
+//        System.out.println("LocalDate Date: "+LocalDate.parse(date));
+//        System.out.println("Result: "+taskService.TasksCompletedBefore(LocalDate.parse(date)));
+        return taskService.TasksCompletedBefore(LocalDate.parse(date));
     }
 }

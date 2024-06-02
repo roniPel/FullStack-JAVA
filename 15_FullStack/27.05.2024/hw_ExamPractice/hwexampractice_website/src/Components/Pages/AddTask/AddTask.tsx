@@ -11,7 +11,7 @@ export function AddTask(): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = useForm<Task>();
 
     const onSubmit: SubmitHandler<Task> = (data) => {
-        console.log(data)
+        //console.log(data)
         data.id=0;
         data.isCompleted = false;
         axios.post("http://localhost:8080/Tasks/add",data).then(res=>{
@@ -36,7 +36,10 @@ export function AddTask(): JSX.Element {
                         <><br /><span style={{ color: "red" }}>'responsible' is required</span></>
                     }
                     <br /><br />
-                    <input type="date" placeholder="Scheduled date" {...register("dateScheduled")}/>
+                    <input type="date" placeholder="Scheduled date" {...register("dateScheduled",{required: true})}/>
+                    {errors.responsible?.type == "required" &&
+                        <><br /><span style={{ color: "red" }}>'scheduled date' is required</span></>
+                    }
                     <br /><br />
                     <input type="submit" value="create task" />
                 </form>
