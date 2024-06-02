@@ -32,7 +32,7 @@ public class Clr_Temp_LogonTester implements CommandLineRunner {
             String password = fillDbUtil.getEmailsPassowrdsMap().get("adminPassword");
             ClientType clientType = ClientType.Administrator;
 
-            Credentials credentials = new Credentials(email,password,clientType);
+            Credentials credentials = new Credentials(email,password);
 
             PrintSectionHeader();
             System.out.println();

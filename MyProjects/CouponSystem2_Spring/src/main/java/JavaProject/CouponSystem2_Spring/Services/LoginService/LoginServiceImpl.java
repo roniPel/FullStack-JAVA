@@ -18,9 +18,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public UserDetails Login(Credentials credentials) throws LoginException {
         // Find user details based on credentials
-        UserDetails userDetails =
-                usersRepo.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword());
-        return userDetails;
+        return usersRepo.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword());
     }
 
     public void AddCredentials(String user, String password, ClientType clientType, String email) {

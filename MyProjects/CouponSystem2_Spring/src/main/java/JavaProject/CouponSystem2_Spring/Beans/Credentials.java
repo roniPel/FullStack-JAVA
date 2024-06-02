@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class Credentials {
     public String email;
     public String password;
-    public ClientType userType;
+    //public ClientType userType;
 }
