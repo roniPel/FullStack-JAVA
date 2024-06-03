@@ -15,10 +15,10 @@ import java.util.List;
 @Configuration
 public class OpenAPIConfiguration {
     @Bean
-    public OpenAPI defineOpenAPI(@Value("Coupon Management System API") String serviceTitle, @Value("3.0") String serviceVersion) {
+    public OpenAPI defineOpenAPI(@Value("Task Management System API") String serviceTitle, @Value("1.0") String serviceVersion) {
         Server server = new Server();
         server.setUrl("http://localhost:8080");
-        server.setDescription("Coupon System api for development");
+        server.setDescription("Task System api for development");
 
         // Configure Contact
         Contact myContact = new Contact();
@@ -29,7 +29,7 @@ public class OpenAPIConfiguration {
         Info info = new Info()
                 .title(serviceTitle)
                 .version(serviceVersion)
-                .description("This API exposes endpoints to manage Coupons System")
+                .description("This API exposes endpoints to manage Task System")
                 .contact(myContact);
 
         final String securitySchemeName = "bearerAuth";

@@ -6,10 +6,6 @@ export function Menu(): JSX.Element {
         <div className="Menu">
 			<NavLink to="/add">Add Task </NavLink>
             | 
-            <NavLink to="/delete"> Delete Task </NavLink>
-            | 
-            <NavLink to="/update"> Update Task </NavLink>
-            | 
             <NavLink to="/"> All Tasks </NavLink>
         </div>
     );

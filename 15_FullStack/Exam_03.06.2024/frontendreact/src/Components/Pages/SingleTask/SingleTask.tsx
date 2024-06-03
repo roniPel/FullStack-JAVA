@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { Task } from "../../Models/Task";
 import "./SingleTask.css";
 
 export function SingleTask(props:Task): JSX.Element {
+    const navigate = useNavigate();
     const completed = () => {
         if(props.isCompleted===true){
             return "Yes";
@@ -9,8 +11,11 @@ export function SingleTask(props:Task): JSX.Element {
         else{
             return "No";
         }}
+        
     return (
-        <div className="SingleTask" id="table">
+        <div className="SingleTask" id="table" onClick={()=>{
+            navigate(`/view/${props.id}`)
+        }}>
             <table>
                 <tr>
                     <td>{props.id}</td>

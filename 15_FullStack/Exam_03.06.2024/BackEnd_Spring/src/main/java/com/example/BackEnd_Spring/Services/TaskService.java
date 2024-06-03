@@ -43,10 +43,14 @@ public class TaskService {
 
     public boolean UpdateTask(Task task) throws TaskException {
         int id = task.getId();
-        // Verify coupon exists in DB
+        // Verify task exists in DB
         Task currentTask = taskRepo.findById(id).orElseThrow(
                 () -> new TaskException(Errors.TASK_NOT_FOUND)
         );
+        // Verify person does not exist in DB
+        if(personRepo.existsById(task.getResponsible().getId())){
+            throw new TaskException(Errors.PERSON_ALREADY_EXISTS);
+        }
         //Save person
         personRepo.saveAndFlush(task.getResponsible());
         //Save task
