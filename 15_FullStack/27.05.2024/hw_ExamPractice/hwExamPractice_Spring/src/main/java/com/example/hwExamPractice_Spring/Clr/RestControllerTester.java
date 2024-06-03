@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-@Component
+//@Component
 @Order(2)
 @RequiredArgsConstructor
 public class RestControllerTester implements CommandLineRunner {
