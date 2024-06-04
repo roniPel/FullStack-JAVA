@@ -21,24 +21,18 @@ export function ViewTask(): JSX.Element {
         <div className="ViewTask">
             <table>
                 <tr>
-                    <td>ID</td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Responsible</th>
+                    <th>Scheduled For</th>
+                    <th>Completed?</th>
+                </tr>
+                <tr>
                     <td>{task?.id}</td>
-                </tr>
-                <tr>
-                    <td>Name</td>
                     <td>{task?.name}</td>
-                </tr>
-                <tr>
-                    <td>Responsible</td>
                     <td>{task?.responsible.name}</td>
-                </tr>
-                <tr>
-                    <td>Scheduled For</td>
                     <td>{task?.scheduledDate.toString()}</td>
-                </tr>
-                <tr>
-                    <td>Completed?</td>
-                    <td>{task?.isCompleted}</td>
+                    <td>{task?.completed.toString()}</td>
                 </tr>
             </table>
             <br/>

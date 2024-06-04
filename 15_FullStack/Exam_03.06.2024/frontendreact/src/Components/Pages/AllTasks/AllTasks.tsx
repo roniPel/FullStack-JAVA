@@ -20,6 +20,7 @@ export function AllTasks(): JSX.Element {
 
     return (
         <div className="AllTasks">
+            <br/>
             <table>
                 <tr>
                     <th>ID</th>
@@ -30,7 +31,7 @@ export function AllTasks(): JSX.Element {
                 </tr>
             </table>
             {tasks.map(item=><SingleTask key={item.id} id={item.id} name={item.name} responsible=
-            {item.responsible} scheduledDate={item.scheduledDate} isCompleted={item.isCompleted}/>)}
+            {item.responsible} scheduledDate={item.scheduledDate} completed={item.completed}/>)}
         </div>
     );
 

@@ -38,19 +38,19 @@ export function AllTasks2(): JSX.Element {
             title: 'Scheduled For',
         },
         {
-            key: 'isCompleted',
+            key: 'completed',
             title: 'Completed?',
         },
     ];
 
       let myData = Array();
-      const data2 = tasks.map((item)=>{
+      tasks.map((item)=>{
         myData.push({
             id: item.id,
             name: item.name,
             responsible: item.responsible.name,
             scheduledDate: item.scheduledDate,
-            isCompleted: item.isCompleted,
+            isCompleted: item.completed,
       })
       });
 

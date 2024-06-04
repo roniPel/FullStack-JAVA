@@ -1,17 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Task } from "../../Models/Task";
 import "./SingleTask.css";
+import { useEffect, useState } from "react";
 
 export function SingleTask(props:Task): JSX.Element {
     const navigate = useNavigate();
-    const completed = () => {
-        if(props.isCompleted===true){
-            return "Yes";
-        }
-        else{
-            return "No";
-        }}
-        
+    //console.log(props);
+
+    const numRows = Task.length;
     return (
         <div className="SingleTask" id="table" onClick={()=>{
             navigate(`/view/${props.id}`)
@@ -22,7 +18,7 @@ export function SingleTask(props:Task): JSX.Element {
                     <td>{props.name}</td>
                     <td>{props.responsible.name}</td>
                     <td>{props.scheduledDate.toString()}</td>
-                    <td>{props.isCompleted}</td>
+                    <td>{props.completed.toString()}</td>
                 </tr>
             </table>
         </div>

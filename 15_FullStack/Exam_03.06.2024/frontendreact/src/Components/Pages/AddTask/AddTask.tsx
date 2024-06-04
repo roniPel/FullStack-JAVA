@@ -15,7 +15,7 @@ export function AddTask(): JSX.Element {
     const onSubmit: SubmitHandler<Task> = (data) => {
         //console.log(data)
         data.id=0;
-        data.isCompleted=false;
+        data.completed=false;
         //todo, move to axios :)
         axios.post("http://localhost:8080/Tasks/AddTask",data).then(res=>{
             //move to thank you page
@@ -33,7 +33,7 @@ export function AddTask(): JSX.Element {
                         <><br /><span style={{ color: "red" }}>task name is required</span></>
                     }
                     <br /><br />
-                    <input type="date" placeholder="Scheduled date"
+                    Scheduled: <input type="date" placeholder="Scheduled date"
                         {...register("scheduledDate", { required: true})} />
                     {errors.scheduledDate?.type == "required" &&
                         <><br /><span style={{ color: "red" }}>scheduled date is required</span></>

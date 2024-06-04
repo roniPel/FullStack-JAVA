@@ -6,13 +6,6 @@ import Table from "../../Table/Table";
 
 export function SingleTask2(props:Task): JSX.Element {
     const navigate = useNavigate();
-    const completed = () => {
-        if(props.isCompleted===true){
-            return "Yes";
-        }
-        else{
-            return "No";
-        }};
     const columns: Array<ColumnProps<Task>> = [
         {
             key: 'id',
@@ -31,7 +24,7 @@ export function SingleTask2(props:Task): JSX.Element {
             title: 'Scheduled For',
         },
         {
-            key: 'isCompleted',
+            key: 'completed',
             title: 'Completed?',
         },
         ];
@@ -42,7 +35,7 @@ export function SingleTask2(props:Task): JSX.Element {
             name: props.name,
             responsible: props.responsible,
             scheduledDate: props.scheduledDate,
-            isCompleted: props.isCompleted,
+            completed: props.completed,
         }
         ];
 

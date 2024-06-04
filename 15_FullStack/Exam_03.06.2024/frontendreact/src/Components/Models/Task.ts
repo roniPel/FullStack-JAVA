@@ -5,13 +5,13 @@ export class Task {
     public name:string;
     public responsible:Person;
     public scheduledDate:Date;
-    public isCompleted:boolean;
+    public completed:boolean;
 
-    constructor(id:number,name:string,responsible:Person,scheduledDate:Date,isCompleted:boolean){
+    constructor(id:number,name:string,responsible:Person,scheduledDate:Date,completed:boolean){
         this.id = id;
         this.name = name;
         this.responsible = responsible;
         this.scheduledDate = scheduledDate;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
     }
 }
