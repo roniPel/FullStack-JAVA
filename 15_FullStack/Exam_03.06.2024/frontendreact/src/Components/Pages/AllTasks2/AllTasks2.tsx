@@ -1,55 +1,67 @@
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
+import {  useState, useEffect } from "react";
 import "./AllTasks2.css";
 import { ColumnProps } from "../../Models/ColumnProps";
 import Table  from "../../Table/Table";
-
-type Data = {
-    name: string;
-    job: string;
-    location: string;
-  };
+import { Task } from "../../Models/Task";
+import axios from "axios";
+import { SingleTask2 } from "../SingleTask2/SingleTask2";
 
 export function AllTasks2(): JSX.Element {
-    const data = [
+    const [tasks,setTasks] = useState<Task[]>([]);
+
+    useEffect(()=>{
+        axios.get("http://localhost:8080/Tasks/GetAllTasks").then(res=>{
+            //console.log(res.data);           
+            let returnTask = [];
+            for (let index=0;index<res.data.length;index++){
+                returnTask.push(res.data[index]);
+            }
+            setTasks(returnTask);
+        })
+    },[])
+
+    const columns: Array<ColumnProps<Task>> = [
         {
-          name: 'Cy Ganderton',
-          job: 'Quality Control Specialist',
-          location: 'Canada',
+            key: 'id',
+            title: 'ID',
         },
         {
-          name: 'Hart Hagerty',
-          job: 'Desktop Support Technician',
-          location: 'United States',
+            key: 'name',
+            title: 'Name',
         },
         {
-          name: 'Brice Swyre',
-          job: 'Tax Accountant',
-          location: 'China',
-        },
-      ];
-      const columns: Array<ColumnProps<Data>> = [
-        {
-          key: 'name',
-          title: 'Name',
+            key: 'responsible',
+            title: 'Responsible',
         },
         {
-          key: 'job',
-          title: 'Job',
+            key: 'scheduledDate',
+            title: 'Scheduled For',
         },
         {
-          key: 'location',
-          title: 'Color',
-    
-          render: (_: any, record: { location: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }) => {
-            return <div className="text-blue-500 font-bold">{record.location}</div>;
-          },
+            key: 'isCompleted',
+            title: 'Completed?',
         },
-      ];
+    ];
+
+      let myData = Array();
+      const data2 = tasks.map((item)=>{
+        myData.push({
+            id: item.id,
+            name: item.name,
+            responsible: item.responsible.name,
+            scheduledDate: item.scheduledDate,
+            isCompleted: item.isCompleted,
+      })
+      });
+
     return (
         <div className="AllTasks2">
-			<div>
-                <Table data={data} columns={columns} />
+            <div>
+                <br/>
+                <Table data={myData} columns={columns} />
             </div>
+            {/* {tasks.map(item=><SingleTask2 key={item.id} id={item.id} name={item.name} responsible=
+            {item.responsible} scheduledDate={item.scheduledDate} isCompleted={item.isCompleted}/>)} */}
         </div>
     );
 }

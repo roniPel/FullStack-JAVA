@@ -18,6 +18,7 @@ export function MainRoutes(): JSX.Element {
                 <Route path="/add" element={<AddTask/>}/>
                 <Route path="/update/:taskID" element={<UpdateTask/>}/>
                 <Route path="/view/:taskID" element={<ViewTask/>}/>
+                <Route path="/view2/:taskID" element={<ViewTask/>}/>
                 <Route path="*" element={<Page404/>}/>
             </Routes>
         </div>
