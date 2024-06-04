@@ -47,13 +47,15 @@ public class TaskService {
         Task currentTask = taskRepo.findById(id).orElseThrow(
                 () -> new TaskException(Errors.TASK_NOT_FOUND)
         );
-        // Verify person does not exist in DB
-        if(personRepo.existsById(task.getResponsible().getId())){
-            throw new TaskException(Errors.PERSON_ALREADY_EXISTS);
+        Person updatedResponsible = task.getResponsible();
+        Person currentResponsible = currentTask.getResponsible();
+        // Verify the same responsible person is linked to the new task
+        if(!(currentResponsible.getId() == updatedResponsible.getId())){
+            throw new TaskException(Errors.INCORRECT_PERSON_IN_TASK);
         }
-        //Save person
+        //Save updated person
         personRepo.saveAndFlush(task.getResponsible());
-        //Save task
+        //Save updated task
         taskRepo.saveAndFlush(task);
         return true;
     }

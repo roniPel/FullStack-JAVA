@@ -1,24 +1,22 @@
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import "./DeleteTask.css";
-import { Task } from "../../Models/Task";
 import axios from "axios";
 import notify from "../../Utils/notify";
 import { useNavigate, useParams } from "react-router-dom";
-import { ViewTask } from "../ViewTask/ViewTask";
 import { Button, ButtonGroup } from "@mui/material";
 
 export function DeleteTask(): JSX.Element {
-    const [id,setID] = useState(0);
-    const [task,setTask] = useState<Task>();
     const navigate = useNavigate();
-    const [show,setShow] = useState(false);
     const params = useParams();
 
     const deleteTask = ()=>{
         //axios
         axios.delete(`http://localhost:8080/Tasks/DeleteTask/${params.taskID}`).then(res=>{
-            //console.log(res.data);
+            //move to home + notify success
+            notify.success("Task was deleted successfully");
             navigate("/");
+        }).catch((err)=>{
+            console.log(err);
+            notify.error("There was a problem deleting the task.");
         })
     }
     return (
@@ -30,11 +28,7 @@ export function DeleteTask(): JSX.Element {
                     <Button variant="contained" color="error" onClick={deleteTask}>Yes</Button>
                     <Button variant="contained" color="primary" onClick={() => { navigate("/") }}>No</Button>
                 </ButtonGroup>
-                {/* <input type="button" value="Yes" onClick={deleteTask}/>
-                <input type="button" value="No!" onClick={()=>navigate("/")}/> */}
             </div>
-            <hr/>
-
         </div>
     );
 }

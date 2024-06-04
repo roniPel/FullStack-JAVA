@@ -22,7 +22,7 @@ export function SingleTask(props:Task): JSX.Element {
                     <td>{props.name}</td>
                     <td>{props.responsible.name}</td>
                     <td>{props.scheduledDate.toString()}</td>
-                    <td>{completed()}</td>
+                    <td>{props.isCompleted}</td>
                 </tr>
             </table>
         </div>

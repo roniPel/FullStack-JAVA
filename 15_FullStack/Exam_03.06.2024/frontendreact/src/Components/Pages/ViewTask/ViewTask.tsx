@@ -16,24 +16,28 @@ export function ViewTask(): JSX.Element {
             setTask(res.data);
         })
     },[])
-    
+
     return (
         <div className="ViewTask">
             <table>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Responsible</th>
-                    <th>Scheduled For</th>
-                    <th>Completed?</th>
-                </tr>
-            </table>
-            <table>
-                <tr>
+                    <td>ID</td>
                     <td>{task?.id}</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
                     <td>{task?.name}</td>
+                </tr>
+                <tr>
+                    <td>Responsible</td>
                     <td>{task?.responsible.name}</td>
+                </tr>
+                <tr>
+                    <td>Scheduled For</td>
                     <td>{task?.scheduledDate.toString()}</td>
+                </tr>
+                <tr>
+                    <td>Completed?</td>
                     <td>{task?.isCompleted}</td>
                 </tr>
             </table>

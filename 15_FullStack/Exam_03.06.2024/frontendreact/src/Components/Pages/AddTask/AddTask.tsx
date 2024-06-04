@@ -3,6 +3,7 @@ import "./AddTask.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Task } from "../../Models/Task";
 import axios from "axios";
+import { Button, ButtonGroup } from "@mui/material";
 
 export function AddTask(): JSX.Element {
 
@@ -12,7 +13,7 @@ export function AddTask(): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = useForm<Task>();
 
     const onSubmit: SubmitHandler<Task> = (data) => {
-        console.log(data)
+        //console.log(data)
         data.id=0;
         data.isCompleted=false;
         //todo, move to axios :)
@@ -46,7 +47,10 @@ export function AddTask(): JSX.Element {
                     <br/><br/>
                     <input type="number" placeholder="phone number" {...register("responsible.phoneNum")}/>
                     <br/><br/>
-                    <input type="submit" value="Create Task" />
+                    <ButtonGroup>
+                        <Button type = "submit" variant="contained" color="primary" >Create Task</Button>
+                        <Button variant="contained" color="error" onClick={() => { navigate("/") }}>Cancel</Button>
+                    </ButtonGroup>
                 </form>
             </div>
         </div>
