@@ -2,8 +2,6 @@ package com.example.Exercise_BackEnd.Beans;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -17,10 +15,10 @@ public class Meeting {
     private int meetingId;
 //    @Column(table = "teams",
 //            nullable = false)
-    private Integer teamId;
+    private Integer devId;
     //private DevTeam devTeam;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startTime;
+    private String endTime;
     private String description;
-    private String room;
+    private String roomName;
 }

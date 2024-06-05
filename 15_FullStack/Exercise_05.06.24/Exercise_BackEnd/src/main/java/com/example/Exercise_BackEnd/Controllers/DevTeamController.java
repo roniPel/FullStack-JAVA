@@ -11,18 +11,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/teams")
+@RequestMapping("/api/v1/group")
 @CrossOrigin
 public class DevTeamController {
     private final DevTeamService teamService;
 
-    @GetMapping("/allTeams")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<DevTeam> getAllTeams(){
         return teamService.AllDevTeams();
     }
 
-    @PostMapping("/addTeam")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void addTeam(@RequestBody DevTeam devTeam) throws MeetingException {
         teamService.AddTeam(devTeam);

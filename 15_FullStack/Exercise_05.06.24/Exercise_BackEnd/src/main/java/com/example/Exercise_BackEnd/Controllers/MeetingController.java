@@ -13,18 +13,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/meetings")
+@RequestMapping("/api/v1/meeting")
 @CrossOrigin
 public class MeetingController {
     private final MeetingService meetingService;
 
-    @PostMapping("/addMeeting")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void addMeeting(@RequestBody Meeting meeting) throws MeetingException {
         meetingService.AddMeeting(meeting);
     }
 
-    @GetMapping("/allMeetings")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Meeting> getAllMeetings(){
         return meetingService.GetAllMeetings();

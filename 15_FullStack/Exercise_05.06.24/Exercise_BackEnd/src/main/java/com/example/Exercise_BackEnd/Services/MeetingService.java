@@ -1,6 +1,5 @@
 package com.example.Exercise_BackEnd.Services;
 
-import com.example.Exercise_BackEnd.Beans.DevTeam;
 import com.example.Exercise_BackEnd.Beans.Meeting;
 import com.example.Exercise_BackEnd.Exceptions.Errors;
 import com.example.Exercise_BackEnd.Exceptions.MeetingException;
@@ -23,7 +22,7 @@ public class MeetingService {
             throw new MeetingException(Errors.MEETING_ALREADY_EXISTS);
         }
         // Check if DevTeam does not exist in DB
-        if(!teamRepo.existsById(meeting.getTeamId())){
+        if(!teamRepo.existsById(meeting.getDevId())){
             throw new MeetingException(Errors.TEAM_DOES_NOT_EXIST);
         }
         meetingRepo.save(meeting);
@@ -31,7 +30,7 @@ public class MeetingService {
     }
 
     public List<Meeting> MeetingsByDevTeam(int devTeamId) {
-        return meetingRepo.findAllByTeamId(devTeamId);
+        return meetingRepo.findAllByDevId(devTeamId);
     }
 
     public List<Meeting> GetAllMeetings() {
