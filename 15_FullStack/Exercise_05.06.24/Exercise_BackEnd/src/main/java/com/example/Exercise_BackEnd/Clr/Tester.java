@@ -22,37 +22,46 @@ public class Tester implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try{
-            Meeting meeting1 = Meeting.builder()
-                    //.id(1)
-                    .description("This and that")
-                    .start_date(LocalDateTime.now())
-                    .end_date(LocalDateTime.now().plusHours(2L))
-                    .room("Room111")
-                    .build();
-            Meeting meeting2 = Meeting.builder()
-                    //.id(1)
-                    .description("That and them")
-                    .start_date(LocalDateTime.now())
-                    .end_date(LocalDateTime.now().plusHours(2L))
-                    .room("Room2")
-                    .build();
             DevTeam team1 = DevTeam.builder()
                     //.id(1)
                     .name("Team1")
-                    .meeting(meeting1)
                     .build();
             DevTeam team2 = DevTeam.builder()
                     //.id(1)
                     .name("Team2")
-                    .meeting(meeting2)
                     .build();
+            Meeting meeting1 = Meeting.builder()
+                    //.id(1)
+                    .teamId(1)
+                    .description("This and that")
+                    .startDate(LocalDateTime.now())
+                    .endDate(LocalDateTime.now().plusHours(2L))
+                    .room("Room111")
+                    .build();
+            Meeting meeting2 = Meeting.builder()
+                    //.id(1)
+                    .teamId(2)
+                    .description("That and them")
+                    .startDate(LocalDateTime.now())
+                    .endDate(LocalDateTime.now().plusHours(2L))
+                    .room("Room2")
+                    .build();
+            Meeting meeting3 = Meeting.builder()
+                    //.id(1)
+                    .teamId(2)
+                    .description("Another Meeting for you")
+                    .startDate(LocalDateTime.now())
+                    .endDate(LocalDateTime.now().plusHours(2L))
+                    .room("Room3")
+                    .build();
+
+            teamRepo.saveAndFlush(team1);
+            teamRepo.saveAndFlush(team2);
+            meetingRepo.saveAndFlush(meeting1);
+            meetingRepo.saveAndFlush(meeting2);
             System.out.println("My new meetings: ");
             System.out.println(meeting1);
             System.out.println(meeting2);
-            meetingRepo.saveAndFlush(meeting1);
-            meetingRepo.saveAndFlush(meeting2);
-            teamRepo.saveAndFlush(team1);
-            teamRepo.saveAndFlush(team2);
 
         } catch (Exception e){
             System.out.println(e);

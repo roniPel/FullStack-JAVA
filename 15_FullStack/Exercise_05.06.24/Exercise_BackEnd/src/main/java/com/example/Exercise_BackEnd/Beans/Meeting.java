@@ -9,17 +9,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name="meetings")
 @Builder
 public class Meeting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "devteam_id",
-            nullable = false)
+    private int meetingId;
+//    @Column(table = "teams",
+//            nullable = false)
     private Integer teamId;
     //private DevTeam devTeam;
-    private LocalDateTime start_date;
-    private LocalDateTime end_date;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String description;
     private String room;
 }

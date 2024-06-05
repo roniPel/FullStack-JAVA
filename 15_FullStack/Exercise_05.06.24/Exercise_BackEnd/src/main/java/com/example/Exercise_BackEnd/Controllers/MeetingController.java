@@ -17,7 +17,6 @@ import java.util.List;
 @CrossOrigin
 public class MeetingController {
     private final MeetingService meetingService;
-    private final DevTeamService teamService;
 
     @PostMapping("/addMeeting")
     @ResponseStatus(HttpStatus.CREATED)
@@ -25,24 +24,17 @@ public class MeetingController {
         meetingService.AddMeeting(meeting);
     }
 
-    @PostMapping("/addTeam")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addTeam(@RequestBody DevTeam devTeam) throws MeetingException {
-        meetingService.AddDevTeam(devTeam);
-    }
-
     @GetMapping("/allMeetings")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Meeting> getAllMeetings(){
         return meetingService.GetAllMeetings();
     }
 
     @GetMapping("/byTeam/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Meeting> getMeetingByTeam(@PathVariable int id){
         return meetingService.MeetingsByDevTeam(id);
     }
 
-    @GetMapping("/allTeams")
-    public List<DevTeam> getAllTeams(){
-        return teamService.AllDevTeams();
-    }
+
 }

@@ -18,28 +18,20 @@ public class MeetingService {
     private final DevTeamRepository teamRepo;
 
     public boolean AddMeeting(Meeting meeting) throws MeetingException {
-        int id = meeting.getId();
-        if(meetingRepo.existsById(id)){
+        int meetingId = meeting.getMeetingId();
+        if(meetingRepo.existsById(meetingId)){
             throw new MeetingException(Errors.MEETING_ALREADY_EXISTS);
         }
         // Check if DevTeam does not exist in DB
-        if(!teamRepo.existsById(meeting.getDevTeam().getId())){
+        if(!teamRepo.existsById(meeting.getTeamId())){
             throw new MeetingException(Errors.TEAM_DOES_NOT_EXIST);
         }
-        meetingRepo.saveAndFlush(meeting);
-        return true;
-    }
-
-    public boolean AddDevTeam(DevTeam devTeam) throws MeetingException {
-        if(teamRepo.existsById(devTeam.getId())){
-            throw new MeetingException(Errors.TEAM_ALREADY_EXISTS);
-        }
-        teamRepo.saveAndFlush(devTeam);
+        meetingRepo.save(meeting);
         return true;
     }
 
     public List<Meeting> MeetingsByDevTeam(int devTeamId) {
-        return meetingRepo.findByTeamId(devTeamId);
+        return meetingRepo.findAllByTeamId(devTeamId);
     }
 
     public List<Meeting> GetAllMeetings() {
