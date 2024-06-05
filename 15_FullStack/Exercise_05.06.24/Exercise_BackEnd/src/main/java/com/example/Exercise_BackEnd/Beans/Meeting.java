@@ -14,8 +14,10 @@ public class Meeting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
-    private DevTeam dev_team;
+    @Column(name = "devteam_id",
+            nullable = false)
+    private Integer teamId;
+    //private DevTeam devTeam;
     private LocalDateTime start_date;
     private LocalDateTime end_date;
     private String description;

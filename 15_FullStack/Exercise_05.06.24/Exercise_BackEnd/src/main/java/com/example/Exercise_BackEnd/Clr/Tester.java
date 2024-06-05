@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-//@Component
+@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Tester implements CommandLineRunner {
@@ -22,21 +22,12 @@ public class Tester implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try{
-            DevTeam team1 = DevTeam.builder()
-                    //.id(1)
-                    .name("Team1")
-                    .build();
-            DevTeam team2 = DevTeam.builder()
-                    //.id(1)
-                    .name("Team2")
-                    .build();
             Meeting meeting1 = Meeting.builder()
                     //.id(1)
                     .description("This and that")
                     .start_date(LocalDateTime.now())
                     .end_date(LocalDateTime.now().plusHours(2L))
                     .room("Room111")
-                    .dev_team(team1)
                     .build();
             Meeting meeting2 = Meeting.builder()
                     //.id(1)
@@ -44,15 +35,24 @@ public class Tester implements CommandLineRunner {
                     .start_date(LocalDateTime.now())
                     .end_date(LocalDateTime.now().plusHours(2L))
                     .room("Room2")
-                    .dev_team(team2)
+                    .build();
+            DevTeam team1 = DevTeam.builder()
+                    //.id(1)
+                    .name("Team1")
+                    .meeting(meeting1)
+                    .build();
+            DevTeam team2 = DevTeam.builder()
+                    //.id(1)
+                    .name("Team2")
+                    .meeting(meeting2)
                     .build();
             System.out.println("My new meetings: ");
             System.out.println(meeting1);
             System.out.println(meeting2);
-            teamRepo.saveAndFlush(team1);
             meetingRepo.saveAndFlush(meeting1);
-            teamRepo.saveAndFlush(team2);
             meetingRepo.saveAndFlush(meeting2);
+            teamRepo.saveAndFlush(team1);
+            teamRepo.saveAndFlush(team2);
 
         } catch (Exception e){
             System.out.println(e);

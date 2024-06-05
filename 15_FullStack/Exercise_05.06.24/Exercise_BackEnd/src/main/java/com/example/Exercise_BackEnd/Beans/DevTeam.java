@@ -18,5 +18,6 @@ public class DevTeam {
 //    @Singular
 //    @OneToMany(cascade = CascadeType.ALL,
 //            orphanRemoval = true)
+//    @JoinColumn(name = "devteam_id")
 //    private List<Meeting> meetings;
 }
