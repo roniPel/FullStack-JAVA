@@ -2,12 +2,14 @@ import { Button, ButtonGroup, Checkbox, MenuItem, Select, TextField, Typography 
 import "./Logon.css";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ClientType } from "../../../Models/ClientType";
-import axiosJWT from "../../../Utilities/axiosJWT";
+import { ClientType } from "../../../../Models/ClientType";
+import axiosJWT from "../../../../Utilities/axiosJWT";
 import { jwtDecode } from "jwt-decode";
-import { couponStore } from "../../../Redux/store";
-import { loginAction } from "../../../Redux/authReducer";
-import notify from "../../../Utilities/notify";
+import { couponStore } from "../../../../Redux/store";
+import { loginAction } from "../../../../Redux/authReducer";
+import notify from "../../../../Utilities/notify";
+import { useEffect, useState } from "react";
+import { checkData } from "../../../../Utilities/checkData";
 
 type userLoginData = {
     userEmail: string;
@@ -17,7 +19,7 @@ type userLoginData = {
 }
 
 type jwtData = { 
-        "userType": string,
+        "clientType": string,
         "userName": string,
         "sub": string,
         "iat": number,
@@ -26,36 +28,51 @@ type jwtData = {
 
 export function Logon(): JSX.Element {
     const navigate = useNavigate();
+    const [userRemember,setRemember] = useState(false);
 
+    couponStore.subscribe(()=>{
+        setRemember(couponStore.getState().auth.rememberMe===true);
+    });
+
+    useEffect(()=>{
+        if(userRemember===true){
+            notify.error("'Remember Me' is on. Please log off current user before performing log on.")
+            navigate("/");
+        }
+    },[]);
     //declare our needed methods from react-hook-form
     const { register, handleSubmit, formState: { errors } } = useForm<userLoginData>();
 
     const onSubmit: SubmitHandler<userLoginData> = (data) => {
-        console.log(data);
+        //console.log(data);
         let userDetails = {
             "email":data.userEmail,
             "password":data.userPass,
-            "userType":data.clientType,
+            "clientType":data.clientType,
         }
         //check that the passwords are the same , if not, do not countinue
         
         //move to axios :)
         axiosJWT.post("http://localhost:8080/Users/login",userDetails)
         .then (res=>{
-            const JWT = res.headers["authorization"].split(" ")[1];
+            //const JWT = res.headers["authorization"].split(" ")[1];
+            const JWT = res.headers["authorization"];
             // Decoding JWT token:
             const decoded_jwt = jwtDecode<jwtData>(JWT);
-            console.log(decoded_jwt);
+            //console.log(decoded_jwt);
 
             let myAuth = {
                 name: decoded_jwt.userName,
                 id: decoded_jwt.sub,
                 token : JWT,
-                userType: decoded_jwt.userType,
+                clientType: decoded_jwt.clientType,
                 isLogged:true,
                 rememberMe:data.userRemember,    
             };
-            // Update Redux with user details
+            console.log("Logon - myAuth: ");
+            console.log(myAuth);
+            
+            // Update Redux with user details:
             couponStore.dispatch(loginAction(myAuth))
             notify.success("Welcome back");
             navigate("/");

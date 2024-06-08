@@ -5,15 +5,16 @@ import { useState } from "react";
 import { couponStore } from "../../../Redux/store";
 
 export function Menu(): JSX.Element {
+    // Determine which client Type is logged on, and display relevant 'Menu' accordingly
 
     const [isAdmin,setAdmin] = useState(false);
     const [isCompany,setCompany] = useState(false);
     const [isCustomer,setCustomer] = useState(false);
 
     couponStore.subscribe(()=>{
-        setAdmin(couponStore.getState().auth.userType==="Administrator");
-        setCompany(couponStore.getState().auth.userType==="Company");
-        setCustomer(couponStore.getState().auth.userType==="Customer");
+        setAdmin(couponStore.getState().auth.clientType==="Administrator");
+        setCompany(couponStore.getState().auth.clientType==="Company");
+        setCustomer(couponStore.getState().auth.clientType==="Customer");
     });
     
     const simpleMenu = ()=>{

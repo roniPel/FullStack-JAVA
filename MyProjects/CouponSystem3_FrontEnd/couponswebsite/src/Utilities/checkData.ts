@@ -3,7 +3,7 @@ import { couponStore } from "../Redux/store";
 import { loginAction } from "../Redux/authReducer";
 
 type jwtData = {
-    "userType": string,
+    "clientType": string,
     "userName": string,
     "sub": string,
     "iat": number,
@@ -15,21 +15,20 @@ export const checkData = () => {
     if (couponStore.getState().auth.token.length < 10) {
         //try to load it from the session storage
         try {
-            const JWT = localStorage.getItem("jwt")!.split(" ")[1];
+            const JWT = sessionStorage.getItem("jwt")!.split(" ")[1];
             const decoded_jwt = jwtDecode<jwtData>(JWT);
-            console.log(decoded_jwt);
+            //console.log(decoded_jwt);
             let myAuth = {
+                clientType: decoded_jwt.clientType,
                 name: decoded_jwt.userName,
                 id: decoded_jwt.sub,
-                token: localStorage.getItem("jwt")!,
-                userType: decoded_jwt.userType,
+                token: sessionStorage.getItem("jwt")!,
                 isLogged: true,
                 rememberMe: true,
             };
-            couponStore.dispatch(loginAction(myAuth))
+            couponStore.dispatch(loginAction(myAuth));
         } catch {
             return;
         }
-
     }
 }

@@ -1,15 +1,11 @@
 General Pages:
-* Home
+* Welcome (guest) = Get All Coupons
+* Get One Coupon
+* Menu (guest)
 * Login
-* Register
+* Register (only as clientType = 'Customer')
 * About Us
 * Page 404
-
-Guest Pages:
-* Home (guest)
-* Menu (guest)
-* Get All Coupons
-* Get One Coupon
 
 Admin Pages:
 * Home (admin)

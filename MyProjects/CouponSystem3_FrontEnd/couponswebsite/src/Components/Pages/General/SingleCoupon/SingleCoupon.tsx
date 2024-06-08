@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Coupon } from "../../../Models/Coupon";
+import { Coupon } from "../../../../Models/Coupon";
 import "./SingleCoupon.css";
 import { Button, ButtonGroup, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 

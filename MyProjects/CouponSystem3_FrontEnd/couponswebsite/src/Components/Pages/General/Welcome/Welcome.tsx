@@ -2,12 +2,12 @@ import { Button, Typography } from "@mui/material";
 import "./Welcome.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Coupon } from "../../../Models/Coupon";
+import { Coupon } from "../../../../Models/Coupon";
 import axios from "axios";
 import { SingleCoupon } from "../SingleCoupon/SingleCoupon";
-import { checkData } from "../../../Utilities/checkData";
-import { couponStore } from "../../../Redux/store";
-import { getAllCouponsAction } from "../../../Redux/guestReducer";
+import { checkData } from "../../../../Utilities/checkData";
+import { couponStore } from "../../../../Redux/store";
+import { getAllCouponsAction } from "../../../../Redux/guestReducer";
 
 export function Welcome(): JSX.Element {
     
@@ -15,11 +15,11 @@ export function Welcome(): JSX.Element {
     const [couponList, setList] = useState<Coupon[]>([]);
     const navigate = useNavigate();
 
-    //get song list from backend
+    //get coupon list from backend
     useEffect(()=>{
         let recivedList:Coupon[] = [];
 
-         //check if we have any coupons on our list, 0 length indicates that we don't have any song
+         //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
          if (couponStore.getState().auth.token.length<10){
             navigate("/login");
         }

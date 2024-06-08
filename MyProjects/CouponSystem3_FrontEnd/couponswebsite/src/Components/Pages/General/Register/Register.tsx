@@ -2,10 +2,10 @@ import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typograph
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ClientType } from "../../../Models/ClientType";
+import { ClientType } from "../../../../Models/ClientType";
 import axios from "axios";
-import notify from "../../../Utilities/notify";
-import { UserDetails } from "../../../Models/UserDetails";
+import notify from "../../../../Utilities/notify";
+import { UserDetails } from "../../../../Models/UserDetails";
 
 export function Register(): JSX.Element {
     const navigate = useNavigate();
