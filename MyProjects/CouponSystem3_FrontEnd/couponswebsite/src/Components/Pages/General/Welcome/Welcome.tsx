@@ -21,7 +21,7 @@ export function Welcome(): JSX.Element {
 
          //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
          if (couponStore.getState().auth.token.length<10){
-            navigate("/login");
+            navigate("/");
         }
         checkData();
         if (couponStore.getState().guest.allCoupons.length == 0) {

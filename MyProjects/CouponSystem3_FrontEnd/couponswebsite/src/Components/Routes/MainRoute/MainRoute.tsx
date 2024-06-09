@@ -6,9 +6,6 @@ import { Welcome } from "../../Pages/General/Welcome/Welcome";
 import { AboutUs } from "../../Pages/General/AboutUs/AboutUs";
 import { Logon } from "../../Pages/General/Logon/Logon";
 import { ViewCoupon } from "../../Pages/General/ViewCoupon/ViewCoupon";
-import { AdminRoute } from "../AdminRoute/AdminRoute";
-import { CompanyRoute } from "../CompanyRoute/CompanyRoute";
-import { CustomerRoute } from "../CustomerRoute/CustomerRoute";
 import { useState } from "react";
 import { couponStore } from "../../../Redux/store";
 
@@ -32,7 +29,7 @@ export function MainRoute(): JSX.Element {
                 <Route path="/" element ={<Welcome/>}/>
                 <Route path="/login" element={<Logon/>}/>
                 <Route path="/register" element={<Register/>}/>
-                <Route path="/coupons/:couponID" element={<ViewCoupon/>}/>
+                <Route path="/coupon/:couponID" element={<ViewCoupon/>}/>
                 <Route path="/aboutus" element={<AboutUs/>}/>
             </>
         )

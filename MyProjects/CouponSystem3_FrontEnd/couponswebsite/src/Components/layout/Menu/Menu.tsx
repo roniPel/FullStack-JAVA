@@ -17,7 +17,7 @@ export function Menu(): JSX.Element {
         setCustomer(couponStore.getState().auth.clientType==="Customer");
     });
     
-    const simpleMenu = ()=>{
+    const guestMenu = ()=>{
         return (
             <>
                 <br/><Typography variant="h4" className="HeadLine">Menu</Typography><br/>
@@ -34,12 +34,13 @@ export function Menu(): JSX.Element {
             <>
                 <NavLink to="/userId">Admin Home</NavLink><br/>
                 <NavLink to="/addCompany">Add Company</NavLink><br/>
+                <NavLink to="/register">Add Customer</NavLink><br/>
                 <NavLink to="/deleteCompany">Delete Company</NavLink><br/>
                 <NavLink to="/deleteCustomer">Delete Customer</NavLink><br/>
-                <NavLink to="/getAllCompanies">View All Companies</NavLink><br/>
-                <NavLink to="/getAllCustomers">View All Customers</NavLink><br/>
-                <NavLink to="/getOneCompany">View One Company</NavLink><br/>
-                <NavLink to="/getOneCustomer">View One Customer</NavLink><br/>
+                <NavLink to="/getAllCompanies">All Companies</NavLink><br/>
+                <NavLink to="/getAllCustomers">All Customers</NavLink><br/>
+                <NavLink to="/getOneCompany">One Company</NavLink><br/>
+                <NavLink to="/getOneCustomer">One Customer</NavLink><br/>
                 <NavLink to="/updateCompany">Update Company</NavLink><br/>
                 <NavLink to="/updateCustomer">Update Customer</NavLink><br/>
                 <hr/>
@@ -83,7 +84,7 @@ export function Menu(): JSX.Element {
 
     return (
         <div className="Menu">
-			{simpleMenu()}
+			{guestMenu()}
             <hr/>
             {isAdmin && adminMenu()}
             {isCompany && companyMenu()}
