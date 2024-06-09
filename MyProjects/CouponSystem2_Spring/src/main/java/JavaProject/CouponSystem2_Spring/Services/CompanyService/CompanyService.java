@@ -79,4 +79,6 @@ public interface CompanyService {
      * @throws CompanyException If we get any exception.  Details are provided
      */
     Company GetOneCompany(int id) throws CompanyException;
+
+    boolean SetCompanyIdByEmail(String email);
 }

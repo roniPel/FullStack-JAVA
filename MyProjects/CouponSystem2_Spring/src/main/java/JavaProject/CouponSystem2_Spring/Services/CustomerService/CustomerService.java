@@ -63,4 +63,5 @@ public interface CustomerService {
      * @throws CustomerException If we get any exception.  Details are provided
      */
     Coupon GetCouponById(int couponId) throws CustomerException;
+    boolean SetCustomerIdByEmail(String email);
 }

@@ -22,7 +22,7 @@ export function Menu(): JSX.Element {
             <>
                 <br/><Typography variant="h4" className="HeadLine">Menu</Typography><br/>
                 <hr/>
-                <NavLink to="/">Home</NavLink><br/>
+                <NavLink to="/">Welcome</NavLink><br/>
                 <NavLink to="/aboutus">About Us</NavLink><br/>
             </>
         )
@@ -54,11 +54,11 @@ export function Menu(): JSX.Element {
                 <NavLink to="/userId">Company Home</NavLink><br/>
                 <NavLink to="/">Add Coupon</NavLink><br/>
                 <NavLink to="/">Delete Coupon</NavLink><br/>
-                <NavLink to="/">View My Coupons</NavLink><br/>
-                <NavLink to="/">View My Coupons by Category</NavLink><br/>
-                <NavLink to="/">View My Coupons by Max Price</NavLink><br/>
-                <NavLink to="/">View My Details</NavLink><br/>
-                <NavLink to="/">View One Coupon</NavLink><br/>
+                <NavLink to="/">My Coupons</NavLink><br/>
+                <NavLink to="/">My Coupons by Category</NavLink><br/>
+                <NavLink to="/">My Coupons by Max Price</NavLink><br/>
+                <NavLink to="/">My Details</NavLink><br/>
+                <NavLink to="/">One Coupon</NavLink><br/>
                 <NavLink to="/">Update Coupon</NavLink><br/>
                 <hr/>
             </>
@@ -69,13 +69,12 @@ export function Menu(): JSX.Element {
         return (
             <>
                 <NavLink to="/userId">Customer Home</NavLink><br/>
-                <NavLink to="/">View All Coupons</NavLink><br/>
-                <NavLink to="/">View All Customers</NavLink><br/>
-                <NavLink to="/">View My Coupons</NavLink><br/>
-                <NavLink to="/">View My Coupons by Category</NavLink><br/>
-                <NavLink to="/">View My Coupons by Max Price</NavLink><br/>
-                <NavLink to="/">View My Details</NavLink><br/>
-                <NavLink to="/">View One Coupon</NavLink><br/>
+                <NavLink to="/">All Coupons</NavLink><br/>
+                <NavLink to="/">My Coupons</NavLink><br/>
+                <NavLink to="/">My Coupons by Category</NavLink><br/>
+                <NavLink to="/">My Coupons by Max Price</NavLink><br/>
+                <NavLink to="/">My Details</NavLink><br/>
+                <NavLink to="/">One Coupon</NavLink><br/>
                 <NavLink to="/">Purchase Customer</NavLink><br/>
                 <hr/>
             </>

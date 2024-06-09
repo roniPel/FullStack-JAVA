@@ -38,7 +38,7 @@ export function ViewCoupon(): JSX.Element {
                     </div>
                     <div className="Grid-Child">
                         <h1>{coupon?.title}</h1>
-                        {coupon?.description}<br/>
+                        <h3>{coupon?.description}</h3><br/>
                         Amount Available: {coupon?.amount}<br/>
                         Valid Until: {coupon?.end_date}<br/>
                         Only {coupon?.price} (NIS)<br/>

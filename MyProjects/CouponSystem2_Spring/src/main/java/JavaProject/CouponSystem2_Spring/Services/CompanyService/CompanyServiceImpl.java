@@ -131,4 +131,10 @@ public class CompanyServiceImpl implements CompanyService {
                 new CompanyException(CompanyErrors.GENERAL_COMPANY_ERROR));
     }
 
+    @Override
+    public boolean SetCompanyIdByEmail(String email) {
+        SetCompanyId(companyRepo.findByEmail(email).getId());
+        return true;
+    }
+
 }

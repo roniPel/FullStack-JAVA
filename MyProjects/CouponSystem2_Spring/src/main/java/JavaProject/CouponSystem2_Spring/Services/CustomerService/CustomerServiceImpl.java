@@ -100,4 +100,10 @@ public class CustomerServiceImpl implements CustomerService {
         return couponRepo.findById(couponId).orElseThrow(
                 () ->new CustomerException(CustomerErrors.COUPON_DOES_NOT_EXIST));
     }
+
+    @Override
+    public boolean SetCustomerIdByEmail(String email) {
+        SetCustomerId(customerRepo.findByEmail(email).getId());
+        return true;
+    }
 }
