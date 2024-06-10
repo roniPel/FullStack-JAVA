@@ -8,6 +8,10 @@ import { Logon } from "../../Pages/General/Logon/Logon";
 import { ViewCoupon } from "../../Pages/General/ViewCoupon/ViewCoupon";
 import { useState } from "react";
 import { couponStore } from "../../../Redux/store";
+import { ViewCompany } from "../../Pages/Administrator/ViewCompany/ViewCompany";
+import { UpdateCompany } from "../../Pages/Administrator/UpdateCompany/UpdateCompany";
+import { DeleteCompany } from "../../Pages/Administrator/DeleteCompany/DeleteCompany";
+import { AdminHome } from "../../Pages/Administrator/AdminHome/AdminHome";
 
 export function MainRoute(): JSX.Element {
 
@@ -38,7 +42,10 @@ export function MainRoute(): JSX.Element {
     const adminRoute = ()=>{
         return (
             <>
-                <Route path="/adminHome" element ={<Welcome/>}/>
+                <Route path="/adminHome" element ={<AdminHome/>}/>
+                <Route path="/company/:companyID" element ={<ViewCompany/>}/>
+                <Route path="/deleteComp/:companyID" element ={<DeleteCompany/>}/>
+                <Route path="/updateComp/:companyID" element ={<UpdateCompany/>}/>
             </>
         )
     }

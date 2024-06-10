@@ -11,6 +11,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { ClientType } from "../../../../Models/ClientType";
+import { checkData } from "../../../../Utilities/checkData";
 
 export function ViewCoupon(): JSX.Element {
     const params = useParams();
@@ -70,6 +71,7 @@ export function ViewCoupon(): JSX.Element {
     }
 
     useEffect(()=>{
+        checkData();
         axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
             setCoupon(res.data);
         })

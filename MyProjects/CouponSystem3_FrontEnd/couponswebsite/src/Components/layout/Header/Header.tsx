@@ -44,7 +44,7 @@ export function Header(): JSX.Element {
             <div className="login">
                 Hello {userName} <br />
                 <ButtonGroup variant="contained" fullWidth>
-                    <Button type="submit" color={isLogged ? "error" : "primary"}
+                    <Button type="submit" color={isLogged ? "error" : "primary"} startIcon = {isLogged?<LogoutIcon/>:<></>}
                         onClick={() => {
                             if (isLogged) {
                                 {logoutBackend()};

@@ -72,7 +72,6 @@ public class JWT {
                 id = customer.getId();
                 name = customer.getFirstName()+" "+customer.getLastName();
             }
-
         }
         claims.put("userName", name);
         //userDetails.getId()

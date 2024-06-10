@@ -9,8 +9,9 @@ interface couponProps {
 }
     
 export function SingleCoupon(props: couponProps): JSX.Element {
-    const navigate = useNavigate();
     const IMAGE_WIDTH=200;
+    const navigate = useNavigate();
+
     return (
         <div id="singleCoupon" className="SingleCoupon Box"
             onClick={()=>{
@@ -53,3 +54,7 @@ export function SingleCoupon(props: couponProps): JSX.Element {
         </div>
     );
 }
+function navigate(arg0: string) {
+    throw new Error("Function not implemented.");
+}
+
