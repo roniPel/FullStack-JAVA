@@ -1,7 +1,13 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
+import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
+import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
+import JavaProject.CouponSystem2_Spring.Services.LoginService.LoginService;
 import JavaProject.CouponSystem2_Spring.Services.LoginService.LoginServiceImpl;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +28,12 @@ import javax.security.auth.login.LoginException;
 @RequestMapping("/Users")
 public class LoginController{
     private final JWT jwt;
-    private final LoginServiceImpl loginServiceImpl;
+    private final LoginService loginService;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public boolean registerUser(@RequestBody UserDetails userDetails) throws Exception {
-        loginServiceImpl.registerUser(userDetails);
+        loginService.registerUser(userDetails);
         return true;
     }
 
@@ -39,11 +45,17 @@ public class LoginController{
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<?> Login(@RequestBody Credentials user) throws LoginException{
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> Login(@RequestBody Credentials user) throws LoginException, AdminException, CustomerException, GuestException, CompanyException {
         HttpHeaders headers = new HttpHeaders();
-        UserDetails userDetails = loginServiceImpl.Login(user);
+        UserDetails userDetails = loginService.Login(user);
         headers.set("Authorization","Bearer "+jwt.generateToken(userDetails));
         return new ResponseEntity<>(true,headers,HttpStatus.OK);
     }
 
+    @PutMapping("/logout/{clientType}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void Logout(@PathVariable ClientType clientType) {
+        loginService.Logout(clientType);
+    }
 }

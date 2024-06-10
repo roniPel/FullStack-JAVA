@@ -1,5 +1,6 @@
 package JavaProject.CouponSystem2_Spring.Services.LoginService;
 
+import JavaProject.CouponSystem2_Spring.Beans.ClientType;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
@@ -21,6 +22,11 @@ public interface LoginService {
      * @throws CompanyException If we get any exception.  Details are provided
      * @throws CustomerException If we get any exception.  Details are provided
      * @throws GuestException If we get any exception.  Details are provided
+     * @throws LoginException If we get any exception.  Details are provided
      */
     UserDetails Login(Credentials credentials) throws AdminException, CompanyException, CustomerException, GuestException, LoginException;
+
+    void Logout(ClientType clientType);
+    boolean registerUser(UserDetails userDetails) throws JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
+    void AddCredentials(String user, String password, ClientType clientType, String email);
 }

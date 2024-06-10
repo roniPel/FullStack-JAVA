@@ -69,8 +69,8 @@ export function Logon(): JSX.Element {
                 isLogged:true,
                 rememberMe:data.userRemember,    
             };
-            console.log("Logon - myAuth: ");
-            console.log(myAuth);
+            // console.log("Logon - myAuth: ");
+            // console.log(myAuth);
             
             // Update Redux with user details:
             couponStore.dispatch(loginAction(myAuth))

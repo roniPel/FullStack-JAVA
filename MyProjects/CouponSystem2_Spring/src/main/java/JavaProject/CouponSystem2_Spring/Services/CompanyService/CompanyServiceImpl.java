@@ -137,4 +137,9 @@ public class CompanyServiceImpl implements CompanyService {
         return true;
     }
 
+    @Override
+    public void ClearCompanyId() {
+        companyId = -1;
+    }
+
 }

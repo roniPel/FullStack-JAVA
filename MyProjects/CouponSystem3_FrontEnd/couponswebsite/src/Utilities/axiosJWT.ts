@@ -14,7 +14,7 @@ axiosJWT.interceptors.request.use(
 
 axiosJWT.interceptors.response.use(
     response=>{
-        console.log(response.headers.authorization);
+        //console.log(response.headers.authorization);
         couponStore.dispatch(updateTokenAction(response.headers.authorization));      
         sessionStorage.setItem("jwt",response.headers.authorization); 
         return response;

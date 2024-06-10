@@ -81,4 +81,6 @@ public interface CompanyService {
     Company GetOneCompany(int id) throws CompanyException;
 
     boolean SetCompanyIdByEmail(String email);
+
+    void ClearCompanyId();
 }

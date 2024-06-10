@@ -64,4 +64,6 @@ public interface CustomerService {
      */
     Coupon GetCouponById(int couponId) throws CustomerException;
     boolean SetCustomerIdByEmail(String email);
+
+    void ClearCustomerId();
 }

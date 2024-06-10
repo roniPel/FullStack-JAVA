@@ -1,3 +1,7 @@
+import axios from "axios";
+import { couponStore } from "./store";
+import notify from "../Utilities/notify";
+
 export class authState {
     id: string = "";
     name: string = "guest";
@@ -31,14 +35,15 @@ export function updateTokenAction(token: string): AuthAction {
     return { type: AuthActionType.updateToken, payload: token }
 }
 
+
+
 export function AuthReducer(currentState: authState = new authState(), action: AuthAction): authState {
     let newState = { ...currentState };
-
+    
     switch (action.type) {
         case AuthActionType.login:
             // console.log("Auth Reducer - payload: ")
             // console.log(action.payload);
-
             newState = action.payload;
             if(action.payload.rememberMe===true){
                 localStorage.setItem("jwt",action.payload.token);
@@ -50,7 +55,7 @@ export function AuthReducer(currentState: authState = new authState(), action: A
         case AuthActionType.logout:
             newState = new authState();
             localStorage.removeItem("jwt");
-            sessionStorage.removeItem("jwt")
+            sessionStorage.removeItem("jwt");
             break;
         case AuthActionType.updateToken:
             newState.token = action.payload;

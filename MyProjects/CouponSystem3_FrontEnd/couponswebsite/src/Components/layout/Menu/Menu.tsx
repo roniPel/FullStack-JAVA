@@ -3,6 +3,7 @@ import "./Menu.css";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import { couponStore } from "../../../Redux/store";
+import { ClientType } from "../../../Models/ClientType";
 
 export function Menu(): JSX.Element {
     // Determine which client Type is logged on, and display relevant 'Menu' accordingly
@@ -12,9 +13,9 @@ export function Menu(): JSX.Element {
     const [isCustomer,setCustomer] = useState(false);
 
     couponStore.subscribe(()=>{
-        setAdmin(couponStore.getState().auth.clientType==="Administrator");
-        setCompany(couponStore.getState().auth.clientType==="Company");
-        setCustomer(couponStore.getState().auth.clientType==="Customer");
+        setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
+        setCompany(couponStore.getState().auth.clientType===ClientType.Company);
+        setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
     });
     
     const guestMenu = ()=>{

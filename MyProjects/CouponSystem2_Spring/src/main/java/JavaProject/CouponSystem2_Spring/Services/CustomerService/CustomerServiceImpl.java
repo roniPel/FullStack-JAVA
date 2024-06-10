@@ -106,4 +106,9 @@ public class CustomerServiceImpl implements CustomerService {
         SetCustomerId(customerRepo.findByEmail(email).getId());
         return true;
     }
+
+    @Override
+    public void ClearCustomerId() {
+        customerId = -1;
+    }
 }

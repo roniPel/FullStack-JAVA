@@ -3,12 +3,11 @@ package JavaProject.CouponSystem2_Spring.Services.LoginService;
 import JavaProject.CouponSystem2_Spring.Beans.Credentials;
 import JavaProject.CouponSystem2_Spring.Beans.UserDetails;
 import JavaProject.CouponSystem2_Spring.Beans.ClientType;
-import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
-import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
+import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginErrors;
 import JavaProject.CouponSystem2_Spring.Repositories.UsersRepo;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
-import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +20,11 @@ public class LoginServiceImpl implements LoginService {
     private final CompanyService companyService;
     private final CustomerService customerService;
     @Override
-    public UserDetails Login(Credentials credentials) throws LoginException {
+    public UserDetails Login(Credentials credentials) throws LoginException, CompanyException {
         // Find user details based on credentials
         UserDetails userDetails = usersRepo.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword());
-        if(usersRepo!= null){
+        // Update Company/ Customer service IDs
+        if(userDetails != null){
             int id = -1;
             switch(userDetails.getClientType()){
                 case Company -> companyService.SetCompanyIdByEmail(userDetails.getEmail());
@@ -33,7 +33,15 @@ public class LoginServiceImpl implements LoginService {
         }
         return userDetails;
     }
+    @Override
+    public void Logout(ClientType clientType) {
+        switch(clientType){
+            case Company -> companyService.ClearCompanyId();
+            case Customer -> customerService.ClearCustomerId();
+        }
+    }
 
+    @Override
     public void AddCredentials(String user, String password, ClientType clientType, String email) {
         int id = usersRepo.findAll().size()+1;
         if(usersRepo.findByEmailAndPassword(email,password) == null)
@@ -50,9 +58,13 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
-    public boolean registerUser(UserDetails userDetails) throws Exception {
+    @Override
+    public boolean registerUser(UserDetails userDetails) throws JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException {
         if (usersRepo.existsById(userDetails.getId())){
-            throw new Exception("UserExists");
+            throw new JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException(LoginErrors.USER_ALREADY_EXISTS);
+        }
+        if(usersRepo.findByEmail(userDetails.getEmail()) != null){
+            throw new JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException(LoginErrors.USER_ALREADY_EXISTS);
         }
         usersRepo.save(userDetails);
         return true;

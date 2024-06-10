@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum LoginErrors {
 
     USER_DOES_NOT_EXIST("\nERROR! The user does not exist in the system. \n"),
-    USER_IS_NOT_LOGGED_IN("\nThe user is not logged in. Please try again. \n");
+    USER_IS_NOT_LOGGED_IN("\nThe user is not logged in. Please try again. \n"),
+    USER_ALREADY_EXISTS("\nThe user already exists in the system. \n");
 
     private String message;
 
