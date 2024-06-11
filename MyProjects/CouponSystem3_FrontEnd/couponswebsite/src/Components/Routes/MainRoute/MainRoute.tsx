@@ -12,6 +12,7 @@ import { ViewCompany } from "../../Pages/Administrator/ViewCompany/ViewCompany";
 import { UpdateCompany } from "../../Pages/Administrator/UpdateCompany/UpdateCompany";
 import { DeleteCompany } from "../../Pages/Administrator/DeleteCompany/DeleteCompany";
 import { AdminHome } from "../../Pages/Administrator/AdminHome/AdminHome";
+import { AllCompanies } from "../../Pages/Administrator/AllCompanies/AllCompanies";
 
 export function MainRoute(): JSX.Element {
 
@@ -43,6 +44,7 @@ export function MainRoute(): JSX.Element {
         return (
             <>
                 <Route path="/adminHome" element ={<AdminHome/>}/>
+                <Route path="/allCompanies" element ={<AllCompanies/>}/>
                 <Route path="/company/:companyID" element ={<ViewCompany/>}/>
                 <Route path="/deleteComp/:companyID" element ={<DeleteCompany/>}/>
                 <Route path="/updateComp/:companyID" element ={<UpdateCompany/>}/>

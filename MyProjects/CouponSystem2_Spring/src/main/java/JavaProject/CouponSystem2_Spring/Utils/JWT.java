@@ -38,7 +38,7 @@ public class JWT {
     //@Value("${jwtTokenValidity}")
     private Integer getJwtTokenValidity = 30;  //Minutes
     //@Value("${jwtTokenEncodedKey}")
-    private String getJwtTokenEncodedKey = "aint+no+mountain+high+enough+aint+no+valley+low+enough";
+    private String getJwtTokenEncodedKey = "+aint+no+mountain+high+enough+aint+no+valley+low+enough+";
     private Key decodedSecretKey = new SecretKeySpec(
             Base64.getDecoder().decode(getJwtTokenEncodedKey), this.signatureAlgorithm
     );

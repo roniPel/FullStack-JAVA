@@ -18,12 +18,9 @@ export function Welcome(): JSX.Element {
     //get coupon list from backend
     useEffect(()=>{
         let recivedList:Coupon[] = [];
-
-         //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
-         if (couponStore.getState().auth.token.length<10){
-            navigate("/");
-        }
+        // Check that our redux data is updated
         checkData();
+        //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
         if (couponStore.getState().guest.allCoupons.length == 0) {
             axios.get("http://localhost:8080/Guest/GetAllCoupons")
             .then(result=>{

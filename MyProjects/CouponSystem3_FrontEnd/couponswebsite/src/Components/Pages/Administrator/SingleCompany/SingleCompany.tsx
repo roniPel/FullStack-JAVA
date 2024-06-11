@@ -37,12 +37,12 @@ export function SingleCompany(props: companyProps): JSX.Element {
                     </Typography >
                     </CardContent>
                 </CardActionArea>
-                <CardActions>
+                {/* <CardActions>
                     <ButtonGroup variant="contained" fullWidth>
                         <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => { navigate(`/deleteComp/${props.company.id}`) }}>Delete</Button>
                         <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => { navigate(`/updateComp/${props.company.id}`) }}>Update</Button>
                     </ButtonGroup>
-                </CardActions>
+                </CardActions> */}
             </Card>
         </div>
     );

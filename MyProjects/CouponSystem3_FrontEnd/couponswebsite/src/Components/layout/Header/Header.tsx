@@ -10,6 +10,10 @@ import notify from "../../../Utilities/notify";
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { clearCompanyStateAction } from "../../../Redux/companyReducer";
+import { clearAdminStateAction } from "../../../Redux/adminReducer";
+import { clearCustomerStateAction } from "../../../Redux/customerReducer";
+import { ClientType } from "../../../Models/ClientType";
 
 export function logoutBackend():void{
     //axios
@@ -48,6 +52,19 @@ export function Header(): JSX.Element {
                         onClick={() => {
                             if (isLogged) {
                                 {logoutBackend()};
+                                // clear relevant reducer
+                                switch(couponStore.getState().auth.clientType){
+                                    case ClientType.Administrator:
+                                        couponStore.dispatch(clearAdminStateAction);
+                                        break;
+                                    case ClientType.Company:
+                                        couponStore.dispatch(clearCompanyStateAction);
+                                        break;
+                                    case ClientType.Customer:
+                                        couponStore.dispatch(clearCustomerStateAction);
+                                        break;
+                                }                               
+                                // clear auth reducer
                                 couponStore.dispatch(logoutAction());
                                 navigate("/");
                             } else {                                                 

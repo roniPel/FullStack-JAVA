@@ -13,7 +13,8 @@ export class CompanyState {
 }
 
 // ActionType - enum (closed list) of actions that can be performed on the AppState
-export enum CompanyActionType {   
+export enum CompanyActionType {
+    clearCompanyState = "clearCompanyState",  
     getAllCompanyCoupons = "getAllCompanyCoupons",
     getAllCompanyCouponsByCategory = "getAllCompanyCouponsByCategory",
     getAllCompanyCouponsByMaxPrice = "getAllCompanyCouponsByMaxPrice",
@@ -31,6 +32,9 @@ export interface CompanyAction {
 }
 
 // Action Creator - Public (external) functions that can be used by the application (work according to the defined rules above)
+export function clearCompanyStateAction(): CompanyAction {
+    return { type: CompanyActionType.clearCompanyState};
+}
 export function getAllCompanyCouponsAction(coupons: Coupon[]): CompanyAction {
     return { type: CompanyActionType.getAllCompanyCoupons, payload: coupons };
 }
@@ -57,8 +61,11 @@ export function updateCouponAction(coupon: Coupon): CompanyAction {
 // The function will return the updated AppState
 // It is impossible to access the Reducer via the code, only the redux runs the Reducer function
 export function CompanyReducer(currentState: CompanyState = new CompanyState(), action: CompanyAction): CompanyState {
-    const newState = { ...currentState }; // Creates a copy of the current state
+    let newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
+        case CompanyActionType.clearCompanyState:
+            newState = new CompanyState();
+            break;
         case CompanyActionType.getAllCompanyCoupons:
             newState.companyCoupons = action.payload;
             break;

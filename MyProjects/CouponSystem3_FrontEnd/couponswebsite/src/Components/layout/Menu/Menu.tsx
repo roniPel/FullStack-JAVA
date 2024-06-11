@@ -36,14 +36,10 @@ export function Menu(): JSX.Element {
                 <NavLink to="/userId">Admin Home</NavLink><br/>
                 <NavLink to="/addCompany">Add Company</NavLink><br/>
                 <NavLink to="/register">Add Customer</NavLink><br/>
-                <NavLink to="/deleteCompany">Delete Company</NavLink><br/>
-                <NavLink to="/deleteCustomer">Delete Customer</NavLink><br/>
-                <NavLink to="/getAllCompanies">All Companies</NavLink><br/>
-                <NavLink to="/getAllCustomers">All Customers</NavLink><br/>
-                <NavLink to="/getOneCompany">One Company</NavLink><br/>
-                <NavLink to="/getOneCustomer">One Customer</NavLink><br/>
-                <NavLink to="/updateCompany">Update Company</NavLink><br/>
-                <NavLink to="/updateCustomer">Update Customer</NavLink><br/>
+                <NavLink to="/allCompanies">All Companies</NavLink><br/>
+                <NavLink to="/allCustomers">All Customers</NavLink><br/>
+                <NavLink to="/findCompany">Find Company</NavLink><br/>
+                <NavLink to="/findCustomer">Find Customer</NavLink><br/>
                 <hr/>
             </>
         )

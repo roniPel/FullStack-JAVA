@@ -14,7 +14,8 @@ export class CustomerState {
 }
 
 // ActionType - enum (closed list) of actions that can be performed on the AppState
-export enum CustomerActionType {   
+export enum CustomerActionType {
+    clearCustomerState = "clearCustomerState",
     getAllCustomerCoupons = "getAllCustomerCoupons",
     getAllCustomerCouponsByCategory = "getAllCustomerCouponsByCategory",
     getAllCustomerCouponsByMaxPrice = "getAllCustomerCouponsByMaxPrice",
@@ -30,6 +31,9 @@ export interface CustomerAction {
 }
 
 // Action Creator - Public (external) functions that can be used by the application (work according to the defined rules above)
+export function clearCustomerStateAction(): CustomerAction {
+    return { type: CustomerActionType.clearCustomerState};
+}
 export function getAllCustomerCouponsAction(coupons: Coupon[]): CustomerAction {
     return { type: CustomerActionType.getAllCustomerCoupons, payload: coupons };
 }
@@ -51,8 +55,11 @@ export function purchaseCouponAction(coupon: Coupon): CustomerAction {
 // The function will return the updated AppState
 // It is impossible to access the Reducer via the code, only the redux runs the Reducer function
 export function CustomerReducer(currentState: CustomerState = new CustomerState(), action: CustomerAction): CustomerState {
-    const newState = { ...currentState }; // Creates a copy of the current state
+    let newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
+        case CustomerActionType.clearCustomerState:
+            newState = new CustomerState();
+            break;
         case CustomerActionType.getAllCustomerCoupons:
             newState.customerCoupons = action.payload;
             break;

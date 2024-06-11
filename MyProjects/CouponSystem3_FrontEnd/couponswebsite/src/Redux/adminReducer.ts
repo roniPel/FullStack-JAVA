@@ -21,7 +21,8 @@ export class AdminState {
 }
 
 // ActionType - enum (closed list) of actions that can be performed on the AppState
-export enum AdminActionType {   
+export enum AdminActionType {
+    clearAdminState = "clearAdminState",
     getAllCompanies = "getAllCompanies",
     getAllCustomers = "getAllCustomers",
     getOneCompany = "getOneCompany",
@@ -42,6 +43,9 @@ export interface AdminAction {
 }
 
 // Action Creator - Public (external) functions that can be used by the application (work according to the defined rules above)
+export function clearAdminStateAction(): AdminAction {
+    return { type: AdminActionType.clearAdminState};
+}
 export function getAllCompaniesAction(companies: Company[]): AdminAction {
     return { type: AdminActionType.getAllCompanies, payload: companies };
 }
@@ -77,8 +81,11 @@ export function updateCustomerAction(customer: Customer): AdminAction {
 // The function will return the updated AppState
 // It is impossible to access the Reducer via the code, only the redux runs the Reducer function
 export function AdminReducer(currentState: AdminState = new AdminState(), action: AdminAction): AdminState {
-    const newState = { ...currentState }; // Creates a copy of the current state
+    let newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
+        case AdminActionType.clearAdminState:
+            newState = new AdminState();
+            break;
         case AdminActionType.getAllCompanies:
             newState.companies = action.payload;
             break;
