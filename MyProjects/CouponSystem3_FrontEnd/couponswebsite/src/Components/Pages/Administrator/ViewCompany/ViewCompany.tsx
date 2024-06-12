@@ -11,21 +11,50 @@ import { checkData } from "../../../../Utilities/checkData";
 import axiosJWT from "../../../../Utilities/axiosJWT";
 import { Company } from "../../../../Models/Company";
 import axios from "axios";
+import { getOneCompanyAction } from "../../../../Redux/adminReducer";
 
 export function ViewCompany(): JSX.Element {
     const params = useParams();
-    const [company,setLocalCompany] = useState<Company>();
+    const [company, setLocalCompany] = useState<Company>();
+    const [companyList, setLocalCompList] = useState<Company[]>([]);
     const navigate = useNavigate();
+
+    function getCompFromDB(){
+        // get company data from backend
+        axiosJWT.get(`http://localhost:8080/Admin/GetOneCompany/${params.companyID}`).then(res=>{
+            setLocalCompany(res.data);
+            couponStore.dispatch(getOneCompanyAction(res.data));
+            }).catch((err)=>{
+                console.log(err);
+                notify.error("There was a problem getting the requested data.");
+            });
+    }
+
     useEffect(()=>{
+        // Check if user has viewing permissions
         if (couponStore.getState().auth.clientType!==ClientType.Administrator){
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
         else {
             checkData();
-            axios.get(`http://localhost:8080/Admin/GetOneCompany/${params.companyID}`).then(res=>{
-            setLocalCompany(res.data);
-        })
+            // // check if requested company exists in redux
+            // if(couponStore.getState().admin.companies.length>0){
+            //     // console.log("From Redux: "+couponStore.getState().admin.companies);
+            //     setLocalCompList(couponStore.getState().admin.companies);
+            //     for(let index =0; index< 3; index++){
+            //         if(companyList[index].id===parseInt(params.companyID as string)){
+            //             setLocalCompany(companyList[index]);
+            //         }
+            //     }
+            //     // If redux is not empty but requested company doesn't exist in it
+            //     if(company?.email === ""){
+            //         getCompFromDB();
+            //     }
+            // } else {    // If redux is empty
+            //     getCompFromDB();
+            // }
+            getCompFromDB();
         }
     },[]);
 

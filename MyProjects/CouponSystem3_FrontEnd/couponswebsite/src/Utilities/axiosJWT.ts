@@ -8,13 +8,14 @@ const axiosJWT = axios.create();
 axiosJWT.interceptors.request.use(
     request=>{
         request.headers.Authorization = `${couponStore.getState().auth.token}`;
+        //console.log("axiosJWT Requested token: "+request.headers.Authorization);
         return request;
     }
 )
 
 axiosJWT.interceptors.response.use(
     response=>{
-        console.log("axiosJWT Updated token: "+response.headers.authorization);
+        //console.log("axiosJWT Updated token: "+response.headers.authorization);
         couponStore.dispatch(updateTokenAction(response.headers.authorization));      
         sessionStorage.setItem("jwt",response.headers.authorization);
         return response;

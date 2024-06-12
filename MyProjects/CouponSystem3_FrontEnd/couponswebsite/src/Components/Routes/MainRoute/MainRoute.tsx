@@ -13,6 +13,11 @@ import { UpdateCompany } from "../../Pages/Administrator/UpdateCompany/UpdateCom
 import { DeleteCompany } from "../../Pages/Administrator/DeleteCompany/DeleteCompany";
 import { AdminHome } from "../../Pages/Administrator/AdminHome/AdminHome";
 import { AllCompanies } from "../../Pages/Administrator/AllCompanies/AllCompanies";
+import { AllCustomers } from "../../Pages/Administrator/AllCustomers/AllCustomers";
+import { ViewCustomer } from "../../Pages/Administrator/ViewCustomer/ViewCustomer";
+import { DeleteCustomer } from "../../Pages/Administrator/DeleteCustomer/DeleteCustomer";
+import { UpdateCustomer } from "../../Pages/Administrator/UpdateCustomer/UpdateCustomer";
+import { AddCompany } from "../../Pages/Administrator/AddCompany/AddCompany";
 
 export function MainRoute(): JSX.Element {
 
@@ -44,10 +49,15 @@ export function MainRoute(): JSX.Element {
         return (
             <>
                 <Route path="/adminHome" element ={<AdminHome/>}/>
+                <Route path="/addCompany" element ={<AddCompany/>}/>
                 <Route path="/allCompanies" element ={<AllCompanies/>}/>
+                <Route path="/allCustomers" element ={<AllCustomers/>}/>
                 <Route path="/company/:companyID" element ={<ViewCompany/>}/>
+                <Route path="/customer/:customerID" element ={<ViewCustomer/>}/>
                 <Route path="/deleteComp/:companyID" element ={<DeleteCompany/>}/>
                 <Route path="/updateComp/:companyID" element ={<UpdateCompany/>}/>
+                <Route path="/deleteCust/:customerID" element ={<DeleteCustomer/>}/>
+                <Route path="/updateCust/:customerID" element ={<UpdateCustomer/>}/>
             </>
         )
     }

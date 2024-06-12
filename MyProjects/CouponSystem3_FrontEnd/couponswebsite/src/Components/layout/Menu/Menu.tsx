@@ -33,7 +33,7 @@ export function Menu(): JSX.Element {
     const adminMenu = ()=>{
         return (
             <>
-                <NavLink to="/userId">Admin Home</NavLink><br/>
+                <NavLink to="/adminHome">Admin Home</NavLink><br/>
                 <NavLink to="/addCompany">Add Company</NavLink><br/>
                 <NavLink to="/register">Add Customer</NavLink><br/>
                 <NavLink to="/allCompanies">All Companies</NavLink><br/>
