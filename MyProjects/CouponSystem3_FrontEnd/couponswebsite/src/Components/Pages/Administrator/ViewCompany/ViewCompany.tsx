@@ -93,8 +93,10 @@ export function ViewCompany(): JSX.Element {
             </Card> */}
             <div className="Grid-Parent">
                 <div className="Grid-Child">
-                    <h1>{company?.name}</h1>
-                    <h3>{company?.email}</h3><br/>
+                    <Typography variant="h4" className="HeadLine">{company?.name}</Typography>
+                    <br/>
+                    <Typography variant="h6" className="HeadLine">{company?.email}</Typography>
+                    <br/><br/>
                 </div>
                 <div className="Grid-Child">
                     <ButtonGroup variant="contained" fullWidth>

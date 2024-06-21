@@ -8,7 +8,7 @@ const axiosJWT = axios.create();
 axiosJWT.interceptors.request.use(
     request=>{
         request.headers.Authorization = `${couponStore.getState().auth.token}`;
-        //console.log("axiosJWT Requested token: "+request.headers.Authorization);
+        //console.log("axiosJWT token added to request: "+request.headers.Authorization);
         return request;
     }
 )

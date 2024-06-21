@@ -149,14 +149,17 @@ public class AdminServiceImpl implements AdminService {
         if(companyRepo.existsCompanyByEmail( company.getEmail() )){
             throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
-        Company oldCompany = companyRepo.findById(company.getId()).get();
         // Verifications for user in DB
-        UserDetails user = usersRepo.findByEmailAndPassword(oldCompany.getEmail(), oldCompany.getPassword());
+        UserDetails user = usersRepo.findByEmailAndPassword(currentCompany.getEmail(), currentCompany.getPassword());
         if(user == null){
             throw new LoginException(LoginErrors.USER_DOES_NOT_EXIST);
         }
         user.setEmail(company.getEmail());
         user.setPassword(company.getPassword());
+        // Check coupons list for updated company is not null
+        if(company.getCoupons()==null){
+            company.setCoupons(currentCompany.getCoupons());
+        }
         // Save changes in DB
         companyRepo.saveAndFlush(company);
         usersRepo.saveAndFlush(user);

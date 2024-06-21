@@ -7,8 +7,8 @@ import notify from "../../../../Utilities/notify";
 import { Company } from "../../../../Models/Company";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axiosJWT from "../../../../Utilities/axiosJWT";
-import { getOneCompanyAction } from "../../../../Redux/adminReducer";
-import { Button, ButtonGroup } from "@mui/material";
+import { getOneCompanyAction, updateCompanyAction } from "../../../../Redux/adminReducer";
+import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import UpdateIcon from '@mui/icons-material/Update';
 
@@ -46,8 +46,11 @@ export function UpdateCompany(): JSX.Element {
 
     const onSubmit: SubmitHandler<Company> = (data) => {
         data.id = parseInt(params.companyID as string);
+        data.name = company?.name as string;
+        //console.log(data);
         axiosJWT.put(`http://localhost:8080/Admin/UpdateCompany`,data)
         .then((res)=> {
+            couponStore.dispatch(updateCompanyAction(data));
             notify.success("The company was updated successfully.");
             navigate("/adminHome");
         })
@@ -58,20 +61,20 @@ export function UpdateCompany(): JSX.Element {
     }
 
     return (
-        <div className="UpdateCompany Box">
+        <div className="UpdateCompany Box" style={{ width: "40%" }}>
 			<div className="Grid-Parent">
                 <div className="Grid-Child">
+                    <Typography variant="h4" className="HeadLine">Update Company</Typography>
+                    <hr /><br/>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <h1>Update Company</h1>
-                        <hr/>
-                        Name: <input type="text" placeholder="Company Name" defaultValue={company?.name} {...register("name")} />
-                        {/* {errors.name?.type == "required" && 
-                        <><br/><span style={{ color: "red" }}>Name is required</span></>
-                        } */}
+                        <TextField type="text" label="Company Name" value={company?.name} fullWidth {...register("name")} />
+                        {errors.name?.type == "required" && 
+                        <><br/><span style={{ color: "red" }}>Name can't be edited</span></>
+                        }
                         <br/><br/>
-                        Email: <input type="text" placeholder="Company Email" defaultValue={company?.email} {...register("email",{required:true})} />
+                        <TextField type="text" label="Company Email" defaultValue={company?.email} fullWidth {...register("email",{required:true})} />
                         <br/><br/>
-                        Password: <input type="password" placeholder="Company Password" defaultValue={company?.password} {...register("password",{required:true})} />
+                        <TextField type="password" label="Company Password" defaultValue={company?.password} fullWidth {...register("password",{required:true})} />
                         <br/><br/>
                         <ButtonGroup variant="contained" fullWidth>
                             <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
