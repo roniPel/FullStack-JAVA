@@ -3,7 +3,7 @@ import "./ViewCoupon.css";
 import { useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
 import axios from "axios";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, Typography } from "@mui/material";
 import { couponStore } from "../../../../Redux/store";
 import  DeleteIcon  from "@mui/icons-material/Delete";
 import UpdateIcon from '@mui/icons-material/Update';
@@ -87,12 +87,18 @@ export function ViewCoupon(): JSX.Element {
                     <img src={coupon?.image} width={IMAGE_WIDTH} />
                 </div>
                 <div className="Grid-Child">
-                    <h1>{coupon?.title}</h1>
-                    <h3>{coupon?.description}</h3><br/>
-                    Amount Available: {coupon?.amount}<br/>
+                <Typography gutterBottom variant="h5" component="div">
+                    {coupon?.title}
+                    </Typography>
+                    <Typography variant="h6" color="text.secondary">
+                    {coupon?.description}
+                    </Typography >
+                    <Typography variant="body1" color="text.secondary">
                     Valid Until: {coupon?.end_date}<br/>
                     Only {coupon?.price} (NIS)<br/>
+                    </Typography>
                 </div>
+                <br/>
                 <div className="Grid-Child">
                     {!isLogged && <ButtonGroup variant="contained" fullWidth >
                         <Button variant="contained" color="primary" startIcon={<LoginIcon/>} onClick={() => { navigate(`/login`) }}>Login</Button>

@@ -18,6 +18,13 @@ import { ClientType } from "../../../Models/ClientType";
 export function logoutBackend():void{
     //axios
     axios.put(`http://localhost:8080/Users/logout/${couponStore.getState().auth.clientType}`).then(res=>{
+        // clear all user reducer states
+        couponStore.dispatch(clearAdminStateAction);
+        couponStore.dispatch(clearCompanyStateAction);
+        couponStore.dispatch(clearCustomerStateAction);
+        // clear auth reducer
+        couponStore.dispatch(logoutAction());
+        // Notify user
         notify.success("User was logged out successfully");
     })
     .catch((err)=>{
@@ -52,20 +59,6 @@ export function Header(): JSX.Element {
                         onClick={() => {
                             if (isLogged) {
                                 {logoutBackend()};
-                                // clear relevant reducer
-                                switch(couponStore.getState().auth.clientType){
-                                    case ClientType.Administrator:
-                                        couponStore.dispatch(clearAdminStateAction);
-                                        break;
-                                    case ClientType.Company:
-                                        couponStore.dispatch(clearCompanyStateAction);
-                                        break;
-                                    case ClientType.Customer:
-                                        couponStore.dispatch(clearCustomerStateAction);
-                                        break;
-                                }                               
-                                // clear auth reducer
-                                couponStore.dispatch(logoutAction());
                                 navigate("/");
                             } else {                                                 
                                 navigate("/login");

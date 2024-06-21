@@ -48,7 +48,7 @@ export function Menu(): JSX.Element {
     const companyMenu = ()=>{
         return (
             <>
-                <NavLink to="/userId">Company Home</NavLink><br/>
+                <NavLink to="/companyHome">Company Home</NavLink><br/>
                 <NavLink to="/">Add Coupon</NavLink><br/>
                 <NavLink to="/">Delete Coupon</NavLink><br/>
                 <NavLink to="/">My Coupons</NavLink><br/>
@@ -65,7 +65,7 @@ export function Menu(): JSX.Element {
     const customerMenu = ()=>{
         return (
             <>
-                <NavLink to="/userId">Customer Home</NavLink><br/>
+                <NavLink to="/customerHome">Customer Home</NavLink><br/>
                 <NavLink to="/">All Coupons</NavLink><br/>
                 <NavLink to="/">My Coupons</NavLink><br/>
                 <NavLink to="/">My Coupons by Category</NavLink><br/>

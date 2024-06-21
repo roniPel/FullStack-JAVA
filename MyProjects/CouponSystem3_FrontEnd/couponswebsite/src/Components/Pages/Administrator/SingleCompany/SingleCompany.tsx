@@ -15,12 +15,12 @@ interface companyProps {
 
 export function SingleCompany(props: companyProps): JSX.Element {
     const navigate = useNavigate();
-    // useEffect(()=>{
-    //     if (couponStore.getState().auth.clientType!==ClientType.Administrator){
-    //         navigate("/login");
-    //         notify.error("You are not allowed!!!");
-    //     }
-    // },[]);
+    useEffect(()=>{
+        if (couponStore.getState().auth.clientType!==ClientType.Administrator){
+            navigate("/login");
+            notify.error("You are not allowed!!!");
+        }
+    },[]);
 
     return (
         <div className="SingleCompany Box" onClick={()=>{
@@ -37,12 +37,6 @@ export function SingleCompany(props: companyProps): JSX.Element {
                     </Typography >
                     </CardContent>
                 </CardActionArea>
-                {/* <CardActions>
-                    <ButtonGroup variant="contained" fullWidth>
-                        <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => { navigate(`/deleteComp/${props.company.id}`) }}>Delete</Button>
-                        <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => { navigate(`/updateComp/${props.company.id}`) }}>Update</Button>
-                    </ButtonGroup>
-                </CardActions> */}
             </Card>
         </div>
     );

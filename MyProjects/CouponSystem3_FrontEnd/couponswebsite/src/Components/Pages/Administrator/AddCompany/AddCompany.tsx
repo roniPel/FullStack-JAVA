@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./AddCompany.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ClientType } from "../../../../Models/ClientType";
 import { couponStore } from "../../../../Redux/store";
 import notify from "../../../../Utilities/notify";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Company } from "../../../../Models/Company";
 import axiosJWT from "../../../../Utilities/axiosJWT";
-import { addCompanyAction } from "../../../../Redux/adminReducer";
+import { addCompanyAction, getOneCompanyAction } from "../../../../Redux/adminReducer";
 import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,7 +15,11 @@ import AddIcon from '@mui/icons-material/Add';
 export function AddCompany(): JSX.Element {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: {errors} } = useForm<Company>();
+    const [newCompany, setNewCompany] = useState<Company>();
 
+    couponStore.subscribe(()=>{
+        // Todo - update Subscibe so that store is updated after adding new company
+    });
     useEffect(()=>{
         // Check if user has viewing permissions
         if (couponStore.getState().auth.clientType!==ClientType.Administrator){
@@ -25,10 +29,12 @@ export function AddCompany(): JSX.Element {
     },[]);
 
     const onSubmit: SubmitHandler<Company> = (data) => {
-        //console.log(data);
+        data.id=couponStore.getState().admin.companies.length+1;
+        console.log(data);
         axiosJWT.post(`http://localhost:8080/Admin/AddCompany`,data)
         .then((res)=> {
             couponStore.dispatch(addCompanyAction(data));
+            setNewCompany(data);
             notify.success("The company was created successfully.");
             navigate("/adminHome");
         })
@@ -46,13 +52,14 @@ export function AddCompany(): JSX.Element {
                     <hr /><br/>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <TextField type="text" label="Company Name" fullWidth {...register("name",{required:true})} />
-                        {errors.name?.type == "required" && 
-                        <><br/><span style={{ color: "red" }}>Name is required</span></>
-                        }
+                        {errors.name?.type == "required" && <><br/><span style={{ color: "red" }}>Name is required</span></>}
                         <br/><br/>
                         <TextField type="text" label="Company Email" variant="outlined" fullWidth {...register("email",{required:true})} />
                         <br/><br/>
-                        <TextField type="password" label="Company Password" variant="outlined" fullWidth {...register("password",{required:true})} />
+                        <TextField type="password" label="Company Password" variant="outlined" fullWidth {...register("password",{required:true, minLength:5, maxLength:15})} />
+                        {errors.password?.type == "required" && <><br/><span style={{color: "red"}}>Password is required</span></>}
+                        {errors.password?.type == "minLength" && <><br/><span style={{color: "red"}}>Password is too short.  Minimum length: 5</span></>}
+                        {errors.password?.type == "maxLength" && <><br/><span style={{color: "red"}}>Password is too long.  Maximum length: 15</span></>}
                         <br/><br/>
                         <TextField label="password check" variant="outlined" type="password" fullWidth />
                         <br /><br />

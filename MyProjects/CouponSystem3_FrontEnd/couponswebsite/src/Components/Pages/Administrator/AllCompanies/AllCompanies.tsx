@@ -15,6 +15,10 @@ export function AllCompanies(): JSX.Element {
     const navigate = useNavigate();
     const [companyList, setList] = useState<Company[]>([]);
 
+    couponStore.subscribe(()=>{
+        setList(couponStore.getState().admin.companies);
+    });
+
     useEffect(()=>{
         // Check if user has viewing permissions
         if (couponStore.getState().auth.clientType!==ClientType.Administrator){

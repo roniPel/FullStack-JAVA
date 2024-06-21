@@ -1,9 +1,3 @@
-import axios from "axios";
-import { couponStore } from "./store";
-import notify from "../Utilities/notify";
-import { clearCompanyStateAction } from "./companyReducer";
-import { clearAdminStateAction } from "./adminReducer";
-import { clearCustomerStateAction } from "./customerReducer";
 
 export class authState {
     id: string = "";
@@ -61,6 +55,7 @@ export function AuthReducer(currentState: authState = new authState(), action: A
             // clear session/local storage token data
             localStorage.removeItem("jwt");
             sessionStorage.removeItem("jwt");
+            // Todo: clear all other reducer data
             break;
         case AuthActionType.updateToken:
             newState.token = action.payload;

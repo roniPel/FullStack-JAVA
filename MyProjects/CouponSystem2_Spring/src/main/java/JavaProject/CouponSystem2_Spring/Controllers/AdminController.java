@@ -104,8 +104,8 @@ public class AdminController{
     public ResponseEntity<?> UpdateCompany
             (@RequestHeader("Authorization") String jwt,@RequestBody Company company)
             throws AdminException, LoginException, SignatureException {
-        System.out.println("Request Reached BackEnd controller");
-        System.out.println(company);
+        //System.out.println("Request Reached BackEnd controller");
+        //System.out.println(company);
         return new ResponseEntity<>(adminService.UpdateCompany(company),jwtUtil.getHeaders(jwt), HttpStatus.NO_CONTENT);
     }
 

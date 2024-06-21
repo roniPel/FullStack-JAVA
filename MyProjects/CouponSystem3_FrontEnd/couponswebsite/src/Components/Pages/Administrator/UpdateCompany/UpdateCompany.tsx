@@ -36,12 +36,15 @@ export function UpdateCompany(): JSX.Element {
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
-
         // check if we have company in redux
-
-        // Get company from BackEnd
-
-        getCompFromDB();
+        if(couponStore.getState().admin.company.id == parseInt(params.companyID as string)){
+            console.log("Get from Store");
+            setCompany(couponStore.getState().admin.company);
+        } else {
+            // Get company from BackEnd
+            console.log("Get from Backend");
+            getCompFromDB();
+        }
     },[]);
 
     const onSubmit: SubmitHandler<Company> = (data) => {

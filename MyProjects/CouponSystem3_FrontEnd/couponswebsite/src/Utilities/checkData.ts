@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { couponStore } from "../Redux/store";
-import { loginAction } from "../Redux/authReducer";
+import { loginAction, logoutAction } from "../Redux/authReducer";
+import notify from "./notify";
 
 type jwtData = {
     "clientType": string,
@@ -30,5 +31,13 @@ export const checkData = () => {
         } catch {
             return;
         }
+    }
+    const JWT = couponStore.getState().auth.token.split(" ")[1];
+    const decoded_jwt = jwtDecode<jwtData>(JWT);
+    // Check if token is expired
+    if(decoded_jwt.exp * 1000 < Date.now()){
+        //Token is expired
+        notify.error("The session has timed out.  Please log in again.");
+        couponStore.dispatch(logoutAction);
     }
 }

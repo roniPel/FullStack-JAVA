@@ -18,6 +18,8 @@ import { ViewCustomer } from "../../Pages/Administrator/ViewCustomer/ViewCustome
 import { DeleteCustomer } from "../../Pages/Administrator/DeleteCustomer/DeleteCustomer";
 import { UpdateCustomer } from "../../Pages/Administrator/UpdateCustomer/UpdateCustomer";
 import { AddCompany } from "../../Pages/Administrator/AddCompany/AddCompany";
+import { CompanyHome } from "../../Pages/Company/CompanyHome/CompanyHome";
+import { CustomerHome } from "../../Pages/Customer/CustomerHome/CustomerHome";
 
 export function MainRoute(): JSX.Element {
 
@@ -65,7 +67,7 @@ export function MainRoute(): JSX.Element {
     const companyRoute = ()=>{
         return (
             <>
-                <Route path="/adminHome" element ={<Welcome/>}/>
+                <Route path="/companyHome" element ={<CompanyHome/>}/>
             </>
         )
     }
@@ -73,7 +75,7 @@ export function MainRoute(): JSX.Element {
     const customerRoute = ()=>{
         return (
             <>
-                <Route path="/adminHome" element ={<Welcome/>}/>
+                <Route path="/customerHome" element ={<CustomerHome/>}/>
             </>
         )
     }

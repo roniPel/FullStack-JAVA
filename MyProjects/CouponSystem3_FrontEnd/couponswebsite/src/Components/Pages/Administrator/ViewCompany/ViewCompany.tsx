@@ -20,6 +20,7 @@ export function ViewCompany(): JSX.Element {
     const navigate = useNavigate();
 
     function getCompFromDB(){
+        // console.log("Getting company data from Backend")
         // get company data from backend
         axiosJWT.get(`http://localhost:8080/Admin/GetOneCompany/${params.companyID}`).then(res=>{
             setLocalCompany(res.data);
@@ -40,10 +41,10 @@ export function ViewCompany(): JSX.Element {
             checkData();
             // // check if requested company exists in redux
             // if(couponStore.getState().admin.companies.length>0){
-            //     // console.log("From Redux: "+couponStore.getState().admin.companies);
+            //     console.log("From Redux: "+couponStore.getState().admin.companies);
             //     setLocalCompList(couponStore.getState().admin.companies);
             //     for(let index =0; index< 3; index++){
-            //         if(companyList[index].id===parseInt(params.companyID as string)){
+            //         if(companyList[index]?.id===parseInt(params.companyID as string)){
             //             setLocalCompany(companyList[index]);
             //         }
             //     }
@@ -73,24 +74,6 @@ export function ViewCompany(): JSX.Element {
     
     return (
         <div className="ViewCompany Box">
-			{/* <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                    <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                    {company?.name}
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                    Email: {company?.email}
-                    </Typography >
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <ButtonGroup variant="contained" fullWidth>
-                        <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => { navigate(`/deleteComp/${company?.id}`) }}>Delete</Button>
-                        <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => { navigate(`/updateComp/${company?.id}`) }}>Update</Button>
-                    </ButtonGroup>
-                </CardActions>
-            </Card> */}
             <div className="Grid-Parent">
                 <div className="Grid-Child">
                     <Typography variant="h4" className="HeadLine">{company?.name}</Typography>

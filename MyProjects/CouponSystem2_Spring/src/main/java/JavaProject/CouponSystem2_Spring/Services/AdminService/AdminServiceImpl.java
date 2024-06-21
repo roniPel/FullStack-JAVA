@@ -278,6 +278,9 @@ public class AdminServiceImpl implements AdminService {
     }
     @Override
     public boolean DeleteCompanyCoupons(int companyId) throws AdminException {
+        if(companyRepo.findById(companyId).get().getCoupons()==null){
+            return true;
+        }
         // Disconnect customers from coupons
         DisconnectCouponsFromCustomers(companyId);
         couponRepo.deleteAllInBatch(couponRepo.findByCompanyId(companyId));
