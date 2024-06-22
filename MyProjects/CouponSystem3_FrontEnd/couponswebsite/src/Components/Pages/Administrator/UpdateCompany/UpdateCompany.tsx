@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./UpdateCompany.css";
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import { couponStore } from "../../../../Redux/store";
 import { ClientType } from "../../../../Models/ClientType";
 import notify from "../../../../Utilities/notify";
@@ -38,11 +38,11 @@ export function UpdateCompany(): JSX.Element {
         }
         // check if we have company in redux
         if(couponStore.getState().admin.company.id == parseInt(params.companyID as string)){
-            console.log("Get from Store");
+            //console.log("Get from Store");
             setCompany(couponStore.getState().admin.company);
         } else {
             // Get company from BackEnd
-            console.log("Get from Backend");
+            //console.log("Get from Backend");
             getCompFromDB();
         }
     },[]);
@@ -70,14 +70,14 @@ export function UpdateCompany(): JSX.Element {
                     <Typography variant="h4" className="HeadLine">Update Company</Typography>
                     <hr /><br/>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <TextField type="text" label="Company Name" value={company?.name} fullWidth {...register("name")} />
+                        Company Name: <input type="text" placeholder="Company Name" value={company?.name}  {...register("name")} />
                         {errors.name?.type == "required" && 
                         <><br/><span style={{ color: "red" }}>Name can't be edited</span></>
                         }
                         <br/><br/>
-                        <TextField type="text" label="Company Email" defaultValue={company?.email} fullWidth {...register("email",{required:true})} />
+                        Company Email: <input required type="text" placeholder="Company Email" defaultValue={company?.email}  {...register("email",{required:true})} />
                         <br/><br/>
-                        <TextField type="password" label="Company Password" defaultValue={company?.password} fullWidth {...register("password",{required:true})} />
+                        Company Password: <input required type="password" placeholder="Company Password" defaultValue={company?.password}  {...register("password",{required:true})} />
                         <br/><br/>
                         <ButtonGroup variant="contained" fullWidth>
                             <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>

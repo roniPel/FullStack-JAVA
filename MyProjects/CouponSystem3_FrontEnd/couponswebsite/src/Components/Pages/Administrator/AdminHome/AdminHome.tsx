@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { ClientType } from "../../../../Models/ClientType";
 import { couponStore } from "../../../../Redux/store";
 import notify from "../../../../Utilities/notify";
+import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 
 export function AdminHome(): JSX.Element {
     const navigate = useNavigate();
@@ -18,7 +19,22 @@ export function AdminHome(): JSX.Element {
 
     return (
         <div className="AdminHome">
-			<h1>Admin Home</h1>
+            <Typography variant="h4" className="HeadLine">{couponStore.getState().auth.name}'s Home</Typography>
+            <hr/>
+            <div className="Details Box" style={{ width: "40%" }}>
+                <Typography variant="h5" className="HeadLine">My Details: </Typography>
+                <hr/>
+                <br/>
+                <div className="Grid-Parent">
+                    <form>
+                        <div className="Grid-Child">
+                            <TextField type="text" label="ID" variant="outlined" fullWidth margin="dense" value={couponStore.getState().auth.id} />
+                            <TextField type="text" label="Name" variant="outlined" fullWidth margin="dense" value={couponStore.getState().auth.name} />
+                            <TextField type="text" label="Type" variant="outlined" fullWidth margin="dense" value={couponStore.getState().auth.clientType} />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }

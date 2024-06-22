@@ -38,8 +38,6 @@ export function Menu(): JSX.Element {
                 <NavLink to="/register">Add Customer</NavLink><br/>
                 <NavLink to="/allCompanies">All Companies</NavLink><br/>
                 <NavLink to="/allCustomers">All Customers</NavLink><br/>
-                <NavLink to="/findCompany">Find Company</NavLink><br/>
-                <NavLink to="/findCustomer">Find Customer</NavLink><br/>
                 <hr/>
             </>
         )
