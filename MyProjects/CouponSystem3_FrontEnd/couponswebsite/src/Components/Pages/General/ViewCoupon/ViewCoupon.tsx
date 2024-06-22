@@ -12,12 +12,14 @@ import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { ClientType } from "../../../../Models/ClientType";
 import { checkData } from "../../../../Utilities/checkData";
+import notify from "../../../../Utilities/notify";
 
 export function ViewCoupon(): JSX.Element {
     const params = useParams();
     const IMAGE_WIDTH=200;
     const navigate = useNavigate();
     const [coupon,setCoupon] = useState<Coupon>();
+    const [inCustomerList, setInCustomerList] = useState(false);
 
     // Determine which client Type is logged on, and display relevant 'Menu' accordingly
     const [isAdmin,setAdmin] = useState(false);
@@ -74,14 +76,24 @@ export function ViewCoupon(): JSX.Element {
         checkData();
         axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
             setCoupon(res.data);
-        })
+            let customerCouponList = couponStore.getState().customer.customerCoupons;
+            // Check whether coupon exists in the list
+            console.log(customerCouponList);
+            //customerCouponList.some((coup)=>{coup.id === coupon?.id})
+            setInCustomerList(false)
+        }).catch((err)=>{
+            console.log(err);
+            notify.error("There was a problem getting the requested data.");
+        });
+        // Update logged status for different user types: 
+        setLogged(couponStore.getState().auth.isLogged);
+        setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
+        setCompany(couponStore.getState().auth.clientType===ClientType.Company);
+        setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
     },[])
 
     return (
         <div className="ViewCoupon Box">
-            {isAdmin && adminView()}
-            {isCompany && companyView()}
-            {isCustomer && customerView()}
             <div className="Grid-Parent">
                 <div className="Grid-Child">
                     <img src={coupon?.image} width={IMAGE_WIDTH} />
@@ -104,7 +116,7 @@ export function ViewCoupon(): JSX.Element {
                         <Button variant="contained" color="primary" startIcon={<LoginIcon/>} onClick={() => { navigate(`/login`) }}>Login</Button>
                         <Button variant="contained" color="success" startIcon={<HowToRegIcon/>} onClick={() => { navigate(`/register`) }}>Register</Button>
                     </ButtonGroup>}
-                    {(isCustomer || isAdmin) && <Button variant="contained" color="success" startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/delete/${coupon?.id}`) }}>Buy Now!</Button>}
+                    {(isCustomer || isAdmin) && (!inCustomerList) &&<Button variant="contained" color="success" startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/purchase/${coupon?.id}`) }}>Buy Now!</Button>}
                     {(isCompany || isAdmin) && <ButtonGroup variant="contained" fullWidth>
                         <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => { navigate(`/delete/${coupon?.id}`) }}>Delete</Button>
                         <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => { navigate(`/update/${coupon?.id}`) }}>Update</Button>

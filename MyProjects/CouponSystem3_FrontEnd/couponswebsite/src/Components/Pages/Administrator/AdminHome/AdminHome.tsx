@@ -21,6 +21,7 @@ export function AdminHome(): JSX.Element {
         <div className="AdminHome">
             <Typography variant="h4" className="HeadLine">{couponStore.getState().auth.name}'s Home</Typography>
             <hr/>
+            <br/>
             <div className="Details Box" style={{ width: "40%" }}>
                 <Typography variant="h5" className="HeadLine">My Details: </Typography>
                 <hr/>

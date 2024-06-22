@@ -52,8 +52,6 @@ export function Menu(): JSX.Element {
                 <NavLink to="/">My Coupons</NavLink><br/>
                 <NavLink to="/">My Coupons by Category</NavLink><br/>
                 <NavLink to="/">My Coupons by Max Price</NavLink><br/>
-                <NavLink to="/">My Details</NavLink><br/>
-                <NavLink to="/">One Coupon</NavLink><br/>
                 <NavLink to="/">Update Coupon</NavLink><br/>
                 <hr/>
             </>
@@ -65,12 +63,9 @@ export function Menu(): JSX.Element {
             <>
                 <NavLink to="/customerHome">Customer Home</NavLink><br/>
                 <NavLink to="/">All Coupons</NavLink><br/>
-                <NavLink to="/">My Coupons</NavLink><br/>
+                <NavLink to="/customerCoupons">My Coupons</NavLink><br/>
                 <NavLink to="/">My Coupons by Category</NavLink><br/>
                 <NavLink to="/">My Coupons by Max Price</NavLink><br/>
-                <NavLink to="/">My Details</NavLink><br/>
-                <NavLink to="/">One Coupon</NavLink><br/>
-                <NavLink to="/">Purchase Customer</NavLink><br/>
                 <hr/>
             </>
         )
