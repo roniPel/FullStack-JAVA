@@ -48,12 +48,10 @@ export function Menu(): JSX.Element {
             <>
                 <NavLink to="/companyHome">Company Home</NavLink><br/>
                 <NavLink to="/">All Coupons</NavLink><br/>
-                <NavLink to="/">Add Coupon</NavLink><br/>
-                <NavLink to="/">Delete Coupon</NavLink><br/>
-                <NavLink to="/">My Coupons</NavLink><br/>
+                <NavLink to="/addCoupon">Add Coupon</NavLink><br/>
+                <NavLink to="/companyCoupons">My Coupons</NavLink><br/>
                 <NavLink to="/">My Coupons by Category</NavLink><br/>
                 <NavLink to="/">My Coupons by Max Price</NavLink><br/>
-                <NavLink to="/">Update Coupon</NavLink><br/>
                 <hr/>
             </>
         )

@@ -23,6 +23,8 @@ import { CustomerHome } from "../../Pages/Customer/CustomerHome/CustomerHome";
 import { CustomerCoupons } from "../../Pages/Customer/CustomerCoupons/CustomerCoupons";
 import { PurchaseCoupon } from "../../Pages/Customer/PurchaseCoupon/PurchaseCoupon";
 import { CustomerCouponsByCategory } from "../../Pages/Customer/CustomerCouponsByCategory/CustomerCouponsByCategory";
+import { CompanyCoupons } from "../../Pages/Company/CompanyCoupons/CompanyCoupons";
+import { AddCoupon } from "../../Pages/Company/AddCoupon/AddCoupon";
 
 export function MainRoute(): JSX.Element {
 
@@ -71,6 +73,8 @@ export function MainRoute(): JSX.Element {
         return (
             <>
                 <Route path="/companyHome" element ={<CompanyHome/>}/>
+                <Route path="/companyCoupons" element = {<CompanyCoupons/>}/>
+                <Route path="/addCoupon" element = {<AddCoupon/>}/>
             </>
         )
     }

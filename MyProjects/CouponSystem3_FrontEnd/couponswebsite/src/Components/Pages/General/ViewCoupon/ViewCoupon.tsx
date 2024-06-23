@@ -86,7 +86,6 @@ export function ViewCoupon(): JSX.Element {
                 setInCustomerList(true);
             }
         })
-        console.log("In company list? "+inCompanyList);
     }
 
     function checkCompanyList(){

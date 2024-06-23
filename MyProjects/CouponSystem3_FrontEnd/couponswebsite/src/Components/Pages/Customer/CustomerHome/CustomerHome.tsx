@@ -58,14 +58,6 @@ export function CustomerHome(): JSX.Element {
                 <hr/>
                 <br/>
                 <div className="Grid-Parent">
-                    {/* <form>
-                        <div className="Grid-Child">
-                            <TextField type="text" label="ID" variant="outlined" fullWidth margin="dense" value={customer?.id} />
-                            <TextField type="text" label="First Name" variant="outlined" fullWidth margin="dense" value={customer?.firstName} />
-                            <TextField type="text" label="Last Name" variant="outlined" fullWidth margin="dense" value={customer?.lastName} />
-                            <TextField type="text" label="Email" variant="outlined" fullWidth margin="dense" value={customer?.email} />
-                        </div>
-                    </form> */}
                     <div className="Grid-Child">
                         <Typography variant="h4" className="HeadLine">{customer?.firstName} {customer?.lastName}</Typography>
                         <br/>

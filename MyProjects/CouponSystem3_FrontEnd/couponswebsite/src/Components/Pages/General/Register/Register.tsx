@@ -19,12 +19,13 @@ export function Register(): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = useForm<Customer>();
     const onSubmit: SubmitHandler<Customer> = (data) => {
         data.id = 0;
-        console.log(data);
+        //console.log(data);
         //Todo - check that the passwords are the same , if not, do not countinue
 
         //todo, move to axios :)
         axiosJWT.post("http://localhost:8080/Admin/AddCustomer",data)
         .then((res)=>{
+            notify.success("User was added successfully");
             navigate("/login");
         })
         .catch(err=>{
@@ -55,29 +56,11 @@ export function Register(): JSX.Element {
                     {errors.password?.type == "maxLength" && <><br /><span style={{ color: "red" }}>password is too long</span></>}
                     <br /><br />
                     <TextField label="password check" variant="outlined" type="password" fullWidth />
-                    
-                    {/* Section below only relevant for Admin registration of new Company
-                    <Select
-                        size="medium"
-                        {...register("clientType")} 
-                        defaultValue={ClientType.Customer}
-                        fullWidth
-                        labelId="user type"
-                        id="user type"
-                        label="user type"
-                        variant="outlined"
-                        autoWidth
-                        >
-                        <MenuItem value=""><em>User Type</em></MenuItem>
-                        <MenuItem value={ClientType.Administrator}>Administrator</MenuItem>
-                        <MenuItem value={ClientType.Company}>Company</MenuItem>
-                        <MenuItem value={ClientType.Customer}>Customer</MenuItem>
-                    </Select> */}
                     <hr />
                     <br/>
                     <ButtonGroup variant="contained" fullWidth>
                         <Button type="submit" color="primary" startIcon={<AddIcon/>} >register</Button>
-                        <Button color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/") }}>cancel</Button>
+                        <Button color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/") }}>Cancel</Button>
                     </ButtonGroup>
                 </form>
             </div>
