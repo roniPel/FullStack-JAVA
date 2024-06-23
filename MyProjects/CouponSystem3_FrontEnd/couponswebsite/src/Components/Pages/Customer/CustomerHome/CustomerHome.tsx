@@ -23,17 +23,17 @@ export function CustomerHome(): JSX.Element {
             notify.error("You are not allowed!!!");
         }
         checkData();
-            // check if requested customer exists in redux
-            if(couponStore.getState().customer.customerDetails !== null){
-                // If redux is not empty but requested customer doesn't exist in it
-                if(customer?.id === -1){
-                    getCustDetailsFromDB();
-                } else {
-                    setLocalCustomer(couponStore.getState().customer.customerDetails);
-                }
-            } else {    // If redux is empty
+        // check if requested customer exists in redux
+        if(couponStore.getState().customer.customerDetails !== null){
+            // If redux is not empty but requested customer doesn't exist in it
+            if(couponStore.getState().customer.customerDetails.id === -1){
                 getCustDetailsFromDB();
+            } else {
+                setLocalCustomer(couponStore.getState().customer.customerDetails);
             }
+        } else {    // If redux is empty
+            getCustDetailsFromDB();
+        }
     },[]);
 
     function getCustDetailsFromDB(){

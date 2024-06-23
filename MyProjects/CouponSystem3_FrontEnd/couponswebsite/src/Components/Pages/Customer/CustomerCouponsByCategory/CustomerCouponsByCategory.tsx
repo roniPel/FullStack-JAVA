@@ -66,7 +66,7 @@ export function CustomerCouponsByCategory(): JSX.Element {
 
     function filterCategory(){
         let myList = couponList.filter( (coup)=>{
-            coup.category === selectedCategory;
+            //coup.category === selectedCategory;
         });
         setFilteredList(myList);
     }

@@ -4,7 +4,7 @@ import { Coupon } from "../Models/Coupon";
 //AppState - the data that exists on the application and Redux level
 export class CompanyState {
     public companyCoupons: Coupon[] = [];
-    public company: Company = {
+    public companyDetails: Company = {
         id:-1,
         name:"",
         email:"",
@@ -76,7 +76,7 @@ export function CompanyReducer(currentState: CompanyState = new CompanyState(), 
             newState.companyCoupons = [...newState.companyCoupons].filter((item) => item.price <= action.payload);
             break;
         case CompanyActionType.getCompanyDetails:
-            newState.company = action.payload;
+            newState.companyDetails = action.payload;
             break;
         case CompanyActionType.addCoupon:
             newState.companyCoupons = [...newState.companyCoupons, action.payload];

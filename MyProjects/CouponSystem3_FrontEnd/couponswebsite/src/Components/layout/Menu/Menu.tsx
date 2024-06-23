@@ -47,6 +47,7 @@ export function Menu(): JSX.Element {
         return (
             <>
                 <NavLink to="/companyHome">Company Home</NavLink><br/>
+                <NavLink to="/">All Coupons</NavLink><br/>
                 <NavLink to="/">Add Coupon</NavLink><br/>
                 <NavLink to="/">Delete Coupon</NavLink><br/>
                 <NavLink to="/">My Coupons</NavLink><br/>
