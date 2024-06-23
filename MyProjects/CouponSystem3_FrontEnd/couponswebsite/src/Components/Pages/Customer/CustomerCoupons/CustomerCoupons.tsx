@@ -55,7 +55,7 @@ export function CustomerCoupons(): JSX.Element {
 
     return (
         <div className="CustomerCoupons">
-			<br/><Typography variant="h4" className="HeadLine">Available Coupons</Typography><hr/><br/>
+			<br/><Typography variant="h4" className="HeadLine">My Coupons</Typography><hr/><br/>
             {couponList.map(item=><SingleCoupon key={item.id} coupon={item}/>)}
         </div>
     );

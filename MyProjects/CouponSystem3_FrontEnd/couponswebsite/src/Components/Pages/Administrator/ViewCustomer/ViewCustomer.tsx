@@ -72,7 +72,6 @@ export function ViewCustomer(): JSX.Element {
                     </ButtonGroup>
                 </div>
             </div>
-			
         </div>
     );
 }

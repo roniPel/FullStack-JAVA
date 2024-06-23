@@ -3,7 +3,7 @@ import "./ViewCoupon.css";
 import { useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
 import axios from "axios";
-import { Button, ButtonGroup, Typography } from "@mui/material";
+import { Button, ButtonGroup, List, Typography } from "@mui/material";
 import { couponStore } from "../../../../Redux/store";
 import  DeleteIcon  from "@mui/icons-material/Delete";
 import UpdateIcon from '@mui/icons-material/Update';
@@ -76,15 +76,17 @@ export function ViewCoupon(): JSX.Element {
         checkData();
         axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
             setCoupon(res.data);
-            let customerCouponList = couponStore.getState().customer.customerCoupons;
-            // Check whether coupon exists in the list
-            console.log(customerCouponList);
-            //customerCouponList.some((coup)=>{coup.id === coupon?.id})
-            setInCustomerList(false)
         }).catch((err)=>{
             console.log(err);
             notify.error("There was a problem getting the requested data.");
         });
+        let customerCouponList = couponStore.getState().customer.customerCoupons as Coupon[];
+        // Check whether coupon exists in the list
+        customerCouponList.forEach((coup)=>{
+            if(coup.id === parseInt(params.couponID as string)){
+                setInCustomerList(true);
+            }
+        })
         // Update logged status for different user types: 
         setLogged(couponStore.getState().auth.isLogged);
         setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
