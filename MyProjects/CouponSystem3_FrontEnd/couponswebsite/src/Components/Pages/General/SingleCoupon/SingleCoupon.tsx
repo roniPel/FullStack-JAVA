@@ -28,12 +28,9 @@ export function SingleCoupon(props: couponProps): JSX.Element {
                     alt={props.coupon.title}
                     />
                     <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                    {props.coupon.title}
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                    {props.coupon.description}
-                    </Typography >
+                    <Typography gutterBottom variant="h5" component="div">{props.coupon.title}</Typography>
+                    <Typography variant="h6" color="text.secondary">{props.coupon.description}</Typography >
+                    <Typography variant="body2" color="text.secondary">Category: {props.coupon.category}</Typography ><br/>
                     <Typography variant="body1" color="text.secondary">
                     Valid Until: {props.coupon.end_date}<br/>
                     Only {props.coupon.price} (NIS)<br/>

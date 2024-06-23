@@ -101,12 +101,9 @@ export function ViewCoupon(): JSX.Element {
                     <img src={coupon?.image} width={IMAGE_WIDTH} />
                 </div>
                 <div className="Grid-Child">
-                <Typography gutterBottom variant="h5" component="div">
-                    {coupon?.title}
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                    {coupon?.description}
-                    </Typography >
+                <Typography gutterBottom variant="h5" component="div">{coupon?.title}</Typography>
+                    <Typography variant="h6" color="text.secondary">{coupon?.description}</Typography >
+                    <Typography variant="body2" color="text.secondary">Category: {coupon?.category}</Typography ><br/>
                     <Typography variant="body1" color="text.secondary">
                     Valid Until: {coupon?.end_date}<br/>
                     Only {coupon?.price} (NIS)<br/>

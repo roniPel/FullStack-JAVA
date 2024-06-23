@@ -22,6 +22,7 @@ import { CompanyHome } from "../../Pages/Company/CompanyHome/CompanyHome";
 import { CustomerHome } from "../../Pages/Customer/CustomerHome/CustomerHome";
 import { CustomerCoupons } from "../../Pages/Customer/CustomerCoupons/CustomerCoupons";
 import { PurchaseCoupon } from "../../Pages/Customer/PurchaseCoupon/PurchaseCoupon";
+import { CustomerCouponsByCategory } from "../../Pages/Customer/CustomerCouponsByCategory/CustomerCouponsByCategory";
 
 export function MainRoute(): JSX.Element {
 
@@ -80,6 +81,7 @@ export function MainRoute(): JSX.Element {
                 <Route path="/customerHome" element ={<CustomerHome/>}/>
                 <Route path="/customerCoupons" element = {<CustomerCoupons/>}/>
                 <Route path="/purchase/:couponID" element = {<PurchaseCoupon/>}/>
+                <Route path="/custCoupByCat" element = {<CustomerCouponsByCategory/>}/>
             </>
         )
     }

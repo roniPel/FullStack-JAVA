@@ -45,10 +45,11 @@ export function CustomerCoupons(): JSX.Element {
                 setList(couponStore.getState().customer.customerCoupons);
                 })
                 .catch(err=>{
-                    navigate("/login")
+                    console.log(err);
+                    notify.error("There was a problem getting the requested data.");
                 });
         } else {
-            setList(couponStore.getState().guest.allCoupons);
+            setList(couponStore.getState().customer.customerCoupons);
         }
 
     },[]);

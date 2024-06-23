@@ -64,28 +64,27 @@ export function UpdateCustomer(): JSX.Element {
     }
     
     return (
-        <div className="UpdateCustomer Box" style={{ width: "40%" }}>
-			<div className="Grid-Parent">
-                <div className="Grid-Child">
-                    <Typography variant="h4" className="HeadLine">Update Customer</Typography>
-                    <hr /><br/>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        First Name:<input type="text" placeholder="First Name" defaultValue={customer?.firstName}  {...register("firstName")} />
-                        <br/><br/>
-                        Last Name: <input type="text" placeholder="Last Name" defaultValue={customer?.lastName}  {...register("lastName")} />
-                        <br/><br/>
-                        Email: <input type="text" placeholder="Email" defaultValue={customer?.email} {...register("email",{required:true})} />
-                        <br/><br/>
-                        Password: <input type="password" placeholder="Password" defaultValue={customer?.password} {...register("password",{required:true})} />
-                        <br/><br/>
-                        <ButtonGroup variant="contained" fullWidth>
-                            <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
-                            <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
-                        </ButtonGroup>
-                    </form>
-                </div>
-                <div className="Grid-Child">
-                    
+        <div>
+            <Typography variant="h4" className="HeadLine">Update Customer</Typography>
+            <hr />
+            <div className="UpdateCustomer Box" style={{ width: "40%" }}>
+                <div className="Grid-Parent">
+                    <div className="Grid-Child">
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            First Name:<input type="text" placeholder="First Name" defaultValue={customer?.firstName}  {...register("firstName")} />
+                            <br/><br/>
+                            Last Name: <input type="text" placeholder="Last Name" defaultValue={customer?.lastName}  {...register("lastName")} />
+                            <br/><br/>
+                            Email: <input type="text" placeholder="Email" defaultValue={customer?.email} {...register("email",{required:true})} />
+                            <br/><br/>
+                            Password: <input type="password" placeholder="Password" defaultValue={customer?.password} {...register("password",{required:true})} />
+                            <br/><br/>
+                            <ButtonGroup variant="contained" fullWidth>
+                                <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
+                                <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
+                            </ButtonGroup>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

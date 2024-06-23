@@ -64,29 +64,31 @@ export function UpdateCompany(): JSX.Element {
     }
 
     return (
-        <div className="UpdateCompany Box" style={{ width: "40%" }}>
-			<div className="Grid-Parent">
-                <div className="Grid-Child">
-                    <Typography variant="h4" className="HeadLine">Update Company</Typography>
-                    <hr /><br/>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        Company Name: <input type="text" placeholder="Company Name" value={company?.name}  {...register("name")} />
-                        {errors.name?.type == "required" && 
-                        <><br/><span style={{ color: "red" }}>Name can't be edited</span></>
-                        }
-                        <br/><br/>
-                        Company Email: <input required type="text" placeholder="Company Email" defaultValue={company?.email}  {...register("email",{required:true})} />
-                        <br/><br/>
-                        Company Password: <input required type="password" placeholder="Company Password" defaultValue={company?.password}  {...register("password",{required:true})} />
-                        <br/><br/>
-                        <ButtonGroup variant="contained" fullWidth>
-                            <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
-                            <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
-                        </ButtonGroup>
-                    </form>
-                </div>
-                <div className="Grid-Child">
-                    
+        <div>
+            <Typography variant="h4" className="HeadLine">Update Company</Typography>
+            <hr/>
+            <div className="UpdateCompany Box" style={{ width: "40%" }}>
+                <div className="Grid-Parent">
+                    <div className="Grid-Child">
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            Company Name: <input type="text" placeholder="Company Name" value={company?.name}  {...register("name")} />
+                            {errors.name?.type == "required" && 
+                            <><br/><span style={{ color: "red" }}>Name can't be edited</span></>
+                            }
+                            <br/><br/>
+                            Company Email: <input required type="text" placeholder="Company Email" defaultValue={company?.email}  {...register("email",{required:true})} />
+                            <br/><br/>
+                            Company Password: <input required type="password" placeholder="Company Password" defaultValue={company?.password}  {...register("password",{required:true})} />
+                            <br/><br/>
+                            <ButtonGroup variant="contained" fullWidth>
+                                <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
+                                <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
+                            </ButtonGroup>
+                        </form>
+                    </div>
+                    <div className="Grid-Child">
+                        
+                    </div>
                 </div>
             </div>
         </div>
