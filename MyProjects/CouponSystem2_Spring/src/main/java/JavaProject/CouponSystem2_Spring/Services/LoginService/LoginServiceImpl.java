@@ -10,7 +10,6 @@ import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Services.CustomerService.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.security.auth.login.LoginException;
 
 @Service
@@ -69,5 +68,4 @@ public class LoginServiceImpl implements LoginService {
         usersRepo.save(userDetails);
         return true;
     }
-
 }

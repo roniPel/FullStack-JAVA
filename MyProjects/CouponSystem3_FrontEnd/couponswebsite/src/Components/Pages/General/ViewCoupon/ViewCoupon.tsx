@@ -36,44 +36,6 @@ export function ViewCoupon(): JSX.Element {
         setCompany(couponStore.getState().auth.clientType===ClientType.Company);
         setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
     });
-    
-    const guestView = ()=>{
-        return (
-            <>
-                
-            </>
-        )
-    }
-
-    const companyView = ()=>{
-        return (
-            <>
-                <ButtonGroup variant="contained" fullWidth>
-                    <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => { navigate(`/delete/${coupon?.id}`) }}>Delete</Button>
-                    <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => { navigate(`/update/${coupon?.id}`) }}>Update</Button>
-                </ButtonGroup>
-            </>
-        )
-    }
-
-    const customerView = ()=>{
-        return (
-            <>
-                <ButtonGroup variant="contained" fullWidth>
-                    <Button variant="contained" color="success" startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/delete/${coupon?.id}`) }}>Buy Now!</Button>
-                </ButtonGroup> 
-            </>
-        )
-    }
-
-    const adminView = ()=>{
-        return (
-            <>
-                {customerView()}
-                {companyView()}
-            </>
-        )
-    }
 
     function checkCustomerList(){
         if(couponStore.getState().customer.customerDetails.id === -1){
@@ -148,13 +110,18 @@ export function ViewCoupon(): JSX.Element {
                 <br/>
                 <div className="Grid-Child">
                     {!isLogged && <ButtonGroup variant="contained" fullWidth >
-                        <Button variant="contained" color="primary" startIcon={<LoginIcon/>} onClick={() => { navigate(`/login`) }}>Login</Button>
-                        <Button variant="contained" color="success" startIcon={<HowToRegIcon/>} onClick={() => { navigate(`/register`) }}>Register</Button>
+                        <Button variant="contained" color="primary" startIcon={<LoginIcon/>} onClick={() => 
+                            { navigate(`/login`) }}>Login</Button>
+                        <Button variant="contained" color="success" startIcon={<HowToRegIcon/>} onClick={() => 
+                            { navigate(`/register`) }}>Register</Button>
                     </ButtonGroup>}
-                    {(isAdmin || (isCustomer && !inCustomerList) ) &&<Button variant="contained" color="success" startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/purchase/${coupon?.id}`) }}>Buy Now!</Button>}
+                    {(isAdmin || (isCustomer && !inCustomerList) ) &&<Button variant="contained" color="success" 
+                    startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/purchase/${coupon?.id}`) }}>Buy Now!</Button>}
                     {(isAdmin || (isCompany && inCompanyList) ) && <ButtonGroup variant="contained" fullWidth>
-                        <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => { navigate(`/delete/${coupon?.id}`) }}>Delete</Button>
-                        <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => { navigate(`/update/${coupon?.id}`) }}>Update</Button>
+                        <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => 
+                            { navigate(`/deleteCoup/${coupon?.id}`) }}>Delete</Button>
+                        <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => 
+                            { navigate(`/updateCoup/${coupon?.id}`) }}>Update</Button>
                     </ButtonGroup>}
                 </div>
             </div>

@@ -19,6 +19,11 @@ export function CustomerCouponsByCategory(): JSX.Element {
     const [selectedCategory, setCategory] = useState<Category>();
     const [filteredCouponList, setFilteredList] = useState<Coupon[]>([]);
 
+    const uniqueCoupCategoryList = couponList.
+        filter((obj, index, self) => index === 
+        self.findIndex((o) => o.category === obj.category)
+    );
+
     useEffect(()=>{
         // Check if user has viewing permissions
         if (couponStore.getState().auth.clientType!==ClientType.Customer){
@@ -65,9 +70,12 @@ export function CustomerCouponsByCategory(): JSX.Element {
     }
 
     function filterCategory(){
-        let myList = couponList.filter( (coup)=>{
-            //coup.category === selectedCategory;
-        });
+        let myList:Coupon[] = [];
+        couponList.forEach((coup)=>{
+            if(coup.category === selectedCategory){
+                myList.push(coup);
+            }
+        })
         setFilteredList(myList);
     }
 
@@ -83,7 +91,7 @@ export function CustomerCouponsByCategory(): JSX.Element {
                         console.log(selectedCategory);
                         filterCategory();
                         }} >
-                        {couponList.map((item)=><option key={item.id} value={item.category}>{item.category as string}</option>)}
+                        {uniqueCoupCategoryList.map((item)=><option key={item.id} value={item.category}>{item.category as string}</option>)}
                     </select><br />
                 </div>
                 <div className="Coupon List Result">
