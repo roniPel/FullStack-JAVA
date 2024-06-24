@@ -1,3 +1,4 @@
+import { Category } from "../Models/Category";
 import { Coupon } from "../Models/Coupon"
 import { Customer } from "../Models/Customer";
 
@@ -11,6 +12,18 @@ export class CustomerState {
         email:"",
         password:""
     };
+    public coupon: Coupon = {
+        id:-1,
+        companyId:-1,
+        category: Category.Automotive,
+        title: "",
+        description: "",
+        start_date: "",
+        end_date: "",
+        amount: 0,
+        price: 0,
+        image: "",
+    };
 }
 
 // ActionType - enum (closed list) of actions that can be performed on the AppState
@@ -19,6 +32,7 @@ export enum CustomerActionType {
     getAllCustomerCoupons = "getAllCustomerCoupons",
     getAllCustomerCouponsByCategory = "getAllCustomerCouponsByCategory",
     getAllCustomerCouponsByMaxPrice = "getAllCustomerCouponsByMaxPrice",
+    getOneCouponViaCustomer = "getOneCouponViaCustomer",
     getCustomerDetails = "getCustomerDetails",
     purchaseCoupon = "purchaseCoupon",
 }
@@ -33,6 +47,9 @@ export interface CustomerAction {
 // Action Creator - Public (external) functions that can be used by the application (work according to the defined rules above)
 export function clearCustomerStateAction(): CustomerAction {
     return { type: CustomerActionType.clearCustomerState};
+}
+export function getOneCouponViaCustomer(coupon: Coupon): CustomerAction {
+    return { type: CustomerActionType.getOneCouponViaCustomer, payload: coupon };
 }
 export function getAllCustomerCouponsAction(coupons: Coupon[]): CustomerAction {
     return { type: CustomerActionType.getAllCustomerCoupons, payload: coupons };
@@ -57,6 +74,9 @@ export function purchaseCouponAction(coupon: Coupon): CustomerAction {
 export function CustomerReducer(currentState: CustomerState = new CustomerState(), action: CustomerAction): CustomerState {
     let newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
+        case CustomerActionType.getOneCouponViaCustomer:
+            newState.coupon = action.payload;
+            break;
         case CustomerActionType.clearCustomerState:
             newState = new CustomerState();
             break;

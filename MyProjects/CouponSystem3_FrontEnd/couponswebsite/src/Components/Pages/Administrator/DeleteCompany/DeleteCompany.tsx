@@ -25,26 +25,26 @@ export function DeleteCompany(): JSX.Element {
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
+        
+        getCompany();
+        
+    },[]);
+
+    function getCompany(){
         // check if we have company in redux
-        if(couponStore.getState().admin.company.id == parseInt(params.companyID as string)){
+        if(couponStore.getState().admin.company.id === parseInt(params.companyID as string)){
             //console.log("Get from Store");
             setCompany(couponStore.getState().admin.company);
         } else {
-            // Get company from BackEnd
-            //console.log("Get from Backend");
-            getCompFromDB();
-        }
-    },[]);
-
-    function getCompFromDB(){
         // get company data from backend
-        axiosJWT.get(`http://localhost:8080/Admin/GetOneCompany/${params.companyID}`).then(res=>{
-            setCompany(res.data);
-            couponStore.dispatch(getOneCompanyAction(res.data));
-            }).catch((err)=>{
-                console.log(err);
-                notify.error("There was a problem getting the requested data.");
-            });
+            axiosJWT.get(`http://localhost:8080/Admin/GetOneCompany/${params.companyID}`).then(res=>{
+                setCompany(res.data);
+                couponStore.dispatch(getOneCompanyAction(res.data));
+                }).catch((err)=>{
+                    console.log(err);
+                    notify.error("There was a problem getting the requested data.");
+                });
+            }
     }
 
     const onSubmit: SubmitHandler<Company> = (data) => {

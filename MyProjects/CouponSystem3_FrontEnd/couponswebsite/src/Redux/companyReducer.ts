@@ -1,3 +1,4 @@
+import { Category } from "../Models/Category";
 import { Company } from "../Models/Company";
 import { Coupon } from "../Models/Coupon";
 
@@ -10,6 +11,18 @@ export class CompanyState {
         email:"",
         password:"",
     };
+    public coupon: Coupon = {
+        id:-1,
+        companyId:-1,
+        category: Category.Automotive,
+        title: "",
+        description: "",
+        start_date: "",
+        end_date: "",
+        amount: 0,
+        price: 0,
+        image: "",
+    };
 }
 
 // ActionType - enum (closed list) of actions that can be performed on the AppState
@@ -19,6 +32,7 @@ export enum CompanyActionType {
     getAllCompanyCouponsByCategory = "getAllCompanyCouponsByCategory",
     getAllCompanyCouponsByMaxPrice = "getAllCompanyCouponsByMaxPrice",
     getCompanyDetails = "getCompanyDetails",
+    getOneCouponViaCompany = "getOneCouponViaCompany",
     addCoupon = "addCoupon",
     deleteCoupon = "deleteCoupon",
     updateCoupon = "updateCoupon",
@@ -34,6 +48,9 @@ export interface CompanyAction {
 // Action Creator - Public (external) functions that can be used by the application (work according to the defined rules above)
 export function clearCompanyStateAction(): CompanyAction {
     return { type: CompanyActionType.clearCompanyState};
+}
+export function getOneCouponViaCompanyAction(coupon: Coupon): CompanyAction {
+    return { type: CompanyActionType.getOneCouponViaCompany, payload: coupon};
 }
 export function getAllCompanyCouponsAction(coupons: Coupon[]): CompanyAction {
     return { type: CompanyActionType.getAllCompanyCoupons, payload: coupons };
@@ -63,6 +80,9 @@ export function updateCouponAction(coupon: Coupon): CompanyAction {
 export function CompanyReducer(currentState: CompanyState = new CompanyState(), action: CompanyAction): CompanyState {
     let newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
+        case CompanyActionType.getOneCouponViaCompany:
+            newState.coupon = action.payload;
+            break;
         case CompanyActionType.clearCompanyState:
             newState = new CompanyState();
             break;

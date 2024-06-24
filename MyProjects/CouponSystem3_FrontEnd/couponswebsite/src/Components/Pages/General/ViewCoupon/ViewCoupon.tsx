@@ -15,6 +15,7 @@ import { checkData } from "../../../../Utilities/checkData";
 import notify from "../../../../Utilities/notify";
 import { getCompanyCouponsFromDB } from "../../../../Utilities/getCompanyCouponsFromDB";
 import { getCustomerCouponsFromDB } from "../../../../Utilities/getCustomerCouponsFromDB";
+import { getOneCouponAction } from "../../../../Redux/guestReducer";
 
 export function ViewCoupon(): JSX.Element {
     const params = useParams();
@@ -73,12 +74,8 @@ export function ViewCoupon(): JSX.Element {
         setCompany(couponStore.getState().auth.clientType===ClientType.Company);
         setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
         // Get coupon info from DB
-        axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
-            setCoupon(res.data);
-        }).catch((err)=>{
-            console.log(err);
-            notify.error("There was a problem getting the requested data.");
-        });
+        getCoupon();
+        // Check whether coupon is in customer/company list (according to logged on client type)
         switch(couponStore.getState().auth.clientType){
             case (ClientType.Company as string):
                 // Company coupon check
@@ -91,6 +88,24 @@ export function ViewCoupon(): JSX.Element {
         }
 
     },[])
+
+    function getCoupon(){
+        // check if we have coupon in redux
+        if(couponStore.getState().customer.coupon.id == parseInt(params.couponID as string)){
+            //console.log("Get from Store");
+            setCoupon(couponStore.getState().customer.coupon);
+        } else {
+            //console.log("Get from Backend");
+            // get coupon data from backend
+            axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
+            setCoupon(res.data);
+            couponStore.dispatch(getOneCouponAction(res.data));
+            }).catch((err)=>{
+                console.log(err);
+                notify.error("There was a problem getting the requested data.");
+            });
+        }
+    }
 
     return (
         <div className="ViewCoupon Box">
@@ -109,14 +124,17 @@ export function ViewCoupon(): JSX.Element {
                 </div>
                 <br/>
                 <div className="Grid-Child">
+                    {/* // If user is a guest */}
                     {!isLogged && <ButtonGroup variant="contained" fullWidth >
                         <Button variant="contained" color="primary" startIcon={<LoginIcon/>} onClick={() => 
                             { navigate(`/login`) }}>Login</Button>
                         <Button variant="contained" color="success" startIcon={<HowToRegIcon/>} onClick={() => 
                             { navigate(`/register`) }}>Register</Button>
                     </ButtonGroup>}
+                    {/* // If user is Admin  -or- a Customer and the coupon is not in customer Coupon list */}
                     {(isAdmin || (isCustomer && !inCustomerList) ) &&<Button variant="contained" color="success" 
                     startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/purchase/${coupon?.id}`) }}>Buy Now!</Button>}
+                    {/* // If user is Admin  -or- a Company and the coupon is in company Coupon list */}
                     {(isAdmin || (isCompany && inCompanyList) ) && <ButtonGroup variant="contained" fullWidth>
                         <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => 
                             { navigate(`/deleteCoup/${coupon?.id}`) }}>Delete</Button>

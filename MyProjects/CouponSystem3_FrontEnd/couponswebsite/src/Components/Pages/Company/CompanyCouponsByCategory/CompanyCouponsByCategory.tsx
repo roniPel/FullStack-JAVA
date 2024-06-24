@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./CompanyCouponsByCategory.css";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
 import { Category } from "../../../../Models/Category";
 import { couponStore } from "../../../../Redux/store";
@@ -12,12 +12,24 @@ import { getAllCompanyCouponsAction } from "../../../../Redux/companyReducer";
 import { Button, ButtonGroup, Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
 import { SubmitHandler, useForm } from "react-hook-form";
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 export function CompanyCouponsByCategory(): JSX.Element {
     const navigate = useNavigate();
     const [couponList, setList] = useState<Coupon[]>([]);
     const [selectedCategory, setCategory] = useState<Category>();
     const [filteredCouponList, setFilteredList] = useState<Coupon[]>([]);
+    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>();
+
+    const uniqueCoupCategoryList = couponList.
+        filter((obj, index, self) => index === 
+        self.findIndex((o) => o.category === obj.category)
+    );
+
+    const handleCatChange = (e: ChangeEvent<HTMLSelectElement>) => { 
+        setCategory(e.target.value as Category);
+        //console.log(e.target.value);
+      };
     
     useEffect(()=>{
         // Check if user has viewing permissions
@@ -31,7 +43,7 @@ export function CompanyCouponsByCategory(): JSX.Element {
 
     function getCompCoupons() {
         // check if requested company coupons exist in redux
-        if(couponStore.getState().company.companyCoupons !== null){
+        if(couponStore.getState().company.companyCoupons.length !== 0){
             setList(couponStore.getState().company.companyCoupons);
         } else {    // If redux is empty
             let recivedList:Coupon[] = [];
@@ -64,12 +76,19 @@ export function CompanyCouponsByCategory(): JSX.Element {
         }
     }
 
-    const uniqueCoupCategoryList = couponList.
-        filter((obj, index, self) => index === 
-        self.findIndex((o) => o.category === obj.category)
-    );
-
     function filterCategory() {
+        let myList:Coupon[] = [];
+        couponList.forEach((coup)=>{
+            if(coup.category === selectedCategory){
+                myList.push(coup);
+            }
+        })
+        setFilteredList(myList);
+    }
+
+    const onSubmit: SubmitHandler<Coupon> = (data) => {
+        //console.log(data);
+        // Filter by category
         let myList:Coupon[] = [];
         couponList.forEach((coup)=>{
             if(coup.category === selectedCategory){
@@ -85,11 +104,14 @@ export function CompanyCouponsByCategory(): JSX.Element {
             <hr />
             <div className="CustomerCouponsByCategory">
                 <div className="Select Category Box">
-                    <label>Select Category:</label><br />
-                    <select >
+                    <Typography variant="body1" color="text.secondary">Select Category:</Typography>
+                    <select onChange={handleCatChange} >
                         {uniqueCoupCategoryList.map((item)=><option key={item.id} value={item.category}>{item.category as string}</option>)}v
                     </select><br /><br/>
-                    <button type="button" color="primary" onClick={()=>{filterCategory()}} >Filter By Category</button>
+                    {/* <button type="button" color="primary" onClick={()=>{filterCategory()}} >Filter</button> */}
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>}>Filter</Button>
+                    </form>
                 </div>
                 <div className="Coupon List Result">
                     {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}

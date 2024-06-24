@@ -15,7 +15,6 @@ import AddIcon from '@mui/icons-material/Add';
 export function AddCompany(): JSX.Element {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: {errors} } = useForm<Company>();
-    const [newCompany, setNewCompany] = useState<Company>();
 
     couponStore.subscribe(()=>{
         // Todo - update Subscibe so that store is updated after adding new company
@@ -30,11 +29,10 @@ export function AddCompany(): JSX.Element {
 
     const onSubmit: SubmitHandler<Company> = (data) => {
         data.id=couponStore.getState().admin.companies.length+1;
-        console.log(data);
+        //console.log(data);
         axiosJWT.post(`http://localhost:8080/Admin/AddCompany`,data)
         .then((res)=> {
             couponStore.dispatch(addCompanyAction(data));
-            setNewCompany(data);
             notify.success("The company was created successfully.");
             navigate("/adminHome");
         })

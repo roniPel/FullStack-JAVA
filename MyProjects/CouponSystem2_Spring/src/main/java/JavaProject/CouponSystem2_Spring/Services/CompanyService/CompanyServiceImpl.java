@@ -62,9 +62,10 @@ public class CompanyServiceImpl implements CompanyService {
                 () -> new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST)
         );
         // Verify company Id in new coupon matches company id listed in existing coupon
-        if(!Objects.equals(coupon.getCompanyId(), currentCoupon.getCompanyId())) {
-            throw new CompanyException(CompanyErrors.NO_PERMISSIONS);
-        }
+        coupon.setCompanyId(currentCoupon.getCompanyId());
+//        if(!Objects.equals(coupon.getCompanyId(), currentCoupon.getCompanyId())) {
+//            throw new CompanyException(CompanyErrors.NO_PERMISSIONS);
+//        }
         couponRepo.saveAndFlush(coupon);
         return true;
     }
@@ -73,9 +74,9 @@ public class CompanyServiceImpl implements CompanyService {
     public boolean DeleteCoupon(int couponId) throws CompanyException {
         Coupon coupon = couponRepo.findById(couponId).orElseThrow( ()->
                 new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST));
-        if (coupon.getCompanyId()!= this.companyId) {
-            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
-        }
+//        if (coupon.getCompanyId()!= this.companyId) {
+//            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
+//        }
         //Disconnect coupon from customer
         if(customerRepo.findByCoupons(coupon) != null) {
             List<Customer> customers = customerRepo.findByCoupons(coupon);

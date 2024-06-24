@@ -25,18 +25,15 @@ export function UpdateCustomer(): JSX.Element {
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
+        getCustomer();
+    },[]);
+
+    function getCustomer(){
         // check if we have customer in redux
         if(couponStore.getState().admin.customer.id == parseInt(params.customerID as string)){
             //console.log("Get from Store");
             setCustomer(couponStore.getState().admin.customer);
         } else {
-            // Get customer from BackEnd
-            //console.log("Get from Backend");
-            getCustFromDB();
-        }
-    },[]);
-
-    function getCustFromDB(){
         // console.log("Getting customer data from Backend")
         // get customer data from backend
         axiosJWT.get(`http://localhost:8080/Admin/GetOneCustomer/${params.customerID}`).then(res=>{
@@ -46,6 +43,7 @@ export function UpdateCustomer(): JSX.Element {
                 console.log(err);
                 notify.error("There was a problem getting the requested data.");
             });
+        }
     }
 
     const onSubmit: SubmitHandler<Customer> = (data) => {

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./CustomerCouponsByCategory.css";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
 import { couponStore } from "../../../../Redux/store";
 import { ClientType } from "../../../../Models/ClientType";
@@ -24,6 +24,11 @@ export function CustomerCouponsByCategory(): JSX.Element {
         self.findIndex((o) => o.category === obj.category)
     );
 
+    const handleCatChange = (e: ChangeEvent<HTMLSelectElement>) => { 
+        setCategory(e.target.value as Category);
+        //console.log(e.target.value);
+      };
+
     useEffect(()=>{
         // Check if user has viewing permissions
         if (couponStore.getState().auth.clientType!==ClientType.Customer){
@@ -36,7 +41,7 @@ export function CustomerCouponsByCategory(): JSX.Element {
 
     function getCustCoupons(){
         // check if requested customer coupons exist in redux
-        if(couponStore.getState().customer.customerCoupons !== null){
+        if(couponStore.getState().customer.customerCoupons.length !== 0){
             setList(couponStore.getState().customer.customerCoupons);
         } else {    // If redux is empty
             let recivedList:Coupon[] = [];
@@ -86,13 +91,10 @@ export function CustomerCouponsByCategory(): JSX.Element {
             <div className="CustomerCouponsByCategory">
                 <div className="Select Category Box">
                     <label>Select Category:</label><br />
-                    <select onChange={(args)=> {
-                        setCategory(args.target.value as Category); 
-                        console.log(selectedCategory);
-                        filterCategory();
-                        }} >
+                    <select onChange={handleCatChange} >
                         {uniqueCoupCategoryList.map((item)=><option key={item.id} value={item.category}>{item.category as string}</option>)}
-                    </select><br />
+                    </select><br /><br/>
+                    <button type="button" color="primary" onClick={()=>{filterCategory()}} >Filter</button>
                 </div>
                 <div className="Coupon List Result">
                     {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}

@@ -31,15 +31,15 @@ export function AddCoupon(): JSX.Element {
     },[])
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
-        data.id = 0;
+        data.id = couponStore.getState().guest.allCoupons.length+1;;
         data.companyId = parseInt(couponStore.getState().auth.id);
         console.log(data);
         //Todo - check that the passwords are the same , if not, do not countinue
 
-        //todo, move to axios :)
         axios.post("http://localhost:8080/Company/AddCoupon",data)
         .then((res)=>{
             //couponStore.dispatch(addCouponAction(data));  // Problematic - sets incorrect ID
+            couponStore.dispatch(addCouponAction(data));
             notify.success("Coupon was added successfully");
             navigate("/companyHome");
         })
@@ -56,13 +56,16 @@ export function AddCoupon(): JSX.Element {
                 <hr /><br/>
                 {/* <input type="text" placeholder="user name..." onChange={(args)=>setEmail(args.target.value)}/><br/><br/> */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField required label="Title" variant="outlined" {...register("title",{required:true})} fullWidth />
+                    {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                    <input type="text" placeholder="Title" {...register("title",{required:true})} />
                     {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                     <br /><br />
-                    <TextField label="Description" variant="outlined" {...register("description")} fullWidth />
+                    <input type="text" placeholder="Description" {...register("description")} />
                     <br /><br />
+                    <label>Start Date: </label>
                     <input type="date" placeholder="Start Date"{...register("start_date", { required: true })} />
                     <br /><br />
+                    <label>End Date: </label>
                     <input type="date" placeholder="End Date"{...register("end_date", { required: true })} />
                     <br /><br />
                     <input type="number" placeholder="Amount"{...register("amount", { required: true })} />
@@ -74,12 +77,12 @@ export function AddCoupon(): JSX.Element {
                         <option key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</option>
                         <option key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</option>
                     </select><br /><br/>
-                    <TextField label="Image" variant="outlined" {...register("image")} fullWidth />
+                    <input type="text" placeholder="Image" {...register("image")} />
                     <br/><br />
                     <hr />
                     <br/>
                     <ButtonGroup variant="contained" fullWidth>
-                        <Button type="submit" color="primary" startIcon={<AddIcon/>} >Create Coupon</Button>
+                        <Button type="submit" color="primary" startIcon={<AddIcon/>} >Add Coupon</Button>
                         <Button color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/") }}>Cancel</Button>
                     </ButtonGroup>
                 </form>
