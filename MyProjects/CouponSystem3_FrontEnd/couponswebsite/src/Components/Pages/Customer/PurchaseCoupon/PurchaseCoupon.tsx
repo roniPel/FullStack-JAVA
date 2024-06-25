@@ -45,7 +45,7 @@ export function PurchaseCoupon(): JSX.Element {
     }
     
     return (
-        <div className="PurchaseCoupon">
+        <div className="PurchaseCoupon Box" style={{ width: "40%" }}>
 			
         </div>
     );

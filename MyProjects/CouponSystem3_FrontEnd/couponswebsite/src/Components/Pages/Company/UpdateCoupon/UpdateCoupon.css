@@ -1,3 +1,4 @@
 .UpdateCoupon {
-	
+	height: 77vh;
+    overflow-y: scroll;
 }

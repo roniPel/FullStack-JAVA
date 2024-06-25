@@ -16,6 +16,7 @@ import notify from "../../../../Utilities/notify";
 import { getCompanyCouponsFromDB } from "../../../../Utilities/getCompanyCouponsFromDB";
 import { getCustomerCouponsFromDB } from "../../../../Utilities/getCustomerCouponsFromDB";
 import { getOneCouponAction } from "../../../../Redux/guestReducer";
+import { getOneCouponViaCompanyAction } from "../../../../Redux/companyReducer";
 
 export function ViewCoupon(): JSX.Element {
     const params = useParams();
@@ -136,9 +137,13 @@ export function ViewCoupon(): JSX.Element {
                     startIcon={<AddShoppingCartIcon/>} onClick={() => { navigate(`/purchase/${coupon?.id}`) }}>Buy Now!</Button>}
                     {/* // If user is Admin  -or- a Company and the coupon is in company Coupon list */}
                     {(isAdmin || (isCompany && inCompanyList) ) && <ButtonGroup variant="contained" fullWidth>
-                        <Button variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={() => 
-                            { navigate(`/deleteCoup/${coupon?.id}`) }}>Delete</Button>
-                        <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} onClick={() => 
+                        <Button variant="contained" color="error" startIcon={<DeleteIcon/>} 
+                            onClick={() => { 
+                                couponStore.dispatch(getOneCouponViaCompanyAction(coupon as Coupon));
+                                navigate(`/deleteCoup/${coupon?.id}`); 
+                                }}>Delete</Button>
+                        <Button variant="contained" color="primary" startIcon={<UpdateIcon/>} 
+                            onClick={() => 
                             { navigate(`/updateCoup/${coupon?.id}`) }}>Update</Button>
                     </ButtonGroup>}
                 </div>

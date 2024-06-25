@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Typography } from "@mui/material";
+import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import "./UpdateCoupon.css";
 import { useEffect, useState } from "react";
 import { couponStore } from "../../../../Redux/store";
@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import notify from "../../../../Utilities/notify";
 import axios from "axios";
 import { getOneCouponAction } from "../../../../Redux/guestReducer";
-import { updateCouponAction } from "../../../../Redux/companyReducer";
+import { getOneCouponViaCompanyAction, updateCouponAction } from "../../../../Redux/companyReducer";
 import { Category } from "../../../../Models/Category";
 import CancelIcon from '@mui/icons-material/Cancel';
 import UpdateIcon from '@mui/icons-material/Update';
@@ -40,7 +40,7 @@ export function UpdateCoupon(): JSX.Element {
         // get data from backend
         axios.get(`http://localhost:8080/Company/GetOneCoupon/${params.couponID}`).then(res=>{
             setCoupon(res.data);
-            couponStore.dispatch(getOneCouponAction(res.data));
+            couponStore.dispatch(getOneCouponViaCompanyAction(res.data));
             }).catch((err)=>{
                 console.log(err);
                 notify.error("There was a problem getting the requested data.");
@@ -50,7 +50,7 @@ export function UpdateCoupon(): JSX.Element {
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
         data.id = parseInt(params.couponID as string);
-        console.log(data);
+        //console.log(data);
         axios.put(`http://localhost:8080/Company/UpdateCoupon/${[params.couponID]}`,data)
         .then((res)=> {
             couponStore.dispatch(updateCouponAction(data));
@@ -68,8 +68,36 @@ export function UpdateCoupon(): JSX.Element {
             <Typography variant="h4" className="HeadLine">Update Coupon</Typography>
             <hr/>
             <div className="UpdateCoupon Box" style={{ width: "40%" }}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                    <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField required type="text" label="Title" defaultValue={coupon?.title} fullWidth {...register("title",{required:true})} />
+                    {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                    <br /><br />
+                    <TextField type="text" label="Description" defaultValue={coupon?.description} fullWidth {...register("description")} />
+                    <br /><br />
+                    <InputLabel id="startDate">Start Date</InputLabel>
+                    <TextField required id = "startDate" type="date" defaultValue={coupon?.start_date} fullWidth {...register("start_date")} />
+                    <br /><br />
+                    <InputLabel id="endDate">End Date</InputLabel>
+                    <TextField required id = "endDate" type="date" defaultValue={coupon?.end_date} fullWidth {...register("end_date")} />
+                    <br /><br />
+                    <TextField required type="number" label="Amount" defaultValue={coupon?.amount} fullWidth {...register("amount", { required: true })} />
+                    <br /><br />
+                    <TextField type="number" label="Price" defaultValue={coupon?.price} fullWidth {...register("price", { required: true })} />
+                    <br /><br />
+                    <InputLabel id="Category-label">Select Category</InputLabel>
+                    <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} 
+                    defaultValue={coupon?.category} fullWidth >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        {/* {categoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)} */}
+                        <MenuItem key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</MenuItem>
+                        <MenuItem key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</MenuItem>
+                    </Select>
+                    <br/><br/>
+                    <TextField type="text" label="Image" fullWidth {...register("image")} />
+                    <br/><br />
+
+
+                    {/* <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
                     {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                     <br /><br />
                     <input type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description")} />
@@ -90,7 +118,7 @@ export function UpdateCoupon(): JSX.Element {
                         <option key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</option>
                     </select><br /><br/>
                     <input type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image")} />
-                    <br/><br />
+                    <br/><br /> */}
                     <hr />
                     <br/>
                     <ButtonGroup variant="contained" fullWidth>

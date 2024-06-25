@@ -9,7 +9,7 @@ import notify from "../../../../Utilities/notify";
 import { checkData } from "../../../../Utilities/checkData";
 import axios from "axios";
 import { getAllCompanyCouponsAction } from "../../../../Redux/companyReducer";
-import { Button, ButtonGroup, Typography } from "@mui/material";
+import { Button, ButtonGroup, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -26,7 +26,7 @@ export function CompanyCouponsByCategory(): JSX.Element {
         self.findIndex((o) => o.category === obj.category)
     );
 
-    const handleCatChange = (e: ChangeEvent<HTMLSelectElement>) => { 
+    const handleCatChange = (e: SelectChangeEvent<HTMLSelectElement>) => { 
         setCategory(e.target.value as Category);
         //console.log(e.target.value);
       };
@@ -76,16 +76,6 @@ export function CompanyCouponsByCategory(): JSX.Element {
         }
     }
 
-    function filterCategory() {
-        let myList:Coupon[] = [];
-        couponList.forEach((coup)=>{
-            if(coup.category === selectedCategory){
-                myList.push(coup);
-            }
-        })
-        setFilteredList(myList);
-    }
-
     const onSubmit: SubmitHandler<Coupon> = (data) => {
         //console.log(data);
         // Filter by category
@@ -99,20 +89,21 @@ export function CompanyCouponsByCategory(): JSX.Element {
     }
 
     return (
-        <div className="CompanyCouponsByCategory">
+        <div>
 			<Typography variant="h4" className="HeadLine">My Coupons by Category</Typography>
             <hr />
             <div className="CustomerCouponsByCategory">
-                <div className="Select Category Box">
-                    <Typography variant="body1" color="text.secondary">Select Category:</Typography>
-                    <select onChange={handleCatChange} >
-                        {uniqueCoupCategoryList.map((item)=><option key={item.id} value={item.category}>{item.category as string}</option>)}v
-                    </select><br /><br/>
-                    {/* <button type="button" color="primary" onClick={()=>{filterCategory()}} >Filter</button> */}
+                <div className="Select Category Box" style={{ width: "20%" }}>
+                    <InputLabel id="Category-label">Select Category</InputLabel>
+                    <Select labelId="Category-label" id="Category-label" label="Category" onChange={handleCatChange} fullWidth >
+                        {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)}
+                    </Select>
+                    <br/><br/>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>}>Filter</Button>
                     </form>
                 </div>
+                <br/><br/>
                 <div className="Coupon List Result">
                     {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}
                 </div>

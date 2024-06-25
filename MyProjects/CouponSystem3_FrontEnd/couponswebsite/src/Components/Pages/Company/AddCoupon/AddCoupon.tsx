@@ -7,7 +7,7 @@ import { couponStore } from "../../../../Redux/store";
 import notify from "../../../../Utilities/notify";
 import { ClientType } from "../../../../Models/ClientType";
 import axios from "axios";
-import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
+import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
 import DatePicker from "react-datepicker";
@@ -51,33 +51,33 @@ export function AddCoupon(): JSX.Element {
 
     return (
         <div className="AddCoupon">
-			<div className="Box" style={{ width: "40%" }}>
+			<div className="Box" style={{ width: "30%" }}>
                 <Typography variant="h4" className="HeadLine">Create New Coupon</Typography>
                 <hr /><br/>
-                {/* <input type="text" placeholder="user name..." onChange={(args)=>setEmail(args.target.value)}/><br/><br/> */}
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField required type="text" label="Title" fullWidth {...register("title",{required:true})} />
                     {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
-                    <input type="text" placeholder="Title" {...register("title",{required:true})} />
-                    {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                     <br /><br />
-                    <input type="text" placeholder="Description" {...register("description")} />
+                    <TextField type="text" label="Description" fullWidth {...register("description")} />
                     <br /><br />
-                    <label>Start Date: </label>
-                    <input type="date" placeholder="Start Date"{...register("start_date", { required: true })} />
+                    <InputLabel id="startDate">Start Date</InputLabel>
+                    <TextField required id = "startDate" type="date" fullWidth {...register("start_date")} />
                     <br /><br />
-                    <label>End Date: </label>
-                    <input type="date" placeholder="End Date"{...register("end_date", { required: true })} />
+                    <InputLabel id="endDate">End Date</InputLabel>
+                    <TextField required id = "endDate" type="date" fullWidth {...register("end_date")} />
                     <br /><br />
-                    <input type="number" placeholder="Amount"{...register("amount", { required: true })} />
+                    <TextField required type="number" label="Amount" fullWidth {...register("amount", { required: true })} />
                     <br /><br />
-                    <input type="number" placeholder="Price"{...register("price", { required: true })} />
+                    <TextField type="number" label="Price" fullWidth {...register("price", { required: true })} />
                     <br /><br />
-                    <label>Select Category:</label><br />
-                    <select {...register("category")} >
-                        <option key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</option>
-                        <option key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</option>
-                    </select><br /><br/>
-                    <input type="text" placeholder="Image" {...register("image")} />
+                    <InputLabel id="Category-label">Select Category</InputLabel>
+                    <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} fullWidth >
+                        {/* {categoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)} */}
+                        <MenuItem key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</MenuItem>
+                        <MenuItem key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</MenuItem>
+                    </Select>
+                    <br/><br/>
+                    <TextField type="text" label="Image" fullWidth {...register("image")} />
                     <br/><br />
                     <hr />
                     <br/>

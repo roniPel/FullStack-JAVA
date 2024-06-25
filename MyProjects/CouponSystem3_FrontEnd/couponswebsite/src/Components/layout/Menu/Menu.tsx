@@ -51,7 +51,7 @@ export function Menu(): JSX.Element {
                 <NavLink to="/addCoupon">Add Coupon</NavLink><br/>
                 <NavLink to="/companyCoupons">My Coupons</NavLink><br/>
                 <NavLink to="/compCoupByCat">My Coupons by Category</NavLink><br/>
-                <NavLink to="/">My Coupons by Max Price</NavLink><br/>
+                <NavLink to="/compCoupByPrice">My Coupons by Max Price</NavLink><br/>
                 <hr/>
             </>
         )

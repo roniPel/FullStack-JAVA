@@ -28,6 +28,7 @@ import { AddCoupon } from "../../Pages/Company/AddCoupon/AddCoupon";
 import { CompanyCouponsByCategory } from "../../Pages/Company/CompanyCouponsByCategory/CompanyCouponsByCategory";
 import { UpdateCoupon } from "../../Pages/Company/UpdateCoupon/UpdateCoupon";
 import { DeleteCoupon } from "../../Pages/Company/DeleteCoupon/DeleteCoupon";
+import { CompanyCouponsByPrice } from "../../Pages/Company/CompanyCouponsByPrice/CompanyCouponsByPrice";
 
 export function MainRoute(): JSX.Element {
 
@@ -79,6 +80,7 @@ export function MainRoute(): JSX.Element {
                 <Route path="/companyCoupons" element = {<CompanyCoupons/>}/>
                 <Route path="/addCoupon" element = {<AddCoupon/>}/>
                 <Route path="/compCoupByCat" element = {<CompanyCouponsByCategory/>} />
+                <Route path="/compCoupByPrice" element = {<CompanyCouponsByPrice/>} />
                 <Route path="/updateCoup/:couponID" element = {<UpdateCoupon/>} />
                 <Route path="/deleteCoup/:couponID" element = {<DeleteCoupon/>}/>
             </>
