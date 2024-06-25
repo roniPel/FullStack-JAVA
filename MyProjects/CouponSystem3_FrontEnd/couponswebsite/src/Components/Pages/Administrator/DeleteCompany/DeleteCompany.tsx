@@ -16,8 +16,6 @@ export function DeleteCompany(): JSX.Element {
     const navigate = useNavigate();
     const [company, setCompany] = useState<Company>();
     const params = useParams();
-
-    const { register, handleSubmit, formState: {errors} } = useForm<Company>();
     
     useEffect(()=>{
         // Check if user has viewing permissions
@@ -47,40 +45,36 @@ export function DeleteCompany(): JSX.Element {
             }
     }
 
-    const onSubmit: SubmitHandler<Company> = (data) => {
-        //console.log(data);
+    function deleteCompany() {
         axiosJWT.delete(`http://localhost:8080/Admin/DeleteCompany/${params.companyID}`)
         .then((res)=> {
-            couponStore.dispatch(deleteCompanyAction(data.id));
+            couponStore.dispatch(deleteCompanyAction(parseInt(params.companyID as string)));
             notify.success("The company was deleted successfully.");
             navigate("/adminHome");
         })
         .catch((err)=> {
             console.log(err);
             notify.error("There was a problem deleting the company.");
-        })
+        })   
     }
-
     return (
         <div>
             <Typography variant="h4" className="HeadLine">Delete Company</Typography>
             <hr/>
             <div className="DeleteCompany Box" style={{ width: "40%" }}>
                 <div className="Grid-Parent">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="Grid-Child">
-                            <Typography variant="h5" className="HeadLine">{company?.name}</Typography>
-                            <br/>
-                            <Typography variant="h6" className="HeadLine">{company?.email}</Typography>
-                            <br/><br/>
-                        </div>
-                        <div className="Grid-Child">
-                            <ButtonGroup variant="contained" fullWidth>
-                                <Button type="submit" variant="contained" color="error" startIcon={<DeleteIcon/>} >Delete</Button>
-                                <Button variant="contained" color="primary" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
-                            </ButtonGroup>
-                        </div>
-                    </form>
+                    <div className="Grid-Child">
+                        <Typography variant="h5" className="HeadLine">{company?.name}</Typography>
+                        <br/>
+                        <Typography variant="h6" className="HeadLine">{company?.email}</Typography>
+                        <br/><br/>
+                    </div>
+                    <div className="Grid-Child">
+                        <ButtonGroup variant="contained" fullWidth>
+                            <Button type="button" variant="contained" color="error" onClick={deleteCompany} > Delete</Button>
+                            <Button variant="contained" color="primary" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
+                        </ButtonGroup>
+                    </div>
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@ export function AddCompany(): JSX.Element {
     },[]);
 
     const onSubmit: SubmitHandler<Company> = (data) => {
-        data.id=couponStore.getState().admin.companies.length+1;
+        data.id=0;
         //console.log(data);
         axiosJWT.post(`http://localhost:8080/Admin/AddCompany`,data)
         .then((res)=> {
@@ -43,33 +43,31 @@ export function AddCompany(): JSX.Element {
     }
 
     return (
-        <div className="AddCompany Box" style={{ width: "40%" }}>
-			<div className="Grid-Parent">
-                <div className="Grid-Child">
-                    <Typography variant="h4" className="HeadLine">New Company</Typography>
-                    <hr /><br/>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <TextField required type="text" label="Company Name" fullWidth {...register("name",{required:true})} />
-                        {errors.name?.type == "required" && <><br/><span style={{ color: "red" }}>Name is required</span></>}
-                        <br/><br/>
-                        <TextField required type="text" label="Company Email" variant="outlined" fullWidth {...register("email",{required:true})} />
-                        <br/><br/>
-                        <TextField required type="password" label="Company Password" variant="outlined" fullWidth {...register("password",{required:true, minLength:5, maxLength:15})} />
-                        {errors.password?.type == "required" && <><br/><span style={{color: "red"}}>Password is required</span></>}
-                        {errors.password?.type == "minLength" && <><br/><span style={{color: "red"}}>Password is too short.  Minimum length: 5</span></>}
-                        {errors.password?.type == "maxLength" && <><br/><span style={{color: "red"}}>Password is too long.  Maximum length: 15</span></>}
-                        <br/><br/>
-                        <TextField label="password check" variant="outlined" type="password" fullWidth />
-                        <br /><br />
-                        <hr />
-                        <br/>
-                        {/* Todo - add a check that passwords are the same */}
-                        <ButtonGroup variant="contained" fullWidth>
-                            <Button type="submit" variant="contained" color="primary" startIcon={<AddIcon/>} >Add</Button>
-                            <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
-                        </ButtonGroup>
-                    </form>
-                </div>
+        <div className="AddCompany" >
+            <div className = "Box" style={{ width: "40%" }}>
+                <Typography variant="h4" className="HeadLine">New Company</Typography>
+                <hr /><br/>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField required type="text" label="Company Name" fullWidth {...register("name",{required:true})} />
+                    {errors.name?.type == "required" && <><br/><span style={{ color: "red" }}>Name is required</span></>}
+                    <br/><br/>
+                    <TextField required type="text" label="Company Email" variant="outlined" fullWidth {...register("email",{required:true})} />
+                    <br/><br/>
+                    <TextField required type="password" label="Company Password" variant="outlined" fullWidth {...register("password",{required:true, minLength:5, maxLength:15})} />
+                    {errors.password?.type == "required" && <><br/><span style={{color: "red"}}>Password is required</span></>}
+                    {errors.password?.type == "minLength" && <><br/><span style={{color: "red"}}>Password is too short.  Minimum length: 5</span></>}
+                    {errors.password?.type == "maxLength" && <><br/><span style={{color: "red"}}>Password is too long.  Maximum length: 15</span></>}
+                    <br/><br/>
+                    <TextField label="password check" variant="outlined" type="password" fullWidth />
+                    <br /><br />
+                    <hr />
+                    <br/>
+                    {/* Todo - add a check that passwords are the same */}
+                    <ButtonGroup variant="contained" fullWidth>
+                        <Button type="submit" variant="contained" color="primary" startIcon={<AddIcon/>} >Add</Button>
+                        <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
+                    </ButtonGroup>
+                </form>
             </div>
         </div>
     );

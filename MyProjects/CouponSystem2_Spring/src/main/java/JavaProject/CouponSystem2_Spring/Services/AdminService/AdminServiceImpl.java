@@ -61,9 +61,9 @@ public class AdminServiceImpl implements AdminService {
         if(!customerRepo.existsById(customer.getId())){
             throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
         }
-        if(customerRepo.findByEmail(customer.getEmail()) != null){
-            throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
-        }
+//        if(customerRepo.findByEmail(customer.getEmail()) != null){
+//            throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
+//        }
         Customer oldCustomer = customerRepo.findById(customer.getId()).get();
         // Verifications for user in DB
         UserDetails user = usersRepo.findByEmailAndPassword(oldCustomer.getEmail(), oldCustomer.getPassword());

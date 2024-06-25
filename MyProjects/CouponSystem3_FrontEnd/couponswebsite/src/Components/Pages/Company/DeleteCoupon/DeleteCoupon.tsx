@@ -18,8 +18,6 @@ export function DeleteCoupon(): JSX.Element {
     const [coupon, setCoupon] = useState<Coupon>();
     const params = useParams();
 
-    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>();
-
     useEffect(()=>{
         // Check if user has viewing permissions
         if (couponStore.getState().auth.clientType!==ClientType.Company){
@@ -49,11 +47,11 @@ export function DeleteCoupon(): JSX.Element {
             }
     }
 
-    const onSubmit: SubmitHandler<Coupon> = (data) => {
+    function deleteCoupon() {
         //console.log(data);
         axios.delete(`http://localhost:8080/Company/DeleteCoupon/${params.couponID}`)
         .then((res)=> {
-            couponStore.dispatch(deleteCouponAction(data.id));
+            couponStore.dispatch(deleteCouponAction(parseInt(params.couponID as string)));
             notify.success("The coupon was deleted successfully.");
             navigate("/companyHome");
         })
@@ -69,27 +67,25 @@ export function DeleteCoupon(): JSX.Element {
             <hr/>
             <div className="DeleteCoupon Box" style={{ width: "40%" }}>
                 <div className="Grid-Parent">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="Grid-Child">
-                            <img src={coupon?.image} />
-                        </div>
-                        <div className="Grid-Child">
-                            <Typography gutterBottom variant="h5" component="div">{coupon?.title}</Typography>
-                            <Typography variant="h6" color="text.secondary">{coupon?.description}</Typography >
-                            <Typography variant="body2" color="text.secondary">Category: {coupon?.category}</Typography ><br/>
-                            <Typography variant="body1" color="text.secondary">
-                            Valid Until: {coupon?.end_date}<br/>
-                            Only {coupon?.price} (NIS)<br/>
-                            </Typography><hr/><br/>
-                        </div>
-                        <div className="Grid-Child">
-                            <ButtonGroup variant="contained" fullWidth>
-                                <Button type="submit" variant="contained" color="error" startIcon={<DeleteIcon/>} >Delete</Button>
-                                <Button variant="contained" color="primary" startIcon={<CancelIcon/>} onClick={() => { navigate("/companyHome") }}>Cancel</Button>
-                            </ButtonGroup>
-                        </div>
-                        <br/>
-                    </form>
+                    <div className="Grid-Child">
+                        <img src={coupon?.image} />
+                    </div>
+                    <div className="Grid-Child">
+                        <Typography gutterBottom variant="h5" component="div">{coupon?.title}</Typography>
+                        <Typography variant="h6" color="text.secondary">{coupon?.description}</Typography >
+                        <Typography variant="body2" color="text.secondary">Category: {coupon?.category}</Typography ><br/>
+                        <Typography variant="body1" color="text.secondary">
+                        Valid Until: {coupon?.end_date}<br/>
+                        Only {coupon?.price} (NIS)<br/>
+                        </Typography><hr/><br/>
+                    </div>
+                    <div className="Grid-Child">
+                        <ButtonGroup variant="contained" fullWidth>
+                            <Button type="button" variant="contained" color="error" startIcon={<DeleteIcon/>} onClick={deleteCoupon} > Delete</Button>
+                            <Button variant="contained" color="primary" startIcon={<CancelIcon/>} onClick={() => { navigate("/companyHome") }}>Cancel</Button>
+                        </ButtonGroup>
+                    </div>
+                    <br/>
                 </div>
             </div>
         </div>

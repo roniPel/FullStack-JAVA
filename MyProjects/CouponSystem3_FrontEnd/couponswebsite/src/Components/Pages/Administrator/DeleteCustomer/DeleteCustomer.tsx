@@ -15,7 +15,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export function DeleteCustomer(): JSX.Element {
     const [customer, setCustomer] = useState<Customer>();
     const params = useParams();
-    const { register, handleSubmit, formState: {errors} } = useForm<Customer>();
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -47,11 +46,11 @@ export function DeleteCustomer(): JSX.Element {
             });
     }
 
-    const onSubmit: SubmitHandler<Customer> = (data) => {
+    function deleteCustomer() {
         //console.log(data);
         axiosJWT.delete(`http://localhost:8080/Admin/DeleteCustomer/${params.customerID}`)
         .then((res)=> {
-            couponStore.dispatch(deleteCustomerAction(data.id));
+            couponStore.dispatch(deleteCustomerAction(parseInt(params.customerID as string)));
             notify.success("The customer was deleted successfully.");
             navigate("/adminHome");
         })
@@ -66,21 +65,19 @@ export function DeleteCustomer(): JSX.Element {
             <Typography variant="h4" className="HeadLine">Delete Customer</Typography>
             <hr/>
             <div className="DeleteCustomer Box" style={{ width: "40%" }}>
-            <div className="Grid-Parent">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="Grid-Child">
-                            <Typography variant="h5" className="HeadLine">{customer?.firstName} {customer?.lastName}</Typography>
-                            <br/>
-                            <Typography variant="h6" className="HeadLine">{customer?.email}</Typography>
-                            <br/><br/>
-                        </div>
-                        <div className="Grid-Child">
-                            <ButtonGroup variant="contained" fullWidth>
-                                <Button type="submit" variant="contained" color="error" startIcon={<DeleteIcon/>} >Delete</Button>
-                                <Button variant="contained" color="primary" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
-                            </ButtonGroup>
-                        </div>
-                    </form>
+                <div className="Grid-Parent">
+                    <div className="Grid-Child">
+                        <Typography variant="h5" className="HeadLine">{customer?.firstName} {customer?.lastName}</Typography>
+                        <br/>
+                        <Typography variant="h6" className="HeadLine">{customer?.email}</Typography>
+                        <br/><br/>
+                    </div>
+                    <div className="Grid-Child">
+                        <ButtonGroup variant="contained" fullWidth>
+                            <Button type="button" variant="contained" color="error" onClick={deleteCustomer} > Delete</Button>
+                            <Button type="button" variant="contained" color="primary" startIcon={<CancelIcon/>} onClick={() => { navigate("/adminHome") }}>Cancel</Button>
+                        </ButtonGroup>
+                    </div>
                 </div>
             </div>
         </div>

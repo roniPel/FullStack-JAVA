@@ -73,7 +73,7 @@ export function UpdateCustomer(): JSX.Element {
                             <br/><br/>
                             Last Name: <input type="text" placeholder="Last Name" defaultValue={customer?.lastName}  {...register("lastName")} />
                             <br/><br/>
-                            Email: <input type="text" placeholder="Email" defaultValue={customer?.email} {...register("email",{required:true})} />
+                            Email: <input type="text" placeholder="Email" defaultValue={customer?.email} value={customer?.email} {...register("email",{required:true})} />
                             <br/><br/>
                             Password: <input type="password" placeholder="Password" defaultValue={customer?.password} {...register("password",{required:true})} />
                             <br/><br/>
