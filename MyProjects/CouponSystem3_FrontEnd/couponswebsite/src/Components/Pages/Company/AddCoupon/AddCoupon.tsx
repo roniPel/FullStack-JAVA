@@ -28,6 +28,11 @@ export function AddCoupon(): JSX.Element {
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
+        // create a list of categories from the 'Category' Model
+        const catList: string[] = [];
+        Object.keys(Category).map((item)=>{catList.push(item)})
+        //console.log(catList);
+        setCategoryList(catList);
     },[])
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
@@ -72,9 +77,7 @@ export function AddCoupon(): JSX.Element {
                     <br /><br />
                     <InputLabel id="Category-label">Select Category</InputLabel>
                     <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} fullWidth >
-                        {/* {categoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)} */}
-                        <MenuItem key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</MenuItem>
-                        <MenuItem key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</MenuItem>
+                        {categoryList.map((item)=><MenuItem key={item} value={item}>{item}</MenuItem>)}
                     </Select>
                     <br/><br/>
                     <TextField type="text" label="Image" fullWidth {...register("image")} />

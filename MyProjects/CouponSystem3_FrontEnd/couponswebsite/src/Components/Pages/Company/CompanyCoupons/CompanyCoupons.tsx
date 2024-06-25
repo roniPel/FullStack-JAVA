@@ -20,6 +20,11 @@ export function CompanyCoupons(): JSX.Element {
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
+        getCoupons();
+
+    },[]);
+
+    function getCoupons() {
         let recivedList:Coupon[] = [];
         //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
         if (couponStore.getState().company.companyCoupons.length == 0) {
@@ -51,8 +56,7 @@ export function CompanyCoupons(): JSX.Element {
         } else {
             setList(couponStore.getState().company.companyCoupons);
         }
-
-    },[]);
+    }
 
     
     return (

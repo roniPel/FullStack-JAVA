@@ -48,7 +48,7 @@ export interface CustomerAction {
 export function clearCustomerStateAction(): CustomerAction {
     return { type: CustomerActionType.clearCustomerState};
 }
-export function getOneCouponViaCustomer(coupon: Coupon): CustomerAction {
+export function getOneCouponViaCustomerAction(coupon: Coupon): CustomerAction {
     return { type: CustomerActionType.getOneCouponViaCustomer, payload: coupon };
 }
 export function getAllCustomerCouponsAction(coupons: Coupon[]): CustomerAction {

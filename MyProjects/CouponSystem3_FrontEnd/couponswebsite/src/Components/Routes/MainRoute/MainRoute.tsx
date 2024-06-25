@@ -29,6 +29,7 @@ import { CompanyCouponsByCategory } from "../../Pages/Company/CompanyCouponsByCa
 import { UpdateCoupon } from "../../Pages/Company/UpdateCoupon/UpdateCoupon";
 import { DeleteCoupon } from "../../Pages/Company/DeleteCoupon/DeleteCoupon";
 import { CompanyCouponsByPrice } from "../../Pages/Company/CompanyCouponsByPrice/CompanyCouponsByPrice";
+import { CustomerCouponsByPrice } from "../../Pages/Customer/CustomerCouponsByPrice/CustomerCouponsByPrice";
 
 export function MainRoute(): JSX.Element {
 
@@ -90,10 +91,11 @@ export function MainRoute(): JSX.Element {
     const customerRoute = ()=>{
         return (
             <>
-                <Route path="/customerHome" element ={<CustomerHome/>}/>
-                <Route path="/customerCoupons" element = {<CustomerCoupons/>}/>
-                <Route path="/purchase/:couponID" element = {<PurchaseCoupon/>}/>
-                <Route path="/custCoupByCat" element = {<CustomerCouponsByCategory/>}/>
+                <Route path="/customerHome" element ={<CustomerHome/>} />
+                <Route path="/customerCoupons" element = {<CustomerCoupons/>} />
+                <Route path="/purchase/:couponID" element = {<PurchaseCoupon/>} />
+                <Route path="/custCoupByCat" element = {<CustomerCouponsByCategory/>} />
+                <Route path="/custCoupByPrice" element = {<CustomerCouponsByPrice/>} />
             </>
         )
     }

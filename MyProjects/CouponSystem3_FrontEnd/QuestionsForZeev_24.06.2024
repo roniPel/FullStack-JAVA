@@ -1,12 +1,13 @@
-1. 	Location: Pages/Company/AddCoupon
+1. 	Location: Pages/Company/AddCoupon (same with AddCompany, AddCustomer)
 	Line 42 - how to dispatch newly added coupon to redux so it will contain the correct id?
 	(right now, added with no ID - can't view)
 
-2. 	Location: 
-	Line XX: 
+2. 	Location: UpdateCoupon (same with 'AddCoupon')
+	Line 79 / 105: 'defaultValue' doesn't work when using the 'TextField' element.
+	How to solve this?
 
-3. 	Location: 
-	Line XX: 
+3. 	Location: UpdateCoupon (same with 'AddCoupon')
+	Line 122: 'defaultValue' also doesn't work for 'select' element (when trying to insert a 'Category as string' type value)
 	
 4. 	Location: 
 	Line XX: 
