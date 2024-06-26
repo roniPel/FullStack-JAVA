@@ -32,6 +32,8 @@ export function AddCompany(): JSX.Element {
         //console.log(data);
         axiosJWT.post(`http://localhost:8080/Admin/AddCompany`,data)
         .then((res)=> {
+            //console.log(res.data);
+            data.id = res.data;
             couponStore.dispatch(addCompanyAction(data));
             notify.success("The company was created successfully.");
             navigate("/adminHome");

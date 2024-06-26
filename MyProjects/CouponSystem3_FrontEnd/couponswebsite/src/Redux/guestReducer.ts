@@ -2,7 +2,7 @@ import { Coupon } from "../Models/Coupon";
 
 //AppState - the data that exists on the application and Redux level
 export class GuestState {
-    public allCoupons: Coupon[] = [];
+    //public allCoupons: Coupon[] = [];
     public coupon: Coupon = {
         id:-1,
         companyId:-1,
@@ -19,7 +19,7 @@ export class GuestState {
 
 // ActionType - enum (closed list) of actions that can be performed on the AppState
 export enum GuestActionType {   
-    getAllCoupons = "getAllCoupons",
+    // getAllCoupons = "getAllCoupons",
     getOneCoupon = "getOneCoupon",
 }
 
@@ -31,9 +31,9 @@ export interface GuestAction {
 }
 
 // Action Creator - Public (external) functions that can be used by the application (work according to the defined rules above)
-export function getAllCouponsAction(coupons: Coupon[]): GuestAction {
-    return { type: GuestActionType.getAllCoupons, payload: coupons };
-}
+// export function getAllCouponsAction(coupons: Coupon[]): GuestAction {
+//     return { type: GuestActionType.getAllCoupons, payload: coupons };
+// }
 export function getOneCouponAction(coupon: Coupon): GuestAction {
     return { type: GuestActionType.getOneCoupon, payload: coupon };
 }
@@ -45,9 +45,9 @@ export function getOneCouponAction(coupon: Coupon): GuestAction {
 export function GuestReducer(currentState: GuestState = new GuestState(), action: GuestAction): GuestState {
     const newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
-        case GuestActionType.getAllCoupons:
-            newState.allCoupons = action.payload;
-            break;
+        // case GuestActionType.getAllCoupons:
+        //     newState.allCoupons = action.payload;
+        //     break;
         case GuestActionType.getOneCoupon:
             newState.coupon = action.payload;
             break;

@@ -24,6 +24,7 @@ export function Menu(): JSX.Element {
                 <br/><Typography variant="h4" className="HeadLine">Menu</Typography><br/>
                 <hr/>
                 <NavLink to="/">Welcome</NavLink><br/>
+                <NavLink to="/allCoupons">All Coupons</NavLink><br/>
                 <NavLink to="/aboutus">About Us</NavLink><br/>
             </>
         )
@@ -47,7 +48,7 @@ export function Menu(): JSX.Element {
         return (
             <>
                 <NavLink to="/companyHome">Company Home</NavLink><br/>
-                <NavLink to="/">All Coupons</NavLink><br/>
+                {/* <NavLink to="/allCoupons">All Coupons</NavLink><br/> */}
                 <NavLink to="/addCoupon">Add Coupon</NavLink><br/>
                 <NavLink to="/companyCoupons">My Coupons</NavLink><br/>
                 <NavLink to="/compCoupByCat">My Coupons by Category</NavLink><br/>
@@ -61,7 +62,7 @@ export function Menu(): JSX.Element {
         return (
             <>
                 <NavLink to="/customerHome">Customer Home</NavLink><br/>
-                <NavLink to="/">All Coupons</NavLink><br/>
+                <NavLink to="/allCoupons">All Coupons</NavLink><br/>
                 <NavLink to="/customerCoupons">My Coupons</NavLink><br/>
                 <NavLink to="/custCoupByCat">My Coupons by Category</NavLink><br/>
                 <NavLink to="/custCoupByPrice">My Coupons by Max Price</NavLink><br/>

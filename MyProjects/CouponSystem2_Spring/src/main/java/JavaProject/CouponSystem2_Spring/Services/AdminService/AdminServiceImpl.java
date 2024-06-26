@@ -80,7 +80,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean AddCustomer(Customer customer) throws AdminException {
+    public int AddCustomer(Customer customer) throws AdminException {
         Integer id = customer.getId();
         if(customerRepo.existsById(id)){
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
@@ -90,7 +90,7 @@ public class AdminServiceImpl implements AdminService {
         }
         customerRepo.save(customer);
         loginServiceImpl.AddCredentials(customer.getEmail(), customer.getPassword(), ClientType.Customer, customer.getEmail());
-        return true;
+        return customerRepo.findByEmailAndPassword(customer.getEmail(),customer.getPassword()).getId();
     }
 
     @Override
@@ -167,7 +167,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean AddCompany(Company company) throws AdminException {
+    public int AddCompany(Company company) throws AdminException {
         int id = company.getId();
         if(companyRepo.existsById(id)) {
             throw new AdminException(AdminErrors.DUPLICATE_ENTRY);
@@ -180,7 +180,7 @@ public class AdminServiceImpl implements AdminService {
         }
         companyRepo.save(company);
         loginServiceImpl.AddCredentials(company.getName(), company.getPassword(), ClientType.Company, company.getEmail());
-        return true;
+        return companyRepo.findByEmailAndPassword(company.getEmail(),company.getPassword()).getId();
     }
 
     @Override

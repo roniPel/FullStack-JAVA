@@ -65,8 +65,8 @@ export function UpdateCustomer(): JSX.Element {
         <div>
             <Typography variant="h4" className="HeadLine">Update Customer</Typography>
             <hr />
-            <div className="UpdateCustomer Box" style={{ width: "40%" }}>
-                <div className="Grid-Parent">
+            <div className="UpdateCustomer" >
+                <div className="Grid-Parent Box" style={{ width: "40%" }}>
                     <div className="Grid-Child">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             First Name:<input type="text" placeholder="First Name" defaultValue={customer?.firstName}  {...register("firstName")} />

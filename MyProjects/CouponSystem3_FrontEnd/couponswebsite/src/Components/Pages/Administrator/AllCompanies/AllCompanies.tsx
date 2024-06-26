@@ -32,7 +32,7 @@ export function AllCompanies(): JSX.Element {
         // Check that our redux data is updated
         checkData();
         //check if we have any companies in our list - 0 length indicates that we don't have any companies
-        if (couponStore.getState().admin.companies.length == 0) {
+        if (couponStore.getState().admin.companies.length === 0) {
             axiosJWT.get("http://localhost:8080/Admin/GetAllCompanies")
             .then(result=>{
                 for (let index=0;index<result.data.length;index++){

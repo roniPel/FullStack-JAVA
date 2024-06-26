@@ -30,6 +30,7 @@ import { UpdateCoupon } from "../../Pages/Company/UpdateCoupon/UpdateCoupon";
 import { DeleteCoupon } from "../../Pages/Company/DeleteCoupon/DeleteCoupon";
 import { CompanyCouponsByPrice } from "../../Pages/Company/CompanyCouponsByPrice/CompanyCouponsByPrice";
 import { CustomerCouponsByPrice } from "../../Pages/Customer/CustomerCouponsByPrice/CustomerCouponsByPrice";
+import { AllCoupons } from "../../Pages/General/AllCoupons/AllCoupons";
 
 export function MainRoute(): JSX.Element {
 
@@ -50,6 +51,7 @@ export function MainRoute(): JSX.Element {
             <>
                 <Route path="/" element ={<Welcome/>}/>
                 <Route path="/login" element={<Logon/>}/>
+                <Route path="/allCoupons" element ={<AllCoupons/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/coupon/:couponID" element={<ViewCoupon/>}/>
                 <Route path="/aboutus" element={<AboutUs/>}/>
@@ -62,6 +64,7 @@ export function MainRoute(): JSX.Element {
             <>
                 <Route path="/adminHome" element ={<AdminHome/>}/>
                 <Route path="/addCompany" element ={<AddCompany/>}/>
+                <Route path="/allCoupons" element ={<AllCoupons/>}/>
                 <Route path="/allCompanies" element ={<AllCompanies/>}/>
                 <Route path="/allCustomers" element ={<AllCustomers/>}/>
                 <Route path="/company/:companyID" element ={<ViewCompany/>}/>
@@ -92,6 +95,7 @@ export function MainRoute(): JSX.Element {
         return (
             <>
                 <Route path="/customerHome" element ={<CustomerHome/>} />
+                <Route path="/allCoupons" element ={<AllCoupons/>}/>
                 <Route path="/customerCoupons" element = {<CustomerCoupons/>} />
                 <Route path="/purchase/:couponID" element = {<PurchaseCoupon/>} />
                 <Route path="/custCoupByCat" element = {<CustomerCouponsByCategory/>} />

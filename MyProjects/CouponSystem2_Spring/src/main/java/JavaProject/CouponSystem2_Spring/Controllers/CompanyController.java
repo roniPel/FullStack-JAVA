@@ -1,7 +1,9 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.*;
+import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
+import JavaProject.CouponSystem2_Spring.Exceptions.LoginExceptions.LoginException;
 import JavaProject.CouponSystem2_Spring.Services.CompanyService.CompanyService;
 import JavaProject.CouponSystem2_Spring.Utils.JWT;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SignatureException;
 import java.util.List;
 /**
  * Controller for Company User
@@ -21,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
-    private final JWT jwt;
+    private final JWT jwtUtil;
 
     //Todo - insert JWT authentication check - part 3
 
@@ -36,6 +39,12 @@ public class CompanyController {
         return companyService.GetCompanyDetails();
     }
 
+//    public ResponseEntity<?> GetCompanyDetails
+//            (@RequestHeader("Authorization") String jwt)
+//            throws SignatureException, CompanyException {
+//        return new ResponseEntity<>(companyService.GetCompanyDetails(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    }
+
     /**
      * Adds a coupon to the DB - based on the details listed in the param
      * @param coupon a 'Coupon' class instance containing coupon details
@@ -43,9 +52,15 @@ public class CompanyController {
      */
     @PostMapping(value = "/AddCoupon")
     @ResponseStatus(HttpStatus.CREATED)
-    public void AddCoupon(@Validated @RequestBody Coupon coupon) throws CompanyException{
-        companyService.AddCoupon(coupon);
+    public int AddCoupon(@Validated @RequestBody Coupon coupon) throws CompanyException{
+        return companyService.AddCoupon(coupon);
     }
+
+//    public ResponseEntity<?> AddCustomer
+//            (@RequestHeader("Authorization") String jwt,@Validated @RequestBody Coupon coupon)
+//            throws SignatureException, CompanyException {
+//        return new ResponseEntity<>(companyService.AddCoupon(coupon), jwtUtil.getHeaders(jwt), HttpStatus.OK);
+//    }
 
     /**
      * Update Coupon in DB - based on the details listed in the param
@@ -58,6 +73,12 @@ public class CompanyController {
         companyService.UpdateCoupon(coupon);
     }
 
+//    public ResponseEntity<?> UpdateCoupon
+//            (@RequestHeader("Authorization") String jwt,@RequestBody Coupon coupon)
+//            throws SignatureException, CompanyException {
+//        return new ResponseEntity<>(companyService.UpdateCoupon(coupon),jwtUtil.getHeaders(jwt), HttpStatus.NO_CONTENT);
+//    }
+
     /**
      * Deletes a Coupon in DB - based on the details listed in the param
      * @param id the ID of the coupon to be deleted in the DB
@@ -69,6 +90,12 @@ public class CompanyController {
         companyService.DeleteCoupon(id);
     }
 
+//    public ResponseEntity<?> DeleteCoupon
+//            (@RequestHeader("Authorization") String jwt, @PathVariable int id)
+//            throws SignatureException, CompanyException {
+//        return new ResponseEntity<>(companyService.DeleteCoupon(id),jwtUtil.getHeaders(jwt),HttpStatus.ACCEPTED);
+//    }
+
     /**
      * Get all the coupons listed in DB for a specific company
      * @return coupon List if succeeded, null if no coupons were found.
@@ -77,6 +104,12 @@ public class CompanyController {
     public List<Coupon> GetCompanyCoupons(){
         return companyService.GetCompanyCoupons();
     }
+
+//    public ResponseEntity<?> GetCompanyCoupons
+//            (@RequestHeader("Authorization") String jwt)
+//            throws SignatureException {
+//        return new ResponseEntity<>(companyService.GetCompanyCoupons(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    }
 
     /**
      * Get all the coupons listed in DB for the logged on company belonging to a specific category
@@ -89,6 +122,12 @@ public class CompanyController {
         return companyService.GetCompanyCouponsByCategory(category);
     }
 
+//    public ResponseEntity<?> GetCompanyCouponsByCategory
+//            (@RequestHeader("Authorization") String jwt,@PathVariable Category category)
+//            throws SignatureException {
+//        return new ResponseEntity<>(companyService.GetCompanyCouponsByCategory(category),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    }
+
     /**
      * Get all the coupons listed in DB for the logged on company up to a max price
      * @param maxPrice - maximum price of coupons to add to coupon list
@@ -99,6 +138,12 @@ public class CompanyController {
     public List<Coupon> GetCompanyCouponsByMaxPrice(@PathVariable double maxPrice) {
         return companyService.GetCompanyCouponsByMaxPrice(maxPrice);
     }
+
+//    public ResponseEntity<?> GetCompanyCouponsByMaxPrice
+//            (@RequestHeader("Authorization") String jwt,@PathVariable double maxPrice)
+//            throws SignatureException {
+//        return new ResponseEntity<>(companyService.GetCompanyCouponsByMaxPrice(maxPrice),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    }
 
     /**
      * Get one coupon
@@ -111,6 +156,10 @@ public class CompanyController {
     public Coupon GetOneCoupon(@PathVariable int id) throws CompanyException{
         return companyService.GetOneCoupon(id);
     }
-
+//    public ResponseEntity<?> GetOneCoupon
+//            (@RequestHeader("Authorization") String jwt, @PathVariable int id)
+//            throws AdminException, SignatureException, CompanyException {
+//        return new ResponseEntity<>(companyService.GetOneCoupon(id),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    }
 
 }

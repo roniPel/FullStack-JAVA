@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./CompanyCouponsByCategory.css";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
 import { Category } from "../../../../Models/Category";
 import { couponStore } from "../../../../Redux/store";
@@ -9,9 +9,8 @@ import notify from "../../../../Utilities/notify";
 import { checkData } from "../../../../Utilities/checkData";
 import axios from "axios";
 import { getAllCompanyCouponsAction } from "../../../../Redux/companyReducer";
-import { Button, ButtonGroup, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
-import { SubmitHandler, useForm } from "react-hook-form";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 export function CompanyCouponsByCategory(): JSX.Element {
@@ -19,7 +18,6 @@ export function CompanyCouponsByCategory(): JSX.Element {
     const [couponList, setList] = useState<Coupon[]>([]);
     const [selectedCategory, setCategory] = useState<Category>();
     const [filteredCouponList, setFilteredList] = useState<Coupon[]>([]);
-    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>();
 
     const uniqueCoupCategoryList = couponList.
         filter((obj, index, self) => index === 
@@ -76,8 +74,8 @@ export function CompanyCouponsByCategory(): JSX.Element {
         }
     }
 
-    const onSubmit: SubmitHandler<Coupon> = (data) => {
-        //console.log(data);
+
+    function filterByCategory() {
         // Filter by category
         let myList:Coupon[] = [];
         couponList.forEach((coup)=>{
@@ -93,19 +91,19 @@ export function CompanyCouponsByCategory(): JSX.Element {
 			<Typography variant="h4" className="HeadLine">My Coupons by Category</Typography>
             <hr />
             <div className="CustomerCouponsByCategory">
-                <div className="Select Category Box" style={{ width: "20%" }}>
-                    <InputLabel id="Category-label">Select Category</InputLabel>
-                    <Select labelId="Category-label" id="Category-label" label="Category" onChange={handleCatChange} fullWidth >
-                        {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)}
-                    </Select>
+                <div className="Grid-Child">
+                    <div className="Select Category Box" style={{ width: "20%" }}>
+                        <InputLabel id="Category-label">Select Category</InputLabel>
+                        <Select labelId="Category-label" id="Category-label" label="Category" onChange={handleCatChange} fullWidth >
+                            {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)}
+                        </Select>
+                        <br/><br/>
+                        <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>} onClick={filterByCategory}>Filter</Button>
+                    </div>
                     <br/><br/>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>}>Filter</Button>
-                    </form>
-                </div>
-                <br/><br/>
-                <div className="Coupon List Result">
-                    {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}
+                    <div className="Coupon List Result">
+                        {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}
+                    </div>
                 </div>
             </div>
         </div>

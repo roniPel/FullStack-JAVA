@@ -10,9 +10,7 @@ import axios from "axios";
 import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
-import DatePicker from "react-datepicker";
 import { Category } from "../../../../Models/Category";
-import { parseJsonText } from "typescript";
 import { addCouponAction } from "../../../../Redux/companyReducer";
 
 export function AddCoupon(): JSX.Element {
@@ -36,14 +34,15 @@ export function AddCoupon(): JSX.Element {
     },[])
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
-        data.id = couponStore.getState().guest.allCoupons.length+1;;
+        data.id = 0;
         data.companyId = parseInt(couponStore.getState().auth.id);
-        console.log(data);
+        //console.log(data);
         //Todo - check that the passwords are the same , if not, do not countinue
 
         axios.post("http://localhost:8080/Company/AddCoupon",data)
         .then((res)=>{
-            //couponStore.dispatch(addCouponAction(data));  // Problematic - sets incorrect ID
+            console.log(res.data);
+            //data.id = res.data.id;
             couponStore.dispatch(addCouponAction(data));
             notify.success("Coupon was added successfully");
             navigate("/companyHome");

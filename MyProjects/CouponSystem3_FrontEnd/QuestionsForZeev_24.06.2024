@@ -1,17 +1,35 @@
-1. 	Location: Pages/Company/AddCoupon (same with AddCompany, AddCustomer)
+1. 	Location: Pages/Company/AddCoupon (same with   AddCompany, AddCustomer)
 	Line 42 - how to dispatch newly added coupon to redux so it will contain the correct id?
 	(right now, added with no ID - can't view coupon)
+	
+	Solution: Change BE function to return the newly created object's id.
+	Use this 'response' object in redux to update the new id and add the new object to redux.
 
 2. 	Location: UpdateCoupon (same with 'AddCoupon')
 	Line 79 / 105: 'defaultValue' doesn't work when using the 'TextField' element.
 	How to solve this?
+	
+	Solution: use 'input' only
 
 3. 	Location: UpdateCoupon (same with 'AddCoupon')
 	Line 122: 'defaultValue' also doesn't work for 'select' element (when trying to insert a 'Category as string' type value).
 	
+	Solution: Change 'Category' to 'enum' type
+
 4. 	Location: UpdateCoupon (same with update company, update customer)
 	Line (after submit): How to force form to receive default values if not changed? (example: image, title, description - are empty if not edited) 
 	
+	Solution: read about 'useForm' or add comparisons to original values in 'onSubmit'
+	
+5. Filtering (coupons by Category, 	coupons by Price)  - is it better to use redux functions instead or filter in the page?
+
+	Solution: better to use local filter, and not redux
+
+
 TODO: 
 1. BE - change controllers in Customer and Company to match JWT requirements
-2. RE - Convert axios to axiosJWT (in all Cusomter and Company actions)
+   FE - Convert axios to axiosJWT (in all Cusomter and Company actions)
+2. Change 'Category' from const to enum (change all filtering accodringly)
+3. Don't save all coupons in 'guest' reducer - change 'Get all coupons' page, change reducer
+4. Check all 'Todo's in BE and FE
+5. Before turning in, go to BE, Clr_FillDBWithMockData, and uncomment the '@Component'

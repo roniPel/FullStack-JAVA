@@ -15,11 +15,12 @@ public interface CompanyService {
     void SetCompanyId(int companyId);
     /**
      * Adds a coupon to the DB - based on the details listed in the param
+     *
      * @param coupon a 'Coupon' class instance containing coupon details
      * @return true if succeeded, false if failed.
-     * @throws CompanyException  If we get any exception.  Details are provided
+     * @throws CompanyException If we get any exception.  Details are provided
      */
-    boolean AddCoupon(Coupon coupon) throws CompanyException;
+    int AddCoupon(Coupon coupon) throws CompanyException;
 
     /**
      * Update Coupon in DB - based on the details listed in the param

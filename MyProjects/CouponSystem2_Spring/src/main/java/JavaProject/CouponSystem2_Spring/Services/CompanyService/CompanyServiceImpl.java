@@ -4,10 +4,8 @@ import JavaProject.CouponSystem2_Spring.Beans.Category;
 import JavaProject.CouponSystem2_Spring.Beans.Company;
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
 import JavaProject.CouponSystem2_Spring.Beans.Customer;
-import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyErrors;
 import JavaProject.CouponSystem2_Spring.Exceptions.CompanyExceptions.CompanyException;
-import JavaProject.CouponSystem2_Spring.Exceptions.CustomerExceptions.CustomerException;
 import JavaProject.CouponSystem2_Spring.Repositories.CompanyRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CouponRepository;
 import JavaProject.CouponSystem2_Spring.Repositories.CustomerRepository;
@@ -16,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Company Service Implementation for Coupon System 2
@@ -39,7 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public boolean AddCoupon(Coupon coupon) throws CompanyException {
+    public int AddCoupon(Coupon coupon) throws CompanyException {
         int id = coupon.getId();
         if(couponRepo.existsById(id)){  //Check if coupon Id exists in DB
             throw new CompanyException(CompanyErrors.DUPLICATE_ENTRY);
@@ -51,7 +47,7 @@ public class CompanyServiceImpl implements CompanyService {
             throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
         }
         couponRepo.save(coupon);
-        return true;
+        return couponRepo.findByTitleAndCompanyId(coupon.getTitle(),coupon.getCompanyId()).getId();
     }
 
     @Override

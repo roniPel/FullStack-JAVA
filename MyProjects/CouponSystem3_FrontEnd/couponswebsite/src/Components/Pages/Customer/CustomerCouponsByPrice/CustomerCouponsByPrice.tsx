@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import "./CustomerCouponsByPrice.css";
 import { useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { couponStore } from "../../../../Redux/store";
 import { ClientType } from "../../../../Models/ClientType";
 import notify from "../../../../Utilities/notify";
@@ -18,7 +17,6 @@ export function CustomerCouponsByPrice(): JSX.Element {
     const [couponList, setList] = useState<Coupon[]>([]);
     const [chosenPrice, setPrice] = useState<number>();
     const [filteredCouponList, setFilteredList] = useState<Coupon[]>([]);
-    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>();
 
     useEffect(()=>{
         // Check if user has viewing permissions
@@ -65,9 +63,12 @@ export function CustomerCouponsByPrice(): JSX.Element {
         }
     }
 
-    const onSubmit: SubmitHandler<Coupon> = (data) => {
-        //console.log(data);
-        // Filter by category
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setPrice(parseInt(e.target.value));
+    }
+
+      function filterByPrice() {
+        // Filter by price
         let myList:Coupon[] = [];
         couponList.forEach((coup)=>{
             if(coup.price <= (chosenPrice as number)){
@@ -76,26 +77,22 @@ export function CustomerCouponsByPrice(): JSX.Element {
         })
         setFilteredList(myList);
     }
-
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setPrice(parseInt(e.target.value));
-      }
     
     return (
         <div>
             <Typography variant="h4" className="HeadLine">My Coupons by Max Price</Typography>
             <hr />
             <div className="CustomerCouponsByPrice">
-            <div className="Insert Price Box" style = {{width: "20%"}}>
-                    <TextField type="number" label="Insert Max Price..." variant="outlined" fullWidth
-                    onChange={handleChange}/><br/><br/>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>}>Filter</Button>
-                    </form>
-                </div>
-                <br/><br/>
-                <div className="Coupon List Result">
-                    {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}
+                <div className="Grid-Child">
+                    <div className="Insert Price Box" style = {{width: "20%"}}>
+                        <TextField type="number" label="Insert Max Price..." variant="outlined" fullWidth
+                        onChange={handleChange}/><br/><br/>
+                        <Button type="button" variant="contained" color="primary" startIcon={<FilterAltIcon/>} onClick={filterByPrice} >Filter</Button>
+                    </div>
+                    <br/><br/>
+                    <div className="Coupon List Result">
+                        {filteredCouponList.map((item)=><SingleCoupon key={item.id} coupon={item}/>)}
+                    </div>
                 </div>
             </div>
         </div>

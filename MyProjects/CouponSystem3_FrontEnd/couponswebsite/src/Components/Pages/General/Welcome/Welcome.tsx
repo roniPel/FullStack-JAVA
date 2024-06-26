@@ -1,60 +1,22 @@
 import { Button, Typography } from "@mui/material";
 import "./Welcome.css";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Coupon } from "../../../../Models/Coupon";
-import axios from "axios";
-import { SingleCoupon } from "../SingleCoupon/SingleCoupon";
-import { checkData } from "../../../../Utilities/checkData";
-import { couponStore } from "../../../../Redux/store";
-import { getAllCouponsAction } from "../../../../Redux/guestReducer";
+import { useNavigate } from "react-router-dom";
 
 export function Welcome(): JSX.Element {
     
     //react hooks => useState , useEffect
-    const [couponList, setList] = useState<Coupon[]>([]);
     const navigate = useNavigate();
-
-    //get coupon list from backend
-    useEffect(()=>{
-        let recivedList:Coupon[] = [];
-        // Check that our redux data is updated
-        checkData();
-        //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
-        if (couponStore.getState().guest.allCoupons.length == 0) {
-            axios.get("http://localhost:8080/Guest/GetAllCoupons")
-            .then(result=>{
-            for (let index=0;index<result.data.length;index++){
-                recivedList.push(new Coupon(
-                    result.data[index].id,
-                    result.data[index].companyId,
-                    result.data[index].category,
-                    result.data[index].title,
-                    result.data[index].description,
-                    result.data[index].start_date,
-                    result.data[index].end_date,
-                    result.data[index].amount,
-                    result.data[index].price,
-                    result.data[index].image
-                ));
-            };
-            setList(recivedList);                   
-                couponStore.dispatch(getAllCouponsAction(recivedList));
-                setList(couponStore.getState().guest.allCoupons);
-                })
-                .catch(err=>{
-                    navigate("/login")
-                });
-        } else {
-            setList(couponStore.getState().guest.allCoupons);
-        }
-        
-    },[]);
 
     return (
         <div className="Welcome">
-            <br/><Typography variant="h4" className="HeadLine">Available Coupons</Typography><hr/><br/>
-            {couponList.map(item=><SingleCoupon key={item.id} coupon={item}/>)}
+            <br/><Typography variant="h4" className="HeadLine">Welcome</Typography><hr/>
+            <div className="Box" style={{width:"60%"}}>
+                <Typography variant="h6" className="HeadLine">The coupon system manages coupons for companies and customers.</Typography>
+                <Typography variant="h6" className="HeadLine">You are welcome to browse through our website, buy coupons you like, 
+                or join us as a company and enjoy sales, deals, and great customer service.</Typography>
+            </div>
+            <br/><br/>
+            <Button variant="contained" color="primary" onClick={() => { navigate("/allCoupons") }}>Show me!</Button>
         </div>
     );
 

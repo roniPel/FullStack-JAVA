@@ -38,11 +38,12 @@ public interface AdminService {
 
     /**
      * Add a customer
+     *
      * @param customer customer object with details to be added
      * @return true if succeeded, false if failed
-     * @throws AdminException  If we get any exception.  Details are provided
+     * @throws AdminException If we get any exception.  Details are provided
      */
-    boolean AddCustomer(Customer customer) throws AdminException;
+    int AddCustomer(Customer customer) throws AdminException;
 
     /**
      * Get All Customers in DB
@@ -76,11 +77,12 @@ public interface AdminService {
 
     /**
      * Add a Company
+     *
      * @param company company object with details to be added
      * @return true if succeeded, false if failed
      * @throws AdminException If we get any exception.  Details are provided
      */
-    boolean AddCompany(Company company) throws AdminException;
+    int AddCompany(Company company) throws AdminException;
 
     /**
      * Get all Companies

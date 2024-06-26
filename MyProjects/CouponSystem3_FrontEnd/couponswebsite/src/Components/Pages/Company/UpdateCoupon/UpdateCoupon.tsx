@@ -38,8 +38,8 @@ export function UpdateCoupon(): JSX.Element {
 
     function getCoupon(){
         // check if we have data in redux
-        if(couponStore.getState().company.coupon.id == parseInt(params.couponID as string)){
-            //console.log("Get from Store");
+        if(params.couponID && couponStore.getState().company.coupon.id === +params.couponID){
+            console.log("Get from Store: \n",coupon);
             setCoupon(couponStore.getState().company.coupon);
         } else {
         // console.log("Get from Backend")
@@ -73,63 +73,65 @@ export function UpdateCoupon(): JSX.Element {
         <div>
             <Typography variant="h4" className="HeadLine">Update Coupon</Typography>
             <hr/>
-            <div className="UpdateCoupon Box" style={{ width: "40%" }}>
-                <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="UpdateCoupon"> 
+                <div className="Box" style={{ width: "40%" }}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
-                    {/* <TextField required type="text" label="Title" defaultValue={coupon?.title} fullWidth {...register("title",{required:true})} />
-                    {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
-                    <br />
-                    <TextField type="text" label="Description" defaultValue={coupon?.description} fullWidth {...register("description")} />
-                    <br />
-                    <InputLabel id="startDate">Start Date</InputLabel>
-                    <TextField required id = "startDate" type="date" defaultValue={coupon?.start_date} fullWidth {...register("start_date")} />
-                    <br />
-                    <InputLabel id="endDate">End Date</InputLabel>
-                    <TextField required id = "endDate" type="date" defaultValue={coupon?.end_date} fullWidth {...register("end_date")} />
-                    <br />
-                    <TextField required type="number" label="Amount" defaultValue={coupon?.amount} fullWidth {...register("amount", { required: true })} />
-                    <br />
-                    <TextField type="number" label="Price" defaultValue={coupon?.price} fullWidth {...register("price", { required: true })} />
-                    <br />
-                    <InputLabel id="Category-label">Select Category</InputLabel>
-                    <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} 
-                    defaultValue={coupon?.category} fullWidth >
-                        <MenuItem value=""><em>None</em></MenuItem>
-                        <MenuItem key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</MenuItem>
-                        <MenuItem key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</MenuItem>
-                    </Select>
-                    <br/>
-                    <TextField type="text" label="Image" fullWidth {...register("image")} />
-                    <br/> */}
+                        {/* <TextField required type="text" label="Title" defaultValue={coupon?.title} fullWidth {...register("title",{required:true})} />
+                        {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                        <br />
+                        <TextField type="text" label="Description" defaultValue={coupon?.description} fullWidth {...register("description")} />
+                        <br />
+                        <InputLabel id="startDate">Start Date</InputLabel>
+                        <TextField required id = "startDate" type="date" defaultValue={coupon?.start_date} fullWidth {...register("start_date")} />
+                        <br />
+                        <InputLabel id="endDate">End Date</InputLabel>
+                        <TextField required id = "endDate" type="date" defaultValue={coupon?.end_date} fullWidth {...register("end_date")} />
+                        <br />
+                        <TextField required type="number" label="Amount" defaultValue={coupon?.amount} fullWidth {...register("amount", { required: true })} />
+                        <br />
+                        <TextField type="number" label="Price" defaultValue={coupon?.price} fullWidth {...register("price", { required: true })} />
+                        <br />
+                        <InputLabel id="Category-label">Select Category</InputLabel>
+                        <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} 
+                        defaultValue={coupon?.category} fullWidth >
+                            <MenuItem value=""><em>None</em></MenuItem>
+                            <MenuItem key = {Category.BabyToddler} value = {Category.BabyToddler}>{Category.BabyToddler}</MenuItem>
+                            <MenuItem key = {Category.Automotive} value = {Category.Automotive}>{Category.Automotive}</MenuItem>
+                        </Select>
+                        <br/>
+                        <TextField type="text" label="Image" fullWidth {...register("image")} />
+                        <br/> */}
 
-                    <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
-                    {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
-                    <br /><br />
-                    <input type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description")} />
-                    <br /><br />
-                    <label>Start Date: </label>
-                    <input type="date" placeholder="Start Date" defaultValue={coupon?.start_date} {...register("start_date", { required: true })} />
-                    <br /><br />
-                    <label>End Date: </label>
-                    <input type="date" placeholder="End Date" defaultValue={coupon?.end_date} {...register("end_date", { required: true })} />
-                    <br /><br />
-                    <input type="number" placeholder="Amount" defaultValue={coupon?.amount} {...register("amount", { required: true })} />
-                    <br /><br />
-                    <input type="number" placeholder="Price" defaultValue={coupon?.price} {...register("price", { required: true })} />
-                    <br /><br />
-                    <label>Select Category:</label><br />
-                    <select defaultValue={coupon?.category} {...register("category")} >
-                        {categoryList.map((item)=><option label={item} value={item}>{item}</option>)} 
-                    </select><br /><br/>
-                    <input type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image")} />
-                    <br/><br />
-                    <hr />
-                    <br/>
-                    <ButtonGroup variant="contained" fullWidth>
-                        <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
-                        <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/companyHome") }}>Cancel</Button>
-                    </ButtonGroup>
-                </form>
+                        <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
+                        {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                        <br /><br />
+                        <input type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description")} />
+                        <br /><br />
+                        <label>Start Date: </label>
+                        <input type="date" placeholder="Start Date" defaultValue={coupon?.start_date} {...register("start_date", { required: true })} />
+                        <br /><br />
+                        <label>End Date: </label>
+                        <input type="date" placeholder="End Date" defaultValue={coupon?.end_date} {...register("end_date", { required: true })} />
+                        <br /><br />
+                        <input type="number" placeholder="Amount" defaultValue={coupon?.amount} {...register("amount", { required: true })} />
+                        <br /><br />
+                        <input type="number" placeholder="Price" defaultValue={coupon?.price} {...register("price", { required: true })} />
+                        <br /><br />
+                        <label>Select Category:</label><br />
+                        <select defaultValue={coupon?.category} {...register("category")} >
+                            {categoryList.map((item)=><option label={item} value={item}>{item}</option>)} 
+                        </select><br /><br/>
+                        <input type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image")} />
+                        <br/><br />
+                        <hr />
+                        <br/>
+                        <ButtonGroup variant="contained" fullWidth>
+                            <Button type="submit" variant="contained" color="primary" startIcon={<UpdateIcon/>} >Update</Button>
+                            <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/companyHome") }}>Cancel</Button>
+                        </ButtonGroup>
+                    </form>
+                </div>
             </div>
         </div>
     );
