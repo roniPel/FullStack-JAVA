@@ -26,8 +26,6 @@ public class CompanyController {
     private final CompanyService companyService;
     private final JWT jwtUtil;
 
-    //Todo - insert JWT authentication check - part 3
-
     /**
      * Gets a company (according to the company ID belonging to the company logged on)
      * @return a 'Company' class item if succeeded, 'null' if failed or if no company matches the requirements.
@@ -35,15 +33,15 @@ public class CompanyController {
      */
     @GetMapping(value = {"/GetCompanyDetails"})
     @ResponseStatus(HttpStatus.OK)
-    public Company GetCompanyDetails() throws CompanyException {
-        return companyService.GetCompanyDetails();
-    }
-
-//    public ResponseEntity<?> GetCompanyDetails
-//            (@RequestHeader("Authorization") String jwt)
-//            throws SignatureException, CompanyException {
-//        return new ResponseEntity<>(companyService.GetCompanyDetails(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    public Company GetCompanyDetails() throws CompanyException {
+//        return companyService.GetCompanyDetails();
 //    }
+
+    public ResponseEntity<?> GetCompanyDetails
+            (@RequestHeader("Authorization") String jwt)
+            throws SignatureException, CompanyException {
+        return new ResponseEntity<>(companyService.GetCompanyDetails(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+    }
 
     /**
      * Adds a coupon to the DB - based on the details listed in the param
@@ -52,15 +50,15 @@ public class CompanyController {
      */
     @PostMapping(value = "/AddCoupon")
     @ResponseStatus(HttpStatus.CREATED)
-    public int AddCoupon(@Validated @RequestBody Coupon coupon) throws CompanyException{
-        return companyService.AddCoupon(coupon);
-    }
-
-//    public ResponseEntity<?> AddCustomer
-//            (@RequestHeader("Authorization") String jwt,@Validated @RequestBody Coupon coupon)
-//            throws SignatureException, CompanyException {
-//        return new ResponseEntity<>(companyService.AddCoupon(coupon), jwtUtil.getHeaders(jwt), HttpStatus.OK);
+//    public int AddCoupon(@Validated @RequestBody Coupon coupon) throws CompanyException{
+//        return companyService.AddCoupon(coupon);
 //    }
+
+    public ResponseEntity<?> AddCoupon
+            (@RequestHeader("Authorization") String jwt,@Validated @RequestBody Coupon coupon)
+            throws SignatureException, CompanyException {
+        return new ResponseEntity<>(companyService.AddCoupon(coupon), jwtUtil.getHeaders(jwt), HttpStatus.OK);
+    }
 
     /**
      * Update Coupon in DB - based on the details listed in the param
@@ -69,15 +67,15 @@ public class CompanyController {
      */
     @PutMapping("/UpdateCoupon/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void UpdateCoupon(@RequestBody Coupon coupon) throws CompanyException {
-        companyService.UpdateCoupon(coupon);
-    }
-
-//    public ResponseEntity<?> UpdateCoupon
-//            (@RequestHeader("Authorization") String jwt,@RequestBody Coupon coupon)
-//            throws SignatureException, CompanyException {
-//        return new ResponseEntity<>(companyService.UpdateCoupon(coupon),jwtUtil.getHeaders(jwt), HttpStatus.NO_CONTENT);
+//    public void UpdateCoupon(@RequestBody Coupon coupon) throws CompanyException {
+//        companyService.UpdateCoupon(coupon);
 //    }
+
+    public ResponseEntity<?> UpdateCoupon
+            (@RequestHeader("Authorization") String jwt,@RequestBody Coupon coupon)
+            throws SignatureException, CompanyException {
+        return new ResponseEntity<>(companyService.UpdateCoupon(coupon),jwtUtil.getHeaders(jwt), HttpStatus.NO_CONTENT);
+    }
 
     /**
      * Deletes a Coupon in DB - based on the details listed in the param
@@ -86,30 +84,31 @@ public class CompanyController {
      */
     @DeleteMapping("/DeleteCoupon/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void DeleteCoupon(@PathVariable int id) throws CompanyException {
-        companyService.DeleteCoupon(id);
-    }
-
-//    public ResponseEntity<?> DeleteCoupon
-//            (@RequestHeader("Authorization") String jwt, @PathVariable int id)
-//            throws SignatureException, CompanyException {
-//        return new ResponseEntity<>(companyService.DeleteCoupon(id),jwtUtil.getHeaders(jwt),HttpStatus.ACCEPTED);
+//    public void DeleteCoupon(@PathVariable int id) throws CompanyException {
+//        companyService.DeleteCoupon(id);
 //    }
+
+    public ResponseEntity<?> DeleteCoupon
+            (@RequestHeader("Authorization") String jwt, @PathVariable int id)
+            throws SignatureException, CompanyException {
+        return new ResponseEntity<>(companyService.DeleteCoupon(id),jwtUtil.getHeaders(jwt),HttpStatus.ACCEPTED);
+    }
 
     /**
      * Get all the coupons listed in DB for a specific company
      * @return coupon List if succeeded, null if no coupons were found.
      */
     @GetMapping(value = {"/GetCompanyCoupons"})
-    public List<Coupon> GetCompanyCoupons(){
-        return companyService.GetCompanyCoupons();
-    }
-
-//    public ResponseEntity<?> GetCompanyCoupons
-//            (@RequestHeader("Authorization") String jwt)
-//            throws SignatureException {
-//        return new ResponseEntity<>(companyService.GetCompanyCoupons(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+//    public List<Coupon> GetCompanyCoupons(){
+//        return companyService.GetCompanyCoupons();
 //    }
+
+    public ResponseEntity<?> GetCompanyCoupons
+            (@RequestHeader("Authorization") String jwt)
+            throws SignatureException {
+        return new ResponseEntity<>(companyService.GetCompanyCoupons(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+    }
 
     /**
      * Get all the coupons listed in DB for the logged on company belonging to a specific category
@@ -118,15 +117,15 @@ public class CompanyController {
      */
     @GetMapping("/GetCompanyCouponsByCategory/{category}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Coupon> GetCompanyCouponsByCategory(@PathVariable Category category) {
-        return companyService.GetCompanyCouponsByCategory(category);
-    }
-
-//    public ResponseEntity<?> GetCompanyCouponsByCategory
-//            (@RequestHeader("Authorization") String jwt,@PathVariable Category category)
-//            throws SignatureException {
-//        return new ResponseEntity<>(companyService.GetCompanyCouponsByCategory(category),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    public List<Coupon> GetCompanyCouponsByCategory(@PathVariable Category category) {
+//        return companyService.GetCompanyCouponsByCategory(category);
 //    }
+
+    public ResponseEntity<?> GetCompanyCouponsByCategory
+            (@RequestHeader("Authorization") String jwt,@PathVariable Category category)
+            throws SignatureException {
+        return new ResponseEntity<>(companyService.GetCompanyCouponsByCategory(category),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+    }
 
     /**
      * Get all the coupons listed in DB for the logged on company up to a max price
@@ -135,15 +134,15 @@ public class CompanyController {
      */
     @GetMapping("/GetCompanyCouponsByMaxPrice/{maxPrice}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Coupon> GetCompanyCouponsByMaxPrice(@PathVariable double maxPrice) {
-        return companyService.GetCompanyCouponsByMaxPrice(maxPrice);
-    }
-
-//    public ResponseEntity<?> GetCompanyCouponsByMaxPrice
-//            (@RequestHeader("Authorization") String jwt,@PathVariable double maxPrice)
-//            throws SignatureException {
-//        return new ResponseEntity<>(companyService.GetCompanyCouponsByMaxPrice(maxPrice),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    public List<Coupon> GetCompanyCouponsByMaxPrice(@PathVariable double maxPrice) {
+//        return companyService.GetCompanyCouponsByMaxPrice(maxPrice);
 //    }
+
+    public ResponseEntity<?> GetCompanyCouponsByMaxPrice
+            (@RequestHeader("Authorization") String jwt,@PathVariable double maxPrice)
+            throws SignatureException {
+        return new ResponseEntity<>(companyService.GetCompanyCouponsByMaxPrice(maxPrice),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+    }
 
     /**
      * Get one coupon
@@ -153,13 +152,13 @@ public class CompanyController {
      */
     @GetMapping("/GetOneCoupon/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Coupon GetOneCoupon(@PathVariable int id) throws CompanyException{
-        return companyService.GetOneCoupon(id);
-    }
-//    public ResponseEntity<?> GetOneCoupon
-//            (@RequestHeader("Authorization") String jwt, @PathVariable int id)
-//            throws AdminException, SignatureException, CompanyException {
-//        return new ResponseEntity<>(companyService.GetOneCoupon(id),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+//    public Coupon GetOneCoupon(@PathVariable int id) throws CompanyException{
+//        return companyService.GetOneCoupon(id);
 //    }
+    public ResponseEntity<?> GetOneCoupon
+            (@RequestHeader("Authorization") String jwt, @PathVariable int id)
+            throws AdminException, SignatureException, CompanyException {
+        return new ResponseEntity<>(companyService.GetOneCoupon(id),jwtUtil.getHeaders(jwt),HttpStatus.OK);
+    }
 
 }

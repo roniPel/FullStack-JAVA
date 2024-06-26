@@ -17,6 +17,7 @@ import { getCompanyCouponsFromDB } from "../../../../Utilities/getCompanyCoupons
 import { getCustomerCouponsFromDB } from "../../../../Utilities/getCustomerCouponsFromDB";
 import { getOneCouponAction } from "../../../../Redux/guestReducer";
 import { getOneCouponViaCompanyAction } from "../../../../Redux/companyReducer";
+import { getOneCouponViaCustomerAction } from "../../../../Redux/customerReducer";
 
 export function ViewCoupon(): JSX.Element {
     const params = useParams();
@@ -74,38 +75,104 @@ export function ViewCoupon(): JSX.Element {
         setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
         setCompany(couponStore.getState().auth.clientType===ClientType.Company);
         setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
-        // Get coupon info from DB
+        // Get coupon info from redux or DB
         getCoupon();
-        // Check whether coupon is in customer/company list (according to logged on client type)
+
+    },[])
+
+    function areIdsEqual(id1:number, id2:number) {
+        if(id1 === id2){
+            return true;
+        }
+        return false;
+    }
+
+    function getCoupon(){
+        let paramId = parseInt(params.couponID as string);
+        let storeId:number = -1;
+        let couponList:Coupon[] = []; 
         switch(couponStore.getState().auth.clientType){
             case (ClientType.Company as string):
+                // set id from redux
+                // Todo - get data from store via 'useSelector' ? (another way?)
+                storeId = couponStore.getState().company.coupon.id as string;
+                if(areIdsEqual(storeId,paramId))    // If coupon exists in redux
+                {
+                    // Update local coupon from redux
+                    setCoupon(couponStore.getState().company.coupon);
+                }
+                else if(couponStore.getState().company.companyCoupons.length !== 0)     // If coupon exists in redux coupon list
+                {
+                    console.log("Coupon exists in redux coupon list")
+                    couponList = [...couponStore.getState().company.companyCoupons];
+                    couponList.forEach((coup)=>{
+                        if(coup.id === paramId){
+                            setCoupon(coup)
+                        }
+                    })
+                }
+                else    // Coupon doesn't exists in redux at all - get from DB
+                {
+                    getCouponFromDB();
+                }
+                // update redux from local coupon
+                couponStore.dispatch(getOneCouponViaCompanyAction(coupon as Coupon));
                 // Company coupon check
                 checkCompanyList();
                 break;
             case (ClientType.Customer as string):
+                // set id from redux
+                storeId = couponStore.getState().customer.coupon.id;
+                if(areIdsEqual(storeId,paramId))    // If coupon exists in redux
+                {
+                    // Update local coupon from redux
+                    setCoupon(couponStore.getState().customer.coupon);
+                }
+                else if(couponStore.getState().customer.customerCoupons.length !== 0)   // If coupon exists in redux coupon list
+                {
+                    couponList = couponStore.getState().customer.customerCoupons;
+                    couponList.forEach((coup)=>{
+                        if(coup.id === paramId){
+                            setCoupon(coup)
+                        }
+                    })
+                }
+                else    // Coupon doesn't exists in redux at all - get from DB
+                {
+                    getCouponFromDB();
+                }
+                // update redux from local coupon
+                couponStore.dispatch(getOneCouponViaCustomerAction(coupon as Coupon));
                 // Customer coupon check
                 checkCustomerList();
                 break;
+            case (ClientType.Guest as string):
+                // set id from redux
+                storeId = couponStore.getState().guest.coupon.id;
+                if(areIdsEqual(storeId,paramId)){
+                    // Update local coupon from redux
+                    setCoupon(couponStore.getState().guest.coupon);
+                }
+                else {
+                    getCouponFromDB();
+                }
+                // update redux from local coupon
+                couponStore.dispatch(getOneCouponAction(coupon as Coupon));
+                break;
         }
+    }
 
-    },[])
-
-    function getCoupon(){
-        // check if we have coupon in redux
-        if(couponStore.getState().customer.coupon.id == parseInt(params.couponID as string)){
-            //console.log("Get from Store");
-            setCoupon(couponStore.getState().customer.coupon);
-        } else {
-            //console.log("Get from Backend");
-            // get coupon data from backend
-            axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
+    function getCouponFromDB() {
+        //console.log("Get from Backend");
+        // get coupon data from backend
+        axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
+            // Update local coupon with result
             setCoupon(res.data);
-            couponStore.dispatch(getOneCouponAction(res.data));
-            }).catch((err)=>{
-                console.log(err);
-                notify.error("There was a problem getting the requested data.");
-            });
-        }
+        })
+        .catch((err)=>{
+            console.log(err);
+            notify.error("There was a problem getting the requested data.");
+        });
     }
 
     return (

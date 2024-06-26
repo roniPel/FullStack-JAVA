@@ -9,6 +9,7 @@ import { Company } from "../../../../Models/Company";
 import { checkData } from "../../../../Utilities/checkData";
 import axios from "axios";
 import { getCompanyDetailsAction } from "../../../../Redux/companyReducer";
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function CompanyHome(): JSX.Element {
     const navigate = useNavigate();
@@ -21,10 +22,10 @@ export function CompanyHome(): JSX.Element {
             notify.error("You are not allowed!!!");
         }
         checkData();
-        // check if requested customer exists in redux
-        if(couponStore.getState().customer.customerDetails !== null){
-            // If redux is not empty but requested customer doesn't exist in it
-            if(couponStore.getState().customer.customerDetails.id === -1){
+        // check if requested company exists in redux
+        if(couponStore.getState().company.companyDetails !== null){
+            // If redux is not empty but requested company doesn't exist in it
+            if(couponStore.getState().company.companyDetails.id === -1){
                 getCompDetailsFromDB();
             } else {
                 setLocalCompany(couponStore.getState().company.companyDetails);
@@ -35,9 +36,9 @@ export function CompanyHome(): JSX.Element {
     },[]);
 
     function getCompDetailsFromDB(){
-        // console.log("Getting customer data from Backend")
-        // get customer data from backend
-        axios.get(`http://localhost:8080/Company/GetCompanyDetails`).then(res=>{
+        //console.log("Getting data from Backend")
+        // get data from backend
+        axiosJWT.get(`http://localhost:8080/Company/GetCompanyDetails`).then(res=>{
             setLocalCompany(res.data);
             couponStore.dispatch(getCompanyDetailsAction(res.data));
             }).catch((err)=>{

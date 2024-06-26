@@ -113,9 +113,9 @@ public class CompanyServiceImpl implements CompanyService {
     public Coupon GetOneCoupon(int id) throws CompanyException {
         Coupon coupon = couponRepo.findById(id).orElseThrow( ()->
                 new CompanyException(CompanyErrors.COUPON_DOES_NOT_EXIST));
-        if (coupon.getCompanyId()!= this.companyId) {
-            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
-        }
+//        if (coupon.getCompanyId() != this.companyId) {
+//            throw new CompanyException(CompanyErrors.COUPON_DOES_NOT_BELONG_TO_COMPANY);
+//        }
         return coupon;
     }
 

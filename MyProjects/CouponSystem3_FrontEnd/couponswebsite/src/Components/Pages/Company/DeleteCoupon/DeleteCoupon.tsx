@@ -12,6 +12,7 @@ import { deleteCouponAction, getOneCouponViaCompanyAction } from "../../../../Re
 import { Button, ButtonGroup, Typography } from "@mui/material";
 import  DeleteIcon  from "@mui/icons-material/Delete";
 import CancelIcon from '@mui/icons-material/Cancel';
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function DeleteCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ export function DeleteCoupon(): JSX.Element {
             //console.log("The Local saved coupon is: "+coupon);
         } else {
         // get data from backend
-            axios.get(`http://localhost:8080/Company/GetOneCoupon/${params.couponID}`).then(res=>{
+            axiosJWT.get(`http://localhost:8080/Company/GetOneCoupon/${params.couponID}`).then(res=>{
                 setCoupon(res.data);
                 couponStore.dispatch(getOneCouponViaCompanyAction(res.data));
                 }).catch((err)=>{
@@ -49,7 +50,7 @@ export function DeleteCoupon(): JSX.Element {
 
     function deleteCoupon() {
         //console.log(data);
-        axios.delete(`http://localhost:8080/Company/DeleteCoupon/${params.couponID}`)
+        axiosJWT.delete(`http://localhost:8080/Company/DeleteCoupon/${params.couponID}`)
         .then((res)=> {
             couponStore.dispatch(deleteCouponAction(parseInt(params.couponID as string)));
             notify.success("The coupon was deleted successfully.");

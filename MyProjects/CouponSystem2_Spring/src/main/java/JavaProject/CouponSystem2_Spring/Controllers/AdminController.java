@@ -28,8 +28,6 @@ public class AdminController{
     private final AdminService adminService;
     private final JWT jwtUtil;
 
-    //Todo - insert JWT authentication check - part 3
-
     /**
      * Get all Companies
      * @return A list of all companies in DB

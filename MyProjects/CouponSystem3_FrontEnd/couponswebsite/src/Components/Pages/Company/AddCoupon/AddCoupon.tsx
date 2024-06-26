@@ -12,6 +12,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
 import { Category } from "../../../../Models/Category";
 import { addCouponAction } from "../../../../Redux/companyReducer";
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ export function AddCoupon(): JSX.Element {
         //console.log(data);
         //Todo - check that the passwords are the same , if not, do not countinue
 
-        axios.post("http://localhost:8080/Company/AddCoupon",data)
+        axiosJWT.post("http://localhost:8080/Company/AddCoupon",data)
         .then((res)=>{
             console.log(res.data);
             //data.id = res.data.id;

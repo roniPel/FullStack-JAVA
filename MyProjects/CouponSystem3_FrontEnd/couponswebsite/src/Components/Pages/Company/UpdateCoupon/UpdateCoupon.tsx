@@ -13,6 +13,7 @@ import { getOneCouponViaCompanyAction, updateCouponAction } from "../../../../Re
 import { Category } from "../../../../Models/Category";
 import CancelIcon from '@mui/icons-material/Cancel';
 import UpdateIcon from '@mui/icons-material/Update';
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -38,13 +39,14 @@ export function UpdateCoupon(): JSX.Element {
 
     function getCoupon(){
         // check if we have data in redux
-        if(params.couponID && couponStore.getState().company.coupon.id === +params.couponID){
+        if(params.couponID && (couponStore.getState().company.coupon.id === +params.couponID)){
             console.log("Get from Store: \n",coupon);
             setCoupon(couponStore.getState().company.coupon);
         } else {
-        // console.log("Get from Backend")
+        //console.log("Get from Backend")
         // get data from backend
-        axios.get(`http://localhost:8080/Company/GetOneCoupon/${params.couponID}`).then(res=>{
+        axiosJWT.get(`http://localhost:8080/Company/GetOneCoupon/${params.couponID}`)
+        .then((res)=>{
             setCoupon(res.data);
             couponStore.dispatch(getOneCouponViaCompanyAction(res.data));
             }).catch((err)=>{
@@ -56,8 +58,8 @@ export function UpdateCoupon(): JSX.Element {
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
         data.id = parseInt(params.couponID as string);
-        console.log(data);
-        axios.put(`http://localhost:8080/Company/UpdateCoupon/${[params.couponID]}`,data)
+        //console.log(data);
+        axiosJWT.put(`http://localhost:8080/Company/UpdateCoupon/${[params.couponID]}`,data)
         .then((res)=> {
             couponStore.dispatch(updateCouponAction(data));
             notify.success("The coupon was updated successfully.");

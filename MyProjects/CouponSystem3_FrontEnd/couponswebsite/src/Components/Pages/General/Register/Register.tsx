@@ -10,6 +10,8 @@ import axiosJWT from "../../../../Utilities/axiosJWT";
 import { Customer } from "../../../../Models/Customer";
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
+import { couponStore } from "../../../../Redux/store";
+import { addCustomerAction } from "../../../../Redux/adminReducer";
 
 
 export function Register(): JSX.Element {
@@ -22,9 +24,11 @@ export function Register(): JSX.Element {
         //console.log(data);
         //Todo - check that the passwords are the same , if not, do not countinue
 
-        //todo, move to axios :)
         axiosJWT.post("http://localhost:8080/Admin/AddCustomer",data)
         .then((res)=>{
+            data.id = res.data;
+            // Update redux
+            couponStore.dispatch(addCustomerAction(data));
             notify.success("User was added successfully");
             navigate("/login");
         })
@@ -37,7 +41,7 @@ export function Register(): JSX.Element {
     return (
         <div className="Register">
             <div className="Box" style={{ width: "40%" }}>
-                <Typography variant="h4" className="HeadLine">User Register</Typography>
+                <Typography variant="h4" className="HeadLine">New Customer / Register</Typography>
                 <hr /><br/>
                 {/* <input type="text" placeholder="user name..." onChange={(args)=>setEmail(args.target.value)}/><br/><br/> */}
                 <form onSubmit={handleSubmit(onSubmit)}>
