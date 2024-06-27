@@ -3,11 +3,12 @@ import { Coupon } from "../Models/Coupon";
 import { couponStore } from "../Redux/store";
 import { getAllCompanyCouponsAction } from "../Redux/companyReducer";
 import notify from "./notify";
+import axiosJWT from "./axiosJWT";
 
 export const getCompanyCouponsFromDB = () => {
     let recivedList:Coupon[] = [];
     // Get coupons from DB
-    axios.get("http://localhost:8080/Company/GetCompanyCoupons")
+    axiosJWT.get("http://localhost:8080/Company/GetCompanyCoupons")
     .then(result=>{
         //console.log("Axios result: "+result)
     for (let index=0;index<result.data.length;index++){

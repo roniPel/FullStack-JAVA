@@ -10,13 +10,14 @@ import axios from "axios";
 import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
-import { Category } from "../../../../Models/Category";
 import { addCouponAction } from "../../../../Redux/companyReducer";
 import axiosJWT from "../../../../Utilities/axiosJWT";
+import { CouponCategory } from "../../../../Models/CouponCategory";
+import { EnumType } from "typescript";
 
 export function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
-    const [categoryList, setCategoryList] = useState<string[]>([]);
+    const [categoryList, setCategoryList] = useState<EnumType[]>([]);
 
     //declare our needed methods from react-hook-form
     const { register, handleSubmit, formState: { errors } } = useForm<Coupon>();
@@ -29,9 +30,10 @@ export function AddCoupon(): JSX.Element {
         }
         // create a list of categories from the 'Category' Model
         const catList: string[] = [];
-        Object.keys(Category).map((item)=>{catList.push(item)})
-        //console.log(catList);
-        setCategoryList(catList);
+        Object.keys(CouponCategory).map((item)=>{catList.push(item)})
+        let catList2: EnumType[] = Object.values(CouponCategory) as unknown as EnumType[];
+        console.log(catList2);
+        setCategoryList(catList2);
     },[])
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
@@ -43,7 +45,7 @@ export function AddCoupon(): JSX.Element {
         axiosJWT.post("http://localhost:8080/Company/AddCoupon",data)
         .then((res)=>{
             console.log(res.data);
-            //data.id = res.data.id;
+            data.id = res.data;
             couponStore.dispatch(addCouponAction(data));
             notify.success("Coupon was added successfully");
             navigate("/companyHome");
@@ -77,7 +79,7 @@ export function AddCoupon(): JSX.Element {
                     <br /><br />
                     <InputLabel id="Category-label">Select Category</InputLabel>
                     <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} fullWidth >
-                        {categoryList.map((item)=><MenuItem key={item} value={item}>{item}</MenuItem>)}
+                        {categoryList.map((item)=><MenuItem key={item.toString()} value={item.toString()}>{item.toString()}</MenuItem>)}
                     </Select>
                     <br/><br/>
                     <TextField type="text" label="Image" fullWidth {...register("image")} />

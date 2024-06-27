@@ -7,13 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Coupon } from "../../../../Models/Coupon";
 import { SubmitHandler, useForm } from "react-hook-form";
 import notify from "../../../../Utilities/notify";
-import axios from "axios";
-import { getOneCouponAction } from "../../../../Redux/guestReducer";
 import { getOneCouponViaCompanyAction, updateCouponAction } from "../../../../Redux/companyReducer";
-import { Category } from "../../../../Models/Category";
 import CancelIcon from '@mui/icons-material/Cancel';
 import UpdateIcon from '@mui/icons-material/Update';
 import axiosJWT from "../../../../Utilities/axiosJWT";
+import { CouponCategory } from "../../../../Models/CouponCategory";
 
 export function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -30,16 +28,17 @@ export function UpdateCoupon(): JSX.Element {
             notify.error("You are not allowed!!!");
         }
         getCoupon();
-        // create a list of categories from the 'Category' Model
+        // create a list of categories from the 'CouponCategory' Model
         const catList: string[] = [];
-        Object.keys(Category).map((item)=>{catList.push(item)})
+        Object.keys(CouponCategory).map((item)=>{catList.push(item)})
         //console.log(catList);
         setCategoryList(catList);
     },[]);
 
     function getCoupon(){
         // check if we have data in redux
-        if(params.couponID && (couponStore.getState().company.coupon.id === +params.couponID)){
+        let reduxCoupon = couponStore.getState().company.coupon;
+        if(params.couponID && (reduxCoupon!== undefined) && (reduxCoupon.id === +params.couponID)){
             console.log("Get from Store: \n",coupon);
             setCoupon(couponStore.getState().company.coupon);
         } else {

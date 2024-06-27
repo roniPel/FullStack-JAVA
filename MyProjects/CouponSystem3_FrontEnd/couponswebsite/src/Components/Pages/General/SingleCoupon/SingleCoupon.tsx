@@ -15,7 +15,7 @@ export function SingleCoupon(props: couponProps): JSX.Element {
     return (
         <div id="singleCoupon" className="SingleCoupon Box"
             onClick={()=>{
-                navigate(`/coupon/${props.coupon.id.valueOf()}`)
+                navigate(`/coupon/${props.coupon.id}`)
             }}
         >
             <Card sx={{ maxWidth: 345 }}>

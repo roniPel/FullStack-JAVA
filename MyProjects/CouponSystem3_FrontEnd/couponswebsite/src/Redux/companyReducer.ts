@@ -1,6 +1,7 @@
-import { Category } from "../Models/Category";
+
 import { Company } from "../Models/Company";
 import { Coupon } from "../Models/Coupon";
+import { CouponCategory } from "../Models/CouponCategory";
 
 //AppState - the data that exists on the application and Redux level
 export class CompanyState {
@@ -14,7 +15,7 @@ export class CompanyState {
     public coupon: Coupon = {
         id:-1,
         companyId:-1,
-        category: Category.Automotive,
+        category: CouponCategory.Automotive,
         title: "",
         description: "",
         start_date: "",

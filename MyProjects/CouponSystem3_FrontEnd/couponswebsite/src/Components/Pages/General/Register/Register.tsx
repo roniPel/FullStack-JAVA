@@ -12,13 +12,18 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
 import { couponStore } from "../../../../Redux/store";
 import { addCustomerAction } from "../../../../Redux/adminReducer";
+import { useEffect, useState } from "react";
 
 
 export function Register(): JSX.Element {
     const navigate = useNavigate();
-
-    //declare our needed methods from react-hook-form
+    const [isAdmin,setAdmin] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<Customer>();
+
+    useEffect(()=>{
+        setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
+    },[]);
+
     const onSubmit: SubmitHandler<Customer> = (data) => {
         data.id = 0;
         //console.log(data);
@@ -30,7 +35,11 @@ export function Register(): JSX.Element {
             // Update redux
             couponStore.dispatch(addCustomerAction(data));
             notify.success("User was added successfully");
-            navigate("/login");
+            if (isAdmin) {
+                navigate("/adminHome");
+            } else {                                                 
+                navigate("/login");
+            }
         })
         .catch(err=>{
             console.log(err);

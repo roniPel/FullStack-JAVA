@@ -1,4 +1,5 @@
 import { Coupon } from "../Models/Coupon";
+import { CouponCategory } from "../Models/CouponCategory";
 
 //AppState - the data that exists on the application and Redux level
 export class GuestState {
@@ -6,7 +7,7 @@ export class GuestState {
     public coupon: Coupon = {
         id:-1,
         companyId:-1,
-        category:'Food',
+        category: CouponCategory.Food,
         title:"",
         description:"",
         start_date:"",

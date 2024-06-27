@@ -39,7 +39,7 @@ export function CustomerHome(): JSX.Element {
     function getCustDetailsFromDB(){
         // console.log("Getting customer data from Backend")
         // get customer data from backend
-        axios.get(`http://localhost:8080/Customer/GetCustomerDetails`).then(res=>{
+        axiosJWT.get(`http://localhost:8080/Customer/GetCustomerDetails`).then(res=>{
             setLocalCustomer(res.data);
             couponStore.dispatch(getCustomerDetailsAction(res.data));
             }).catch((err)=>{

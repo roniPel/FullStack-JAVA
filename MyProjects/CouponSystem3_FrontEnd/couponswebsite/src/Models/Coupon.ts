@@ -1,9 +1,10 @@
-import { Category } from "./Category";
+
+import { CouponCategory } from "./CouponCategory";
 
 export class Coupon{
     public id:number;
     public companyId:number;
-    public category:Category;
+    public category:CouponCategory;
     public title:string;
     public description:string;
     public start_date:string;
@@ -12,7 +13,7 @@ export class Coupon{
     public price:number;
     public image:string;
 
-    constructor(id:number,companyId:number,category:Category,title:string,description:string,
+    constructor(id:number,companyId:number,category:CouponCategory,title:string,description:string,
         start_date:string,end_date:string,amount:number,price:number,image:string){
             this.id=id;
             this.companyId=companyId;

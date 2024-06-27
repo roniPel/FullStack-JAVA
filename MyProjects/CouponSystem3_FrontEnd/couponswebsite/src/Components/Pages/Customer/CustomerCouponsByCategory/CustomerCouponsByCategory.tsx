@@ -6,21 +6,18 @@ import { couponStore } from "../../../../Redux/store";
 import { ClientType } from "../../../../Models/ClientType";
 import notify from "../../../../Utilities/notify";
 import { checkData } from "../../../../Utilities/checkData";
-import axios from "axios";
 import { getAllCustomerCouponsAction } from "../../../../Redux/customerReducer";
 import { Button, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
-import { Category } from "../../../../Models/Category";
-import { getValue } from "@testing-library/user-event/dist/utils";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { SubmitHandler, useForm } from "react-hook-form";
+import axiosJWT from "../../../../Utilities/axiosJWT";
+import { CouponCategory } from "../../../../Models/CouponCategory";
 
 export function CustomerCouponsByCategory(): JSX.Element {
     const navigate = useNavigate();
     const [couponList, setList] = useState<Coupon[]>([]);
-    const [selectedCategory, setCategory] = useState<Category>();
+    const [selectedCategory, setCategory] = useState<CouponCategory>();
     const [filteredCouponList, setFilteredList] = useState<Coupon[]>([]);
-    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>();
 
     const uniqueCoupCategoryList = couponList.
         filter((obj, index, self) => index === 
@@ -28,7 +25,7 @@ export function CustomerCouponsByCategory(): JSX.Element {
     );
 
     const handleCatChange = (e: SelectChangeEvent<HTMLSelectElement>) => { 
-        setCategory(e.target.value as Category);
+        setCategory(e.target.value as unknown as CouponCategory);
         //console.log(e.target.value);
       };
 
@@ -49,7 +46,7 @@ export function CustomerCouponsByCategory(): JSX.Element {
         } else {    // If redux is empty
             let recivedList:Coupon[] = [];
             // Get coupons from DB
-            axios.get("http://localhost:8080/Customer/GetCustomerCoupons")
+            axiosJWT.get("http://localhost:8080/Customer/GetCustomerCoupons")
             .then(result=>{
                 //console.log("Axios result: "+result)
             for (let index=0;index<result.data.length;index++){
@@ -77,19 +74,7 @@ export function CustomerCouponsByCategory(): JSX.Element {
         }
     }
 
-    // function filterCategory(){
-    //     let myList:Coupon[] = [];
-    //     couponList.forEach((coup)=>{
-    //         if(coup.category === selectedCategory){
-    //             myList.push(coup);
-    //         }
-    //     })
-    //     setFilteredList(myList);
-    // }
-
-    const onSubmit: SubmitHandler<Coupon> = (data) => {
-        //console.log(data);
-        // Filter by category
+    function filterByCategory(){
         let myList:Coupon[] = [];
         couponList.forEach((coup)=>{
             if(coup.category === selectedCategory){
@@ -117,12 +102,10 @@ export function CustomerCouponsByCategory(): JSX.Element {
                 <div className="Select Category Box" style={{ width: "20%" }}>
                     <InputLabel id="Category-label">Select Category</InputLabel>
                     <Select labelId="Category-label" id="Category-label" label="Category" onChange={handleCatChange} fullWidth >
-                        {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)}
+                        {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category}</MenuItem>)}
                     </Select>
                     <br/><br/>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>}>Filter</Button>
-                    </form>
+                    <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>} onClick={filterByCategory}>Filter</Button>
                 </div>
                 <br/><br/>
                 <div className="Coupon List Result">

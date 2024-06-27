@@ -27,13 +27,12 @@ export function AdminHome(): JSX.Element {
                 <hr/>
                 <br/>
                 <div className="Grid-Parent">
-                    <form>
-                        <div className="Grid-Child">
-                            <TextField type="text" label="ID" variant="outlined" fullWidth margin="dense" value={couponStore.getState().auth.id} />
-                            <TextField type="text" label="Name" variant="outlined" fullWidth margin="dense" value={couponStore.getState().auth.name} />
-                            <TextField type="text" label="Type" variant="outlined" fullWidth margin="dense" value={couponStore.getState().auth.clientType} />
-                        </div>
-                    </form>
+                    <div className="Grid-Child">
+                        <Typography variant="h4" className="HeadLine">Name: {couponStore.getState().auth.name}</Typography>
+                        <br/>
+                        <Typography variant="h6" className="HeadLine">Type: {couponStore.getState().auth.clientType}</Typography>
+                        <br/>
+                    </div>
                 </div>
             </div>
         </div>

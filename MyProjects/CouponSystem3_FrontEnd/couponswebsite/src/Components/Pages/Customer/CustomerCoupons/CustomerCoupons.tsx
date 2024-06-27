@@ -9,6 +9,7 @@ import axios from "axios";
 import { getAllCustomerCouponsAction } from "../../../../Redux/customerReducer";
 import { Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function CustomerCoupons(): JSX.Element {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ export function CustomerCoupons(): JSX.Element {
         let recivedList:Coupon[] = [];
         //check if we have any coupons on our list - 0 length indicates that we don't have any coupons
         if (couponStore.getState().company.companyCoupons.length == 0) {
-            axios.get("http://localhost:8080/Customer/GetCustomerCoupons")
+            axiosJWT.get("http://localhost:8080/Customer/GetCustomerCoupons")
             .then(result=>{
                 //console.log("Axios result: "+result)
             for (let index=0;index<result.data.length;index++){

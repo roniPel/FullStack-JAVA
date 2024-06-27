@@ -12,6 +12,7 @@ import { Button, ButtonGroup, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import ShopIcon from '@mui/icons-material/Shop';
 import { getOneCouponViaCustomerAction, purchaseCouponAction } from "../../../../Redux/customerReducer";
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function PurchaseCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -32,13 +33,14 @@ export function PurchaseCoupon(): JSX.Element {
 
     function getCoupon(){
         // check if we have coupon in redux
-        if(couponStore.getState().customer.coupon.id == parseInt(params.couponID as string)){
+        let reduxCoupon:Coupon = couponStore.getState().customer.coupon;
+        if((reduxCoupon!==undefined) && reduxCoupon.id == parseInt(params.couponID as string)){
             //console.log("Get from Store");
             setCoupon(couponStore.getState().customer.coupon);
         } else {
             //console.log("Get from Backend");
             // get coupon data from backend
-            axios.get(`http://localhost:8080/Customer/GetOneCoupon/${params.couponID}`).then(res=>{
+            axiosJWT.get(`http://localhost:8080/Customer/GetOneCoupon/${params.couponID}`).then(res=>{
             setCoupon(res.data);
             couponStore.dispatch(getOneCouponViaCustomerAction(res.data));
             }).catch((err)=>{
@@ -50,7 +52,7 @@ export function PurchaseCoupon(): JSX.Element {
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
         //console.log(coupon);
-        axios.post(`http://localhost:8080/Customer/PurchaseCoupon`,coupon)
+        axiosJWT.post(`http://localhost:8080/Customer/PurchaseCoupon`,coupon)
         .then((res)=> {
             couponStore.dispatch(purchaseCouponAction(coupon as Coupon));
             notify.success("The coupon was purchased successfully.");

@@ -11,6 +11,7 @@ import { getAllCustomerCouponsAction } from "../../../../Redux/customerReducer";
 import { Button, TextField, Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import axiosJWT from "../../../../Utilities/axiosJWT";
 
 export function CustomerCouponsByPrice(): JSX.Element {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ export function CustomerCouponsByPrice(): JSX.Element {
         } else {    // If redux is empty
             let recivedList:Coupon[] = [];
             // Get coupons from DB
-            axios.get("http://localhost:8080/Customer/GetCustomerCoupons")
+            axiosJWT.get("http://localhost:8080/Customer/GetCustomerCoupons")
             .then(result=>{
                 //console.log("Axios result: "+result)
             for (let index=0;index<result.data.length;index++){

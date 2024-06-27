@@ -2,22 +2,21 @@ import { useNavigate } from "react-router-dom";
 import "./CompanyCouponsByCategory.css";
 import { useEffect, useState } from "react";
 import { Coupon } from "../../../../Models/Coupon";
-import { Category } from "../../../../Models/Category";
 import { couponStore } from "../../../../Redux/store";
 import { ClientType } from "../../../../Models/ClientType";
 import notify from "../../../../Utilities/notify";
 import { checkData } from "../../../../Utilities/checkData";
-import axios from "axios";
 import { getAllCompanyCouponsAction } from "../../../../Redux/companyReducer";
 import { Button, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import axiosJWT from "../../../../Utilities/axiosJWT";
+import { CouponCategory } from "../../../../Models/CouponCategory";
 
 export function CompanyCouponsByCategory(): JSX.Element {
     const navigate = useNavigate();
     const [couponList, setList] = useState<Coupon[]>([]);
-    const [selectedCategory, setCategory] = useState<Category>();
+    const [selectedCategory, setCategory] = useState<CouponCategory>();
     const [filteredCouponList, setFilteredList] = useState<Coupon[]>([]);
 
     const uniqueCoupCategoryList = couponList.
@@ -26,7 +25,7 @@ export function CompanyCouponsByCategory(): JSX.Element {
     );
 
     const handleCatChange = (e: SelectChangeEvent<HTMLSelectElement>) => { 
-        setCategory(e.target.value as Category);
+        setCategory(e.target.value as unknown as CouponCategory);
         //console.log(e.target.value);
       };
     
@@ -96,7 +95,7 @@ export function CompanyCouponsByCategory(): JSX.Element {
                     <div className="Select Category Box" style={{ width: "20%" }}>
                         <InputLabel id="Category-label">Select Category</InputLabel>
                         <Select labelId="Category-label" id="Category-label" label="Category" onChange={handleCatChange} fullWidth >
-                            {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category as string}</MenuItem>)}
+                            {uniqueCoupCategoryList.map((item)=><MenuItem key={item.id} value={item.category}>{item.category}</MenuItem>)}
                         </Select>
                         <br/><br/>
                         <Button type="submit" variant="contained" color="primary" startIcon={<FilterAltIcon/>} onClick={filterByCategory}>Filter</Button>

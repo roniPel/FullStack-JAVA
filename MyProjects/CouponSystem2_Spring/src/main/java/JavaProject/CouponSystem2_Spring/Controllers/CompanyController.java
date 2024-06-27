@@ -104,8 +104,7 @@ public class CompanyController {
 //        return companyService.GetCompanyCoupons();
 //    }
 
-    public ResponseEntity<?> GetCompanyCoupons
-            (@RequestHeader("Authorization") String jwt)
+    public ResponseEntity<?> GetCompanyCoupons (@RequestHeader("Authorization") String jwt)
             throws SignatureException {
         return new ResponseEntity<>(companyService.GetCompanyCoupons(),jwtUtil.getHeaders(jwt),HttpStatus.OK);
     }

@@ -95,15 +95,16 @@ export function ViewCoupon(): JSX.Element {
             case (ClientType.Company as string):
                 // set id from redux
                 // Todo - get data from store via 'useSelector' ? (another way?)
-                storeId = couponStore.getState().company.coupon.id as string;
+                storeId = (coupon !== undefined)? couponStore.getState().company.coupon.id:-1;
                 if(areIdsEqual(storeId,paramId))    // If coupon exists in redux
                 {
+                    //console.log("Get coupon from redux");
                     // Update local coupon from redux
                     setCoupon(couponStore.getState().company.coupon);
                 }
                 else if(couponStore.getState().company.companyCoupons.length !== 0)     // If coupon exists in redux coupon list
                 {
-                    console.log("Coupon exists in redux coupon list")
+                    //console.log("Coupon exists in redux coupon list")
                     couponList = [...couponStore.getState().company.companyCoupons];
                     couponList.forEach((coup)=>{
                         if(coup.id === paramId){
@@ -122,23 +123,25 @@ export function ViewCoupon(): JSX.Element {
                 break;
             case (ClientType.Customer as string):
                 // set id from redux
-                storeId = couponStore.getState().customer.coupon.id;
+                // console.log("Inside 'customer' switch, coupon from store: "+couponStore.getState().customer.coupon);
+                storeId = (couponStore.getState().company.coupon !== undefined)? couponStore.getState().company.coupon.id:-1;
                 if(areIdsEqual(storeId,paramId))    // If coupon exists in redux
                 {
                     // Update local coupon from redux
                     setCoupon(couponStore.getState().customer.coupon);
                 }
-                else if(couponStore.getState().customer.customerCoupons.length !== 0)   // If coupon exists in redux coupon list
+                else if(couponStore.getState().customer.customerCoupons.length !== 0)   // If redux coupon list is not empty
                 {
                     couponList = couponStore.getState().customer.customerCoupons;
                     couponList.forEach((coup)=>{
                         if(coup.id === paramId){
-                            setCoupon(coup)
+                            setCoupon(coup);
                         }
                     })
                 }
-                else    // Coupon doesn't exists in redux at all - get from DB
+                if (coupon === undefined)   // Coupon doesn't exists in redux at all - get from DB
                 {
+                    //console.log("Get coupon from DB");
                     getCouponFromDB();
                 }
                 // update redux from local coupon

@@ -27,9 +27,13 @@
 
 
 TODO: 
-1. BE - change controllers in Customer and Company to match JWT requirements
+1. DONE
+   BE - change controllers in Customer and Company to match JWT requirements (Company - partially done, customer - not done)
    FE - Convert axios to axiosJWT (in all Cusomter and Company actions)
-2. Change 'Category' from const to enum (change all filtering accodringly)
-3. Don't save all coupons in 'guest' reducer - change 'Get all coupons' page, change reducer
-4. Check all 'Todo's in BE and FE
-5. Before turning in, go to BE, Clr_FillDBWithMockData, and uncomment the '@Component'
+2. DONE
+   Change 'Category' from const to enum (change all filtering accodringly)
+3. DONE
+   Don't save all coupons in 'guest' reducer - change 'Get all coupons' page, change reducer
+4. 'ViewCoupon' - check why always getting data from DB and not redux
+5. Check all 'Todo's in BE and FE
+6. Before turning in, go to BE, Clr_FillDBWithMockData, and uncomment the '@Component'
