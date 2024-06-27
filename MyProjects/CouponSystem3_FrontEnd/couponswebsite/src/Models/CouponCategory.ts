@@ -1,16 +1,16 @@
 enum CouponCategory{
-    Food,
-    Electricity,
-    Restaurant,
-    Vacation,
-    Toys,
-    Automotive,
-    Tires,
-    BabyToddler,
-    Computers,
-    CellPhones,
-    Televisions,
-    VideoGamesConsoles,
+    Food='Food',
+    Electricity='Electricity',
+    Restaurant='Restaurant',
+    Vacation='Vacation',
+    Toys='Toys',
+    Automotive='Automotive',
+    Tires='Tires',
+    BabyToddler='BabyToddler',
+    Computers='Computers',
+    CellPhones='CellPhones',
+    Televisions='Televisions',
+    VideoGamesConsoles='VideoGamesConsoles',
 }
 
   export {CouponCategory}

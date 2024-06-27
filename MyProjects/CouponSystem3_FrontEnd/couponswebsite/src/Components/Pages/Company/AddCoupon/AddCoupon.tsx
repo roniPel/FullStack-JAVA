@@ -17,7 +17,6 @@ import { EnumType } from "typescript";
 
 export function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
-    const [categoryList, setCategoryList] = useState<EnumType[]>([]);
 
     //declare our needed methods from react-hook-form
     const { register, handleSubmit, formState: { errors } } = useForm<Coupon>();
@@ -29,11 +28,10 @@ export function AddCoupon(): JSX.Element {
             notify.error("You are not allowed!!!");
         }
         // create a list of categories from the 'Category' Model
-        const catList: string[] = [];
-        Object.keys(CouponCategory).map((item)=>{catList.push(item)})
-        let catList2: EnumType[] = Object.values(CouponCategory) as unknown as EnumType[];
-        console.log(catList2);
-        setCategoryList(catList2);
+        let catList = CouponCategory;
+        // EnumType[] = Object.values(CouponCategory) as unknown as EnumType[];
+        // console.log(catList);
+        //setCategoryList(catList.keys(),catList.values());
     },[])
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
@@ -79,7 +77,7 @@ export function AddCoupon(): JSX.Element {
                     <br /><br />
                     <InputLabel id="Category-label">Select Category</InputLabel>
                     <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} fullWidth >
-                        {categoryList.map((item)=><MenuItem key={item.toString()} value={item.toString()}>{item.toString()}</MenuItem>)}
+                        {Object.entries(CouponCategory).map(([key,val])=><MenuItem key={key} value={val}>{val}</MenuItem>)}
                     </Select>
                     <br/><br/>
                     <TextField type="text" label="Image" fullWidth {...register("image")} />

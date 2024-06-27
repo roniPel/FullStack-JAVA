@@ -30,7 +30,7 @@ TODO:
 1. DONE
    BE - change controllers in Customer and Company to match JWT requirements (Company - partially done, customer - not done)
    FE - Convert axios to axiosJWT (in all Cusomter and Company actions)
-2. DONE
+2. Partially - need to correct 'AddCoupon'
    Change 'Category' from const to enum (change all filtering accodringly)
 3. DONE
    Don't save all coupons in 'guest' reducer - change 'Get all coupons' page, change reducer

@@ -12,6 +12,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import UpdateIcon from '@mui/icons-material/Update';
 import axiosJWT from "../../../../Utilities/axiosJWT";
 import { CouponCategory } from "../../../../Models/CouponCategory";
+import { Key } from "@mui/icons-material";
 
 export function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -19,7 +20,10 @@ export function UpdateCoupon(): JSX.Element {
     const params = useParams();
     const [categoryList, setCategoryList] = useState<string[]>([]);
 
-    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>();
+    const { register, watch, handleSubmit, formState: {errors} } = useForm<Coupon>({
+        resetOptions: { keepDefaultValues: true }
+    });
+    const watchAllFields = watch();
     
     useEffect(()=>{
         // Check if user has viewing permissions
@@ -33,26 +37,28 @@ export function UpdateCoupon(): JSX.Element {
         Object.keys(CouponCategory).map((item)=>{catList.push(item)})
         //console.log(catList);
         setCategoryList(catList);
+        // Check values for watch
     },[]);
 
     function getCoupon(){
         // check if we have data in redux
         let reduxCoupon = couponStore.getState().company.coupon;
-        if(params.couponID && (reduxCoupon!== undefined) && (reduxCoupon.id === +params.couponID)){
-            console.log("Get from Store: \n",coupon);
-            setCoupon(couponStore.getState().company.coupon);
+        if(params.couponID && (reduxCoupon !== undefined) && (reduxCoupon.id === +params.couponID)){
+            //console.log("Get from Store: \n",coupon);
         } else {
         //console.log("Get from Backend")
         // get data from backend
         axiosJWT.get(`http://localhost:8080/Company/GetOneCoupon/${params.couponID}`)
         .then((res)=>{
-            setCoupon(res.data);
+            setCoupon(res.data as Coupon);
             couponStore.dispatch(getOneCouponViaCompanyAction(res.data));
             }).catch((err)=>{
                 console.log(err);
                 notify.error("There was a problem getting the requested data.");
             });
         }
+        setCoupon(couponStore.getState().company.coupon as Coupon);
+        console.log("The coupon is: "+coupon);
     }
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
@@ -104,24 +110,26 @@ export function UpdateCoupon(): JSX.Element {
                         <TextField type="text" label="Image" fullWidth {...register("image")} />
                         <br/> */}
 
-                        <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
+                        <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title")} />
                         {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                         <br /><br />
                         <input type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description")} />
                         <br /><br />
                         <label>Start Date: </label>
-                        <input type="date" placeholder="Start Date" defaultValue={coupon?.start_date} {...register("start_date", { required: true })} />
+                        <input type="date" placeholder="Start Date" defaultValue={coupon?.start_date} {...register("start_date")} />
                         <br /><br />
                         <label>End Date: </label>
-                        <input type="date" placeholder="End Date" defaultValue={coupon?.end_date} {...register("end_date", { required: true })} />
+                        <input type="date" placeholder="End Date" defaultValue={coupon?.end_date} {...register("end_date")} />
                         <br /><br />
-                        <input type="number" placeholder="Amount" defaultValue={coupon?.amount} {...register("amount", { required: true })} />
+                        <input type="number" placeholder="Amount" defaultValue={coupon?.amount} {...register("amount")} />
                         <br /><br />
-                        <input type="number" placeholder="Price" defaultValue={coupon?.price} {...register("price", { required: true })} />
+                        <input type="number" placeholder="Price" defaultValue={coupon?.price} {...register("price")} />
                         <br /><br />
                         <label>Select Category:</label><br />
-                        <select defaultValue={coupon?.category} {...register("category")} >
-                            {categoryList.map((item)=><option label={item} value={item}>{item}</option>)} 
+                        <select 
+                            // Object.entries(CouponCategory).filter(([key,val]) => key === {coupon?.category as string}) } 
+                        {...register("category")} >
+                            {Object.entries(CouponCategory).map(([key,val])=><option key={val} value={val}>{val}</option>)} 
                         </select><br /><br/>
                         <input type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image")} />
                         <br/><br />
