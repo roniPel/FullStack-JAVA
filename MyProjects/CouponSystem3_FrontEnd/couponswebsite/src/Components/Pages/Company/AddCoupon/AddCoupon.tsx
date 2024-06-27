@@ -66,17 +66,17 @@ export function AddCoupon(): JSX.Element {
                     <TextField type="text" label="Description" fullWidth {...register("description")} />
                     <br /><br />
                     <InputLabel id="startDate">Start Date</InputLabel>
-                    <TextField required id = "startDate" type="date" fullWidth {...register("start_date")} />
+                    <TextField required id = "startDate" type="date" fullWidth {...register("start_date",{required:true})} />
                     <br /><br />
                     <InputLabel id="endDate">End Date</InputLabel>
-                    <TextField required id = "endDate" type="date" fullWidth {...register("end_date")} />
+                    <TextField required id = "endDate" type="date" fullWidth {...register("end_date",{required:true})} />
                     <br /><br />
                     <TextField required type="number" label="Amount" fullWidth {...register("amount", { required: true })} />
                     <br /><br />
-                    <TextField type="number" label="Price" fullWidth {...register("price", { required: true })} />
+                    <TextField required type="number" label="Price" fullWidth {...register("price", { required: true })} />
                     <br /><br />
                     <InputLabel id="Category-label">Select Category</InputLabel>
-                    <Select labelId="Category-label" id="Category-label" label="Category" {...register("category")} fullWidth >
+                    <Select required labelId="Category-label" id="Category-label" label="Category" {...register("category", {required:true})} fullWidth >
                         {Object.entries(CouponCategory).map(([key,val])=><MenuItem key={key} value={val}>{val}</MenuItem>)}
                     </Select>
                     <br/><br/>

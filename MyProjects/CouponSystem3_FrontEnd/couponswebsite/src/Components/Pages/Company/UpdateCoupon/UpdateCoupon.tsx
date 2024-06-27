@@ -110,28 +110,28 @@ export function UpdateCoupon(): JSX.Element {
                         <TextField type="text" label="Image" fullWidth {...register("image")} />
                         <br/> */}
 
-                        <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title")} />
+                        <input type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
                         {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                         <br /><br />
-                        <input type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description")} />
+                        <input type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description", {required:true})} />
                         <br /><br />
                         <label>Start Date: </label>
-                        <input type="date" placeholder="Start Date" defaultValue={coupon?.start_date} {...register("start_date")} />
+                        <input type="date" placeholder="Start Date" defaultValue={coupon?.start_date} {...register("start_date", { required: true })} />
                         <br /><br />
                         <label>End Date: </label>
-                        <input type="date" placeholder="End Date" defaultValue={coupon?.end_date} {...register("end_date")} />
+                        <input type="date" placeholder="End Date" defaultValue={coupon?.end_date} {...register("end_date", { required: true })} />
                         <br /><br />
-                        <input type="number" placeholder="Amount" defaultValue={coupon?.amount} {...register("amount")} />
+                        <input type="number" placeholder="Amount" defaultValue={coupon?.amount} {...register("amount", { required: true })} />
                         <br /><br />
-                        <input type="number" placeholder="Price" defaultValue={coupon?.price} {...register("price")} />
+                        <input type="number" placeholder="Price" defaultValue={coupon?.price} {...register("price", { required: true })} />
                         <br /><br />
                         <label>Select Category:</label><br />
                         <select 
                             // Object.entries(CouponCategory).filter(([key,val]) => key === {coupon?.category as string}) } 
-                        {...register("category")} >
+                        {...register("category", {required:true})} >
                             {Object.entries(CouponCategory).map(([key,val])=><option key={val} value={val}>{val}</option>)} 
                         </select><br /><br/>
-                        <input type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image")} />
+                        <input type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image", {required:true})} />
                         <br/><br />
                         <hr />
                         <br/>
