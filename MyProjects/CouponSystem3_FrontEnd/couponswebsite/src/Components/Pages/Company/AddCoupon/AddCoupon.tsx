@@ -6,14 +6,13 @@ import { useEffect, useState } from "react";
 import { couponStore } from "../../../../Redux/store";
 import notify from "../../../../Utilities/notify";
 import { ClientType } from "../../../../Models/ClientType";
-import axios from "axios";
 import { Button, ButtonGroup, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
 import { addCouponAction } from "../../../../Redux/companyReducer";
 import axiosJWT from "../../../../Utilities/axiosJWT";
 import { CouponCategory } from "../../../../Models/CouponCategory";
-import { EnumType } from "typescript";
+import { Category } from "@mui/icons-material";
 
 export function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -75,8 +74,9 @@ export function AddCoupon(): JSX.Element {
                     <br /><br />
                     <TextField required type="number" label="Price" fullWidth {...register("price", { required: true })} />
                     <br /><br />
-                    <InputLabel id="Category-label">Select Category</InputLabel>
-                    <Select required labelId="Category-label" id="Category-label" label="Category" {...register("category", {required:true})} fullWidth >
+                    <InputLabel id="category-label">Select Category</InputLabel>
+                    <Select required labelId="category-label" id="Category" label="Select Category" {...register("category", {required:true})} fullWidth >
+                        <MenuItem disabled selected> -- select a category -- </MenuItem>
                         {Object.entries(CouponCategory).map(([key,val])=><MenuItem key={key} value={val}>{val}</MenuItem>)}
                     </Select>
                     <br/><br/>
