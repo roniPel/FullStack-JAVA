@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./AddCoupon.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Coupon } from "../../../../Models/Coupon";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { couponStore } from "../../../../Redux/store";
 import notify from "../../../../Utilities/notify";
 import { ClientType } from "../../../../Models/ClientType";
@@ -12,7 +12,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { addCouponAction } from "../../../../Redux/companyReducer";
 import axiosJWT from "../../../../Utilities/axiosJWT";
 import { CouponCategory } from "../../../../Models/CouponCategory";
-import { Category } from "@mui/icons-material";
 
 export function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
@@ -26,11 +25,6 @@ export function AddCoupon(): JSX.Element {
             navigate("/login");
             notify.error("You are not allowed!!!");
         }
-        // create a list of categories from the 'Category' Model
-        let catList = CouponCategory;
-        // EnumType[] = Object.values(CouponCategory) as unknown as EnumType[];
-        // console.log(catList);
-        //setCategoryList(catList.keys(),catList.values());
     },[])
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
@@ -60,7 +54,7 @@ export function AddCoupon(): JSX.Element {
                 <hr /><br/>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField required type="text" label="Title" fullWidth {...register("title",{required:true})} />
-                    {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                    {errors.title?.type === "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                     <br /><br />
                     <TextField type="text" label="Description" fullWidth {...register("description")} />
                     <br /><br />

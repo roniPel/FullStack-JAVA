@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { Button, ButtonGroup, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import "./UpdateCoupon.css";
 import { useEffect, useState } from "react";
 import { couponStore } from "../../../../Redux/store";
@@ -17,9 +17,9 @@ export function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
     const [coupon, setCoupon] = useState<Coupon>();
     const params = useParams();
-    const [category, setCategory] = useState<CouponCategory>();
+    
 
-    const { register, watch, handleSubmit, setValue, formState: {errors} } = useForm<Coupon>({
+    const { register, handleSubmit, formState: {errors} } = useForm<Coupon>({
         resetOptions: { keepDefaultValues: true }
     });
     
@@ -30,7 +30,6 @@ export function UpdateCoupon(): JSX.Element {
             notify.error("You are not allowed!!!");
         }
         getCoupon();
-        
     },[]);
 
     function getCoupon(){
@@ -70,11 +69,6 @@ export function UpdateCoupon(): JSX.Element {
         })
     }
 
-    const handleCatChange = (e: SelectChangeEvent<HTMLSelectElement>) => { 
-        setCategory(e.target.value as unknown as CouponCategory);
-        //console.log(e.target.value);
-      };
-
     return (
         <div>
             <Typography variant="h4" className="HeadLine">Update Coupon</Typography>
@@ -108,7 +102,7 @@ export function UpdateCoupon(): JSX.Element {
                         <br/> */}
                         <label>Title: </label>
                         <input required type="text" placeholder="Title" defaultValue={coupon?.title} {...register("title",{required:true})} />
-                        {errors.title?.type == "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                        {errors.title?.type === "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
                         <br /><br />
                         <label>Description: </label>
                         <input required type="text" placeholder="Description" defaultValue={coupon?.description} {...register("description", {required:true})} />
@@ -136,7 +130,7 @@ export function UpdateCoupon(): JSX.Element {
                         <Select labelId="Category-label" id="Category-label" label="Category" defaultValue={coupon?.category} {...register("category", {required:true})} fullWidth >
                             {Object.entries(CouponCategory).map(([key,val])=><MenuItem key={key} value={val}>{val}</MenuItem>)}
                         </Select>
-                        {errors.category?.type == "required" && <><br /><span style={{ color: "red" }}>Category is required</span></>}
+                        {errors.category?.type === "required" && <><br /><span style={{ color: "red" }}>Category is required</span></>}
                         <br/><br/>
                         <label>Image: </label>
                         <input required type="text" placeholder="Image" defaultValue={coupon?.image} {...register("image", {required:true})} />
