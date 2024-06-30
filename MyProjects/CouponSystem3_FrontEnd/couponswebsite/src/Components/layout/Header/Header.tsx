@@ -7,13 +7,10 @@ import { couponStore } from "../../../Redux/store";
 import { logoutAction } from "../../../Redux/authReducer";
 import axios from "axios";
 import notify from "../../../Utilities/notify";
-import LoginIcon from '@mui/icons-material/Login';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { clearCompanyStateAction } from "../../../Redux/companyReducer";
 import { clearAdminStateAction } from "../../../Redux/adminReducer";
 import { clearCustomerStateAction } from "../../../Redux/customerReducer";
-import { ClientType } from "../../../Models/ClientType";
 import { clearGuestStateAction } from "../../../Redux/guestReducer";
 
 export function logoutBackend():void{

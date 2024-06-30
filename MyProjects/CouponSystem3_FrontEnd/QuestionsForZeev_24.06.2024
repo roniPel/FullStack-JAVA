@@ -34,6 +34,8 @@ TODO:
    Change 'Category' from const to enum (change all filtering accodringly)
 3. DONE
    Don't save all coupons in 'guest' reducer - change 'Get all coupons' page, change reducer
-4. 'ViewCoupon' - check why always getting data from DB and not redux
-5. Check all 'Todo's in BE and FE
-6. Before turning in, go to BE, Clr_FillDBWithMockData, and uncomment the '@Component'
+4. NO
+   Add Pictures to some of the coupons (optional)
+5. 'ViewCoupon' - check why always getting data from DB and not redux
+6. Check all 'Todo's in BE and FE
+7. Before turning in, go to BE, Clr_FillDBWithMockData, and uncomment the '@Component'
