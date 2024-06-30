@@ -86,7 +86,7 @@ export function PurchaseCoupon(): JSX.Element {
                         <div className="Grid-Child">
                             <ButtonGroup variant="contained" fullWidth>
                                 <Button type="submit" variant="contained" color="success" startIcon={<ShopIcon/>} >Purchase</Button>
-                                <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/companyHome") }}>Cancel</Button>
+                                <Button variant="contained" color="error" startIcon={<CancelIcon/>} onClick={() => { navigate("/customerHome") }}>Cancel</Button>
                             </ButtonGroup>
                         </div>
                         <br/>

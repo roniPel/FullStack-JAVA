@@ -5,7 +5,6 @@ import { Coupon } from "../../../../Models/Coupon";
 import { couponStore } from "../../../../Redux/store";
 import { ClientType } from "../../../../Models/ClientType";
 import notify from "../../../../Utilities/notify";
-import axios from "axios";
 import { getAllCustomerCouponsAction } from "../../../../Redux/customerReducer";
 import { Typography } from "@mui/material";
 import { SingleCoupon } from "../../General/SingleCoupon/SingleCoupon";
@@ -58,6 +57,7 @@ export function CustomerCoupons(): JSX.Element {
         } else {
             setList(couponStore.getState().customer.customerCoupons);
         }
+        setList(couponStore.getState().customer.customerCoupons);
     }
 
     return (

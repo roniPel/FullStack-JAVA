@@ -1,6 +1,7 @@
 package JavaProject.CouponSystem2_Spring.Controllers;
 
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
 import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
 import JavaProject.CouponSystem2_Spring.Services.GuestService.GuestService;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,11 @@ public class GuestController {
     @GetMapping(value = {"/GetAllCoupons"})
     public List<Coupon> GetAllCoupons(){
         return guestService.GetAllCoupons();
+    }
+
+    @PostMapping(value = {"/AddCustomer"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void AddCustomer(@Validated @RequestBody Customer customer) throws GuestException {
+        guestService.AddCustomer(customer);
     }
 }

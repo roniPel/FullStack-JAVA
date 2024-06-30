@@ -1,6 +1,8 @@
 package JavaProject.CouponSystem2_Spring.Services.GuestService;
 
 import JavaProject.CouponSystem2_Spring.Beans.Coupon;
+import JavaProject.CouponSystem2_Spring.Beans.Customer;
+import JavaProject.CouponSystem2_Spring.Exceptions.AdminExceptions.AdminException;
 import JavaProject.CouponSystem2_Spring.Exceptions.GuestExceptions.GuestException;
 
 import java.util.List;
@@ -22,5 +24,7 @@ public interface GuestService {
      * @throws GuestException If we get any exception.  Details are provided
      */
     Coupon GetCouponById(int couponId) throws GuestException;
+
+    int AddCustomer(Customer customer) throws GuestException;
 
 }

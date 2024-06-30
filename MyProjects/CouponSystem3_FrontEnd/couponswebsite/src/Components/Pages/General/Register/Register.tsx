@@ -28,23 +28,36 @@ export function Register(): JSX.Element {
         data.id = 0;
         //console.log(data);
         //Todo - check that the passwords are the same , if not, do not countinue
-
-        axiosJWT.post("http://localhost:8080/Admin/AddCustomer",data)
+        if(isAdmin){
+            axiosJWT.post("http://localhost:8080/Admin/AddCustomer",data)
         .then((res)=>{
             data.id = res.data;
             // Update redux
             couponStore.dispatch(addCustomerAction(data));
             notify.success("User was added successfully");
-            if (isAdmin) {
-                navigate("/adminHome");
-            } else {                                                 
-                navigate("/login");
-            }
+            navigate("/adminHome");
+
         })
         .catch(err=>{
             console.log(err);
             notify.error("There was a problem saving the user");
         });
+        }
+        else {
+            axios.post("http://localhost:8080/Guest/AddCustomer", data)
+            .then((res)=>{
+                data.id = res.data;
+                // No need to update redux, since user is 'guest'
+                notify.success("User was added successfully");
+                navigate("/login");
+                
+            })
+            .catch(err=>{
+                console.log(err);
+                notify.error("There was a problem saving the user");
+            });
+        }
+        
     }
 
     return (

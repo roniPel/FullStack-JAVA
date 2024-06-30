@@ -9,7 +9,9 @@ public enum GuestErrors {
     EMPTY_OR_NULL("\nERROR! The relevant table/field is empty or null. \n"),
     COUPON_AMOUNT_IS_ZERO("\nERROR! There are not enough coupons in the system in order to perform this purchase. \n"),
     COUPON_DATE_EXPIRED("\nERROR! The coupon date has expired. \n"),
-    NO_PERMISSIONS("\nERROR! User has insufficient permissions for the requested action. \n");
+    NO_PERMISSIONS("\nERROR! User has insufficient permissions for the requested action. \n"),
+    DUPLICATE_ENTRY("\nERROR! The value inserted (id/ name/ email/ user) already exists in the system. \n"),
+    CUSTOMER_EMAIL_ALREADY_EXISTS("\nERROR! The customer email already exists in the system. \n");
 
     private String message;
     /**

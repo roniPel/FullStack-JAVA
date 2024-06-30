@@ -90,11 +90,13 @@ export function Logon(): JSX.Element {
                 <hr /><br/>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="user email" variant="outlined" {
-                        ...register("userEmail", { required: true })} fullWidth />
-                    {errors.userEmail && <span style={{ color: "red" }}>Email is required</span>}
+                        ...register("userEmail", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i })} fullWidth />
+                    {/* {errors.userEmail && <span style={{ color: "red" }}>Email is required</span>} */}
+                    {errors.userEmail ? <span style={{ color: "red" }}>Invalid email address</span> : null}
                     <br /><br />
                     <TextField label="user password" type="password" variant="outlined" {
-                        ...register("userPass", { required: true})} fullWidth />
+                        ...register("userPass", { required: true, maxLength: 40})} fullWidth />
+                    {errors.userPass ? <span style={{ color: "red" }}>Invalid password</span> : null}
                     <br/>
                     <Checkbox {...register("userRemember")}/> Remember me
                     <hr /><br/>
