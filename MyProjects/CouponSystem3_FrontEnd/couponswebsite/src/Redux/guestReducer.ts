@@ -22,6 +22,7 @@ export class GuestState {
 export enum GuestActionType {   
     // getAllCoupons = "getAllCoupons",
     getOneCoupon = "getOneCoupon",
+    clearGuestState = "clearGuestState",
 }
 
 // Action - an object that contains the data required in order to perform the action.  Object is sent to Redux when performing the action.
@@ -38,19 +39,25 @@ export interface GuestAction {
 export function getOneCouponAction(coupon: Coupon): GuestAction {
     return { type: GuestActionType.getOneCoupon, payload: coupon };
 }
+export function clearGuestStateAction(): GuestAction{
+    return { type: GuestActionType.clearGuestState};
+}
 
 
 // Reducer: The function that performs the actions we want to run.
 // The function will return the updated AppState
 // It is impossible to access the Reducer via the code, only the redux runs the Reducer function
 export function GuestReducer(currentState: GuestState = new GuestState(), action: GuestAction): GuestState {
-    const newState = { ...currentState }; // Creates a copy of the current state
+    let newState = { ...currentState }; // Creates a copy of the current state
     switch (action.type) {
         // case GuestActionType.getAllCoupons:
         //     newState.allCoupons = action.payload;
         //     break;
         case GuestActionType.getOneCoupon:
             newState.coupon = action.payload;
+            break;
+        case GuestActionType.clearGuestState:
+            newState = new GuestState();
             break;
     }
     // Return the new state and update to the current state

@@ -60,6 +60,8 @@ export function ViewCustomer(): JSX.Element {
         <div className="ViewCustomer Box">
             <div className="Grid-Parent">
                 <div className="Grid-Child">
+                    <Typography variant="h6" className="HeadLine">ID: {customer?.id}</Typography>
+                    <br/>
                     <Typography variant="h4" className="HeadLine">{customer?.firstName} {customer?.lastName}</Typography>
                     <br/>
                     <Typography variant="h6" className="HeadLine">{customer?.email}</Typography>

@@ -29,6 +29,9 @@ export function SingleCompany(props: companyProps): JSX.Element {
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                     <CardContent>
+                    <Typography variant="h6" color="text.secondary">
+                    id: {props.company.id}
+                    </Typography>
                     <Typography gutterBottom variant="h5" component="div">
                     {props.company.name}
                     </Typography>

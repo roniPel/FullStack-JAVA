@@ -1,9 +1,10 @@
+import { ClientType } from "../Models/ClientType";
 
 export class authState {
     id: string = "";
     name: string = "guest";
     token: string = "";
-    clientType: string = "";
+    clientType: string = ClientType.Guest;
     isLogged:boolean = false;
     rememberMe:boolean=false;
 }

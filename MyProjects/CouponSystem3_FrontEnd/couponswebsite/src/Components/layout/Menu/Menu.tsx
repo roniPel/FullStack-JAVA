@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "./Menu.css";
 import { Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { couponStore } from "../../../Redux/store";
 import { ClientType } from "../../../Models/ClientType";
+import { checkData } from "../../../Utilities/checkData";
 
 export function Menu(): JSX.Element {
     // Determine which client Type is logged on, and display relevant 'Menu' accordingly
@@ -17,9 +18,19 @@ export function Menu(): JSX.Element {
         setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
         setCompany(couponStore.getState().auth.clientType===ClientType.Company);
         setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
-        setGuest(couponStore.getState().auth.name === "guest");
+        setGuest(couponStore.getState().auth.clientType===ClientType.Guest);
     });
     
+    useEffect(()=>{
+        checkData();
+        // Update logged status for different user types: 
+        setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
+        setCompany(couponStore.getState().auth.clientType===ClientType.Company);
+        setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
+        setGuest(couponStore.getState().auth.clientType===ClientType.Guest);
+
+    },[])
+
     const simpleMenu = ()=>{
         return (
             <>
@@ -34,8 +45,6 @@ export function Menu(): JSX.Element {
     const guestMenu = ()=>{
         return (
             <>
-                <br/><Typography variant="h4" className="HeadLine">Menu</Typography><br/>
-                <hr/>
                 <NavLink to="/allCoupons">All Coupons</NavLink><br/>
             </>
         )

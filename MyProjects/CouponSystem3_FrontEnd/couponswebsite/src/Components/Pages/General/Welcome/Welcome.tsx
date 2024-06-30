@@ -16,7 +16,7 @@ export function Welcome(): JSX.Element {
                 or join us as a company and enjoy sales, deals, and great customer service.</Typography>
             </div>
             <br/><br/>
-            <Button variant="contained" color="primary" onClick={() => { navigate("/login") }}>Show me!</Button>
+            <Button variant="contained" color="primary" onClick={() => { navigate("/allCoupons") }}>Show me!</Button>
         </div>
     );
 

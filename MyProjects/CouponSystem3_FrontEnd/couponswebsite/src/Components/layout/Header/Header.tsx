@@ -14,6 +14,7 @@ import { clearCompanyStateAction } from "../../../Redux/companyReducer";
 import { clearAdminStateAction } from "../../../Redux/adminReducer";
 import { clearCustomerStateAction } from "../../../Redux/customerReducer";
 import { ClientType } from "../../../Models/ClientType";
+import { clearGuestStateAction } from "../../../Redux/guestReducer";
 
 export function logoutBackend():void{
     //axios
@@ -22,6 +23,7 @@ export function logoutBackend():void{
         couponStore.dispatch(clearAdminStateAction);
         couponStore.dispatch(clearCompanyStateAction);
         couponStore.dispatch(clearCustomerStateAction);
+        couponStore.dispatch(clearGuestStateAction);
         // clear auth reducer
         couponStore.dispatch(logoutAction());
         // Notify user

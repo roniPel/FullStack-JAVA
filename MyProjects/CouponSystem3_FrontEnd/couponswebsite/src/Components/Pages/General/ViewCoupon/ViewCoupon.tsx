@@ -31,13 +31,28 @@ export function ViewCoupon(): JSX.Element {
     const [isAdmin,setAdmin] = useState(false);
     const [isCompany,setCompany] = useState(false);
     const [isCustomer,setCustomer] = useState(false);
+    const [isGuest, setGuest] = useState(false);
     const [isLogged, setLogged] = useState(false);
+
+    useEffect(()=>{
+        checkData();
+        // Update logged status for different user types: 
+        setLogged(couponStore.getState().auth.isLogged);
+        setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
+        setCompany(couponStore.getState().auth.clientType===ClientType.Company);
+        setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
+        setGuest(couponStore.getState().auth.clientType===ClientType.Guest);
+        // Get coupon info from redux or DB
+        getCoupon();
+
+    },[])
 
     couponStore.subscribe(()=>{
         setLogged(couponStore.getState().auth.isLogged);
         setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
         setCompany(couponStore.getState().auth.clientType===ClientType.Company);
         setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
+        setGuest(couponStore.getState().auth.clientType===ClientType.Guest);
     });
 
     function checkCustomerList(){
@@ -67,18 +82,6 @@ export function ViewCoupon(): JSX.Element {
         })
 
     }
-
-    useEffect(()=>{
-        checkData();
-        // Update logged status for different user types: 
-        setLogged(couponStore.getState().auth.isLogged);
-        setAdmin(couponStore.getState().auth.clientType===ClientType.Administrator);
-        setCompany(couponStore.getState().auth.clientType===ClientType.Company);
-        setCustomer(couponStore.getState().auth.clientType===ClientType.Customer);
-        // Get coupon info from redux or DB
-        getCoupon();
-
-    },[])
 
     function areIdsEqual(id1:number, id2:number) {
         if(id1 === id2){
@@ -150,17 +153,21 @@ export function ViewCoupon(): JSX.Element {
                 checkCustomerList();
                 break;
             case (ClientType.Guest as string):
-                // set id from redux
-                storeId = couponStore.getState().guest.coupon.id;
-                if(areIdsEqual(storeId,paramId)){
-                    // Update local coupon from redux
-                    setCoupon(couponStore.getState().guest.coupon);
-                }
-                else {
-                    getCouponFromDB();
-                }
-                // update redux from local coupon
-                couponStore.dispatch(getOneCouponAction(coupon as Coupon));
+                getCouponFromDB();
+                // // set id from redux
+                // storeId = (couponStore.getState().guest.coupon.id !== undefined)? couponStore.getState().guest.coupon.id:-1;
+                // // console.log("Store coupon ID: "+storeId);
+                // if(areIdsEqual(storeId,paramId)){
+                //     // Update local coupon from redux
+                //     setCoupon(couponStore.getState().guest.coupon);
+                // }
+                // else {
+                //     getCouponFromDB();
+                // }
+                // // update redux from local coupon
+                // couponStore.dispatch(getOneCouponAction(coupon as Coupon));
+                // // console.log("Local Coupon: "+coupon);
+                // // console.log("Redux coupon: "+couponStore.getState().guest.coupon);
                 break;
         }
     }
@@ -168,7 +175,9 @@ export function ViewCoupon(): JSX.Element {
     function getCouponFromDB() {
         //console.log("Get from Backend");
         // get coupon data from backend
-        axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`).then(res=>{
+        axios.get(`http://localhost:8080/Guest/GetOneCoupon/${params.couponID}`)
+        .then((res)=>{
+            //console.log("Coupon from DB: "+res.data);
             // Update local coupon with result
             setCoupon(res.data);
         })

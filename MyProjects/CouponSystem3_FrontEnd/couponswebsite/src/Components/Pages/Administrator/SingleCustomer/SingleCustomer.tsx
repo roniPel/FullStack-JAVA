@@ -27,6 +27,9 @@ export function SingleCustomer(props: customerProps): JSX.Element {
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                     <CardContent>
+                    <Typography variant="h6" color="text.secondary">
+                    ID: {props.customer.id}
+                    </Typography >
                     <Typography gutterBottom variant="h5" component="div">
                     {props.customer.firstName} {props.customer.lastName}
                     </Typography>

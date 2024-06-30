@@ -53,10 +53,14 @@ export function AddCoupon(): JSX.Element {
                 <Typography variant="h4" className="HeadLine">Create New Coupon</Typography>
                 <hr /><br/>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField required type="text" label="Title" fullWidth {...register("title",{required:true})} />
+                    <TextField required type="text" label="Title" fullWidth 
+                    {...register("title",{required:true, maxLength:50})} />
                     {errors.title?.type === "required" && <><br /><span style={{ color: "red" }}>Title is required</span></>}
+                    {errors.title?.type == "maxLength" && <><br/><span style={{ color: "red" }}>Title is too long. Max length: 50</span></>}
                     <br /><br />
-                    <TextField type="text" label="Description" fullWidth {...register("description")} />
+                    <TextField type="text" label="Description" fullWidth 
+                    {...register("description", {maxLength: 70})} />
+                    {errors.description?.type == "maxLength" && <><br/><span style={{ color: "red" }}>Description is too long. Max length: 70</span></>}
                     <br /><br />
                     <InputLabel id="startDate">Start Date</InputLabel>
                     <TextField required id = "startDate" type="date" fullWidth {...register("start_date",{required:true})} />

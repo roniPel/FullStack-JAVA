@@ -50,12 +50,17 @@ export function AddCompany(): JSX.Element {
                 <Typography variant="h4" className="HeadLine">New Company</Typography>
                 <hr /><br/>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField required type="text" label="Company Name" fullWidth {...register("name",{required:true})} />
+                    <TextField required type="text" label="Company Name" fullWidth 
+                    {...register("name",{required:true, maxLength:20})} />
                     {errors.name?.type == "required" && <><br/><span style={{ color: "red" }}>Name is required</span></>}
+                    {errors.name?.type == "maxLength" && <><br/><span style={{ color: "red" }}>Name is too long. Max length: 20</span></>}
                     <br/><br/>
-                    <TextField required type="text" label="Company Email" variant="outlined" fullWidth {...register("email",{required:true})} />
+                    <TextField required type="text" label="Company Email" variant="outlined" fullWidth 
+                    {...register("email",{required:true, maxLength:30})} />
+                    {errors.name?.type == "maxLength" && <><br/><span style={{ color: "red" }}>Email is too long. Max length: 30</span></>}
                     <br/><br/>
-                    <TextField required type="password" label="Company Password" variant="outlined" fullWidth {...register("password",{required:true, minLength:5, maxLength:15})} />
+                    <TextField required type="password" label="Company Password" variant="outlined" fullWidth 
+                    {...register("password",{required:true, minLength:5, maxLength:15})} />
                     {errors.password?.type == "required" && <><br/><span style={{color: "red"}}>Password is required</span></>}
                     {errors.password?.type == "minLength" && <><br/><span style={{color: "red"}}>Password is too short.  Minimum length: 5</span></>}
                     {errors.password?.type == "maxLength" && <><br/><span style={{color: "red"}}>Password is too long.  Maximum length: 15</span></>}

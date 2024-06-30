@@ -57,13 +57,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean UpdateCustomer(Customer customer) throws AdminException, LoginException {
+        int id = customer.getId();
         // Verifications for customer in DB
         if(!customerRepo.existsById(customer.getId())){
             throw new AdminException(AdminErrors.CUSTOMER_DOES_NOT_EXIST);
         }
-//        if(customerRepo.findByEmail(customer.getEmail()) != null){
-//            throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
-//        }
+        Customer currentCustomer = customerRepo.findById(id).get();
+        if((!Objects.equals(customer.getEmail(), currentCustomer.getEmail())) && customerRepo.findByEmail(customer.getEmail()) != null){
+            throw new AdminException(AdminErrors.CUSTOMER_EMAIL_ALREADY_EXISTS);
+        }
         Customer oldCustomer = customerRepo.findById(customer.getId()).get();
         // Verifications for user in DB
         UserDetails user = usersRepo.findByEmailAndPassword(oldCustomer.getEmail(), oldCustomer.getPassword());
@@ -146,7 +148,7 @@ public class AdminServiceImpl implements AdminService {
         if(!company.getName().equals(currentCompany.getName())) {
             throw new AdminException(AdminErrors.CANT_UPDATE_COMPANY_NAME);
         }
-        if(companyRepo.existsCompanyByEmail( company.getEmail() )){
+        if((!Objects.equals(company.getEmail(), currentCompany.getEmail())) && companyRepo.existsCompanyByEmail( company.getEmail() )){
             throw new AdminException(AdminErrors.COMPANY_EMAIL_ALREADY_EXISTS);
         }
         // Verifications for user in DB

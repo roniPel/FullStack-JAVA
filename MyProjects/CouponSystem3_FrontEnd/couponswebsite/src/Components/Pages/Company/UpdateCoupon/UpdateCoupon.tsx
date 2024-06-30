@@ -16,6 +16,7 @@ import { CouponCategory } from "../../../../Models/CouponCategory";
 export function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
     const [coupon, setCoupon] = useState<Coupon>();
+    const [catKey, setCategoryKey] = useState<keyof typeof CouponCategory>();
     const params = useParams();
     
 
@@ -51,12 +52,15 @@ export function UpdateCoupon(): JSX.Element {
         }
         setCoupon(couponStore.getState().company.coupon as Coupon);
         //console.log("The coupon is: "+coupon);
+        let key: keyof typeof CouponCategory = coupon?.category as CouponCategory;
+        setCategoryKey(key);
     }
 
     const onSubmit: SubmitHandler<Coupon> = (data) => {
         // Insert required data
         data.id = parseInt(params.couponID as string);
-        //console.log(data);
+        data.category? console.log(data.category) : data.category = coupon?.category as CouponCategory;
+        console.log(data);
         axiosJWT.put(`http://localhost:8080/Company/UpdateCoupon/${[params.couponID]}`,data)
         .then((res)=> {
             couponStore.dispatch(updateCouponAction(data));
@@ -121,13 +125,13 @@ export function UpdateCoupon(): JSX.Element {
                         <br /><br />
                         {/* onChange={handleCatChange} */}
                         {/* <label>Category: </label>
-                        <select required defaultValue={coupon?.category} {...register("category", {required:true})} >
-                            <option disabled selected > -- select category -- </option>
+                        <select required defaultValue={catKey} {...register("category", {required:true})} >
+                            <option disabled > -- select category -- </option>
                             {Object.entries(CouponCategory).map(([key,val])=><option key={key} value={val}>{val}</option>)}
                             {errors.category?.type == undefined && <><br /><span style={{ color: "red" }}>Category is required</span></>}
                         </select><br /><br/> */}
                         <InputLabel id="Category-label">Select Category</InputLabel>
-                        <Select labelId="Category-label" id="Category-label" label="Category" defaultValue={coupon?.category} {...register("category", {required:true})} fullWidth >
+                        <Select labelId="Category-label" id="Category-label" label="Category" defaultValue={catKey} {...register("category", {required:true})} fullWidth >
                             {Object.entries(CouponCategory).map(([key,val])=><MenuItem key={key} value={val}>{val}</MenuItem>)}
                         </Select>
                         {errors.category?.type === "required" && <><br /><span style={{ color: "red" }}>Category is required</span></>}

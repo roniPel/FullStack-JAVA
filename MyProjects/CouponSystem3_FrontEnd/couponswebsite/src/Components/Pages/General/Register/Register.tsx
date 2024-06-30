@@ -67,13 +67,16 @@ export function Register(): JSX.Element {
                 <hr /><br/>
                 {/* <input type="text" placeholder="user name..." onChange={(args)=>setEmail(args.target.value)}/><br/><br/> */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField label="first name" variant="outlined" {...register("firstName")} fullWidth />
+                    <TextField label="first name" variant="outlined" {...register("firstName", {maxLength:20})} fullWidth />
+                    {errors.firstName?.type == "maxLength" && <><br/><span style={{ color: "red" }}>First Name is too long. Max length: 20</span></>}
                     <br /><br />
-                    <TextField label="last name" variant="outlined" {...register("lastName")} fullWidth />
+                    <TextField label="last name" variant="outlined" {...register("lastName",{maxLength:20})} fullWidth />
+                    {errors.lastName?.type == "maxLength" && <><br/><span style={{ color: "red" }}>Last Name is too long. Max length: 20</span></>}
                     <br /><br />
                     <TextField required label="email" variant="outlined" {
-                        ...register("email", { required: true })} fullWidth />
+                        ...register("email", { required: true , maxLength:30})} fullWidth />
                     {errors.email && <span style={{ color: "red" }}>Email is required</span>}
+                    {errors.email?.type == "maxLength" && <><br/><span style={{ color: "red" }}>Email is too long. Max length: 30</span></>}
                     <br /><br />
                     <TextField required label="password" type="password" variant="outlined" {
                         ...register("password", { required: true, minLength: 5, maxLength: 10 })} fullWidth />

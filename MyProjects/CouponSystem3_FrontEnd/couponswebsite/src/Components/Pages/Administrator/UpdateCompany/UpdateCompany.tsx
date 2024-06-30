@@ -77,7 +77,7 @@ export function UpdateCompany(): JSX.Element {
                                 <><br/><span style={{ color: "red" }}>Name can't be edited</span></>
                                 }
                                 <br/><br/>
-                                Company Email: <input required type="text" placeholder="Company Email" value={company?.email}  {...register("email",{required:true})} />
+                                Company Email: <input required type="text" placeholder="Company Email" defaultValue={company?.email}  {...register("email",{required:true})} />
                                 <br/><br/>
                                 Company Password: <input required type="password" placeholder="Company Password" defaultValue={company?.password}  {...register("password",{required:true})} />
                                 <br/><br/>

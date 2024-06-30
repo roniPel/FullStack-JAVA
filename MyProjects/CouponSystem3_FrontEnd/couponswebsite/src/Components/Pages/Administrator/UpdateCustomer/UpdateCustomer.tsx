@@ -48,6 +48,12 @@ export function UpdateCustomer(): JSX.Element {
 
     const onSubmit: SubmitHandler<Customer> = (data) => {
         data.id = parseInt(params.customerID as string);
+        if(data.firstName === ""){
+            data.firstName = customer?.firstName as string;
+        }
+        if(data.lastName === ""){
+            data.lastName = customer?.lastName as string;
+        }
         //console.log(data);
         axiosJWT.put(`http://localhost:8080/Admin/UpdateCustomer`,data)
         .then((res)=> {
@@ -73,7 +79,7 @@ export function UpdateCustomer(): JSX.Element {
                             <br/><br/>
                             Last Name: <input type="text" placeholder="Last Name" defaultValue={customer?.lastName}  {...register("lastName")} />
                             <br/><br/>
-                            Email: <input type="text" placeholder="Email" defaultValue={customer?.email} value={customer?.email} {...register("email",{required:true})} />
+                            Email: <input type="text" placeholder="Email" defaultValue={customer?.email} {...register("email",{required:true})} />
                             <br/><br/>
                             Password: <input type="password" placeholder="Password" defaultValue={customer?.password} {...register("password",{required:true})} />
                             <br/><br/>

@@ -76,6 +76,8 @@ export function ViewCompany(): JSX.Element {
         <div className="ViewCompany Box">
             <div className="Grid-Parent">
                 <div className="Grid-Child">
+                    <Typography variant="h6" className="HeadLine">ID: {company?.id}</Typography>
+                    <br/>
                     <Typography variant="h4" className="HeadLine">{company?.name}</Typography>
                     <br/>
                     <Typography variant="h6" className="HeadLine">{company?.email}</Typography>
