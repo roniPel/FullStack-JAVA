@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Clr Tester - Used to Fill the DB with mock data for testing purposes
  */
-@Component
+//@Component
 @Order(1)
 @RequiredArgsConstructor
 public class Clr_FillDBwithMockData implements CommandLineRunner {
