@@ -1,5 +1,7 @@
 package TaskSystem.example.TaskSystem_Spring.Beans;
 
+import lombok.Getter;
+
 public enum Priority {
     Complete, InProgress, NotStarted;
     private static final int size = Priority.values().length;

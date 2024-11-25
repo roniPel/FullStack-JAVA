@@ -38,10 +38,7 @@ public class Task {
     @Column(name = "due_date")
     private LocalDate due_date;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "priority_id",
-            nullable = false)
-    private Integer priority;
+    private Priority priority;
 
     @Column(name = "project_id",
             nullable = false)
