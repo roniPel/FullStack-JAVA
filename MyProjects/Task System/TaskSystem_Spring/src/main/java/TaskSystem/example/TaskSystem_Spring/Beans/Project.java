@@ -18,6 +18,10 @@ public class Project {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "user_id",
+            nullable = false)
+    private Integer userId;
+
     @Column(name = "title",
             length = 10)
     @Length(max = 10)

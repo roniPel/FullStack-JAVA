@@ -20,7 +20,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    // with a title, description, due date, priority level, and project category.
+
+    @Column(name = "user_id",
+            nullable = false)
+    private Integer userId;
+
     @Column(name = "title",
             length = 50,
             unique = true)
