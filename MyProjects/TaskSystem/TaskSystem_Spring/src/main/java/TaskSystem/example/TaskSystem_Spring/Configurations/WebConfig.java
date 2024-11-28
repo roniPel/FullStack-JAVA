@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Web Configurations for system
  */
-@Configuration
+//@Configuration
 public class WebConfig {
     /**
      * Creates a RestTemplate

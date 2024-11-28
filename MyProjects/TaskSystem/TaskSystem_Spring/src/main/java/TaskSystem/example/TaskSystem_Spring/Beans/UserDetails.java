@@ -9,6 +9,7 @@ import org.apache.catalina.User;
 import org.hibernate.validator.constraints.Length;
 
 @Data
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

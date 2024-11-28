@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * API Configurations for System
  */
-@Configuration
+//@Configuration
 public class OpenAPIConfiguration {
     /**
      * Method with definitions of System API
